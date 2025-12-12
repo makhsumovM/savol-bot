@@ -2,7 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { marathonApi } from '@/api/marathonApi'
 import { MarathonQuestion } from '@/types/marathon'
 import Error from '@/ui/common/error'
@@ -13,15 +13,19 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ModeToggle } from '@/ui/common/modeToggle/modeToggle'
 
 const MarathonPage = () => {
+  const queryClient = useQueryClient()
+
   const {
     data: questions = [],
     isLoading,
+    isFetching,
     isError,
     refetch,
   } = useQuery<MarathonQuestion[]>({
     queryKey: ['marathon'],
     queryFn: marathonApi,
     refetchOnWindowFocus: false,
+    refetchOnMount: 'always',
   })
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -31,7 +35,6 @@ const MarathonPage = () => {
 
   useEffect(() => {
     const saved = Number(localStorage.getItem('marathonRecord') || 0)
-
     setRecord(saved)
   }, [])
 
@@ -67,21 +70,11 @@ const MarathonPage = () => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
+    queryClient.setQueryData(['marathon'], [])
     refetch()
   }
 
-  if (isGameOver && record !== null) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.4 }}
-      >
-        <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
-      </motion.div>
-    )
-  }
+  
 
   return (
     <div className="p-6 space-y-8 max-w-3xl mx-auto">
@@ -95,6 +88,16 @@ const MarathonPage = () => {
       </motion.h1>
       <ModeToggle />
 
+      {isGameOver && record !== null && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+        >
+          <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
+        </motion.div>
+      )}
       {record !== null && (
         <motion.p
           className="text-sm text-primary"
@@ -108,9 +111,9 @@ const MarathonPage = () => {
         </motion.p>
       )}
 
-      {isLoading && <Loading />}
+      {(isLoading || isFetching) && <Loading />}
       {isError && <Error message="Ошибка при загрузке вопросов." />}
-      {!questions.length && !isLoading && <Error message="Вопросы не найдены." />}
+      {!questions.length && !isLoading && !isFetching && <Error message="Вопросы не найдены." />}
 
       {currentQuestion && (
         <AnimatePresence mode="wait">
