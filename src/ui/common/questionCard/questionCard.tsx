@@ -42,30 +42,33 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
 
   return (
     <motion.div
-      className="border rounded-lg p-6 bg-card text-primary shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col gap-4"
+      className="group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-primary/10 bg-card/80 p-6 text-primary shadow-[0_10px_60px_-45px_rgba(0,0,0,0.4)] backdrop-blur transition-transform duration-300 hover:-translate-y-0.5"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4 }}
     >
+      <span className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary/70 via-primary/40 to-primary/0" />
+
       <div className="flex items-center gap-2">
-        <h2 className="text-lg md:text-xl font-semibold text-primary flex-1">
+        <h2 className="flex-1 text-lg font-semibold md:text-xl">
           {index + 1}. {question.question}
         </h2>
-        {question.code && <Code className="w-5 h-5 text-muted-foreground group-hover" />}
+        {question.code && <Code className="h-5 w-5 text-muted-foreground" />}
       </div>
 
       {question.code && (
-        <div className="relative ">
-          <SyntaxHighlighter language="javascript" style={oneDark} className="rounded-md">
+        <div className="relative rounded-xl border border-primary/10 bg-muted/40">
+          <SyntaxHighlighter language="javascript" style={oneDark} className="rounded-xl !bg-transparent !p-4">
             {question.code}
           </SyntaxHighlighter>
 
           <button
             onClick={handleCopy}
-            className="absolute top-2 right-2 flex items-center gap-1 text-sm text-white bg-gray-700 bg-opacity-50 hover:bg-opacity-80 px-2 py-1 rounded"
+            className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-background/80 px-3 py-1 text-xs font-medium text-muted-foreground shadow-sm transition hover:text-primary"
           >
-            {copied ? <Verified className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Verified className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            {copied ? 'Скопировано' : 'Скопировать'}
           </button>
         </div>
       )}
@@ -80,18 +83,19 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
           <motion.li
             key={i}
             onClick={() => handleClick(i)}
-            className="cursor-pointer font-medium text-primary hover:bg-primary/10 rounded-md transition-colors duration-200 px-3 py-2 select-none flex items-center gap-2"
+            className="group/answer flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3 py-2 text-sm font-medium text-muted-foreground transition hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
             variants={answerVariants}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
           >
+            <span className="h-2 w-2 rounded-full bg-primary/30 transition group-hover/answer:bg-primary" />
             {ans}
           </motion.li>
         ))}
       </motion.ul>
 
-      <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground">
-        <Star className="w-4 h-4 text-yellow-400" />
+      <div className="mt-1 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+        <Star className="h-4 w-4 text-yellow-400" />
         {question.difficulty}
       </div>
     </motion.div>

@@ -77,61 +77,124 @@ const MarathonPage = () => {
   
 
   return (
-    <div className="p-6 space-y-8 max-w-3xl mx-auto">
-      <motion.h1
-        className="text-3xl font-bold text-primary"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Marathon Questions
-      </motion.h1>
-      <ModeToggle />
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/40 text-primary">
+      <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 pb-16 pt-12 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
+          <div className="space-y-2">
+            <motion.p
+              className="text-xs uppercase tracking-[0.25em] text-muted-foreground"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              marathon mode
+            </motion.p>
+            <motion.h1
+              className="text-3xl font-semibold sm:text-4xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              Минималистичный марафон вопросов
+            </motion.h1>
+            <motion.p
+              className="max-w-2xl text-sm text-muted-foreground"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+            >
+              Оставайся в «потоке» как на monkeytype: чистый интерфейс, тихая палитра, акцент на контенте.
+              Выбирай ответы, не отвлекаясь.
+            </motion.p>
+          </div>
 
-      {isGameOver && record !== null && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4 }}
-        >
-          <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
-        </motion.div>
-      )}
-      {record !== null && (
-        <motion.p
-          className="text-sm text-primary"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          suppressHydrationWarning
-        >
-          Текущий счет: <span className="font-bold">{currentScore}</span> | Рекорд:{' '}
-          <span className="font-bold">{record}</span>
-        </motion.p>
-      )}
+          <div className="flex items-center gap-2 rounded-full border border-primary/10 bg-card/60 px-4 py-2 backdrop-blur">
+            <span className="text-xs font-medium text-muted-foreground">Тема</span>
+            <ModeToggle />
+          </div>
+        </div>
 
-      {(isLoading || isFetching) && <Loading />}
-      {isError && <Error message="Ошибка при загрузке вопросов." />}
-      {!questions.length && !isLoading && !isFetching && <Error message="Вопросы не найдены." />}
-
-      {currentQuestion && (
-        <AnimatePresence mode="wait">
+        <div className="grid gap-4 md:grid-cols-3">
           <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
+            className="rounded-xl border border-primary/10 bg-card/70 p-4 backdrop-blur"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <p className="text-xs uppercase text-muted-foreground">Вопрос</p>
+            <p className="text-2xl font-semibold">{currentIndex + 1}</p>
+          </motion.div>
+          <motion.div
+            className="rounded-xl border border-primary/10 bg-card/70 p-4 backdrop-blur"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05, duration: 0.3 }}
+          >
+            <p className="text-xs uppercase text-muted-foreground">Текущий счет</p>
+            <p className="text-2xl font-semibold">{currentScore}</p>
+          </motion.div>
+          <motion.div
+            className="rounded-xl border border-primary/10 bg-card/70 p-4 backdrop-blur"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+            suppressHydrationWarning
+          >
+            <p className="text-xs uppercase text-muted-foreground">Рекорд</p>
+            <p className="text-2xl font-semibold">{record ?? '—'}</p>
+          </motion.div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 rounded-xl border border-primary/10 bg-card/80 p-4 text-sm text-muted-foreground backdrop-blur">
+          <span className="rounded-lg bg-primary/5 px-3 py-1 font-medium text-primary">Без лишнего шума</span>
+          <span>Всегда один вопрос на экране.</span>
+          <span>Мгновенная перезагрузка раунда по кнопке ниже.</span>
+        </div>
+
+        {(isLoading || isFetching) && <Loading />}
+        {isError && <Error message="Ошибка при загрузке вопросов." />}
+        {!questions.length && !isLoading && !isFetching && <Error message="Вопросы не найдены." />}
+
+        {isGameOver && record !== null && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
           >
-            <QuestionCard
-              question={currentQuestion}
-              index={currentIndex}
-              onAnswered={handleAnswer}
-            />
+            <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={handleRestart}
+            className="rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary/40 hover:bg-primary/15"
+          >
+            Начать заново
+          </button>
+          <p className="text-xs text-muted-foreground">Новый сет вопросов загрузится автоматически после конца серии.</p>
+        </div>
+
+        {currentQuestion && (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.4 }}
+            >
+              <QuestionCard
+                question={currentQuestion}
+                index={currentIndex}
+                onAnswered={handleAnswer}
+              />
+            </motion.div>
+          </AnimatePresence>
+        )}
+      </div>
     </div>
   )
 }
