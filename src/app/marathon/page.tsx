@@ -10,7 +10,6 @@ import Loading from '@/ui/common/loading'
 import QuestionCard from '@/ui/common/questionCard/questionCard'
 import GameOver from '@/ui/common/gameOver/gameOver'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ModeToggle } from '@/ui/common/modeToggle/modeToggle'
 
 const MarathonPage = () => {
   const queryClient = useQueryClient()
@@ -74,8 +73,6 @@ const MarathonPage = () => {
     refetch()
   }
 
-  
-
   return (
     <div className="p-6 space-y-8 max-w-3xl mx-auto">
       <motion.h1
@@ -86,7 +83,6 @@ const MarathonPage = () => {
       >
         Marathon Questions
       </motion.h1>
-      <ModeToggle />
 
       {isGameOver && record !== null && (
         <motion.div
@@ -115,7 +111,7 @@ const MarathonPage = () => {
       {isError && <Error message="Ошибка при загрузке вопросов." />}
       {!questions.length && !isLoading && !isFetching && <Error message="Вопросы не найдены." />}
 
-      {currentQuestion && (
+      {currentQuestion && !isLoading && !isFetching && !isError && (
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}

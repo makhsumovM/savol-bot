@@ -2,8 +2,8 @@ import { MarathonQuestion } from '@/types/marathon'
 import { Code, Star, Copy, Verified } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -27,8 +27,13 @@ const answerVariants = {
 
 const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
   const [copied, setCopied] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [answered, setAnswered] = useState(false)
 
   const handleClick = (ansIndex: number) => {
+    if (answered) return
+    setSelectedIndex(ansIndex)
+    setAnswered(true)
     onAnswered?.(ansIndex === question.correctIndex)
   }
 
@@ -38,6 +43,15 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     }
+  }
+
+  const getAnswerStyle = (i: number) => {
+    if (!answered) return ''
+    if (i === question.correctIndex)
+      return 'bg-green-500/20 text-green-600'
+    if (i === selectedIndex)
+      return 'bg-red-500/20 text-red-600'
+    return 'opacity-60'
   }
 
   return (
@@ -52,15 +66,14 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
         <h2 className="text-lg md:text-xl font-semibold text-primary flex-1">
           {index + 1}. {question.question}
         </h2>
-        {question.code && <Code className="w-5 h-5 text-muted-foreground group-hover" />}
+        {question.code && <Code className="w-5 h-5 text-muted-foreground" />}
       </div>
 
       {question.code && (
-        <div className="relative ">
+        <div className="relative">
           <SyntaxHighlighter language="javascript" style={oneDark} className="rounded-md">
             {question.code}
           </SyntaxHighlighter>
-
           <button
             onClick={handleCopy}
             className="absolute top-2 right-2 flex items-center gap-1 text-sm text-white bg-gray-700 bg-opacity-50 hover:bg-opacity-80 px-2 py-1 rounded"
@@ -80,10 +93,10 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
           <motion.li
             key={i}
             onClick={() => handleClick(i)}
-            className="cursor-pointer font-medium text-primary hover:bg-primary/10 rounded-md transition-colors duration-200 px-3 py-2 select-none flex items-center gap-2"
+            className={`cursor-pointer font-medium rounded-md transition-colors duration-200 px-3 py-2 select-none flex items-center gap-2 ${getAnswerStyle(i)}`}
             variants={answerVariants}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={!answered ? { scale: 1.03 } : undefined}
+            whileTap={!answered ? { scale: 0.97 } : undefined}
           >
             {ans}
           </motion.li>

@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import '../styles/globals.css'
 import Providers from '@/lib/providers/providers'
+import Header from '@/ui/layout/header'
 
 export const metadata: Metadata = {
   title: 'Savol-bot',
-  description: 'AI chatbot',
+  description: 'AI тестировщик',
 }
 
 export default function RootLayout({
@@ -15,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   )

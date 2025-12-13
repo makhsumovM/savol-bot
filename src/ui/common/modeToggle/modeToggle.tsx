@@ -2,19 +2,34 @@
 
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { Button } from '@/ui/button/button'
+import { ToggleGroup, ToggleGroupItem } from '@/ui/toggle-group/toggle-group'
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
+
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light')
 
   return (
-    <div className="flex items-center gap-2">
-      <Button onClick={() => setTheme('light')} variant="outline" size="icon">
-        <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all " />
-      </Button>
-      <Button onClick={() => setTheme('dark')} variant="outline" size="icon">
-        <Moon  className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all " />
-      </Button>
-    </div>
+    <ToggleGroup type="single" className="flex gap-2 bg-card/50 backdrop-blur rounded-lg p-1 border border-border">
+      <ToggleGroupItem
+        value="light"
+        onClick={toggleTheme}
+        className={`flex items-center justify-center p-2 rounded-md cursor-pointer transition-all duration-300
+          ${theme === 'light' ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:bg-primary/10'}`}
+        aria-label="Light mode"
+      >
+        <Sun className="h-5 w-5" />
+      </ToggleGroupItem>
+
+      <ToggleGroupItem
+        value="dark"
+        onClick={toggleTheme}
+        className={`flex items-center justify-center p-2 rounded-md cursor-pointer transition-all duration-300
+          ${theme === 'dark' ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:bg-primary/10'}`}
+        aria-label="Dark mode"
+      >
+        <Moon className="h-5 w-5" />
+      </ToggleGroupItem>
+    </ToggleGroup>
   )
 }
