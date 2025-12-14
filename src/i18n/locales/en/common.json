@@ -1,0 +1,87 @@
+{
+  "app": {
+    "name": "Savol-bot",
+    "subtitle": "AI Tester",
+    "description": "Choose a mode on the first screen, dive into questions without unnecessary clicks, and stay focused with minimal animations."
+  },
+
+  "home": {
+    "cta": {
+      "startMarathon": "Start marathon →",
+      "features": "Rhythm, density, and subtle animations"
+    },
+    "ui": {
+      "pulse": "Pulse UI",
+      "microInteractions": "Micro-interactions",
+      "focusMode": "Focus mode",
+      "noNoise": "No visual noise"
+    },
+    "rows": {
+      "row1": "Row 1",
+      "row2": "Row 2",
+      "row3": "Row 3",
+      "hover": "hover / tap"
+    }
+  },
+
+  "modes": {
+    "marathon": {
+      "title": "Marathon",
+      "badge": "LIVE",
+      "description": "An endless stream of questions to train concentration."
+    },
+    "classic": {
+      "title": "Classic",
+      "badge": "SOON",
+      "description": "A sprint of 10–15 questions to quickly test yourself."
+    },
+    "coding": {
+      "title": "Coding",
+      "badge": "SOON",
+      "description": "Code-based challenges with hints, inspired by IDEs."
+    }
+  },
+
+  "header": {
+    "nav": {
+      "marathon": "Start marathon",
+      "random": "Random game"
+    }
+  },
+
+  "marathon": {
+    "title": "Marathon Questions",
+    "score": {
+      "current": "Current score",
+      "record": "Record"
+    },
+    "noQuestions": "Error in marathon "
+  },
+
+  "question": {
+    "difficulty": "Difficulty",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+
+  "gameOver": {
+    "title": "Game Over",
+    "wrongAnswer": "You answered incorrectly. Round score:",
+    "record": "Record:",
+    "restart": "Restart"
+  },
+
+  "errors": {
+    "loadFailed": "Failed to load questions.",
+    "notFound": "No questions found."
+  },
+
+  "loading": {
+    "text": "Loading..."
+  },
+
+  "theme": {
+    "light": "Light mode",
+    "dark": "Dark mode"
+  }
+}

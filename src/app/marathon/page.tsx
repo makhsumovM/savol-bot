@@ -10,9 +10,24 @@ import Loading from '@/ui/common/loading'
 import QuestionCard from '@/ui/common/questionCard/questionCard'
 import GameOver from '@/ui/common/gameOver/gameOver'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 const MarathonPage = () => {
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
+
+  const [lang, setLang] = useState('en')
+  const [record, setRecord] = useState<number | null>(null)
+  
+  useEffect(() => {
+    const storedLang = localStorage.getItem('lang')
+    if (storedLang) setLang(storedLang)
+  }, [])
+
+  useEffect(() => {
+    const saved = Number(localStorage.getItem('marathonRecord') || 0)
+    setRecord(saved)
+  }, [])
 
   const {
     data: questions = [],
@@ -21,8 +36,8 @@ const MarathonPage = () => {
     isError,
     refetch,
   } = useQuery<MarathonQuestion[]>({
-    queryKey: ['marathon'],
-    queryFn: marathonApi,
+    queryKey: ['marathon', lang],
+    queryFn: () => marathonApi(lang),
     refetchOnWindowFocus: false,
     refetchOnMount: 'always',
   })
@@ -30,12 +45,6 @@ const MarathonPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isGameOver, setIsGameOver] = useState(false)
   const [currentScore, setCurrentScore] = useState(0)
-  const [record, setRecord] = useState<number | null>(null)
-
-  useEffect(() => {
-    const saved = Number(localStorage.getItem('marathonRecord') || 0)
-    setRecord(saved)
-  }, [])
 
   useEffect(() => {
     if (isGameOver && record !== null) {
@@ -73,6 +82,7 @@ const MarathonPage = () => {
     refetch()
   }
 
+
   return (
     <div className="p-6 space-y-8 max-w-3xl mx-auto">
       <motion.h1
@@ -81,7 +91,7 @@ const MarathonPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Marathon Questions
+        {t('marathon.title')}
       </motion.h1>
 
       {isGameOver && record !== null && (
@@ -94,6 +104,7 @@ const MarathonPage = () => {
           <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
         </motion.div>
       )}
+
       {record !== null && (
         <motion.p
           className="text-sm text-primary"
@@ -102,14 +113,16 @@ const MarathonPage = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
           suppressHydrationWarning
         >
-          Текущий счет: <span className="font-bold">{currentScore}</span> | Рекорд:{' '}
-          <span className="font-bold">{record}</span>
+          {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
+          {t('marathon.score.record')}: <span className="font-bold">{record}</span>
         </motion.p>
       )}
 
       {(isLoading || isFetching) && <Loading />}
-      {isError && <Error message="Ошибка при загрузке вопросов." />}
-      {!questions.length && !isLoading && !isFetching && <Error message="Вопросы не найдены." />}
+      {isError && <Error message={t('marathon.errorLoading')} />}
+      {!questions.length && !isLoading && !isFetching && (
+        <Error message={t('marathon.noQuestions')} />
+      )}
 
       {currentQuestion && !isLoading && !isFetching && !isError && (
         <AnimatePresence mode="wait">

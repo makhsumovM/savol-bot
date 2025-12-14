@@ -3,9 +3,18 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const prompt = `Сгенерируй строго массив из 15 объектов вопросов по JavaScript в формате JSON.
+    const url = new URL(request.url)
+    const lang = url.searchParams.get('lang')
+
+    if (!lang) {
+      return NextResponse.json({ error: 'Missing required query parameter: lang' }, { status: 400 })
+    }
+
+    const prompt = `Сгенерируй все вопросы строго массивом из 15 объектов по JavaScript на языке ${
+      lang == 'tj' ? 'Tajikistan' : lang
+    }.
 Никакого текста, объяснений, комментариев или Markdown вне JSON.
 
 Требования к сложности:
@@ -52,7 +61,7 @@ JSON-массив из ровно 15 объектов, каждый объект
       difficulty: z.enum(['easy', 'medium', 'hard', 'very-hard', 'expert']),
     })
 
-    const QuestionsListSchema = z.array(QuestionSchema).length(5)
+    const QuestionsListSchema = z.array(QuestionSchema).length(15)
 
     const client = new GoogleGenAI({
       apiKey: process.env.GEMINI_API_KEY,

@@ -30,12 +30,12 @@ export function ModeCards({ modes }: ModeCardsProps) {
             transition={{
               delay: i * 0.12,
               duration: 0.7,
-              ease: [0.22, 1, 0.36, 1]
+              ease: [0.22, 1, 0.36, 1],
             }}
             whileHover={{
               scale: 1.03,
               y: -4,
-              transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+              transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
             }}
             whileTap={{ scale: 0.98 }}
             className="group relative rounded-3xl border border-border/40 bg-card/40 backdrop-blur-xl p-8 hover:bg-card/60 hover:border-border/60 hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden"
@@ -44,9 +44,10 @@ export function ModeCards({ modes }: ModeCardsProps) {
 
             <div className="relative">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-xl font-bold text-foreground group-hover:text-foreground transition-colors duration-200">
+                <h3 className="text-xl font-bold text-foreground">
                   {mode.title}
                 </h3>
+
                 <motion.span
                   whileHover={{ scale: 1.1 }}
                   className={`text-xs font-semibold rounded-full px-3 py-1.5 ${
@@ -58,7 +59,8 @@ export function ModeCards({ modes }: ModeCardsProps) {
                   {mode.badge}
                 </motion.span>
               </div>
-              <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-muted-foreground/90 transition-colors duration-200">
+
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 {mode.desc}
               </p>
             </div>
