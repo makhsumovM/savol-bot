@@ -4,21 +4,31 @@ import { ModeToggle } from '@/ui/common/modeToggle/modeToggle'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Gamepad, PlayCircle } from 'lucide-react'
-
-const navLinks = [
-  {
-    href: '/marathon',
-    icon: PlayCircle,
-    label: 'Начать марафон',
-  },
-  {
-    href: '/random',
-    icon: Gamepad,
-    label: 'Случайная игра',
-  },
-]
+import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n'
+import LanguageSwitcher from '@/ui/common/languageSwitcher/languageSwitcher'
 
 const Header = () => {
+  const { t } = useTranslation()
+
+  const navLinks = [
+    {
+      href: '/marathon',
+      icon: PlayCircle,
+      label: t('header.nav.marathon'),
+    },
+    {
+      href: '/random',
+      icon: Gamepad,
+      label: t('header.nav.random'),
+    },
+  ]
+
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const lang = event.target.value
+    i18n.changeLanguage(lang)
+  }
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -28,7 +38,7 @@ const Header = () => {
     >
       <Link href="/">
         <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-primary hover:text-primary/80 transition-colors duration-300">
-          Savol-bot
+          {t('app.name')}
         </h1>
       </Link>
 
@@ -50,8 +60,11 @@ const Header = () => {
           </motion.div>
         ))}
       </nav>
+      <div className="flex items-center gap-10">
+        <LanguageSwitcher />
 
-      <ModeToggle />
+        <ModeToggle />
+      </div>
     </motion.header>
   )
 }

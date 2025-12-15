@@ -62,8 +62,8 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex items-center gap-2">
-        <h2 className="text-lg md:text-xl font-semibold text-primary flex-1">
+      <div className="flex border-red-800 items-center gap-2">
+        <h2 className="text-lg  border-red-800 md:text-xl font-semibold text-primary flex-1">
           {index + 1}. {question.question}
         </h2>
         {question.code && <Code className="w-5 h-5 text-muted-foreground" />}
