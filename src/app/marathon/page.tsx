@@ -13,17 +13,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
 const MarathonPage = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
 
-  const [lang, setLang] = useState('en')
-  const [record, setRecord] = useState<number | null>(null)
-  
-  useEffect(() => {
-    const storedLang = localStorage.getItem('lang')
-    if (storedLang) setLang(storedLang)
-  }, [])
+  // Текущий язык приложения (реальный активный язык)
+  const lang = i18n.language
 
+  const [record, setRecord] = useState<number | null>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentScore, setCurrentScore] = useState(0)
+  const [isGameOver, setIsGameOver] = useState(false)
+
+  // Рекорд можно оставить в localStorage (не относится к языку)
   useEffect(() => {
     const saved = Number(localStorage.getItem('marathonRecord') || 0)
     setRecord(saved)
@@ -42,35 +43,41 @@ const MarathonPage = () => {
     refetchOnMount: 'always',
   })
 
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isGameOver, setIsGameOver] = useState(false)
-  const [currentScore, setCurrentScore] = useState(0)
-
+  // Обновление рекорда
   useEffect(() => {
     if (isGameOver && record !== null) {
-      setRecord((prevRecord) => {
-        if (currentScore > (prevRecord || 0)) {
+      setRecord((prev) => {
+        if (currentScore > (prev || 0)) {
           localStorage.setItem('marathonRecord', currentScore.toString())
           return currentScore
         }
-        return prevRecord
+        return prev
       })
     }
   }, [isGameOver, currentScore, record])
+
+  // При смене языка начинаем игру заново
+  useEffect(() => {
+    setCurrentIndex(0)
+    setCurrentScore(0)
+    setIsGameOver(false)
+  }, [lang])
 
   const currentQuestion = questions[currentIndex]
 
   const handleAnswer = (isCorrect: boolean) => {
     if (!isCorrect) {
       setIsGameOver(true)
+      return
+    }
+
+    setCurrentScore((prev) => prev + 1)
+
+    const nextIndex = currentIndex + 1
+    if (nextIndex < questions.length) {
+      setCurrentIndex(nextIndex)
     } else {
-      setCurrentScore((prev) => prev + 1)
-      const nextIndex = currentIndex + 1
-      if (nextIndex < questions.length) {
-        setCurrentIndex(nextIndex)
-      } else {
-        refetch().then(() => setCurrentIndex(0))
-      }
+      refetch().then(() => setCurrentIndex(0))
     }
   }
 
@@ -78,10 +85,8 @@ const MarathonPage = () => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
-    queryClient.setQueryData(['marathon'], [])
-    refetch()
+    queryClient.invalidateQueries({ queryKey: ['marathon', lang] })
   }
-
 
   return (
     <div className="p-6 space-y-8 max-w-3xl mx-auto">
@@ -98,10 +103,13 @@ const MarathonPage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.4 }}
         >
-          <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
+          <GameOver
+            currentScore={currentScore}
+            record={record}
+            onRestart={handleRestart}
+          />
         </motion.div>
       )}
 
@@ -113,13 +121,16 @@ const MarathonPage = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
           suppressHydrationWarning
         >
-          {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
-          {t('marathon.score.record')}: <span className="font-bold">{record}</span>
+          {t('marathon.score.current')}:{' '}
+          <span className="font-bold">{currentScore}</span> |{' '}
+          {t('marathon.score.record')}:{' '}
+          <span className="font-bold">{record}</span>
         </motion.p>
       )}
 
       {(isLoading || isFetching) && <Loading />}
       {isError && <Error message={t('marathon.errorLoading')} />}
+
       {!questions.length && !isLoading && !isFetching && (
         <Error message={t('marathon.noQuestions')} />
       )}
@@ -127,7 +138,7 @@ const MarathonPage = () => {
       {currentQuestion && !isLoading && !isFetching && !isError && (
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentIndex}
+            key={`${lang}-${currentIndex}`}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
