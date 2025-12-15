@@ -82,7 +82,7 @@ export default function Home() {
               delay: 0.4,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="flex items-center gap-4 flex-wrap"
+            className="flex items-center gap-4"
           >
             <Link href="/marathon">
               <Button className="px-8 py-6 text-base font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-xl">
