@@ -3,13 +3,26 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/ui/button/button'
 import { FocusRow } from '@/ui/home/focusRow'
 import { ModeCards } from '@/ui/home/modeCards'
 import { Typewriter } from '@/ui/home/typewriterText'
+import { Gamepad, PlayCircle } from 'lucide-react'
 
 export default function Home() {
   const { t } = useTranslation()
+
+  const navLinks = [
+    {
+      href: '/marathon',
+      icon: PlayCircle,
+      label: t('header.nav.marathon'),
+    },
+    {
+      href: '/random',
+      icon: Gamepad,
+      label: t('header.nav.random'),
+    },
+  ]
 
   const modes = [
     {
@@ -34,89 +47,129 @@ export default function Home() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/10" />
-      <div className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-secondary/15 blur-[120px] animate-pulse-slow" />
+      <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
+      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
+      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-secondary/15 blur-[120px] animate-pulse-slow" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-32 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div
+        className="
+          relative mx-auto max-w-7xl
+          px-4 sm:px-6
+          py-14 sm:py-20 md:py-28
+          grid grid-cols-1 lg:grid-cols-2
+          gap-10 sm:gap-12 lg:gap-20
+          items-center
+        "
+      >
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-8"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-7 sm:space-y-8 text-center lg:text-left"
         >
-          <div className="space-y-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: 0.6,
-                delay: 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="inline-block"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1
+              className="
+                text-4xl
+                sm:text-5xl
+                md:text-6xl
+                lg:text-7xl
+                font-bold tracking-tight
+                bg-linear-to-br from-foreground via-foreground to-foreground/60
+                bg-clip-text text-transparent
+                leading-tight
+              "
             >
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-linear-to-br from-foreground via-foreground to-foreground/60 bg-clip-text text-transparent leading-[1.1]">
-                <Typewriter text={t('app.name')} />
-              </h1>
-            </motion.div>
+              <Typewriter text={t('app.name')} />
+            </h1>
+          </motion.div>
 
-            <motion.p className="text-xl md:text-2xl font-medium text-foreground/80">
-              <Typewriter text={t('app.subtitle')} delay={0.6} />
-            </motion.p>
-          </div>
-
-          <motion.p className="max-w-xl text-muted-foreground text-lg leading-relaxed">
-            <Typewriter
-              text={t('app.description')}
-              delay={1.4}
-              speed={0.02}
-            />
+          <motion.p
+            className="
+              text-base
+              sm:text-lg
+              md:text-2xl
+              font-medium
+              text-foreground/80
+            "
+          >
+            <Typewriter text={t('app.subtitle')} delay={0.5} />
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.4,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="flex items-center gap-4"
+          <motion.p
+            className="
+              max-w-xl mx-auto lg:mx-0
+              text-sm
+              sm:text-base
+              md:text-lg
+              leading-relaxed
+              text-muted-foreground
+            "
           >
-            <Link href="/marathon">
-              <Button className="px-8 py-6 text-base font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-xl">
-                {t('home.cta.startMarathon')}
-              </Button>
-            </Link>
+            <Typewriter text={t('app.description')} delay={1.1} speed={0.02} />
+          </motion.p>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-              className="group flex items-center gap-2.5 rounded-full border border-border/50 bg-card/40 backdrop-blur-sm px-5 py-3 text-sm text-muted-foreground hover:bg-card/60 hover:border-border transition-all duration-300 shadow-sm"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-              </span>
-              {t('home.cta.features')}
-            </motion.div>
-          </motion.div>
+          <nav
+            className="
+              flex flex-col
+              sm:flex-row
+              gap-3 sm:gap-4
+              items-stretch sm:items-center
+              justify-center lg:justify-start
+            "
+          >
+            {navLinks.map(({ href, icon: Icon, label }) => (
+              <motion.div
+                key={href}
+                whileHover={{ scale: 1.05, y: -1 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <Link
+                  href={href}
+                  className="
+                    flex items-center justify-center
+                    gap-2
+                    px-4 py-3
+                    rounded-xl
+                    text-sm sm:text-base
+                    font-medium
+                    bg-primary/5 hover:bg-primary/20
+                    text-primary
+                    transition-all duration-300
+                  "
+                >
+                  <Icon size={20} />
+                  <span>{label}</span>
+                </Link>
+              </motion.div>
+            ))}
+          </nav>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 20 }}
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="relative"
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="relative mt-8 lg:mt-0"
         >
           <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-secondary/10 rounded-3xl blur-xl" />
-          <div className="relative rounded-3xl border border-border/50 bg-card/50 backdrop-blur-xl p-8 shadow-2xl hover:shadow-3xl transition-shadow duration-500">
-            <div className="flex items-center justify-between mb-8">
+
+          <div
+            className="
+              relative
+              rounded-2xl sm:rounded-3xl
+              border border-border/50
+              bg-card/60
+              backdrop-blur-xl
+              p-5 sm:p-6 md:p-8
+              shadow-xl
+            "
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
               <span className="text-sm font-semibold text-primary tracking-wide">
                 {t('home.ui.pulse')}
               </span>
@@ -125,15 +178,15 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {[t('home.rows.row1'), t('home.rows.row2'), t('home.rows.row3')].map(
                 (row, i) => (
-                  <FocusRow key={row} label={row} delay={0.3 + i * 0.12} />
+                  <FocusRow key={i} label={row} delay={0.3 + i * 0.12} />
                 )
               )}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-border/30 flex justify-between text-xs text-muted-foreground/70 font-medium">
+            <div className="mt-6 pt-4 border-t border-border/30 flex justify-between text-xs text-muted-foreground/70 font-medium">
               <span>{t('home.ui.focusMode')}</span>
               <span>{t('home.ui.noNoise')}</span>
             </div>
@@ -141,6 +194,7 @@ export default function Home() {
         </motion.div>
       </div>
 
+      {/* Modes */}
       <ModeCards modes={modes} />
     </section>
   )
