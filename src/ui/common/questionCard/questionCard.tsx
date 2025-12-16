@@ -44,26 +44,26 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
         cursor-pointer
       `
     }
+
     if (i === question.correctIndex) {
       return `
         bg-green-100 dark:bg-green-800
         ring-2 ring-green-400
-        text-foreground
         transition-colors duration-500
       `
     }
-    if (i === selected && i !== question.correctIndex) {
+
+    if (i === selected) {
       return `
         bg-red-100 dark:bg-red-800
         ring-2 ring-red-400
-        text-foreground
         transition-colors duration-500
       `
     }
+
     return `
-      opacity-50 bg-muted/30 dark:bg-muted/50
+      opacity-50
       cursor-not-allowed
-      transition-colors duration-500
     `
   }
 
@@ -71,52 +71,56 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
     <motion.article
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg backdrop-blur-xl space-y-6"
+      transition={{ duration: 0.5 }}
+      className="w-full rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg space-y-6"
     >
-      {/* Header */}
       <header className="flex items-start gap-3 pb-4 border-b border-border">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 ring-1 ring-primary/20">
-          <span className="text-sm font-bold text-primary">{index + 1}</span>
+          <span className="text-sm font-bold text-primary">
+            {index + 1}
+          </span>
         </div>
-        <h2 className="text-lg sm:text-xl font-semibold leading-relaxed text-foreground flex-1">
+
+        <h2 className="text-lg sm:text-xl font-semibold leading-relaxed flex-1">
           {question.question}
         </h2>
-        {question.code && <Code2 className="w-5 h-5 text-primary/60 mt-1" />}
+
+        {question.code && (
+          <Code2 className="w-5 h-5 text-primary/60 mt-1" />
+        )}
       </header>
 
-      {/* Code block */}
       {question.code && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.4 }}
-          className="relative rounded-xl overflow-hidden border border-border bg-muted/30 dark:bg-muted/50 shadow-inner"
-        >
+        <div className="relative rounded-xl overflow-hidden border border-border bg-muted/30 shadow-inner">
           <SyntaxHighlighter
             language="javascript"
             style={oneDark}
+            wrapLongLines
             customStyle={{
               margin: 0,
-              padding: "1.25rem",
+              padding: "1rem",
               fontSize: "0.875rem",
-              lineHeight: "1.6",
+              lineHeight: "1.45",
               background: "transparent",
+              overflowX: "auto",
+              fontFamily:
+                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+              borderRadius: "0.75rem",
             }}
           >
-            {question.code}
+            {question.code.trim()}
           </SyntaxHighlighter>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleCopy}
-            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-card/90 dark:bg-card/70 backdrop-blur-md border border-border shadow-lg hover:ring-2 hover:ring-primary/30 transition-all duration-200"
+            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-card/90 border border-border shadow hover:ring-2 hover:ring-primary/30 transition"
           >
             {copied ? (
               <>
                 <Check className="w-3.5 h-3.5 text-primary" />
-                <span className="text-primary">Copied!</span>
+                <span className="text-primary">Copied</span>
               </>
             ) : (
               <>
@@ -125,7 +129,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
               </>
             )}
           </motion.button>
-        </motion.div>
+        </div>
       )}
 
       <ul className="space-y-3">
@@ -134,58 +138,42 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             key={i}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.15 + i * 0.05, duration: 0.4 }}
-            whileHover={!answered ? { x: 4 } : undefined}
-            whileTap={!answered ? { scale: 0.98 } : undefined}
+            transition={{ delay: i * 0.05 }}
             onClick={() => handleAnswer(i)}
-            className={`flex items-center gap-4 px-4 py-4 rounded-xl border text-sm sm:text-base font-medium ${getAnswerClasses(i)}`}
+            className={`flex items-center gap-4 px-4 py-4 rounded-xl border text-sm sm:text-base font-medium ${getAnswerClasses(
+              i
+            )}`}
           >
-            <span
-              className={`flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold shrink-0 transition-all duration-200 ${
-                answered && i === question.correctIndex
-                  ? "border-green-400 bg-green-100 text-green-800"
-                  : answered && i === selected
-                  ? "border-red-400 bg-red-100 text-red-800"
-                  : "border-border bg-background text-foreground"
-              }`}
-            >
+            <span className="flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold">
               {letters[i]}
             </span>
-            <span className="flex-1 leading-relaxed text-foreground">{ans}</span>
+
+            <span className="flex-1 leading-relaxed">{ans}</span>
+
             {answered && i === question.correctIndex && (
-              <motion.div
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              >
-                <Check className="w-5 h-5 text-green-500" />
-              </motion.div>
+              <Check className="w-5 h-5 text-green-500" />
             )}
           </motion.li>
         ))}
       </ul>
 
-      <footer className="flex items-center justify-between pt-4 border-t border-border text-xs sm:text-sm">
-        <div className="flex items-center gap-2">
-          <div className="px-2.5 py-1 rounded-md bg-muted/50 border border-border/30 text-muted-foreground font-medium">
-            {question.difficulty}
-          </div>
-        </div>
+      <footer className="flex items-center justify-between pt-4 border-t border-border text-sm">
+        <span className="px-2.5 py-1 rounded-md bg-muted/50 border text-muted-foreground">
+          {question.difficulty}
+        </span>
+
         {answered && (
-          <motion.div
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3 }}
+          <span
             className={`px-3 py-1 rounded-md font-semibold ${
               selected === question.correctIndex
-                ? "bg-green-900 text-green-100 ring-1 ring-green-400"
-                : "bg-red-100 dark:bg-red-800 text-red-800 ring-1 ring-red-400"
+                ? "bg-green-900 text-green-100"
+                : "bg-red-800 text-red-100"
             }`}
           >
-            <span className='text-foreground'>
-              {selected === question.correctIndex ? "✓ Correct" : "✗ Incorrect"}
-            </span>
-          </motion.div>
+            {selected === question.correctIndex
+              ? "✓ Correct"
+              : "✗ Incorrect"}
+          </span>
         )}
       </footer>
     </motion.article>
