@@ -32,7 +32,7 @@ export default function Home() {
       desc: t('modes.marathon.description'),
     },
     {
-      id: 'classic',
+      id: 'random',
       title: t('modes.classic.title'),
       badge: t('modes.classic.badge'),
       desc: t('modes.classic.description'),
