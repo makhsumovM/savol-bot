@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Gamepad, PlayCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import i18n from '@/i18n'
 import LanguageSwitcher from '@/ui/common/languageSwitcher/languageSwitcher'
 
 const Header = () => {
@@ -24,11 +23,6 @@ const Header = () => {
     },
   ]
 
-  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const lang = event.target.value
-    i18n.changeLanguage(lang)
-  }
-
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -37,7 +31,7 @@ const Header = () => {
       className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-xl bg-background/80 border-b border-border shadow-md"
     >
       <Link href="/">
-        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-primary hover:text-primary/80 transition-colors duration-300">
+        <h1 className=" md:text-3xl text-2xl  font-extrabold tracking-tight text-primary hover:text-primary/80 transition-colors duration-300">
           {t('app.name')}
         </h1>
       </Link>
@@ -46,6 +40,7 @@ const Header = () => {
         {navLinks.map(({ href, icon: Icon, label }) => (
           <motion.div
             key={href}
+            className="hidden md:block"
             whileHover={{ scale: 1.05, y: -1 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
@@ -55,12 +50,12 @@ const Header = () => {
                          bg-primary/5 hover:bg-primary/20 text-primary transition-all duration-300"
             >
               <Icon size={20} />
-              {label}
+              <span className="hidden md:block">{label}</span>
             </Link>
           </motion.div>
         ))}
       </nav>
-      <div className="flex items-center gap-10">
+      <div className="flex items-center md:gap-10 gap-2">
         <LanguageSwitcher />
 
         <ModeToggle />
