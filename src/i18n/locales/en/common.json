@@ -2,7 +2,7 @@
   "app": {
     "name": "Savol-bot",
     "subtitle": "AI Tester",
-    "description": "Choose a mode on the first screen, dive into questions without unnecessary clicks, and stay focused with minimal animations."
+    "description": "Pick a mode on the first screen, dive into questions without extra clicks, and stay focused with minimal animations."
   },
 
   "home": {
@@ -28,17 +28,17 @@
     "marathon": {
       "title": "Marathon",
       "badge": "LIVE",
-      "description": "An endless stream of questions to train concentration."
+      "description": "An endless stream of questions to train your focus."
     },
     "classic": {
       "title": "Classic",
-      "badge": "SOON",
-      "description": "A sprint of 10–15 questions to quickly test yourself."
+      "badge": "COMING SOON",
+      "description": "A sprint of 10–15 questions for a quick self-test."
     },
     "coding": {
       "title": "Coding",
-      "badge": "SOON",
-      "description": "Code-based challenges with hints, inspired by IDEs."
+      "badge": "COMING SOON",
+      "description": "Coding challenges with hints, inspired by IDEs."
     }
   },
 
@@ -55,7 +55,7 @@
       "current": "Current score",
       "record": "Record"
     },
-    "noQuestions": "Error in marathon "
+    "noQuestions": "Error loading marathon"
   },
 
   "question": {
