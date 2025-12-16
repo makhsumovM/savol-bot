@@ -28,7 +28,7 @@ const Header = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-xl bg-background/80 border-b border-border shadow-md"
+      className="sticky top-0 z-50 flex items-center justify-between px-2 md:px-6 py-4 backdrop-blur-xl  bg-background/80 border-b border-border shadow-md"
     >
       <Link href="/">
         <h1 className=" md:text-3xl text-2xl  font-extrabold tracking-tight text-primary hover:text-primary/80 transition-colors duration-300">
@@ -55,7 +55,7 @@ const Header = () => {
           </motion.div>
         ))}
       </nav>
-      <div className="flex items-center md:gap-10 gap-2">
+      <div className="flex items-center md:gap-7 gap-2">
         <LanguageSwitcher />
 
         <ModeToggle />
