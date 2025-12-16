@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Code2, Copy, Check } from "lucide-react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
-import type { MarathonQuestion } from "@/types/marathon"
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import {Copy, Check } from 'lucide-react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import type { MarathonQuestion } from '@/types/marathon'
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -13,7 +13,7 @@ interface QuestionCardProps {
   onAnswered?: (isCorrect: boolean) => void
 }
 
-const letters = ["A", "B", "C", "D"]
+const letters = ['A', 'B', 'C', 'D']
 
 const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
   const [selected, setSelected] = useState<number | null>(null)
@@ -74,20 +74,35 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       transition={{ duration: 0.5 }}
       className="w-full rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg space-y-6"
     >
-      <header className="flex items-start gap-3 pb-4 border-b border-border">
-        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 ring-1 ring-primary/20">
-          <span className="text-sm font-bold text-primary">
-            {index + 1}
-          </span>
+      <header className="flex items-start justify-between gap-3 pb-4 border-b border-border">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 ring-1 ring-primary/20">
+            <span className="text-sm font-bold text-primary">{index + 1}</span>
+          </div>
+
+          <h2 className="text-lg sm:text-xl font-semibold leading-relaxed flex-1">
+            {question.question}
+          </h2>
+
         </div>
 
-        <h2 className="text-lg sm:text-xl font-semibold leading-relaxed flex-1">
-          {question.question}
-        </h2>
-
-        {question.code && (
-          <Code2 className="w-5 h-5 text-primary/60 mt-1" />
-        )}
+        <span
+          className={`px-2.5 py-1 rounded-md text-lg self-start border ${
+            question.difficulty === 'easy'
+              ? 'bg-green-100 text-green-800 border-green-200'
+              : question.difficulty === 'medium'
+              ? 'bg-yellow-100 text-yellow-800 border-yellow-200'
+              : question.difficulty === 'hard'
+              ? 'bg-orange-100 text-orange-800 border-orange-200'
+              : question.difficulty === 'very-hard'
+              ? 'bg-red-100 text-red-800 border-red-200'
+              : question.difficulty === 'expert'
+              ? 'bg-purple-100 text-purple-800 border-purple-200'
+              : 'bg-muted/50 text-muted-foreground border'
+          }`}
+        >
+          {question.difficulty}
+        </span>
       </header>
 
       {question.code && (
@@ -96,16 +111,16 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             language="javascript"
             style={oneDark}
             wrapLongLines
+            wrapLines
             customStyle={{
               margin: 0,
-              padding: "1rem",
-              fontSize: "0.875rem",
-              lineHeight: "1.45",
-              background: "transparent",
-              overflowX: "auto",
-              fontFamily:
-                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-              borderRadius: "0.75rem",
+              padding: '1rem',
+              fontSize: '0.875rem',
+              lineHeight: '1.45',
+              background: 'transparent',
+              overflowX: 'auto',
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+              borderRadius: '0.75rem',
             }}
           >
             {question.code.trim()}
@@ -141,7 +156,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             transition={{ delay: i * 0.05 }}
             onClick={() => handleAnswer(i)}
             className={`flex items-center gap-4 px-4 py-4 rounded-xl border text-sm sm:text-base font-medium ${getAnswerClasses(
-              i
+              i,
             )}`}
           >
             <span className="flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold">
@@ -157,22 +172,16 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
         ))}
       </ul>
 
-      <footer className="flex items-center justify-between pt-4 border-t border-border text-sm">
-        <span className="px-2.5 py-1 rounded-md bg-muted/50 border text-muted-foreground">
-          {question.difficulty}
-        </span>
-
+      <footer className="flex justify-end pt-4 border-t border-border text-sm">
         {answered && (
           <span
             className={`px-3 py-1 rounded-md font-semibold ${
               selected === question.correctIndex
-                ? "bg-green-900 text-green-100"
-                : "bg-red-800 text-red-100"
+                ? 'bg-green-900 text-green-100'
+                : 'bg-red-800 text-red-100'
             }`}
           >
-            {selected === question.correctIndex
-              ? "✓ Correct"
-              : "✗ Incorrect"}
+            {selected === question.correctIndex ? '✓ Correct' : '✗ Incorrect'}
           </span>
         )}
       </footer>

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { marathonApi } from '@/api/marathonApi'
 import { MarathonQuestion } from '@/types/marathon'
@@ -16,6 +16,8 @@ const MarathonPage = () => {
   const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
   const lang = i18n.language
+
+  const gameOverRef = useRef<HTMLDivElement | null>(null)
 
   const [record, setRecord] = useState<number | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -58,6 +60,15 @@ const MarathonPage = () => {
     setIsGameOver(false)
   }, [lang])
 
+  useEffect(() => {
+    if (isGameOver && gameOverRef.current) {
+      gameOverRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
+  }, [isGameOver])
+
   const currentQuestion = questions[currentIndex]
 
   const handleAnswer = (isCorrect: boolean) => {
@@ -81,6 +92,11 @@ const MarathonPage = () => {
     setCurrentScore(0)
     setIsGameOver(false)
     queryClient.invalidateQueries({ queryKey: ['marathon', lang] })
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
@@ -101,11 +117,16 @@ const MarathonPage = () => {
 
         {isGameOver && record !== null && (
           <motion.div
+            ref={gameOverRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
+            <GameOver
+              currentScore={currentScore}
+              record={record}
+              onRestart={handleRestart}
+            />
           </motion.div>
         )}
 
@@ -117,8 +138,10 @@ const MarathonPage = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             suppressHydrationWarning
           >
-            {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
-            {t('marathon.score.record')}: <span className="font-bold">{record}</span>
+            {t('marathon.score.current')}:{' '}
+            <span className="font-bold">{currentScore}</span> |{' '}
+            {t('marathon.score.record')}:{' '}
+            <span className="font-bold">{record}</span>
           </motion.p>
         )}
 
