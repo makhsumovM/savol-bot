@@ -147,12 +147,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             <span className="flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold">
               {letters[i]}
             </span>
-            <span>
-              {i === question.correctIndex && (
-                <span className="text-primary">{question.answers[i]}</span>
-              )}
-
-            </span>
+           
 
             <span className="flex-1 leading-relaxed">{ans}</span>
 
