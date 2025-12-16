@@ -48,8 +48,8 @@ export default function Home() {
   return (
     <section className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
-      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-secondary/15 blur-[120px] animate-pulse-slow" />
+      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] " />
+      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-secondary/15 blur-[120px] " />
 
       <div
         className="
@@ -163,10 +163,8 @@ export default function Home() {
               relative
               rounded-2xl sm:rounded-3xl
               border border-border/50
-              bg-card/60
-              backdrop-blur-xl
+              bg-card
               p-5 sm:p-6 md:p-8
-              shadow-xl
             "
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
@@ -179,11 +177,9 @@ export default function Home() {
             </div>
 
             <div className="space-y-4 sm:space-y-6">
-              {[t('home.rows.row1'), t('home.rows.row2'), t('home.rows.row3')].map(
-                (row, i) => (
-                  <FocusRow key={i} label={row} delay={0.3 + i * 0.12} />
-                )
-              )}
+              {[t('home.rows.row1'), t('home.rows.row2'), t('home.rows.row3')].map((row, i) => (
+                <FocusRow key={i} label={row} delay={0.3 + i * 0.12} />
+              ))}
             </div>
 
             <div className="mt-6 pt-4 border-t border-border/30 flex justify-between text-xs text-muted-foreground/70 font-medium">
@@ -194,7 +190,6 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* Modes */}
       <ModeCards modes={modes} />
     </section>
   )
