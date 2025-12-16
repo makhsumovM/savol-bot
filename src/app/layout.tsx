@@ -6,7 +6,11 @@ import Header from '@/ui/layout/header'
 export const metadata: Metadata = {
   title: 'Savol-bot',
   description: 'AI тестировщик',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
+
 
 export default function RootLayout({
   children,

@@ -1,9 +1,11 @@
-import { MarathonQuestion } from '@/types/marathon'
-import { Code, Star, Copy, Verified } from 'lucide-react'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+"use client"
+
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Code2, Copy, Check } from "lucide-react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import type { MarathonQuestion } from "@/types/marathon"
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -11,103 +13,182 @@ interface QuestionCardProps {
   onAnswered?: (isCorrect: boolean) => void
 }
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const answerVariants = {
-  hidden: { opacity: 0, x: 20 },
-  show: { opacity: 1, x: 0 },
-}
+const letters = ["A", "B", "C", "D"]
 
 const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
-  const [copied, setCopied] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [selected, setSelected] = useState<number | null>(null)
   const [answered, setAnswered] = useState(false)
+  const [copied, setCopied] = useState(false)
 
-  const handleClick = (ansIndex: number) => {
+  const handleAnswer = (i: number) => {
     if (answered) return
-    setSelectedIndex(ansIndex)
+    setSelected(i)
     setAnswered(true)
-    onAnswered?.(ansIndex === question.correctIndex)
+    onAnswered?.(i === question.correctIndex)
   }
 
   const handleCopy = () => {
-    if (question.code) {
-      navigator.clipboard.writeText(question.code)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    }
+    if (!question.code) return
+    navigator.clipboard.writeText(question.code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1200)
   }
 
-  const getAnswerStyle = (i: number) => {
-    if (!answered) return ''
-    if (i === question.correctIndex)
-      return 'bg-green-500/20 text-green-600'
-    if (i === selectedIndex)
-      return 'bg-red-500/20 text-red-600'
-    return 'opacity-60'
+  const getAnswerClasses = (i: number) => {
+    if (!answered) {
+      return `
+        bg-card
+        hover:bg-accent/20
+        hover:ring-2 hover:ring-primary/30
+        transition-all duration-200
+        cursor-pointer
+      `
+    }
+    if (i === question.correctIndex) {
+      return `
+        bg-green-100 dark:bg-green-800
+        ring-2 ring-green-400
+        text-foreground
+        transition-colors duration-500
+      `
+    }
+    if (i === selected && i !== question.correctIndex) {
+      return `
+        bg-red-100 dark:bg-red-800
+        ring-2 ring-red-400
+        text-foreground
+        transition-colors duration-500
+      `
+    }
+    return `
+      opacity-50 bg-muted/30 dark:bg-muted/50
+      cursor-not-allowed
+      transition-colors duration-500
+    `
   }
 
   return (
-    <motion.div
-      className="border rounded-lg p-6 bg-card text-primary shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col gap-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
+    <motion.article
+      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="w-full rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg backdrop-blur-xl space-y-6"
     >
-      <div className="flex border-red-800 items-center gap-2">
-        <h2 className="text-lg  border-red-800 md:text-xl font-semibold text-primary flex-1">
-          {index + 1}. {question.question}
+      {/* Header */}
+      <header className="flex items-start gap-3 pb-4 border-b border-border">
+        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 ring-1 ring-primary/20">
+          <span className="text-sm font-bold text-primary">{index + 1}</span>
+        </div>
+        <h2 className="text-lg sm:text-xl font-semibold leading-relaxed text-foreground flex-1">
+          {question.question}
         </h2>
-        {question.code && <Code className="w-5 h-5 text-muted-foreground" />}
-      </div>
+        {question.code && <Code2 className="w-5 h-5 text-primary/60 mt-1" />}
+      </header>
 
+      {/* Code block */}
       {question.code && (
-        <div className="relative">
-          <SyntaxHighlighter language="javascript" style={oneDark} className="rounded-md">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+          className="relative rounded-xl overflow-hidden border border-border bg-muted/30 dark:bg-muted/50 shadow-inner"
+        >
+          <SyntaxHighlighter
+            language="javascript"
+            style={oneDark}
+            customStyle={{
+              margin: 0,
+              padding: "1.25rem",
+              fontSize: "0.875rem",
+              lineHeight: "1.6",
+              background: "transparent",
+            }}
+          >
             {question.code}
           </SyntaxHighlighter>
-          <button
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleCopy}
-            className="absolute top-2 right-2 flex items-center gap-1 text-sm text-white bg-gray-700 bg-opacity-50 hover:bg-opacity-80 px-2 py-1 rounded"
+            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-card/90 dark:bg-card/70 backdrop-blur-md border border-border shadow-lg hover:ring-2 hover:ring-primary/30 transition-all duration-200"
           >
-            {copied ? <Verified className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-          </button>
-        </div>
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                <span className="text-muted-foreground">Copy</span>
+              </>
+            )}
+          </motion.button>
+        </motion.div>
       )}
 
-      <motion.ul
-        className="flex flex-col gap-2"
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-      >
+      <ul className="space-y-3">
         {question.answers.map((ans, i) => (
           <motion.li
             key={i}
-            onClick={() => handleClick(i)}
-            className={`cursor-pointer font-medium rounded-md transition-colors duration-200 px-3 py-2 select-none flex items-center gap-2 ${getAnswerStyle(i)}`}
-            variants={answerVariants}
-            whileHover={!answered ? { scale: 1.03 } : undefined}
-            whileTap={!answered ? { scale: 0.97 } : undefined}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15 + i * 0.05, duration: 0.4 }}
+            whileHover={!answered ? { x: 4 } : undefined}
+            whileTap={!answered ? { scale: 0.98 } : undefined}
+            onClick={() => handleAnswer(i)}
+            className={`flex items-center gap-4 px-4 py-4 rounded-xl border text-sm sm:text-base font-medium ${getAnswerClasses(i)}`}
           >
-            {ans}
+            <span
+              className={`flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold shrink-0 transition-all duration-200 ${
+                answered && i === question.correctIndex
+                  ? "border-green-400 bg-green-100 text-green-800"
+                  : answered && i === selected
+                  ? "border-red-400 bg-red-100 text-red-800"
+                  : "border-border bg-background text-foreground"
+              }`}
+            >
+              {letters[i]}
+            </span>
+            <span className="flex-1 leading-relaxed text-foreground">{ans}</span>
+            {answered && i === question.correctIndex && (
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              >
+                <Check className="w-5 h-5 text-green-500" />
+              </motion.div>
+            )}
           </motion.li>
         ))}
-      </motion.ul>
+      </ul>
 
-      <div className="flex items-center gap-1 mt-2 text-sm text-muted-foreground">
-        <Star className="w-4 h-4 text-yellow-400" />
-        {question.difficulty}
-      </div>
-    </motion.div>
+      <footer className="flex items-center justify-between pt-4 border-t border-border text-xs sm:text-sm">
+        <div className="flex items-center gap-2">
+          <div className="px-2.5 py-1 rounded-md bg-muted/50 border border-border/30 text-muted-foreground font-medium">
+            {question.difficulty}
+          </div>
+        </div>
+        {answered && (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`px-3 py-1 rounded-md font-semibold ${
+              selected === question.correctIndex
+                ? "bg-green-900 text-green-100 ring-1 ring-green-400"
+                : "bg-red-100 dark:bg-red-800 text-red-800 ring-1 ring-red-400"
+            }`}
+          >
+            <span className='text-foreground'>
+              {selected === question.correctIndex ? "✓ Correct" : "✗ Incorrect"}
+            </span>
+          </motion.div>
+        )}
+      </footer>
+    </motion.article>
   )
 }
 
