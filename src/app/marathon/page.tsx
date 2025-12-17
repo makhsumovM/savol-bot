@@ -173,5 +173,4 @@ const MarathonPage = () => {
     </section>
   )
 }
-
 export default MarathonPage
