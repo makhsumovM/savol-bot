@@ -3,10 +3,19 @@ import {NextResponse} from 'next/server'
 import {z} from 'zod'
 import {zodToJsonSchema} from 'zod-to-json-schema'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+     const url = new URL(request.url)
+    const lang = url.searchParams.get('lang')
+
+    if (!lang) {
+      return NextResponse.json({ error: 'Missing required query parameter: lang' }, { status: 400 })
+    }
+
     const prompt = `
-Сгенерируй строго массив объектов вопросов по JavaScript и TypeScript, HTML, CSS, Next.js в формате JSON.
+Сгенерируй строго массив объектов вопросов по JavaScript и TypeScript, HTML, CSS, Next.js в формате JSON.${
+      lang == 'tj' ? 'Tajikistan' : lang
+    }.
 Количество вопросов может быть неограниченным.
 Никакого текста, объяснений, комментариев или Markdown вне JSON.
 
@@ -19,7 +28,7 @@ export async function GET() {
   "code": "string|null",
   "answers": ["string", "string", "string", "string"],
   "correctIndex": number,
-  "difficulty": "easy" | "medium" | "hard" | "very-hard" | "expert"
+  "difficulty": "Easy" | "Medium" | "Hard" | "Very-Hard" | "Expert"
 }
 
 Дополнительные правила:

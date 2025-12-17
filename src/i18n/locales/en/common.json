@@ -31,8 +31,8 @@
       "description": "An endless stream of questions to train your focus."
     },
     "classic": {
-      "title": "Classic",
-      "badge": "COMING SOON",
+      "title": "Random",
+      "badge": "LIVE",
       "description": "A sprint of 10–15 questions for a quick self-test."
     },
     "coding": {
@@ -48,6 +48,9 @@
       "random": "Random game"
     }
   },
+   "random": {
+    "title": "Random Questions"
+   },
 
   "marathon": {
     "title": "Marathon Questions",
