@@ -107,6 +107,7 @@ const MarathonPage = () => {
 
       <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-14 md:py-20 space-y-8">
         <motion.h1
+          suppressHydrationWarning
           className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,11 +123,7 @@ const MarathonPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <GameOver
-              currentScore={currentScore}
-              record={record}
-              onRestart={handleRestart}
-            />
+            <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
           </motion.div>
         )}
 
@@ -138,10 +135,8 @@ const MarathonPage = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             suppressHydrationWarning
           >
-            {t('marathon.score.current')}:{' '}
-            <span className="font-bold">{currentScore}</span> |{' '}
-            {t('marathon.score.record')}:{' '}
-            <span className="font-bold">{record}</span>
+            {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
+            {t('marathon.score.record')}: <span className="font-bold">{record}</span>
           </motion.p>
         )}
 
