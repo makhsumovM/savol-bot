@@ -1,23 +1,23 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
-import { type VariantProps } from "class-variance-authority"
 import { cn } from '@/lib/utils/shadUtils'
 import { toggleVariants } from '@/ui/toggle-group/toggle'
+import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
+import { type VariantProps } from 'class-variance-authority'
+import * as React from 'react'
 
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants> & { spacing?: number }
 >({
-  size: "default",
-  variant: "default",
+  size: 'default',
+  variant: 'default',
   spacing: 0,
 })
 
 function ToggleGroup({
   className,
-  variant = "default",
-  size = "default",
+  variant = 'default',
+  size = 'default',
   spacing = 0,
   children,
   ...props
@@ -29,11 +29,11 @@ function ToggleGroup({
       data-variant={variant}
       data-size={size}
       data-spacing={spacing}
-      style={{ "--gap": `${spacing}px` } as React.CSSProperties}
+      style={{ '--gap': `${spacing}px` } as React.CSSProperties}
       className={cn(
-        "group/toggle-group flex w-fit items-center gap-[--gap] rounded-md shadow-sm",
-        "transition-all duration-200",
-        className
+        'group/toggle-group flex w-fit items-center gap-[--gap] rounded-md shadow-sm',
+        'transition-all duration-200',
+        className,
       )}
       {...props}
     >
@@ -50,8 +50,7 @@ function ToggleGroupItem({
   variant,
   size,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
-  VariantProps<typeof toggleVariants>) {
+}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) {
   const context = React.useContext(ToggleGroupContext)
 
   return (
@@ -65,9 +64,9 @@ function ToggleGroupItem({
           variant: context.variant || variant,
           size: context.size || size,
         }),
-        "w-auto min-w-0 shrink-0 px-3 py-2 rounded-md focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-        "transition-all duration-200 hover:scale-105",
-        className
+        'w-auto min-w-0 shrink-0 px-3 py-2 rounded-md focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
+        'transition-all duration-200 hover:scale-105',
+        className,
       )}
       {...props}
     >
