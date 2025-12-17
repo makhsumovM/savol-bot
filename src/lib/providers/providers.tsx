@@ -13,7 +13,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+        <ThemeProvider enableSystem attribute="class" defaultTheme="dark"   disableTransitionOnChange>
           {children}
         </ThemeProvider>
       </QueryClientProvider>
