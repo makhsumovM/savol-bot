@@ -1,9 +1,12 @@
-import {RandomQuestion} from '@/types/random'
-import {motion} from 'framer-motion'
-import {Code, Copy, Star, Verified} from 'lucide-react'
-import {useState} from 'react'
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {oneDark} from 'react-syntax-highlighter/dist/cjs/styles/prism'
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Code2, Copy, Check } from 'lucide-react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { useTranslation } from 'react-i18next'
+import { RandomQuestion } from '@/types/random'
 
 interface QuestionCardProps {
   question: RandomQuestion
@@ -11,115 +14,126 @@ interface QuestionCardProps {
   onAnswered?: (isCorrect: boolean) => void
 }
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
+const letters = ["A", "B", "C", "D"]
 
-const answerVariants = {
-  hidden: {opacity: 0, x: 20},
-  show: {opacity: 1, x: 0},
-}
-
-const optionLabels = ['A', 'B', 'C', 'D']
-
-const QuestionCardR = ({question, index, onAnswered}: QuestionCardProps) => {
-  const [copied, setCopied] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
+  const { t } = useTranslation()
+  const [selected, setSelected] = useState<number | null>(null)
   const [answered, setAnswered] = useState(false)
+  const [copied, setCopied] = useState(false)
 
-  const handleClick = (ansIndex: number) => {
+  const handleAnswer = (i: number) => {
     if (answered) return
-    setSelectedIndex(ansIndex)
+    setSelected(i)
     setAnswered(true)
-    onAnswered?.(ansIndex === question.correctIndex)
+    onAnswered?.(i === question.correctIndex)
   }
 
   const handleCopy = () => {
-    if (question.code) {
-      navigator.clipboard.writeText(question.code)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
+    if (!question.code) return
+    navigator.clipboard.writeText(question.code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1200)
+  }
+
+  const getAnswerClasses = (i: number) => {
+    if (!answered) {
+      return `bg-card hover:bg-accent/20 hover:ring-2 hover:ring-primary/30 transition-all duration-200 cursor-pointer`
     }
+    if (i === question.correctIndex) {
+      return `bg-green-100 dark:bg-green-800 ring-2 ring-green-400 transition-colors duration-500`
+    }
+    if (i === selected && i !== question.correctIndex) {
+      return `bg-red-100 dark:bg-red-800 ring-2 ring-red-400 transition-colors duration-500`
+    }
+    return `opacity-50 cursor-not-allowed`
   }
-
-  const getAnswerStyle = (i: number) => {
-    if (!answered) return 'bg-card hover:bg-gray-100'
-    if (i === question.correctIndex)
-      return 'bg-green-500/20 text-green-600'
-    if (i === selectedIndex)
-      return 'bg-red-500/20 text-red-600'
-    return 'opacity-60'
-  }
-
+  
   return (
-    <motion.div
-      className="border rounded-lg p-6 bg-card text-primary shadow-md flex flex-col gap-4"
-      initial={{opacity: 0, y: 20}}
-      animate={{opacity: 1, y: 0}}
-      exit={{opacity: 0, y: -20}}
-      transition={{duration: 0.4}}
+    <motion.article
+      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className={`w-full rounded-2xl border border-border p-6 sm:p-8 shadow-lg space-y-6 transition-colors duration-500
+        ${answered ? (selected === question.correctIndex ? 'bg-green-100 dark:bg-green-900 ring-4 ring-green-400/50' : 'bg-red-100 dark:bg-red-900 ring-4 ring-red-400/50') : 'bg-card'}
+      `}
     >
       <div className="flex items-center gap-2">
-        <h2 className="text-lg md:text-xl font-semibold flex-1">
-          {index + 1}. {question.question}
-        </h2>
-        {question.code && <Code className="w-5 h-5 text-muted-foreground" />}
+        <span className="px-2.5 py-1 rounded-md text-2xl flex items-center justify-center ">{question.difficulty}</span>
       </div>
+      <header className="flex items-start gap-3 pb-4 border-b border-border">
+        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 ring-1 ring-primary/20">
+          <span className="text-sm font-bold text-primary">{index + 1}</span>
+        </div>
+
+        <h2 className="text-lg sm:text-xl font-semibold leading-relaxed flex-1">
+          {question.question}
+        </h2>
+
+        {question.code && <Code2 className="w-5 h-5 text-primary/60 mt-1" />}
+      </header>
 
       {question.code && (
-        <div className="relative">
+        <div className="relative rounded-xl overflow-hidden border border-border bg-muted/30 shadow-inner">
           <SyntaxHighlighter
             language="javascript"
             style={oneDark}
-            className="rounded-md"
+            wrapLongLines
+            customStyle={{
+              margin: 0,
+              padding: "1rem",
+              fontSize: "0.875rem",
+              lineHeight: "1.45",
+              background: "transparent",
+              overflowX: "auto",
+              fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+              borderRadius: "0.75rem",
+            }}
           >
-            {question.code}
+            {question.code?.trim()}
           </SyntaxHighlighter>
-          <button
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleCopy}
-            className={`absolute top-2 right-2 flex items-center gap-1 text-sm px-2 py-1 rounded ${
-              copied
-                ? 'bg-green-600 text-white'
-                : 'bg-gray-700 bg-opacity-50 text-white hover:bg-opacity-80'
-            }`}
+            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-card/90 border border-border shadow hover:ring-2 hover:ring-primary/30 transition"
           >
-            {copied ? <Verified className="w-4 h-4" /> :
-              <Copy className="w-4 h-4" />}
-          </button>
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                <span className="text-muted-foreground">Copy</span>
+              </>
+            )}
+          </motion.button>
         </div>
       )}
 
-      <motion.ul
-        className="flex flex-col gap-2"
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-      >
+      <ul className="space-y-3">
         {question.answers.map((ans, i) => (
           <motion.li
             key={i}
-            onClick={() => handleClick(i)}
-            className={`cursor-pointer rounded-md px-3 py-2 flex items-center gap-3 transition-colors ${getAnswerStyle(i)}`}
-            variants={answerVariants}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.05 }}
+            onClick={() => handleAnswer(i)}
+            className={`flex items-center gap-4 px-4 py-4 rounded-xl border text-sm sm:text-base font-medium 
+              ${getAnswerClasses(i)}`}
           >
-            <span className="font-semibold text-muted-foreground">
-              {optionLabels[i]})
-            </span>
-            <span>{ans}</span>
+            <span className="flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold">{letters[i]}</span>
+            <span className="flex-1 leading-relaxed">{ans}</span>
+            {answered && i === question.correctIndex && <Check className="w-5 h-5 text-green-500" />}
           </motion.li>
         ))}
-      </motion.ul>
+      </ul>
 
-      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-        <Star className="w-4 h-4 text-yellow-400" />
-        {question.difficulty}
-      </div>
-    </motion.div>
+
+    </motion.article>
   )
 }
 
