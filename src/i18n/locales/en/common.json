@@ -56,7 +56,8 @@
     "title": "Marathon Questions",
     "score": {
       "current": "Current score",
-      "record": "Record"
+      "record": "Record",
+      "difficulty" : "Difficulty"
     },
     "noQuestions": "Error loading marathon"
   },
