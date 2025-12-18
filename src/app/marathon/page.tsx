@@ -12,6 +12,8 @@ import GameOver from '@/ui/common/gameOver/gameOver'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
+const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert']
+
 const MarathonPage = () => {
   const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
@@ -23,6 +25,9 @@ const MarathonPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
   const [isGameOver, setIsGameOver] = useState(false)
+  const [difficultyIndex, setDifficultyIndex] = useState(0)
+
+  const currentDifficulty = difficulties[difficultyIndex]
 
   useEffect(() => {
     const saved = Number(localStorage.getItem('marathonRecord') || 0)
@@ -36,8 +41,8 @@ const MarathonPage = () => {
     isError,
     refetch,
   } = useQuery<MarathonQuestion[]>({
-    queryKey: ['marathon', lang],
-    queryFn: () => marathonApi(lang),
+    queryKey: ['marathon', lang, currentDifficulty],
+    queryFn: () => marathonApi(lang, currentDifficulty),
     refetchOnWindowFocus: false,
     refetchOnMount: 'always',
   })
@@ -58,6 +63,7 @@ const MarathonPage = () => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
+    setDifficultyIndex(0)
   }, [lang])
 
   useEffect(() => {
@@ -78,12 +84,19 @@ const MarathonPage = () => {
     }
 
     setCurrentScore((prev) => prev + 1)
-
     const nextIndex = currentIndex + 1
+
     if (nextIndex < questions.length) {
       setCurrentIndex(nextIndex)
     } else {
-      refetch().then(() => setCurrentIndex(0))
+      const nextDifficultyIndex = difficultyIndex + 1
+      if (nextDifficultyIndex < difficulties.length) {
+        setDifficultyIndex(nextDifficultyIndex)
+        setCurrentIndex(0)
+        refetch().then(() => setCurrentIndex(0))
+      } else {
+        setIsGameOver(true)
+      }
     }
   }
 
@@ -91,7 +104,8 @@ const MarathonPage = () => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
-    queryClient.invalidateQueries({ queryKey: ['marathon', lang] })
+    setDifficultyIndex(0)
+    queryClient.invalidateQueries({ queryKey: ['marathon', lang, currentDifficulty] })
 
     window.scrollTo({
       top: 0,
@@ -136,7 +150,8 @@ const MarathonPage = () => {
             suppressHydrationWarning
           >
             {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
-            {t('marathon.score.record')}: <span className="font-bold">{record}</span>
+            {t('marathon.score.record')}: <span className="font-bold">{record}</span> |{' '}
+            {t('marathon.score.difficulty')}: <span className="font-bold">{currentDifficulty}</span>
           </motion.p>
         )}
 
@@ -150,7 +165,7 @@ const MarathonPage = () => {
         {currentQuestion && !isLoading && !isFetching && !isError && (
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${lang}-${currentIndex}`}
+              key={`${lang}-${currentDifficulty}-${currentIndex}`}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
@@ -168,4 +183,5 @@ const MarathonPage = () => {
     </section>
   )
 }
+
 export default MarathonPage
