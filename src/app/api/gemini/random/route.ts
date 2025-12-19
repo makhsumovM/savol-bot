@@ -36,14 +36,13 @@ Frontend:
 - React
 - Next.js
 
-Backend (ТОЛЬКО концептуально):
-- Node.js
-- REST API
-- Authentication
-- Databases
-- Security basics
+Backend (концептуально, для C# / .NET и в целом backend):
+.NET (ASP.NET Core) — платформа и фреймворк для backend-разработки
+Web API / REST API — проектирование и реализация HTTP-сервисов
+Authentication & Authorization — JWT, OAuth2, Identity, роли и политики
+Databases — реляционные (SQL Server, PostgreSQL) и NoSQL, ORM (Entity Framework Core)
+Security basics — хеширование паролей, HTTPS, защита от SQL Injection, XSS, CSRF
 
-DevOps ЗАПРЕЩЕН.
 
 Формат:
 {
