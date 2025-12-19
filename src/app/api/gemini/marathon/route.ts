@@ -1,72 +1,61 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GoogleGenAI } from '@google/genai'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
+const validDifficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
+
+const topics = {
+  easy: 'HTML, CSS, Basic JavaScript',
+  medium: 'JavaScript, Basic TypeScript',
+  hard: 'Advanced JavaScript, TypeScript, React',
+  'very-hard': 'Advanced Frontend Concepts',
+  expert: 'Senior Frontend Architecture',
+}
+
+const QuestionSchema = z.object({
+  question: z.string(),
+  code: z.string().nullable(),
+  codeLanguage: z.enum(['javascript', 'typescript', 'html', 'css', 'tsx']).nullable(),
+  answers: z.array(z.string()).length(4),
+  correctIndex: z.number().int().min(0).max(3),
+  difficulty: z.enum(validDifficulties),
+})
+
+const QuestionsSchema = z.array(QuestionSchema).length(10)
+
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url)
-    const lang = url.searchParams.get('lang')
+    const lang = url.searchParams.get('lang') || 'en'
+    const difficulty = url.searchParams.get('difficulty')
 
-    if (!lang) {
-      return NextResponse.json({ error: 'Missing required query parameter: lang' }, { status: 400 })
+    if (!validDifficulties.includes(difficulty as any)) {
+      return NextResponse.json({ error: 'Invalid difficulty' }, { status: 400 })
     }
 
     const prompt = `
-Сгенерируй вопросы строго массивом из 5 объектов по JavaScript на языке ${
-      lang == 'tj' ? 'Tajikistan' : lang
-    }.
-Никакого текста, объяснений, комментариев или Markdown вне JSON.
+You are an API that generates frontend interview questions.
 
-Требования к сложности:
-1 вопрос — "easy"
-2 вопрос — "medium"
-3 вопрос — "hard"
-4 вопрос — "very-hard"
-5 вопрос — "expert"
-
-Требования к содержанию:
-- Каждый вопрос должен быть про РАЗНЫЕ аспекты JavaScript (например: типы данных, функции, область видимости, this, прототипы, замыкания, промисы, async/await, event loop, коллекции и т.д.).
-- Поле "code" содержит фрагмент кода (до 6 строк) или null.
-- Ровно 2 вопроса должны иметь ненулевой "code".
-- Вопросы с кодом должны иметь разные фрагменты кода.
-- Остальные вопросы должны иметь "code": null.
-- Поле "answers" — массив из 4 вариантов ответа.
-- Только один правильный вариант.
-- "correctIndex" — число от 0 до 3.
-
-Требования к формату:
-JSON-массив из ровно 5 объектов.
-Каждый объект строго в формате:
-{
-  "question": "string",
-  "code": "string|null",
-  "answers": ["string", "string", "string", "string"],
-  "correctIndex": number,
-  "difficulty": "easy" | "medium" | "hard" | "very-hard" | "expert"
-}
-
-Дополнительные правила:
-- Порядок элементов строго соответствует порядку сложностей.
-- JSON должен быть валидным.
-- Никаких лишних полей.
-- Никакого текста вне JSON.
-
-Сгенерируй итоговый JSON.
+STRICT RULES (DO NOT BREAK):
+- Output ONLY valid JSON
+- Output MUST match provided JSON schema
+- Generate EXACTLY 10 questions
+- EXACTLY 4 questions MUST include "code"
+- If "code" is null → "codeLanguage" MUST be null
+- If "code" exists → "codeLanguage" MUST be correct
+- "answers" MUST have 4 items
+- "correctIndex" MUST NOT always be 0
+- Use DIFFERENT correctIndex values across questions
+- Correct answer MUST match correctIndex
+- All questions difficulty: "${difficulty}"
+- Language: "${lang}"
+- Topic: ${topics[difficulty as keyof typeof topics]}
 `
 
-    const QuestionSchema = z.object({
-      question: z.string(),
-      code: z.string().nullable(),
-      answers: z.array(z.string()).length(4),
-      correctIndex: z.number(),
-      difficulty: z.enum(['easy', 'medium', 'hard', 'very-hard', 'expert']),
-    })
-
-    const QuestionsListSchema = z.array(QuestionSchema).length(15)
-
     const client = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
+      apiKey: process.env.GEMINI_API_KEY!,
     })
 
     const result = await client.models.generateContent({
@@ -74,13 +63,12 @@ JSON-массив из ровно 5 объектов.
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
-        responseJsonSchema: zodToJsonSchema(QuestionsListSchema),
+        responseJsonSchema: zodToJsonSchema(QuestionsSchema),
       },
     })
 
     return NextResponse.json({ result: result.text })
   } catch (error) {
-    console.error(error)
     return NextResponse.json({ error: String(error) }, { status: 500 })
   }
 }

@@ -2,10 +2,9 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import {Copy, Check } from 'lucide-react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { Copy, Check } from 'lucide-react'
 import type { MarathonQuestion } from '@/types/marathon'
+import CodeBlock from '@/ui/common/questionCard/codeBlock'
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -14,6 +13,14 @@ interface QuestionCardProps {
 }
 
 const letters = ['A', 'B', 'C', 'D']
+
+const difficultyShadows: Record<string, string> = {
+  easy: 'shadow-[0_0_20px_rgba(34,197,94,0.5)]',
+  medium: 'shadow-[0_0_20px_rgba(234,179,8,0.5)]',
+  hard: 'shadow-[0_0_25px_rgba(249,115,22,0.6)]',
+  'very-hard': 'shadow-[0_0_30px_rgba(239,68,68,0.7)]',
+  expert: 'shadow-[0_0_35px_rgba(139,92,246,0.7)]',
+}
 
 const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
   const [selected, setSelected] = useState<number | null>(null)
@@ -26,7 +33,6 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
     setAnswered(true)
     onAnswered?.(i === question.correctIndex)
   }
-
   const handleCopy = () => {
     if (!question.code) return
     navigator.clipboard.writeText(question.code)
@@ -72,7 +78,9 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="w-full rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg space-y-6"
+      className={`w-full rounded-2xl border p-6 sm:p-8 bg-card ${
+        difficultyShadows[question.difficulty] || 'shadow-lg'
+      }`}
     >
       <header className="flex items-start justify-between gap-3 pb-4 border-b border-border">
         <div className="flex items-center gap-3">
@@ -83,48 +91,12 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
           <h2 className="text-lg sm:text-xl font-semibold leading-relaxed flex-1">
             {question.question}
           </h2>
-
         </div>
-
-        <span
-          className={`px-2.5 py-1 rounded-md text-lg self-start border ${
-            question.difficulty === 'easy'
-              ? 'bg-green-100 text-green-800 border-green-200'
-              : question.difficulty === 'medium'
-              ? 'bg-yellow-100 text-yellow-800 border-yellow-200'
-              : question.difficulty === 'hard'
-              ? 'bg-orange-100 text-orange-800 border-orange-200'
-              : question.difficulty === 'very-hard'
-              ? 'bg-red-100 text-red-800 border-red-200'
-              : question.difficulty === 'expert'
-              ? 'bg-purple-100 text-purple-800 border-purple-200'
-              : 'bg-muted/50 text-muted-foreground border'
-          }`}
-        >
-          {question.difficulty}
-        </span>
       </header>
 
       {question.code && (
-        <div className="relative rounded-xl overflow-hidden border border-border bg-muted/30 shadow-inner">
-          <SyntaxHighlighter
-            language="javascript"
-            style={oneDark}
-            wrapLongLines
-            wrapLines
-            customStyle={{
-              margin: 0,
-              padding: '1rem',
-              fontSize: '0.875rem',
-              lineHeight: '1.45',
-              background: 'transparent',
-              overflowX: 'auto',
-              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-              borderRadius: '0.75rem',
-            }}
-          >
-            {question.code.trim()}
-          </SyntaxHighlighter>
+        <div className="relative rounded-xl  overflow-hidden border border-border  shadow-inner">
+          <CodeBlock code={question.code} language={question.codeLanguage || 'javascript'} />
 
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -147,7 +119,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
         </div>
       )}
 
-      <ul className="space-y-3">
+      <ul className="space-y-3 pt-2">
         {question.answers.map((ans, i) => (
           <motion.li
             key={i}
@@ -162,6 +134,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             <span className="flex items-center justify-center w-9 h-9 rounded-lg border-2 text-sm font-bold">
               {letters[i]}
             </span>
+            {question.correctIndex == i && <span className="text-primary">✔</span>}
 
             <span className="flex-1 leading-relaxed">{ans}</span>
 
