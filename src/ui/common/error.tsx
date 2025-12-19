@@ -8,7 +8,8 @@ interface IErrorProps {
 const Error = ({ message }: IErrorProps) => {
   return (
     <motion.div
-      className="flex items-center gap-3 bg-destructive/10 text-destructive border border-destructive/30 rounded-lg p-4 max-w-md mx-auto"
+      className="flex items-center gap-3 bg-destructive/10 
+      text-destructive border border-destructive/30 rounded-lg p-4 max-w-md mx-auto"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
