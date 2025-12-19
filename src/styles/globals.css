@@ -136,6 +136,7 @@
 .loader {
   height: 10px;
   width: 130px;
+  color: #191b20;
   --c: no-repeat linear-gradient(var(--card-foreground));
   background: var(--c), var(--c) var(--color-primary);
   background-size: 60% 100%;

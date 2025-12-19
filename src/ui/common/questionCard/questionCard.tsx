@@ -3,10 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check } from 'lucide-react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import type { MarathonQuestion } from '@/types/marathon'
-import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import CodeBlock from '@/ui/common/questionCard/codeBlock'
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -35,7 +33,6 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
     setAnswered(true)
     onAnswered?.(i === question.correctIndex)
   }
-  const theme = localStorage.getItem('theme') === 'dark' ? oneDark : oneLight
   const handleCopy = () => {
     if (!question.code) return
     navigator.clipboard.writeText(question.code)
@@ -95,46 +92,11 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             {question.question}
           </h2>
         </div>
-
-        <span
-          className={`px-2.5 py-1 rounded-md text-lg self-start border ${
-            question.difficulty === 'easy'
-              ? 'bg-green-100 text-green-800 border-green-200'
-              : question.difficulty === 'medium'
-              ? 'bg-yellow-100 text-yellow-800 border-yellow-200'
-              : question.difficulty === 'hard'
-              ? 'bg-orange-100 text-orange-800 border-orange-200'
-              : question.difficulty === 'very-hard'
-              ? 'bg-red-100 text-red-800 border-red-200'
-              : question.difficulty === 'expert'
-              ? 'bg-purple-100 text-purple-800 border-purple-200'
-              : 'bg-muted/50 text-muted-foreground border'
-          }`}
-        >
-          {question.difficulty}
-        </span>
       </header>
 
       {question.code && (
-        <div className="relative rounded-xl overflow-hidden border border-border bg-muted/30 shadow-inner">
-          <SyntaxHighlighter
-            language="javascript"
-            style={theme}
-            wrapLongLines
-            wrapLines
-            customStyle={{
-              margin: 0,
-              padding: '1rem',
-              fontSize: '0.875rem',
-              lineHeight: '1.45',
-              background: 'dark',
-              overflowX: 'auto',
-              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-              borderRadius: '0.75rem',
-            }}
-          >
-            {question.code.trim()}
-          </SyntaxHighlighter>
+        <div className="relative rounded-xl  overflow-hidden border border-border  shadow-inner">
+          <CodeBlock code={question.code} language={question.codeLanguage || 'javascript'} />
 
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -157,7 +119,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
         </div>
       )}
 
-      <ul className="space-y-3">
+      <ul className="space-y-3 pt-2">
         {question.answers.map((ans, i) => (
           <motion.li
             key={i}

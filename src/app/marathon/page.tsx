@@ -93,7 +93,6 @@ const MarathonPage = () => {
       if (nextDifficultyIndex < difficulties.length) {
         setDifficultyIndex(nextDifficultyIndex)
         setCurrentIndex(0)
-        refetch().then(() => setCurrentIndex(0))
       } else {
         setIsGameOver(true)
       }
