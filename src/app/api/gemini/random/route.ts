@@ -1,73 +1,88 @@
-import {GoogleGenAI} from '@google/genai'
-import {NextResponse} from 'next/server'
-import {z} from 'zod'
-import {zodToJsonSchema} from 'zod-to-json-schema'
+import { NextResponse } from 'next/server'
+import { GoogleGenAI } from '@google/genai'
+import { z } from 'zod'
+import { zodToJsonSchema } from 'zod-to-json-schema'
+
+const Question = z.object({
+  question: z.string(),
+  code: z.string().nullable(),
+  answers: z.array(z.string()).length(4),
+  correctIndex: z.number().min(0).max(3),
+  difficulty: z.enum(['easy', 'medium', 'hard', 'very-hard', 'expert']),
+  type: z.enum(['frontend', 'backend']),
+})
+
+const QuestionsList = z.array(Question)
 
 export async function GET(request: Request) {
   try {
-     const url = new URL(request.url)
-    const lang = url.searchParams.get('lang')
+    const url = new URL(request.url)
+    const lang = url.searchParams.get('lang') || 'en'
+    const type = url.searchParams.get('type') || 'frontend'
 
-    if (!lang) {
-      return NextResponse.json({ error: 'Missing required query parameter: lang' }, { status: 400 })
-    }
+    const language =
+      lang === 'tj' ? 'таҷикӣ' : lang === 'ru' ? 'русский' : 'english'
 
     const prompt = `
-Сгенерируй строго массив объектов вопросов по JavaScript и TypeScript, HTML, CSS, Next.js в формате JSON.${
-      lang == 'tj' ? 'Tajikistan' : lang
-    }.
-Количество вопросов может быть неограниченным.
-Никакого текста, объяснений, комментариев или Markdown вне JSON.
+Сгенерируй СТРОГО валидный JSON-массив из 10 вопросов.
+Только JSON, без текста.
 
-Вопросы должны быть разнообразными, охватывать разные темы JavaScript и TypeScript, HTML и CSS, Next.js.
-И должен сказат ето вопрос пра JavaScript иил TypeScript или HTML, CSS, Next.js.
+Язык: ${language}
+Все вопросы должны иметь type="${type}"
 
-Требования к формату каждого объекта:
+Frontend:
+- JavaScript
+- TypeScript
+- React
+- Next.js
+
+Backend (концептуально, для C# / .NET и в целом backend):
+.NET (ASP.NET Core) — платформа и фреймворк для backend-разработки
+Web API / REST API — проектирование и реализация HTTP-сервисов
+Authentication & Authorization — JWT, OAuth2, Identity, роли и политики
+Databases — реляционные (SQL Server, PostgreSQL) и NoSQL, ORM (Entity Framework Core)
+Security basics — хеширование паролей, HTTPS, защита от SQL Injection, XSS, CSRF
+
+
+Формат:
 {
   "question": "string",
   "code": "string|null",
-  "answers": ["string", "string", "string", "string"],
-  "correctIndex": number,
-  "difficulty": "Easy" | "Medium" | "Hard" | "Very-Hard" | "Expert"
+  "answers": ["a","b","c","d"],
+  "correctIndex": 0-3,
+  "difficulty": "easy|medium|hard|very-hard|expert",
+  "type": "frontend|backend"
 }
-
-Дополнительные правила:
-- Порядок элементов должен соответствовать возрастанию сложности.
-- JSON должен быть валидным.
-- Никаких лишних полей.
-- Никакого текста вне JSON.
-
-Сгенерируй итоговый JSON.
 `
-    const Question = z.object({
-      question: z.string(),
-      code: z.string().nullable(),
-      answers: z.array(z.string()).length(4),
-      correctIndex: z.number(),
-      difficulty: z.enum(['easy', 'medium', 'hard', 'very-hard', 'expert']),
-    })
-
-    const QuestionsList = z.array(Question).length(4)
 
     const client = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
+      apiKey: process.env.GEMINI_API_KEY!,
     })
-
 
     const result = await client.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         responseJsonSchema: zodToJsonSchema(QuestionsList),
       },
     })
 
-    return NextResponse.json({result: result.text})
+    if (!result.text) {
+      return NextResponse.json(
+        { error: 'No response from API' },
+        { status: 500 }
+      )
+    }
+    const parsed = JSON.parse(result.text)
+    const validated = QuestionsList.parse(parsed)
+
+    return NextResponse.json(validated)
   } catch (error) {
-    console.error(error)
-    return NextResponse.json({error: String(error)}, {status: 500})
+    return NextResponse.json(
+      { error: 'Failed to generate questions' },
+      { status: 500 }
+    )
   }
 }

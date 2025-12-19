@@ -49,8 +49,11 @@
     }
   },
    "random": {
-    "title": "Random Questions"
+    "title": "Random Questions", 
+    "noQuestions": "Error loading random questions"
+    
    },
+   
 
   "marathon": {
     "title": "Marathon Questions",
