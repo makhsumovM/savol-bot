@@ -11,7 +11,9 @@ import QuestionCard from '@/ui/common/questionCard/questionCard'
 import GameOver from '@/ui/common/gameOver/gameOver'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-
+import Image from 'next/image'
+import reactIcon from '../../../public/react.png'
+import charmIcon from '../../../public/ccharm.png'
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert']
 
 const MarathonPage = () => {
@@ -125,64 +127,52 @@ const MarathonPage = () => {
           {t('marathon.title')}
         </motion.h1>
 
-        <div className="flex justify-center gap-4 mb-6">
-          <button
+        <div className="flex flex-wrap justify-center gap-4 mb-6">
+          <motion.button
+            animate={mode === 'frontend' ? 'active' : 'inactive'}
+            whileHover={{ scale: mode === 'frontend' ? 1.08 : 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setMode('frontend')}
-            className={`flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all ${
-              mode === 'frontend'
-                ? 'bg-primary text-white shadow-lg scale-105'
-                : 'bg-card text-muted-foreground hover:bg-accent'
-            }`}
+            className={`
+          group flex items-center  px-2  rounded-xl font-medium transition-all
+          ${
+            mode === 'frontend'
+              ? 'bg-primary text-white'
+              : 'bg-card text-muted-foreground hover:bg-accent hover:text-foreground'
+          }
+        `}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-monitor"
-            >
-              <rect width="20" height="14" x="2" y="3" rx="2" />
-              <line x1="8" x2="16" y1="21" y2="21" />
-              <line x1="12" x2="12" y1="17" y2="21" />
-            </svg>
+            <Image
+              src={reactIcon}
+              width={60}
+              alt="React"
+              className="group-hover:rotate-12 transition-transform duration-300"
+            />
             Frontend
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            animate={mode === 'backend' ? 'active' : 'inactive'}
+            whileHover={{ scale: mode === 'backend' ? 1.08 : 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setMode('backend')}
-            className={`flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all ${
-              mode === 'backend'
-                ? 'bg-primary text-white shadow-lg scale-105'
-                : 'bg-card text-muted-foreground hover:bg-accent'
-            }`}
+            className={`
+          group flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all
+          ${
+            mode === 'backend'
+              ? 'bg-primary text-white'
+              : 'bg-card text-muted-foreground hover:bg-accent hover:text-foreground'
+          }
+        `}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-server"
-            >
-              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-              <line x1="3" x2="21" y1="9" y2="9" />
-              <line x1="3" x2="21" y1="15" y2="15" />
-              <path d="M8 9h.01" />
-              <path d="M16 9h.01" />
-              <path d="M8 15h.01" />
-              <path d="M16 15h.01" />
-            </svg>
+            <Image
+              src={charmIcon}
+              width={60}
+              alt="Backend"
+              className="group-hover:rotate-12 transition-transform duration-300"
+            />
             Backend
-          </button>
+          </motion.button>
         </div>
 
         {isGameOver && record !== null && (
