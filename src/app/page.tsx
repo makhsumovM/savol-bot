@@ -84,7 +84,8 @@ export default function Home() {
                 leading-tight
               "
             >
-              <Typewriter text={t('app.name')} />
+              <span className="text-primary">Skill</span>
+              <span className="text-primary-2">Check</span>
             </h1>
           </motion.div>
 
