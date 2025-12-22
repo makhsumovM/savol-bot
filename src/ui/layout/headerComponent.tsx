@@ -35,7 +35,7 @@ const HeaderComponent = () => {
     >
       <Link href="/">
         <div suppressHydrationWarning>
-          <Image src={logo} className="md:w-40 md:h-15 w-30 h-10 object-cover" alt="" />
+          <Image src={logo} className="md:w-40 md:h-13 w-30 h-10 object-cover" alt="" />
         </div>
       </Link>
 
