@@ -18,7 +18,6 @@ const MarathonPage = () => {
   const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
   const lang = i18n.language
-
   const gameOverRef = useRef<HTMLDivElement | null>(null)
 
   const [record, setRecord] = useState<number | null>(null)
@@ -26,23 +25,23 @@ const MarathonPage = () => {
   const [currentScore, setCurrentScore] = useState(0)
   const [isGameOver, setIsGameOver] = useState(false)
   const [difficultyIndex, setDifficultyIndex] = useState(0)
+  const [mode, setMode] = useState<'frontend' | 'backend'>('frontend')
 
   const currentDifficulty = difficulties[difficultyIndex]
 
   useEffect(() => {
-    const saved = Number(localStorage.getItem('marathonRecord') || 0)
+    const saved = Number(localStorage.getItem(`marathonRecord_${mode}`) || 0)
     setRecord(saved)
-  }, [])
+  }, [mode])
 
   const {
     data: questions = [],
     isLoading,
     isFetching,
     isError,
-    refetch,
   } = useQuery<MarathonQuestion[]>({
-    queryKey: ['marathon', lang, currentDifficulty],
-    queryFn: () => marathonApi(lang, currentDifficulty),
+    queryKey: ['marathon', lang, currentDifficulty, mode],
+    queryFn: () => marathonApi(lang, currentDifficulty, mode),
     refetchOnWindowFocus: false,
     refetchOnMount: 'always',
   })
@@ -50,21 +49,21 @@ const MarathonPage = () => {
   useEffect(() => {
     if (isGameOver && record !== null) {
       setRecord((prev) => {
+        const newRecord = Math.max(currentScore, prev || 0)
         if (currentScore > (prev || 0)) {
-          localStorage.setItem('marathonRecord', currentScore.toString())
-          return currentScore
+          localStorage.setItem(`marathonRecord_${mode}`, currentScore.toString())
         }
-        return prev
+        return newRecord
       })
     }
-  }, [isGameOver, currentScore, record])
+  }, [isGameOver, currentScore, record, mode])
 
   useEffect(() => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
     setDifficultyIndex(0)
-  }, [lang])
+  }, [lang, mode])
 
   useEffect(() => {
     if (isGameOver && gameOverRef.current) {
@@ -82,10 +81,8 @@ const MarathonPage = () => {
       setIsGameOver(true)
       return
     }
-
     setCurrentScore((prev) => prev + 1)
     const nextIndex = currentIndex + 1
-
     if (nextIndex < questions.length) {
       setCurrentIndex(nextIndex)
     } else {
@@ -104,8 +101,7 @@ const MarathonPage = () => {
     setCurrentScore(0)
     setIsGameOver(false)
     setDifficultyIndex(0)
-    queryClient.invalidateQueries({ queryKey: ['marathon', lang, currentDifficulty] })
-
+    queryClient.invalidateQueries({ queryKey: ['marathon', lang, currentDifficulty, mode] })
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -129,6 +125,66 @@ const MarathonPage = () => {
           {t('marathon.title')}
         </motion.h1>
 
+        <div className="flex justify-center gap-4 mb-6">
+          <button
+            onClick={() => setMode('frontend')}
+            className={`flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all ${
+              mode === 'frontend'
+                ? 'bg-primary text-white shadow-lg scale-105'
+                : 'bg-card text-muted-foreground hover:bg-accent'
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-monitor"
+            >
+              <rect width="20" height="14" x="2" y="3" rx="2" />
+              <line x1="8" x2="16" y1="21" y2="21" />
+              <line x1="12" x2="12" y1="17" y2="21" />
+            </svg>
+            Frontend
+          </button>
+
+          <button
+            onClick={() => setMode('backend')}
+            className={`flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all ${
+              mode === 'backend'
+                ? 'bg-primary text-white shadow-lg scale-105'
+                : 'bg-card text-muted-foreground hover:bg-accent'
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-server"
+            >
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+              <line x1="3" x2="21" y1="9" y2="9" />
+              <line x1="3" x2="21" y1="15" y2="15" />
+              <path d="M8 9h.01" />
+              <path d="M16 9h.01" />
+              <path d="M8 15h.01" />
+              <path d="M16 15h.01" />
+            </svg>
+            Backend
+          </button>
+        </div>
+
         {isGameOver && record !== null && (
           <motion.div
             ref={gameOverRef}
@@ -149,14 +205,14 @@ const MarathonPage = () => {
             suppressHydrationWarning
           >
             {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
-            {t('marathon.score.record')}: <span className="font-bold">{record}</span> |{' '}
-            {t('marathon.score.difficulty')}: <span className="font-bold">{currentDifficulty}</span>
+            {t('marathon.score.record')} ({mode === 'frontend' ? 'Frontend' : 'Backend'}):{' '}
+            <span className="font-bold">{record}</span> | {t('marathon.score.difficulty')}:{' '}
+            <span className="font-bold">{currentDifficulty}</span>
           </motion.p>
         )}
 
         {(isLoading || isFetching) && <Loading />}
         {isError && <Error message={t('marathon.errorLoading')} />}
-
         {!questions.length && !isLoading && !isFetching && (
           <Error message={t('marathon.noQuestions')} />
         )}
@@ -164,7 +220,7 @@ const MarathonPage = () => {
         {currentQuestion && !isLoading && !isFetching && !isError && (
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${lang}-${currentDifficulty}-${currentIndex}`}
+              key={`${lang}-${currentDifficulty}-${currentIndex}-${mode}`}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
