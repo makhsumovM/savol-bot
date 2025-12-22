@@ -9,6 +9,7 @@ import Loading from '@/ui/common/loading'
 import Error from '@/ui/common/error'
 import { Randonapi } from '@/api/randomAPi'
 import { RandomQuestion } from '@/types/random'
+import clsx from 'clsx'
 
 const RandomPage = () => {
   const { t, i18n } = useTranslation()
@@ -28,7 +29,6 @@ const RandomPage = () => {
     refetchOnWindowFocus: false,
   })
 
-  // reset only
   useEffect(() => {
     setCurrentIndex(0)
     setScore(0)
@@ -45,25 +45,33 @@ const RandomPage = () => {
 
   return (
     <section className="min-h-screen p-8">
-      <div className="flex justify-center gap-4 mb-6">
+      <motion.h1
+        suppressHydrationWarning
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {t('random.title')}
+      </motion.h1>
+
+      <div className="flex justify-center gap-4 my-6">
         <button
           onClick={() => setType('frontend')}
-          className={`px-4 py-2 rounded ${
-            type === 'frontend'
-              ? 'bg-primary text-white'
-              : 'bg-primary/10 text-primary'
-          }`}
+          className={clsx(
+            'flex items-center gap-2 px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-all duration-300',
+            'bg-primary/5 hover:bg-primary/20 text-primary',
+          )}
         >
           Frontend
         </button>
 
         <button
           onClick={() => setType('backend')}
-          className={`px-4 py-2 rounded ${
-            type === 'backend'
-              ? 'bg-primary text-white'
-              : 'bg-primary/10 text-primary'
-          }`}
+          className={clsx(
+            'flex items-center gap-2 px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-all duration-300',
+            'bg-primary/5 hover:bg-primary/20 text-primary',
+          )}
         >
           Backend
         </button>
