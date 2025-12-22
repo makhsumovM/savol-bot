@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import ShikiHighlighter from 'react-shiki'
 
 interface CodeBlockProps {
@@ -7,22 +8,30 @@ interface CodeBlockProps {
   language: string
 }
 
-const CodeBlock = ({ code, language  }: CodeBlockProps) => {
+export default function CodeBlock({ code, language }: CodeBlockProps) {
+  const { theme } = useTheme()
+
+  const isDark = theme === 'dark'
+
   return (
-    <div className="relative">
+    <div
+      className="
+        relative rounded-xl overflow-hidden
+        border border-slate-200 dark:border-white/10
+        bg-slate-50 dark:bg-[#1e1f24]
+      "
+    >
       <ShikiHighlighter
         language={language}
-        theme="dark-plus"
+        theme={isDark ? 'dark-plus' : 'github-light'}
         showLanguage={false}
         className="
-          rounded-xl
           text-sm
           max-h-[400px]
           overflow-auto
           [&_pre]:whitespace-pre-wrap
           [&_pre]:leading-relaxed
-          [&_.shiki]:!text-inherit
-          [&_.shiki_span]:!color-inherit
+          [&_pre]:p-4
         "
       >
         {code.trim()}
@@ -30,5 +39,3 @@ const CodeBlock = ({ code, language  }: CodeBlockProps) => {
     </div>
   )
 }
-
-export default CodeBlock
