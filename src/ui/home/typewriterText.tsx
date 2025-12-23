@@ -1,47 +1,36 @@
-'use client'
+"use client"
 
-import { motion } from 'framer-motion'
+import { useState, useEffect } from "react"
 
-type TypewriterProps = {
+interface TypewriterProps {
   text: string
   delay?: number
   speed?: number
-  className?: string
 }
 
-export function Typewriter({ text, delay = 0, speed = 0.05, className }: TypewriterProps) {
-  const characters = Array.from(text)
+export function Typewriter({ text, delay = 0, speed = 0.05 }: TypewriterProps) {
+  const [displayedText, setDisplayedText] = useState("")
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [started, setStarted] = useState(false)
 
-  return (
-    <motion.span
-      className={`inline-block overflow-hidden whitespace-pre-wrap ${className}`}
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: speed,
-            delayChildren: delay,
-            repeat: Infinity,
-            repeatType: 'loop',
-            repeatDelay: 1.2,
-          },
-        },
-      }}
-    >
-      {characters.map((char, i) => (
-        <motion.span
-          key={i}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1 },
-          }}
-          
-        >
-          {char}
-        </motion.span>
-      ))}
-    </motion.span>
-  )
+  useEffect(() => {
+    const startTimeout = setTimeout(() => {
+      setStarted(true)
+    }, delay * 1000)
+
+    return () => clearTimeout(startTimeout)
+  }, [delay])
+
+  useEffect(() => {
+    if (!started || currentIndex >= text.length) return
+
+    const timeout = setTimeout(() => {
+      setDisplayedText((prev) => prev + text[currentIndex])
+      setCurrentIndex((prev) => prev + 1)
+    }, speed * 1000)
+
+    return () => clearTimeout(timeout)
+  }, [currentIndex, text, speed, started])
+
+  return <span suppressHydrationWarning>{displayedText}</span>
 }

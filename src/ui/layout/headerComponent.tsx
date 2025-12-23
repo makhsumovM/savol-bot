@@ -7,7 +7,8 @@ import { Gamepad, PlayCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '@/ui/common/languageSwitcher/languageSwitcher'
 import clsx from 'clsx'
-
+import Image from 'next/image'
+import logo from '../../../public/favicon.ico'
 const HeaderComponent = () => {
   const { t } = useTranslation()
 
@@ -33,12 +34,8 @@ const HeaderComponent = () => {
              backdrop-blur-xl bg-background/80 border-b border-border shadow-md"
     >
       <Link href="/">
-        <div
-          suppressHydrationWarning
-          className="md:text-3xl text-2xl font-extrabold tracking-tight text-primary
-                   hover:text-primary/80 transition-colors duration-300"
-        >
-          {t('app.name')}
+        <div suppressHydrationWarning>
+          <Image src={logo} className="md:w-40 md:h-13 w-30 h-10 object-cover" alt="" />
         </div>
       </Link>
 

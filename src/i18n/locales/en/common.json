@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Savol-bot",
+    "name": "SkillCheck",
     "subtitle": "AI Tester",
     "description": "Pick a mode on the first screen, dive into questions without extra clicks, and stay focused with minimal animations."
   },
@@ -49,11 +49,11 @@
     }
   },
    "random": {
-    "title": "Random Questions", 
+    "title": "Random Questions",
     "noQuestions": "Error loading random questions"
-    
+
    },
-   
+
 
   "marathon": {
     "title": "Marathon Questions",
