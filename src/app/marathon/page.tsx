@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
 import reactIcon from '../../../public/react.png'
 import charmIcon from '../../../public/ccharm.png'
+
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert']
 
 const MarathonPage = () => {
@@ -104,74 +105,92 @@ const MarathonPage = () => {
     setIsGameOver(false)
     setDifficultyIndex(0)
     queryClient.invalidateQueries({ queryKey: ['marathon', lang, currentDifficulty, mode] })
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
     <section className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
-      <div className="absolute -top-40 -right-40 h-[420px] w-[420px] sm:h-[560px] sm:w-[560px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[380px] w-[380px] sm:h-[520px] sm:w-[520px] rounded-full bg-secondary/15 blur-[120px] animate-pulse-slow" />
+      <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
+      <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
 
-      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-14 md:py-20 space-y-8">
-        <motion.h1
-          suppressHydrationWarning
-          className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center"
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 md:py-14 space-y-6">
+        <motion.div
+          className="text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7 }}
         >
-          {t('marathon.title')}
-        </motion.h1>
+          <h1
+            suppressHydrationWarning
+            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
+          >
+            <span style={{ color: 'rgb(245, 73, 0)' }}>{t('marathon.title').split(' ')[0]}</span>{' '}
+            <span style={{ color: 'oklch(0.75 0.20 185)' }}>
+              {t('marathon.title').split(' ').slice(1).join(' ')}
+            </span>
+          </h1>
+        </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <div className="flex justify-center gap-6 mb-10">
           <motion.button
-            animate={mode === 'frontend' ? 'active' : 'inactive'}
-            whileHover={{ scale: mode === 'frontend' ? 1.08 : 1.05 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setMode('frontend')}
-            className={`
-          group flex items-center  px-2  rounded-xl font-medium transition-all
-          ${
-            mode === 'frontend'
-              ? 'bg-primary text-white'
-              : 'bg-card text-muted-foreground hover:bg-accent hover:text-foreground'
-          }
-        `}
+            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
+              mode === 'frontend'
+                ? 'bg-primary text-white border-primary shadow-primary/30'
+                : 'bg-card border-border text-foreground hover:border-primary/50'
+            }`}
           >
-            <Image
-              src={reactIcon}
-              width={60}
-              alt="React"
-              className="group-hover:rotate-12 transition-transform duration-300"
-            />
-            Frontend
+            <span className="relative z-10 flex items-center gap-3">
+              <Image
+                src={reactIcon}
+                width={36}
+                height={36}
+                alt="Frontend"
+                className="drop-shadow-md"
+              />
+              Frontend
+            </span>
+            {mode === 'frontend' && (
+              <motion.div
+                layoutId="modeIndicator"
+                className="absolute inset-0 bg-primary"
+                initial={false}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              />
+            )}
           </motion.button>
 
           <motion.button
-            animate={mode === 'backend' ? 'active' : 'inactive'}
-            whileHover={{ scale: mode === 'backend' ? 1.08 : 1.05 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setMode('backend')}
-            className={`
-          group flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all
-          ${
-            mode === 'backend'
-              ? 'bg-primary text-white'
-              : 'bg-card text-muted-foreground hover:bg-accent hover:text-foreground'
-          }
-        `}
+            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
+              mode === 'backend'
+                ? 'bg-primary-2 text-white border-primary-2 shadow-primary-2/40'
+                : 'bg-card border-border text-foreground hover:border-primary-2/50'
+            }`}
           >
-            <Image
-              src={charmIcon}
-              width={60}
-              alt="Backend"
-              className="group-hover:rotate-12 transition-transform duration-300"
-            />
-            Backend
+            <span className="relative z-10 flex items-center gap-3">
+              <Image
+                src={charmIcon}
+                width={36}
+                height={36}
+                alt="Backend"
+                className="drop-shadow-md"
+              />
+              Backend
+            </span>
+            {mode === 'backend' && (
+              <motion.div
+                layoutId="modeIndicator"
+                className="absolute inset-0 bg-primary-2"
+                initial={false}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              />
+            )}
           </motion.button>
         </div>
 
@@ -180,25 +199,40 @@ const MarathonPage = () => {
             ref={gameOverRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
           >
             <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
           </motion.div>
         )}
 
         {record !== null && (
-          <motion.p
-            className="text-sm sm:text-base text-primary text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            suppressHydrationWarning
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-6 shadow-xl mb-8"
           >
-            {t('marathon.score.current')}: <span className="font-bold">{currentScore}</span> |{' '}
-            {t('marathon.score.record')} ({mode === 'frontend' ? 'Frontend' : 'Backend'}):{' '}
-            <span className="font-bold">{record}</span> | {t('marathon.score.difficulty')}:{' '}
-            <span className="font-bold">{currentDifficulty}</span>
-          </motion.p>
+            <div className="grid grid-cols-3 gap-6 text-center">
+              <div>
+                <p className="text-muted-foreground text-xs font-medium mb-1">
+                  {t('marathon.score.current')}
+                </p>
+                <p className="text-4xl font-black text-primary">{currentScore}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-xs font-medium mb-1">
+                  {t('marathon.score.record')} ({mode === 'frontend' ? 'Frontend' : 'Backend'})
+                </p>
+                <p className="text-4xl font-black text-primary-2">{record}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-xs font-medium mb-1">
+                  {t('marathon.score.difficulty')}
+                </p>
+                <p className="text-2xl font-bold text-foreground uppercase tracking-wider">
+                  {currentDifficulty}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         )}
 
         {(isLoading || isFetching) && <Loading />}
