@@ -1,7 +1,5 @@
 'use client'
 
-import { SiDotnet } from "react-icons/si";
-import { FaReact } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -67,7 +65,6 @@ const RandomPage = () => {
             isLoading && 'opacity-50 cursor-not-allowed'
           )}
         >
-          <FaReact />
           Frontend
         </button>
 
@@ -82,7 +79,6 @@ const RandomPage = () => {
             isLoading && 'opacity-50 cursor-not-allowed'
           )}
         >
-          <SiDotnet />
         Backend
         </button>
       </div>
