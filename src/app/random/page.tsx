@@ -1,5 +1,7 @@
 'use client'
 
+import { SiDotnet } from "react-icons/si";
+import { FaReact } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,6 +11,7 @@ import Loading from '@/ui/common/loading'
 import Error from '@/ui/common/error'
 import { Randonapi } from '@/api/randomAPi'
 import { RandomQuestion } from '@/types/random'
+import clsx from 'clsx'
 
 const RandomPage = () => {
   const { t, i18n } = useTranslation()
@@ -28,7 +31,6 @@ const RandomPage = () => {
     refetchOnWindowFocus: false,
   })
 
-  // reset only
   useEffect(() => {
     setCurrentIndex(0)
     setScore(0)
@@ -45,58 +47,78 @@ const RandomPage = () => {
 
   return (
     <section className="min-h-screen p-8">
-      <div className="flex justify-center gap-4 mb-6">
+      <motion.h1
+        suppressHydrationWarning
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        {t('random.title')}
+      </motion.h1>
+      <div className="flex justify-center gap-4 my-6">
         <button
           onClick={() => setType('frontend')}
-          className={`px-4 py-2 rounded ${
-            type === 'frontend'
-              ? 'bg-primary text-white'
-              : 'bg-primary/10 text-primary'
-          }`}
+          disabled={isLoading}
+          className={clsx(
+            'flex items-center gap-3 px-6 py-3 rounded-full font-medium transition-all duration-300',
+            ' text-orange-400 hover:bg-[#242424]',
+            'shadow-md hover:shadow-orange-500/20',
+            type === 'frontend' && 'ring-1 ring-orange-500/40',
+            isLoading && 'opacity-50 cursor-not-allowed'
+          )}
         >
+          <FaReact />
           Frontend
         </button>
 
         <button
           onClick={() => setType('backend')}
-          className={`px-4 py-2 rounded ${
-            type === 'backend'
-              ? 'bg-primary text-white'
-              : 'bg-primary/10 text-primary'
-          }`}
+          disabled={isLoading}
+          className={clsx(
+            'flex items-center gap-3 px-6 py-3 rounded-full font-medium transition-all duration-300',
+            ' text-orange-400 hover:bg-[#242424]',
+            'shadow-md hover:shadow-orange-500/20',
+            type === 'backend' && 'ring-1 ring-orange-500/40',
+            isLoading && 'opacity-50 cursor-not-allowed'
+          )}
         >
-          Backend
+          <SiDotnet />
+        Backend
         </button>
       </div>
 
+
       {isLoading && <Loading />}
-      {isError && <Error message={t('random.errorLoading')} />}
 
-      {!isLoading && !questions.length && (
-        <Error message={t('random.noQuestions')} />
-      )}
+      {!isLoading && (
+        <>
+          {isError && <Error message={t('random.errorLoading')} />}
 
-      <AnimatePresence mode="wait">
-        {currentQuestion && (
-          <motion.div
-            key={`${lang}-${type}-${currentIndex}`}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-          >
-            <QuestionCardR
-              question={currentQuestion}
-              index={currentIndex}
-              onAnswered={handleAnswer}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {!isError && !questions.length && (
+            <Error message={t('random.noQuestions')} />
+          )}
 
-      {!currentQuestion && questions.length > 0 && (
-        <div className="text-center text-xl font-bold mt-10">
-          🎉 Finished! Score: {score} / {questions.length}
-        </div>
+          <AnimatePresence mode="wait">
+            {currentQuestion ? (
+              <motion.div
+                key={`${lang}-${type}-${currentIndex}`}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+              >
+                <QuestionCardR
+                  question={currentQuestion}
+                  index={currentIndex}
+                  onAnswered={handleAnswer}
+                />
+              </motion.div>
+            ) : (
+              <div className="text-center text-xl font-bold mt-10">
+                🎉 Finished! Score: {score} / {questions.length}
+              </div>
+            )}
+          </AnimatePresence>
+        </>
       )}
     </section>
   )

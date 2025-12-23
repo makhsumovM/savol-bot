@@ -15,7 +15,11 @@ interface QuestionCardProps {
 
 const letters = ['A', 'B', 'C', 'D']
 
-const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
+export default function QuestionCardR({
+  question,
+  index,
+  onAnswered,
+}: QuestionCardProps) {
   const [selected, setSelected] = useState<number | null>(null)
   const [answered, setAnswered] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -33,59 +37,63 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
     onAnswered?.(i === question.correctIndex)
   }
 
-  const difficultyClass = {
-    easy: 'bg-green-500/15 text-green-400 border-green-500/30',
-    medium: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30',
-    hard: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
-    'very-hard': 'bg-red-500/15 text-red-400 border-red-500/30',
-    expert: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
-  }[question.difficulty]
+  const getAnswerClass = (i: number) => {
+    if (!answered) {
+      return `
+        border border-slate-200 dark:border-white/10
+        bg-slate-50 dark:bg-white/5
+        hover:bg-slate-100 dark:hover:bg-white/10
+      `
+    }
 
-  const answerStyle = (i: number) => {
-    if (!answered)
-      return 'border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 cursor-pointer'
-    if (i === question.correctIndex)
-      return 'border border-green-500 bg-green-500/20'
-    if (i === selected)
-      return 'border border-red-500 bg-red-500/20'
-    return 'border border-white/5 opacity-50'
+    if (i === question.correctIndex) {
+      return 'border-green-500 bg-green-500/20'
+    }
+
+    if (i === selected) {
+      return 'border-red-500 bg-red-500/20'
+    }
+
+    return 'border-slate-200 dark:border-white/5 opacity-50'
   }
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45 }}
-      className="max-w-3xl mx-auto rounded-2xl bg-[#1e1f24] border border-white/10 p-8 space-y-6 shadow-xl"
+      transition={{ duration: 0.35 }}
+      className="
+        max-w-3xl mx-auto rounded-2xl
+        bg-white dark:bg-[#1e1f24]
+        border border-slate-200 dark:border-white/10
+        p-4 sm:p-6 md:p-8
+        space-y-4 sm:space-y-6
+        shadow-xl
+      "
     >
-      <header className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-        <div className="flex gap-4">
-          <div className="w-8 h-8 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-sm">
+      <header className="flex items-start justify-between gap-3 border-b border-slate-200 dark:border-white/10 pb-3 sm:pb-4">
+        <div className="flex gap-3 sm:gap-4">
+          <div className="w-7 h-7  sm:w-8 sm:h-8 rounded-full bg-orange-500/20 text-orange-500 shrink-0 flex items-center justify-center font-bold text-xs sm:text-sm">
             {index + 1}
           </div>
-          <h2 className="text-lg sm:text-xl font-semibold text-white leading-snug">
+          <h2 className="text-base sm:text-lg md:text-xl font-semibold text-slate-900 dark:text-white">
             {question.question}
           </h2>
         </div>
-
-        <span
-          className={`px-3 py-1 rounded-md text-xs font-semibold border ${difficultyClass}`}
-        >
-          {question.difficulty}
-        </span>
       </header>
 
       {question.code && (
-        <div className="relative rounded-xl overflow-hidden border border-white/10 bg-black/40">
+        <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-900">
           <SyntaxHighlighter
             language="javascript"
             style={oneDark}
             customStyle={{
               margin: 0,
-              padding: '1rem',
+              padding: '0.75rem',
               background: 'transparent',
-              fontSize: '0.85rem',
+              fontSize: '0.75rem',
             }}
+            className="sm:text-sm"
           >
             {question.code}
           </SyntaxHighlighter>
@@ -96,52 +104,59 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
               setCopied(true)
               setTimeout(() => setCopied(false), 1200)
             }}
-            className="absolute top-3 right-3 text-xs flex items-center gap-1 px-2 py-1 rounded bg-black/60 border border-white/10 text-white/70 hover:text-white"
+            className="
+              absolute top-2 right-2 sm:top-3 sm:right-3
+              flex items-center gap-1 px-2 py-1
+              text-[10px] sm:text-xs
+              rounded bg-black/60 border border-white/10 text-white
+            "
           >
-            {copied ? <Check size={14} /> : <Copy size={14} />}
+            {copied ? <Check size={12} /> : <Copy size={12} />}
             {copied ? 'Copied' : 'Copy'}
           </button>
         </div>
       )}
 
-      <ul className="space-y-4">
+      <ul className="space-y-3 sm:space-y-4">
         {question.answers.map((ans, i) => (
           <motion.li
             key={i}
             onClick={() => handleAnswer(i)}
             whileHover={!answered ? { scale: 1.01 } : undefined}
-            className={`flex items-center gap-4 px-4 py-4 rounded-xl transition ${answerStyle(
-              i
-            )}`}
+            className={`
+              flex items-center gap-3 sm:gap-4
+              px-3 py-3 sm:px-4 sm:py-4
+              rounded-xl cursor-pointer
+              transition
+              ${getAnswerClass(i)}
+            `}
           >
-            <div className="w-10 h-10 rounded-lg border border-white/20 flex items-center justify-center font-bold text-white/80">
+            <div
+              className="
+                w-8 h-8 sm:w-10 sm:h-10
+                rounded-lg border border-slate-300 dark:border-white/20
+                flex items-center justify-center
+                font-bold text-xs sm:text-sm
+                text-slate-700 dark:text-white/80
+              "
+            >
               {letters[i]}
             </div>
 
-            <span className="text-white/90 flex-1">{ans}</span>
+            <span className="flex-1 text-sm sm:text-base text-slate-800 dark:text-white/90">
+              {ans}
+            </span>
 
             {answered && i === question.correctIndex && (
-              <Check className="text-green-400" />
+              <Check className="text-green-500" size={18} />
+            )}
+
+            {answered && i === selected && selected !== question.correctIndex && (
+              <span className="text-red-500 font-bold text-lg">✕</span>
             )}
           </motion.li>
         ))}
       </ul>
-
-      {answered && (
-        <footer className="pt-4 border-t border-white/10 text-right">
-          <span
-            className={`inline-block px-4 py-1 rounded-md font-semibold text-sm ${
-              selected === question.correctIndex
-                ? 'bg-green-500/20 text-green-400'
-                : 'bg-red-500/20 text-red-400'
-            }`}
-          >
-            {selected === question.correctIndex ? '✓ Correct' : '✗ Incorrect'}
-          </span>
-        </footer>
-      )}
     </motion.article>
   )
 }
-
-export default QuestionCardR
