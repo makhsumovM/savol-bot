@@ -2,18 +2,17 @@
   "app": {
     "name": "SkillCheck",
     "subtitle": "AI Tester",
-    "description": "Choose a mode on the first screen, dive into questions without extra clicks, and stay focused with minimal animations."
+    "description": "Choose a mode on the first screen, dive into questions with minimal clicks, and focus with minimal animations."
   },
-
   "home": {
     "cta": {
       "startMarathon": "Start Marathon →",
       "features": "Rhythm, density, and subtle animations"
     },
     "ui": {
-      "pulse": "Pulse UI",
+      "pulse": "Pulsating interface",
       "microInteractions": "Micro-interactions",
-      "focusMode": "Focus Mode",
+      "focusMode": "Focus mode",
       "noNoise": "No visual noise"
     },
     "rows": {
@@ -23,39 +22,35 @@
       "hover": "hover / tap"
     }
   },
-
   "modes": {
     "marathon": {
       "title": "Marathon",
       "badge": "LIVE",
-      "description": "An endless stream of questions to train your focus."
+      "description": "An endless stream of questions to train concentration."
     },
     "classic": {
       "title": "Random",
       "badge": "LIVE",
-      "description": "A sprint of 10–15 questions for a quick self-test."
+      "description": "A sprint of 10–15 questions for quick self-testing."
     },
     "coding": {
       "title": "Coding",
       "badge": "COMING SOON",
-      "description": "Coding challenges with hints, inspired by IDEs."
+      "description": "Programming tasks with hints, inspired by IDEs."
     }
   },
-
   "header": {
     "nav": {
-      "marathon": "Start Marathon",
-      "random": "Random Game",
-      "myBest": "My Best Scores"
+      "marathon": "Marathon",
+      "random": "Random",
+      "myBest": "Best Scores"
     },
     "login": "Login"
   },
-
   "random": {
     "title": "Random Questions",
     "noQuestions": "Failed to load random questions"
   },
-
   "marathon": {
     "title": "Marathon Questions",
     "score": {
@@ -65,13 +60,11 @@
     },
     "noQuestions": "Failed to load marathon questions"
   },
-
   "question": {
     "difficulty": "Difficulty",
     "copy": "Copy",
     "copied": "Copied"
   },
-
   "gameOver": {
     "title": "Game Over",
     "wrongAnswer": "You answered incorrectly.",
@@ -79,45 +72,85 @@
     "record": "Record:",
     "restart": "Restart"
   },
-
   "errors": {
     "loadFailed": "Failed to load questions.",
-    "notFound": "No questions found.",
-    "myBestLoadError": "Failed to load my best scores"
+    "notFound": "Questions not found.",
+    "myBestLoadError": "Failed to load best scores"
   },
-
   "loading": {
     "text": "Loading..."
   },
-
   "theme": {
-    "light": "Light Mode",
-    "dark": "Dark Mode"
+    "light": "Light Theme",
+    "dark": "Dark Theme"
   },
-
   "notfound": {
     "title": "Page Not Found",
     "description": "The page you are looking for does not exist.",
-    "home": "Back to Home",
+    "home": "Go Home",
     "back": "Back",
-    "hint": "Hint: The page may have been removed, renamed, or is temporarily unavailable."
+    "hint": "Hint: the page may have been deleted, renamed, or temporarily unavailable."
   },
-
   "myBestScores": {
     "title": "My Best Scores",
     "sections": {
       "frontend": {
         "title": "Frontend",
         "bestScore": "Best Score",
-        "achievedAt": "Achieved At",
-        "retry": "Retry"
+        "achievedAt": "Achieved On",
+        "retry": "Try Again"
       },
       "backend": {
         "title": "Backend",
         "bestScore": "Best Score",
-        "achievedAt": "Achieved At",
-        "retry": "Retry"
+        "achievedAt": "Achieved On",
+        "retry": "Try Again"
       }
+    }
+  },
+  "login": {
+    "title": "Login to ",
+    "subtitle": "Sign in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Sign In",
+    "signingIn": "Signing in...",
+    "createAccount": "Create Account",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed"
+  },
+  "register": {
+    "title": "Create your account on ",
+    "subtitle":"Sign up to continue",
+    "form": {
+      "fields": {
+        "fullName": {
+          "label": "Full name",
+          "placeholder": "Full Name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "••••••••"
+        }
+      },
+      "submitButton": {
+        "default": "Register",
+        "loading": "Creating account..."
+      }
+    },
+    "footer": {
+      "text": "Already have an account?",
+      "linkText": "Login"
+    },
+    "toasts": {
+      "success": "Account created successfully",
+      "error": "Account creation failed"
     }
   }
 }
