@@ -1,13 +1,12 @@
-// src/api/marathonApi.ts (или где у тебя лежит этот файл)
-
-import { MarathonQuestion } from '@/types/marathon'
+import { api } from '@/lib/utils/axiosConfig'
+import { IScore, MarathonQuestion } from '@/types/marathon'
 import axios from 'axios'
 
 export const marathonApi = async (
   lang: string,
   difficulty: string,
-  type: 'frontend' | 'backend' = 'frontend'
-): Promise<MarathonQuestion[]> => {
+  type: 'frontend' | 'backend' = 'frontend',
+) => {
   try {
     const response = await axios.get('/api/gemini/marathon', {
       params: {
@@ -23,5 +22,21 @@ export const marathonApi = async (
   } catch (error) {
     console.error('Error fetching marathon questions:', error)
     return []
+  }
+}
+export const createMarathonAttempt = async (data: ICreateMarathonAttempt) => {
+  try {
+    const response = await api.post('/marathon/attempts', data)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+export const getMyBestScores = async () => {
+  try {
+    const response = await api.get<IScore>('/marathon/my-best')
+    return response.data
+  } catch (error) {
+    throw error
   }
 }
