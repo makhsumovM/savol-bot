@@ -2,9 +2,9 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { marathonApi } from '@/api/marathonApi'
-import { MarathonQuestion } from '@/types/marathon'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
+import { marathonApi, createMarathonAttempt } from '@/api/marathonApi'
+import { MarathonQuestion, ICreateMarathonAttempt } from '@/types/marathon'
 import Error from '@/ui/common/error'
 import Loading from '@/ui/common/loading'
 import QuestionCard from '@/ui/common/questionCard/questionCard'
@@ -23,19 +23,15 @@ const MarathonPage = () => {
   const lang = i18n.language
   const gameOverRef = useRef<HTMLDivElement | null>(null)
 
-  const [record, setRecord] = useState<number | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
   const [isGameOver, setIsGameOver] = useState(false)
   const [difficultyIndex, setDifficultyIndex] = useState(0)
   const [mode, setMode] = useState<'frontend' | 'backend'>('frontend')
+  const [isLose, setIsLose] = useState(false)
+  const [bestScore, setBestScore] = useState(0)
 
   const currentDifficulty = difficulties[difficultyIndex]
-
-  useEffect(() => {
-    const saved = Number(localStorage.getItem(`marathonRecord_${mode}`) || 0)
-    setRecord(saved)
-  }, [mode])
 
   const {
     data: questions = [],
@@ -49,23 +45,32 @@ const MarathonPage = () => {
     refetchOnMount: 'always',
   })
 
+  const { mutate } = useMutation({
+    mutationFn: (data: ICreateMarathonAttempt) => createMarathonAttempt(data),
+    onSuccess: (response) => {
+      if (mode === 'frontend') setBestScore(response.data.bestFrontendScore)
+      else setBestScore(response.data.bestBackendScore)
+    },
+  })
+
   useEffect(() => {
-    if (isGameOver && record !== null) {
-      setRecord((prev) => {
-        const newRecord = Math.max(currentScore, prev || 0)
-        if (currentScore > (prev || 0)) {
-          localStorage.setItem(`marathonRecord_${mode}`, currentScore.toString())
-        }
-        return newRecord
-      })
+    if (isGameOver && isLose) {
+      const data: ICreateMarathonAttempt =
+        mode === 'frontend'
+          ? { frontendScore: currentScore, backendScore: 0 }
+          : { frontendScore: 0, backendScore: currentScore }
+
+      mutate(data)
     }
-  }, [isGameOver, currentScore, record, mode])
+  }, [isGameOver, isLose, currentScore, mode, mutate])
 
   useEffect(() => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
+    setIsLose(false)
     setDifficultyIndex(0)
+    setBestScore(0)
   }, [lang, mode])
 
   useEffect(() => {
@@ -81,11 +86,14 @@ const MarathonPage = () => {
 
   const handleAnswer = (isCorrect: boolean) => {
     if (!isCorrect) {
+      setIsLose(true)
       setIsGameOver(true)
       return
     }
+
     setCurrentScore((prev) => prev + 1)
     const nextIndex = currentIndex + 1
+
     if (nextIndex < questions.length) {
       setCurrentIndex(nextIndex)
     } else {
@@ -103,8 +111,13 @@ const MarathonPage = () => {
     setCurrentIndex(0)
     setCurrentScore(0)
     setIsGameOver(false)
+    setIsLose(false)
     setDifficultyIndex(0)
-    queryClient.invalidateQueries({ queryKey: ['marathon', lang, currentDifficulty, mode] })
+    setBestScore(0)
+
+    queryClient.invalidateQueries({
+      queryKey: ['marathon', lang, currentDifficulty, mode],
+    })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -153,14 +166,6 @@ const MarathonPage = () => {
               />
               Frontend
             </span>
-            {mode === 'frontend' && (
-              <motion.div
-                layoutId="modeIndicator"
-                className="absolute inset-0 bg-primary"
-                initial={false}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              />
-            )}
           </motion.button>
 
           <motion.button
@@ -183,55 +188,16 @@ const MarathonPage = () => {
               />
               Backend
             </span>
-            {mode === 'backend' && (
-              <motion.div
-                layoutId="modeIndicator"
-                className="absolute inset-0 bg-primary-2"
-                initial={false}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              />
-            )}
           </motion.button>
         </div>
 
-        {isGameOver && record !== null && (
+        {isGameOver && (
           <motion.div
             ref={gameOverRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <GameOver currentScore={currentScore} record={record} onRestart={handleRestart} />
-          </motion.div>
-        )}
-
-        {record !== null && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-6 shadow-xl mb-8"
-          >
-            <div className="grid grid-cols-3 gap-6 text-center">
-              <div>
-                <p className="text-muted-foreground text-xs font-medium mb-1">
-                  {t('marathon.score.current')}
-                </p>
-                <p className="text-4xl font-black text-primary">{currentScore}</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground text-xs font-medium mb-1">
-                  {t('marathon.score.record')} ({mode === 'frontend' ? 'Frontend' : 'Backend'})
-                </p>
-                <p className="text-4xl font-black text-primary-2">{record}</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground text-xs font-medium mb-1">
-                  {t('marathon.score.difficulty')}
-                </p>
-                <p className="text-2xl font-bold text-foreground uppercase tracking-wider">
-                  {currentDifficulty}
-                </p>
-              </div>
-            </div>
+            <GameOver currentScore={currentScore} record={bestScore} onRestart={handleRestart} />
           </motion.div>
         )}
 
