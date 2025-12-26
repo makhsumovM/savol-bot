@@ -6,14 +6,15 @@ import { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { store } from '@/lib/store/store'
 import { ThemeProvider } from '@/lib/providers/theme-provider'
-
+import { Toaster } from 'sonner'
 const queryClient = new QueryClient()
 
 const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider enableSystem attribute="class" defaultTheme="dark"   disableTransitionOnChange>
+        <ThemeProvider enableSystem attribute="class" defaultTheme="dark" disableTransitionOnChange>
+          <Toaster closeButton richColors />
           {children}
         </ThemeProvider>
       </QueryClientProvider>
