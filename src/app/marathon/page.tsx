@@ -136,12 +136,11 @@ const MarathonPage = () => {
         >
           <h1
             suppressHydrationWarning
-            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
+            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight
+  bg-linear-to-r from-primary to-primary-2
+  bg-clip-text text-transparent"
           >
-            <span style={{ color: 'rgb(245, 73, 0)' }}>{t('marathon.title').split(' ')[0]}</span>{' '}
-            <span style={{ color: 'oklch(0.75 0.20 185)' }}>
-              {t('marathon.title').split(' ').slice(1).join(' ')}
-            </span>
+            {t('marathon.title')}
           </h1>
         </motion.div>
 
