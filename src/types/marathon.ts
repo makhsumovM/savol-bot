@@ -6,3 +6,15 @@ export interface MarathonQuestion {
   correctIndex: number
   difficulty: 'easy' | 'medium' | 'hard' | 'very-hard' | 'expert'
 }
+
+export interface ICreateMarathonAttempt {
+  frontendScore: number
+  backendScore: number
+}
+
+export interface IScore {
+  bestFrontendScore: number
+  bestBackendScore: number
+  frontendAchievedAt: string
+  backendAchievedAt: string
+}
