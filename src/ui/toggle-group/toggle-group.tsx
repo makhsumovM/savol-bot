@@ -64,8 +64,9 @@ function ToggleGroupItem({
           variant: context.variant || variant,
           size: context.size || size,
         }),
-        'w-auto min-w-0 shrink-0 px-3 py-2 rounded-md focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
-        'transition-all duration-200 hover:scale-105',
+        'w-auto min-w-0 shrink-0 px-2 sm:px-3 py-1.5 sm:py-2 rounded-md',
+        'focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
+        'transition-all duration-200 hover:scale-105 sm:hover:scale-110',
         className,
       )}
       {...props}
