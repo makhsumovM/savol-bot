@@ -1,30 +1,15 @@
-"use client"
+'use client'
 
-import { useState, useRef, useEffect } from "react"
-import { useTranslation } from "react-i18next"
-import i18n from "@/i18n"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, Check } from "lucide-react"
+import { useState, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronDown, Check } from 'lucide-react'
 
 const languages = [
-  {
-    code: "tj",
-    label: "Тоҷикӣ",
-    shortLabel: "TJ",
-    flagSrc: "/tj.png",
-  },
-  {
-    code: "en",
-    label: "English",
-    shortLabel: "EN",
-    flagSrc: "/en.png",
-  },
-  {
-    code: "ru",
-    label: "Русский",
-    shortLabel: "RU",
-    flagSrc: "/ru.png",
-  },
+  { code: 'tj', label: 'Тоҷикӣ', shortLabel: 'TJ', flagSrc: '/tj.png' },
+  { code: 'en', label: 'English', shortLabel: 'EN', flagSrc: '/en.png' },
+  { code: 'ru', label: 'Русский', shortLabel: 'RU', flagSrc: '/ru.png' },
 ]
 
 export default function LanguageSwitcher() {
@@ -43,10 +28,12 @@ export default function LanguageSwitcher() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) setOpen(false)
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
     }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const currentLanguage = languages.find((l) => l.code === currentLang) || languages[0]
@@ -60,9 +47,15 @@ export default function LanguageSwitcher() {
         aria-label="Select language"
         aria-expanded={open}
         aria-haspopup="true"
-        className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl bg-card/80 backdrop-blur-xl border border-border/50 shadow-sm hover:shadow-md hover:border-primary/30 text-foreground font-medium transition-all duration-300 min-w-[100px]"
+        className="
+          group relative flex items-center gap-3 px-3 py-2.5 rounded-xl
+          bg-card/80 backdrop-blur-xl border border-border/50 shadow-sm
+          transition-all duration-300 hover:shadow-md hover:border-primary/30
+          w-auto min-h-11 max-h-11
+          lg:min-w-[110px] lg:max-w-[110px]
+        "
       >
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 rounded-xl bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <span className="relative flex items-center gap-2.5 flex-1">
           <img
             src={currentLanguage.flagSrc}
@@ -73,7 +66,7 @@ export default function LanguageSwitcher() {
         </span>
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           className="relative text-muted-foreground group-hover:text-foreground transition-colors"
         >
           <ChevronDown size={16} strokeWidth={2.5} />
@@ -86,10 +79,10 @@ export default function LanguageSwitcher() {
             initial={{ opacity: 0, scale: 0.96, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -8 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className="absolute right-0 mt-2 min-w-[200px] rounded-xl bg-card/95 backdrop-blur-2xl border border-border/50 shadow-2xl overflow-hidden z-50"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
             <div className="relative flex flex-col py-1.5">
               {languages.map((lang, index) => {
                 const isActive = lang.code === currentLang
@@ -102,15 +95,17 @@ export default function LanguageSwitcher() {
                     onClick={() => changeLanguage(lang.code)}
                     className={`
                       group/item relative flex items-center justify-between gap-3 px-4 py-3 transition-all duration-200 cursor-pointer
-                      ${isActive ? "bg-primary/15 text-primary font-semibold" : "hover:bg-primary/8 text-foreground hover:text-primary"}
+                      ${isActive
+                        ? 'bg-primary/15 text-primary font-semibold'
+                        : 'hover:bg-primary/8 text-foreground hover:text-primary'}
                     `}
-                    aria-current={isActive ? "true" : "false"}
+                    aria-current={isActive ? 'true' : 'false'}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="activeLanguage"
                         className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
                     )}
                     <span className="flex items-center gap-3 flex-1">
@@ -125,7 +120,7 @@ export default function LanguageSwitcher() {
                       <motion.span
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                       >
                         <Check size={16} strokeWidth={3} className="text-primary" />
                       </motion.span>
