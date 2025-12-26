@@ -2,18 +2,18 @@
   "app": {
     "name": "SkillCheck",
     "subtitle": "AI Tester",
-    "description": "Pick a mode on the first screen, dive into questions without extra clicks, and stay focused with minimal animations."
+    "description": "Choose a mode on the first screen, dive into questions without extra clicks, and stay focused with minimal animations."
   },
 
   "home": {
     "cta": {
-      "startMarathon": "Start marathon →",
+      "startMarathon": "Start Marathon →",
       "features": "Rhythm, density, and subtle animations"
     },
     "ui": {
       "pulse": "Pulse UI",
       "microInteractions": "Micro-interactions",
-      "focusMode": "Focus mode",
+      "focusMode": "Focus Mode",
       "noNoise": "No visual noise"
     },
     "rows": {
@@ -44,25 +44,26 @@
 
   "header": {
     "nav": {
-      "marathon": "Start marathon",
-      "random": "Random game"
-    }
+      "marathon": "Start Marathon",
+      "random": "Random Game",
+      "myBest": "My Best Scores"
+    },
+    "login": "Login"
   },
-   "random": {
+
+  "random": {
     "title": "Random Questions",
-    "noQuestions": "Error loading random questions"
-
-   },
-
+    "noQuestions": "Failed to load random questions"
+  },
 
   "marathon": {
     "title": "Marathon Questions",
     "score": {
-      "current": "Current score",
+      "current": "Current Score",
       "record": "Record",
-      "difficulty" : "Difficulty"
+      "difficulty": "Difficulty"
     },
-    "noQuestions": "Error loading marathon"
+    "noQuestions": "Failed to load marathon questions"
   },
 
   "question": {
@@ -73,14 +74,16 @@
 
   "gameOver": {
     "title": "Game Over",
-    "wrongAnswer": "You answered incorrectly. Round score:",
+    "wrongAnswer": "You answered incorrectly.",
+    "score": "Round Score:",
     "record": "Record:",
     "restart": "Restart"
   },
 
   "errors": {
     "loadFailed": "Failed to load questions.",
-    "notFound": "No questions found."
+    "notFound": "No questions found.",
+    "myBestLoadError": "Failed to load my best scores"
   },
 
   "loading": {
@@ -88,7 +91,33 @@
   },
 
   "theme": {
-    "light": "Light mode",
-    "dark": "Dark mode"
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+
+  "notfound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "home": "Back to Home",
+    "back": "Back",
+    "hint": "Hint: The page may have been removed, renamed, or is temporarily unavailable."
+  },
+
+  "myBestScores": {
+    "title": "My Best Scores",
+    "sections": {
+      "frontend": {
+        "title": "Frontend",
+        "bestScore": "Best Score",
+        "achievedAt": "Achieved At",
+        "retry": "Retry"
+      },
+      "backend": {
+        "title": "Backend",
+        "bestScore": "Best Score",
+        "achievedAt": "Achieved At",
+        "retry": "Retry"
+      }
+    }
   }
 }
