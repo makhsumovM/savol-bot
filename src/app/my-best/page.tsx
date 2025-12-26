@@ -18,9 +18,13 @@ const MyBestScoresPage = () => {
     queryFn: getMyBestScores,
     refetchOnWindowFocus: false,
   })
+  if (isLoading || !data) {
+    return <Loading />
+  }
 
-  if (isLoading) return <Loading text={t('loading.text')} />
-  if (isError || !data) return <Error message={t('errors.myBestLoadError')} />
+  if (isError) {
+    return <Error message={t('errors.myBestLoadError')} />
+  }
 
   const { bestFrontendScore, bestBackendScore, frontendAchievedAt, backendAchievedAt } = data.data
 
@@ -41,55 +45,65 @@ const MyBestScoresPage = () => {
           {t('myBestScores.title')}
         </motion.h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <Trophy size={28} className="text-primary" />
-              <h2 className="text-2xl font-semibold text-primary">{t('myBestScores.sections.frontend.title')}</h2>
-            </div>
-            <p className="text-lg font-medium mb-1">
-              {t('myBestScores.sections.frontend.bestScore')}: {bestFrontendScore}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {t('myBestScores.sections.frontend.achievedAt')}: {new Date(frontendAchievedAt).toLocaleString()}
-            </p>
-            <Link
-              href="/marathon"
-              className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
             >
-              {t('myBestScores.sections.frontend.retry')}
-            </Link>
-          </motion.div>
+              <div className="flex items-center gap-3 mb-4">
+                <Trophy size={28} className="text-primary" />
+                <h2 className="text-2xl font-semibold text-primary">
+                  {t('myBestScores.sections.frontend.title')}
+                </h2>
+              </div>
+              <p className="text-lg font-medium mb-1">
+                {t('myBestScores.sections.frontend.bestScore')}: {bestFrontendScore}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {t('myBestScores.sections.frontend.achievedAt')}:{' '}
+                {new Date(frontendAchievedAt).toLocaleString()}
+              </p>
+              <Link
+                href="/marathon"
+                className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
+              >
+                {t('myBestScores.sections.frontend.retry')}
+              </Link>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <Trophy size={28} className="text-primary-2" />
-              <h2 className="text-2xl font-semibold text-primary-2">{t('myBestScores.sections.backend.title')}</h2>
-            </div>
-            <p className="text-lg font-medium mb-1">
-              {t('myBestScores.sections.backend.bestScore')}: {bestBackendScore}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {t('myBestScores.sections.backend.achievedAt')}: {new Date(backendAchievedAt).toLocaleString()}
-            </p>
-            <Link
-              href="/marathon"
-              className="mt-4 inline-block text-sm font-medium text-primary-2 hover:underline"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
             >
-              {t('myBestScores.sections.backend.retry')}
-            </Link>
-          </motion.div>
-        </div>
+              <div className="flex items-center gap-3 mb-4">
+                <Trophy size={28} className="text-primary-2" />
+                <h2 className="text-2xl font-semibold text-primary-2">
+                  {t('myBestScores.sections.backend.title')}
+                </h2>
+              </div>
+              <p className="text-lg font-medium mb-1">
+                {t('myBestScores.sections.backend.bestScore')}: {bestBackendScore}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {t('myBestScores.sections.backend.achievedAt')}:{' '}
+                {new Date(backendAchievedAt).toLocaleString()}
+              </p>
+              <Link
+                href="/marathon"
+                className="mt-4 inline-block text-sm font-medium text-primary-2 hover:underline"
+              >
+                {t('myBestScores.sections.backend.retry')}
+              </Link>
+            </motion.div>
+          </div>
+        )}
       </div>
     </section>
   )
