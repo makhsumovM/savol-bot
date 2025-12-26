@@ -15,59 +15,71 @@ const GameOver = ({ currentScore, record, onRestart }: IGameOverProps) => {
 
   return (
     <motion.div
-      className="relative p-8 sm:p-10 flex flex-col items-center justify-center gap-6 bg-card/90 backdrop-blur-2xl text-card-foreground rounded-3xl shadow-2xl border-2 border-destructive/30 max-w-lg mx-auto overflow-hidden"
-      initial={{ opacity: 0, scale: 0.85, y: 30 }}
+      className="relative p-6 sm:p-8 flex flex-col items-center gap-6
+        bg-card/90 backdrop-blur-2xl text-card-foreground
+        rounded-3xl shadow-2xl border-2 border-destructive/30
+        max-w-md mx-auto text-center overflow-hidden"
+      initial={{ opacity: 0, scale: 0.9, y: 30 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.85, y: 30 }}
-      transition={{ duration: 0.6, type: 'spring', stiffness: 180, damping: 20 }}
+      transition={{ duration: 0.5 }}
     >
+      {/* background */}
       <div className="absolute inset-0 bg-destructive/10 blur-3xl animate-pulse-slow" />
 
+      {/* title */}
       <motion.h1
-        className="relative text-6xl sm:text-7xl font-black tracking-tight"
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.5 }}
+        className="relative text-3xl md:text-5xl font-black tracking-tight"
         style={{ color: 'rgb(245, 73, 0)' }}
       >
         {t('gameOver.title')}
       </motion.h1>
 
-      <motion.p
-        className="relative text-lg font-bold text-muted-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        {t('gameOver.wrongAnswer')}{' '}
-        <span className="text-3xl font-black" style={{ color: 'oklch(0.75 0.20 185)' }}>
-          {currentScore}
-        </span>
-      </motion.p>
+      {/* description */}
+      <p className="relative text-base font-semibold text-muted-foreground max-w-xs">
+        {t('gameOver.wrongAnswer')}
+      </p>
 
-      <motion.p
-        className="relative text-lg font-bold text-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        {t('gameOver.record')}{' '}
-        <span className="text-3xl font-black" style={{ color: 'rgb(245, 73, 0)' }}>
-          {record}
-        </span>
-      </motion.p>
+      {/* score + record */}
+      <div className="relative flex gap-10 mt-2">
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-base font-semibold text-muted-foreground">
+            {t('gameOver.score')}
+          </span>
 
+          <span
+            className="text-3xl font-black"
+            style={{ color: 'oklch(0.75 0.20 185)' }}
+          >
+            {currentScore}
+          </span>
+        </div>
+
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-base font-semibold text-muted-foreground">
+            {t('gameOver.record')}
+          </span>
+
+          <span
+            className="text-3xl font-black"
+            style={{ color: 'rgb(245, 73, 0)' }}
+          >
+            {record}
+          </span>
+        </div>
+      </div>
+
+      {/* button */}
       <motion.button
-        aria-label={t('gameOver.restart')}
-        className="relative mt-6 px-8 py-4  bg-primary-2 text-white rounded-2xl flex items-center gap-3 text-xl font-black shadow-2xl border-2 border-white/20"
+        className="relative mt-4 px-6 py-3
+          bg-primary-2 text-white rounded-xl
+          flex items-center gap-2
+          text-lg font-black
+          shadow-2xl border-2 border-white/20"
         onClick={onRestart}
-        whileHover={{ scale: 1.08, y: -3 }}
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
       >
-        <RefreshCcw className="w-6 h-6" />
+        <RefreshCcw className="w-5 h-5" />
         {t('gameOver.restart')}
       </motion.button>
     </motion.div>
