@@ -28,7 +28,6 @@ const RandomPage = () => {
     refetchOnWindowFocus: false,
   })
 
-  // reset only
   useEffect(() => {
     setCurrentIndex(0)
     setScore(0)
@@ -49,9 +48,7 @@ const RandomPage = () => {
         <button
           onClick={() => setType('frontend')}
           className={`px-4 py-2 rounded ${
-            type === 'frontend'
-              ? 'bg-primary text-white'
-              : 'bg-primary/10 text-primary'
+            type === 'frontend' ? 'bg-primary text-white' : 'bg-primary/10 text-primary'
           }`}
         >
           Frontend
@@ -60,9 +57,7 @@ const RandomPage = () => {
         <button
           onClick={() => setType('backend')}
           className={`px-4 py-2 rounded ${
-            type === 'backend'
-              ? 'bg-primary text-white'
-              : 'bg-primary/10 text-primary'
+            type === 'backend' ? 'bg-primary text-white' : 'bg-primary/10 text-primary'
           }`}
         >
           Backend
@@ -72,9 +67,7 @@ const RandomPage = () => {
       {isLoading && <Loading />}
       {isError && <Error message={t('random.errorLoading')} />}
 
-      {!isLoading && !questions.length && (
-        <Error message={t('random.noQuestions')} />
-      )}
+      {!isLoading && !questions.length && <Error message={t('random.noQuestions')} />}
 
       <AnimatePresence mode="wait">
         {currentQuestion && (
