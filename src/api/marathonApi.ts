@@ -32,11 +32,4 @@ export const createMarathonAttempt = async (data: ICreateMarathonAttempt) => {
     throw error
   }
 }
-export const getMyBestScores = async () => {
-  try {
-    const response = await api.get<IScore>('/marathon/my-best')
-    return response.data || []
-  } catch (error) {
-    throw error || []
-  }
-}
+
