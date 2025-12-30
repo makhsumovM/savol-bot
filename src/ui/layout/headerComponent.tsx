@@ -8,29 +8,30 @@ import LanguageSwitcher from '@/ui/common/languageSwitcher/languageSwitcher'
 import clsx from 'clsx'
 import Image from 'next/image'
 import logo from '../../../public/favicon.ico'
-import { User } from 'lucide-react'
+import { User, Activity, Dices, Award, ChartBar, Badge } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { getJwtFromCookie } from '@/lib/utils/jwt'
 
 const HeaderComponent = () => {
   const { t } = useTranslation()
-  const pathname = usePathname() // получаем текущий путь
+  const pathname = usePathname()
+
+  const jwt = getJwtFromCookie()
+  const userName = jwt?.Email?.split('@')[0]
 
   const navLinks = [
-    { href: '/marathon', label: t('header.nav.marathon') },
-    { href: '/random', label: t('header.nav.random') },
-    { href: '/my-best', label: t('header.nav.myBest') },
+    { href: '/marathon', icon: Activity },
+    { href: '/random', icon: Dices },
+    ...(jwt ? [{ href: '/my-best', icon: Award }] : []),
+    ...(jwt ? [{ href: '/my-rank', icon: Badge }] : []),
+    { href: '/leaderboard', icon: ChartBar },
   ]
-
   return (
     <motion.header
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="
-        sticky top-0 z-50 flex items-center justify-between
-        px-1 sm:px-2 md:px-3 lg:px-2 py-1
-        backdrop-blur-lg bg-background/80 border-b border-border shadow-sm
-      "
+      className="sticky top-0 z-50 flex items-center justify-between px-1 sm:px-2 md:px-3 lg:px-2 py-1 backdrop-blur-lg bg-background/80 border-b border-border shadow-sm"
     >
       <Link href="/" className="shrink-0 z-10">
         <Image
@@ -41,26 +42,27 @@ const HeaderComponent = () => {
         />
       </Link>
 
-      <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-4">
-        {navLinks.map(({ href, label }) => {
+      <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8">
+        {navLinks.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href
 
           return (
             <motion.div
               key={href}
-              whileHover={{ scale: 1.03, y: -1 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 15 }}
+              whileHover={{ scale: 1.1, y: -2 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
             >
               <Link
                 href={href}
+                aria-label={label}
                 className={clsx(
-                  'px-2 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors duration-150',
+                  'flex items-center justify-center p-3 rounded-lg transition-colors duration-200',
                   isActive
                     ? 'text-primary bg-accent/20'
                     : 'text-foreground hover:text-primary hover:bg-accent/30',
                 )}
               >
-                {label}
+                <Icon size={24} />
               </Link>
             </motion.div>
           )
@@ -71,17 +73,20 @@ const HeaderComponent = () => {
         <LanguageSwitcher />
         <ModeToggle />
 
-        <Link
-          href="/login"
-          className={clsx(
-            'hidden md:flex h-9.5  items-center gap-1 sm:gap-2 px-2.5  rounded-lg font-medium text-xs sm:text-sm',
-            'bg-primary text-primary-foreground shadow-sm hover:shadow-md hover:bg-primary/90',
-            'transition-all duration-200 transform hover:-translate-y-0.5',
-          )}
-        >
-          <User size={16} />
-          <span>{t('header.login')}</span>
-        </Link>
+        {!jwt ? (
+          <Link
+            href="/login"
+            className="hidden md:flex h-9.5 items-center gap-1 sm:gap-2 px-2.5 rounded-lg bg-primary text-primary-foreground text-xs sm:text-sm font-medium shadow-sm hover:shadow-md hover:bg-primary/90 transition-all duration-200 hover:-translate-y-0.5"
+          >
+            <User size={16} />
+            <span>{t('header.login')}</span>
+          </Link>
+        ) : (
+          <div className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/30 text-foreground text-xs sm:text-sm font-medium">
+            <User size={16} />
+            <span>{userName}</span>
+          </div>
+        )}
       </div>
     </motion.header>
   )
