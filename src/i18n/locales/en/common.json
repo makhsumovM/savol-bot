@@ -40,11 +40,6 @@
     }
   },
   "header": {
-    "nav": {
-      "marathon": "Marathon",
-      "random": "Random",
-      "myBest": "Best Scores"
-    },
     "login": "Login"
   },
   "random": {
@@ -75,7 +70,8 @@
   "errors": {
     "loadFailed": "Failed to load questions.",
     "notFound": "Questions not found.",
-    "myBestLoadError": "Failed to load best scores"
+    "myBestLoadError": "Failed to load best scores",
+    "leaderboardLoadError": "Failed to load leaderboard"
   },
   "loading": {
     "text": "Loading..."
@@ -91,7 +87,7 @@
     "back": "Back",
     "hint": "Hint: the page may have been deleted, renamed, or temporarily unavailable."
   },
-  "myBestScores": {
+  "myBest": {
     "title": "My Best Scores",
     "sections": {
       "frontend": {
@@ -123,7 +119,7 @@
   },
   "register": {
     "title": "Create your account on ",
-    "subtitle":"Sign up to continue",
+    "subtitle": "Sign up to continue",
     "form": {
       "fields": {
         "fullName": {
@@ -151,6 +147,18 @@
     "toasts": {
       "success": "Account created successfully",
       "error": "Account creation failed"
+    }
+  },
+  "myRank": {
+    "title": "My Rank",
+    "yourRank": "Your Rank"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "columns": {
+      "rank": "Rank",
+      "username": "Username",
+      "score": "Score"
     }
   }
 }
