@@ -12,9 +12,4 @@ export interface ICreateMarathonAttempt {
   backendScore: number
 }
 
-export interface IScore {
-  bestFrontendScore: number
-  bestBackendScore: number
-  frontendAchievedAt: string
-  backendAchievedAt: string
-}
+
