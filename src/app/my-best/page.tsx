@@ -3,21 +3,22 @@
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import Loading from '@/ui/common/loading'
 import Error from '@/ui/common/error'
-import { IScore } from '@/types/marathon'
-import { getMyBestScores } from '@/api/marathonApi'
 import Link from 'next/link'
 import { Trophy } from 'lucide-react'
+import { IMybest } from '@/types/my-best'
+import Loading from '@/ui/common/loading'
+import { getMyBest } from '@/api/my-bestApi'
 
-const MyBestScoresPage = () => {
+const MyBestPage = () => {
   const { t } = useTranslation()
 
-  const { data, isLoading, isError } = useQuery<IScore>({
+  const { data, isLoading, isError } = useQuery<IMybest>({
     queryKey: ['my-best-scores'],
-    queryFn: getMyBestScores,
+    queryFn: getMyBest,
     refetchOnWindowFocus: false,
   })
+
   if (isLoading || !data) {
     return <Loading />
   }
@@ -42,71 +43,67 @@ const MyBestScoresPage = () => {
              bg-linear-to-r from-primary to-primary-2
              bg-clip-text text-transparent"
         >
-          {t('myBestScores.title')}
+          {t('myBest.title')}
         </motion.h1>
 
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Trophy size={28} className="text-primary" />
+              <h2 className="text-2xl font-semibold text-primary">
+                {t('myBest.sections.frontend.title')}
+              </h2>
+            </div>
+            <p className="text-lg font-medium mb-1">
+              {t('myBest.sections.frontend.bestScore')}: {bestFrontendScore}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {t('myBest.sections.frontend.achievedAt')}:{' '}
+              {new Date(frontendAchievedAt).toLocaleString()}
+            </p>
+            <Link
+              href="/marathon"
+              className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <Trophy size={28} className="text-primary" />
-                <h2 className="text-2xl font-semibold text-primary">
-                  {t('myBestScores.sections.frontend.title')}
-                </h2>
-              </div>
-              <p className="text-lg font-medium mb-1">
-                {t('myBestScores.sections.frontend.bestScore')}: {bestFrontendScore}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {t('myBestScores.sections.frontend.achievedAt')}:{' '}
-                {new Date(frontendAchievedAt).toLocaleString()}
-              </p>
-              <Link
-                href="/marathon"
-                className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
-              >
-                {t('myBestScores.sections.frontend.retry')}
-              </Link>
-            </motion.div>
+              {t('myBest.sections.frontend.retry')}
+            </Link>
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="p-8 rounded-3xl border border-border/30 shadow-xl bg-card/80 backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Trophy size={28} className="text-primary-2" />
+              <h2 className="text-2xl font-semibold text-primary-2">
+                {t('myBest.sections.backend.title')}
+              </h2>
+            </div>
+            <p className="text-lg font-medium mb-1">
+              {t('myBest.sections.backend.bestScore')}: {bestBackendScore}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {t('myBest.sections.backend.achievedAt')}:{' '}
+              {new Date(backendAchievedAt).toLocaleString()}
+            </p>
+            <Link
+              href="/marathon"
+              className="mt-4 inline-block text-sm font-medium text-primary-2 hover:underline"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <Trophy size={28} className="text-primary-2" />
-                <h2 className="text-2xl font-semibold text-primary-2">
-                  {t('myBestScores.sections.backend.title')}
-                </h2>
-              </div>
-              <p className="text-lg font-medium mb-1">
-                {t('myBestScores.sections.backend.bestScore')}: {bestBackendScore}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {t('myBestScores.sections.backend.achievedAt')}:{' '}
-                {new Date(backendAchievedAt).toLocaleString()}
-              </p>
-              <Link
-                href="/marathon"
-                className="mt-4 inline-block text-sm font-medium text-primary-2 hover:underline"
-              >
-                {t('myBestScores.sections.backend.retry')}
-              </Link>
-            </motion.div>
-          </div>
-        )}
+              {t('myBest.sections.backend.retry')}
+            </Link>
+          </motion.div>
+        </div>
       </div>
     </section>
   )
 }
 
-export default MyBestScoresPage
+export default MyBestPage
