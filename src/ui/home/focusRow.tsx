@@ -20,7 +20,7 @@ export function FocusRow({ label, delay }: FocusRowProps) {
         whileHover={{ scale: 1.5 }}
         transition={{ type: "spring", stiffness: 400 }}
       />
-      <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
+      <div className="flex-1 h-px bg-linear-to-r from-border to-transparent" />
       <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
         {label}
       </span>
