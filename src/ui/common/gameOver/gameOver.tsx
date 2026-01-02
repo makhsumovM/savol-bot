@@ -23,10 +23,8 @@ const GameOver = ({ currentScore, record, onRestart }: IGameOverProps) => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* background */}
       <div className="absolute inset-0 bg-destructive/10 blur-3xl animate-pulse-slow" />
 
-      {/* title */}
       <motion.h1
         className="relative text-3xl md:text-5xl font-black tracking-tight"
         style={{ color: 'rgb(245, 73, 0)' }}
@@ -34,12 +32,10 @@ const GameOver = ({ currentScore, record, onRestart }: IGameOverProps) => {
         {t('gameOver.title')}
       </motion.h1>
 
-      {/* description */}
       <p className="relative text-base font-semibold text-muted-foreground max-w-xs">
         {t('gameOver.wrongAnswer')}
       </p>
 
-      {/* score + record */}
       <div className="relative flex gap-10 mt-2">
         <div className="flex flex-col items-center gap-1">
           <span className="text-base font-semibold text-muted-foreground">
@@ -68,7 +64,6 @@ const GameOver = ({ currentScore, record, onRestart }: IGameOverProps) => {
         </div>
       </div>
 
-      {/* button */}
       <motion.button
         className="relative mt-4 px-6 py-3
           bg-primary-2 text-white rounded-xl
