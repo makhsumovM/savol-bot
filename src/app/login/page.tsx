@@ -13,18 +13,18 @@ import { loginApi } from '@/api/authApi'
 import FormInput from '@/ui/input/formInput'
 import { Button } from '@/ui/button/button'
 import { setCookie } from '@/lib/utils/cookies'
-import { useRouter } from 'next/navigation'
 
 const LoginPage = () => {
   const { t } = useTranslation()
-  const router = useRouter()
   const { mutate, isPending } = useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
       setCookie({ token: data.data.accessToken })
       setCookie({ token: data.data.refreshToken, key: 'refreshToken' })
       toast.success(t('login.loginSuccess'))
-      router.push('/')
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 500)
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message || t('login.loginFailed'))
