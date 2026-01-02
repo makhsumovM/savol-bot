@@ -4,23 +4,65 @@
     "subtitle": "AI Tester",
     "description": "Choose a mode on the first screen, dive into questions with minimal clicks, and focus with minimal animations."
   },
+  "errors": {
+    "loadFailed": "Failed to load questions.",
+    "notFound": "Questions not found.",
+    "myBestLoadError": "Failed to load best scores",
+    "leaderboardLoadError": "Failed to load leaderboard",
+    "profileLoadError": "Failed to load profile",
+    "updateProfileError": "Failed to update profile"
+  },
+  "gameOver": {
+    "title": "Game Over",
+    "wrongAnswer": "You answered incorrectly.",
+    "score": "Round Score:",
+    "record": "Record:",
+    "restart": "Restart"
+  },
+  "header": {
+    "login": "Login"
+  },
   "home": {
     "cta": {
       "startMarathon": "Start Marathon →",
       "features": "Rhythm, density, and subtle animations"
-    },
-    "ui": {
-      "pulse": "Pulsating interface",
-      "microInteractions": "Micro-interactions",
-      "focusMode": "Focus mode",
-      "noNoise": "No visual noise"
-    },
-    "rows": {
-      "row1": "Row 1",
-      "row2": "Row 2",
-      "row3": "Row 3",
-      "hover": "hover / tap"
     }
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "columns": {
+      "rank": "Rank",
+      "username": "Username",
+      "score": "Score"
+    },
+    "common": "You",
+    "inLeaderboard": "in the leaderboard",
+    "top5": "Top 5 Players"
+  },
+  "loading": {
+    "text": "Loading..."
+  },
+  "login": {
+    "title": "Login to ",
+    "subtitle": "Sign in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Sign In",
+    "signingIn": "Signing in...",
+    "createAccount": "Create Account",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed"
+  },
+  "marathon": {
+    "title": "Marathon Questions",
+    "score": {
+      "current": "Current Score",
+      "record": "Record",
+      "difficulty": "Difficulty"
+    },
+    "noQuestions": "Failed to load marathon questions"
   },
   "modes": {
     "marathon": {
@@ -39,56 +81,6 @@
       "description": "Programming tasks with hints, inspired by IDEs."
     }
   },
-  "header": {
-    "login": "Login"
-  },
-  "random": {
-    "title": "Random Questions",
-    "noQuestions": "Failed to load random questions"
-  },
-  "marathon": {
-    "title": "Marathon Questions",
-    "score": {
-      "current": "Current Score",
-      "record": "Record",
-      "difficulty": "Difficulty"
-    },
-    "noQuestions": "Failed to load marathon questions"
-  },
-  "question": {
-    "difficulty": "Difficulty",
-    "copy": "Copy",
-    "copied": "Copied"
-  },
-  "gameOver": {
-    "title": "Game Over",
-    "wrongAnswer": "You answered incorrectly.",
-    "score": "Round Score:",
-    "record": "Record:",
-    "restart": "Restart"
-  },
-  "errors": {
-    "loadFailed": "Failed to load questions.",
-    "notFound": "Questions not found.",
-    "myBestLoadError": "Failed to load best scores",
-    "leaderboardLoadError": "Failed to load leaderboard",
-    "profileLoadError": "Failed to load profile",
-    "updateProfileError": "Failed to update profile"
-  },
-  "loading": {
-    "text": "Loading..."
-  },
-  "theme": {
-    "light": "Light Theme",
-    "dark": "Dark Theme"
-  },
-  "notfound": {
-    "title": "Page Not Found",
-    "description": "The page you are looking for does not exist.",
-    "home": "Go Home",
-    "back": "Back",
-    "hint": "Hint: the page may have been deleted, renamed, or temporarily unavailable."
-  },
   "myBest": {
     "title": "My Best Scores",
     "sections": {
@@ -106,18 +98,40 @@
       }
     }
   },
-  "login": {
-    "title": "Login to ",
-    "subtitle": "Sign in to continue",
-    "emailLabel": "Email",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
-    "loginButton": "Sign In",
-    "signingIn": "Signing in...",
-    "createAccount": "Create Account",
-    "loginSuccess": "Login successful",
-    "loginFailed": "Login failed"
+  "myRank": {
+    "title": "My Rank",
+    "yourRank": "Your Rank",
+    "currentPosition": "Your current position in the leaderboard",
+    "place": "place"
+  },
+  "notfound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "home": "Go Home",
+    "back": "Back",
+    "hint": "Hint: the page may have been deleted, renamed, or temporarily unavailable."
+  },
+  "profile": {
+    "title": "Profile",
+    "joined": "Joined",
+    "bestFrontendScore": "Best Frontend Score",
+    "bestBackendScore": "Best Backend Score",
+    "updateProfile": "Update Profile",
+    "changePassword": "Change Password"
+  },
+  "profileMenu": {
+    "profile": "Profile",
+    "logout": "Logout",
+    "logoutSuccess": "Logged out successfully"
+  },
+  "question": {
+    "difficulty": "Difficulty",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "random": {
+    "title": "Random Questions",
+    "noQuestions": "Failed to load random questions"
   },
   "register": {
     "title": "Create your account on ",
@@ -151,27 +165,9 @@
       "error": "Account creation failed"
     }
   },
-  "myRank": {
-    "title": "My Rank",
-    "yourRank": "Your Rank",
-    "currentPosition": "Your current position in the leaderboard",
-    "place": "place"
-  },
-  "leaderboard": {
-    "title": "Leaderboard",
-    "columns": {
-      "rank": "Rank",
-      "username": "Username",
-      "score": "Score"
-    },
-    "inLeaderboard": "in the leaderboard"
-  },
-  "profile": {
-    "title": "Profile",
-    "joined": "Joined",
-    "bestFrontendScore": "Best Frontend Score",
-    "bestBackendScore": "Best Backend Score",
-    "updateProfile": "Update Profile"
+  "theme": {
+    "light": "Light Theme",
+    "dark": "Dark Theme"
   },
   "updateProfileModal": {
     "title": "Update Profile",
@@ -191,9 +187,30 @@
     },
     "success": "Profile updated successfully"
   },
-  "profileMenu": {
-    "profile": "Profile",
-    "logout": "Logout",
-    "logoutSuccess": "Logged out successfully"
+  "changePasswordModal": {
+    "title": "Change Password",
+    "fields": {
+      "currentPassword": {
+        "label": "Current Password",
+        "placeholder": "Enter your current password"
+      },
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter your new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm your new password"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "change": "Change Password"
+    },
+    "success": "Password changed successfully",
+    "error": "Failed to change password"
+  },
+  "common": {
+    "viewAll": "View All"
   }
 }
