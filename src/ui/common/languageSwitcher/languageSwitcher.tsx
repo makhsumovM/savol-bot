@@ -78,7 +78,7 @@ export default function LanguageSwitcher() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -6 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="absolute right-0 mt-1.5 min-w-[160px] rounded-lg bg-card/95 backdrop-blur-xl border border-border/50 shadow-xl overflow-hidden z-50"
+            className="absolute right-0 mt-1.5 min-w-40 rounded-lg bg-card/95 backdrop-blur-xl border border-border/50 shadow-xl overflow-hidden z-50"
           >
             <div className="relative flex flex-col py-1">
               {languages.map((lang, index) => {
