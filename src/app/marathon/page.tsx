@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -14,24 +13,39 @@ import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
 import reactIcon from '../../../public/react.png'
 import charmIcon from '../../../public/ccharm.png'
+import Cookies from 'js-cookie'
+import { useSearchParams } from 'next/navigation'
 
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert']
+
+const LOCAL_STORAGE_KEYS = {
+  frontend: 'marathon_best_frontend',
+  backend: 'marathon_best_backend',
+} as const
 
 const MarathonPage = () => {
   const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
+  const searchParams = useSearchParams()
   const lang = i18n.language
   const gameOverRef = useRef<HTMLDivElement | null>(null)
+
+  const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as
+    | 'frontend'
+    | 'backend'
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
   const [isGameOver, setIsGameOver] = useState(false)
   const [difficultyIndex, setDifficultyIndex] = useState(0)
-  const [mode, setMode] = useState<'frontend' | 'backend'>('frontend')
+  const [mode, setMode] = useState<'frontend' | 'backend'>(initialMode)
   const [isLose, setIsLose] = useState(false)
   const [bestScore, setBestScore] = useState(0)
 
   const currentDifficulty = difficulties[difficultyIndex]
+
+  const token = Cookies.get('token')
+  const isAuthenticated = !!token
 
   const {
     data: questions = [],
@@ -45,24 +59,53 @@ const MarathonPage = () => {
     refetchOnMount: 'always',
   })
 
-  const { mutate } = useMutation({
+  const { mutate: mutateAttempt } = useMutation({
     mutationFn: (data: ICreateMarathonAttempt) => createMarathonAttempt(data),
     onSuccess: (response) => {
-      if (mode === 'frontend') setBestScore(response.data.bestFrontendScore)
-      else setBestScore(response.data.bestBackendScore)
+      if (mode === 'frontend') {
+        setBestScore(response.data.bestFrontendScore)
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.frontend,
+          response.data.bestFrontendScore.toString(),
+        )
+      } else {
+        setBestScore(response.data.bestBackendScore)
+        localStorage.setItem(LOCAL_STORAGE_KEYS.backend, response.data.bestBackendScore.toString())
+      }
     },
   })
 
   useEffect(() => {
-    if (isGameOver && isLose) {
-      const data: ICreateMarathonAttempt =
-        mode === 'frontend'
-          ? { frontendScore: currentScore, backendScore: 0 }
-          : { frontendScore: 0, backendScore: currentScore }
-
-      mutate(data)
+    const loadBestScore = () => {
+      if (isAuthenticated) {
+        setBestScore(0)
+      } else {
+        const key = mode === 'frontend' ? LOCAL_STORAGE_KEYS.frontend : LOCAL_STORAGE_KEYS.backend
+        const saved = localStorage.getItem(key)
+        setBestScore(saved ? parseInt(saved, 10) : 0)
+      }
     }
-  }, [isGameOver, isLose, currentScore, mode, mutate])
+    loadBestScore()
+  }, [mode, lang, isAuthenticated])
+
+  useEffect(() => {
+    if (isGameOver && isLose && currentScore > 0) {
+      if (isAuthenticated) {
+        const data: ICreateMarathonAttempt =
+          mode === 'frontend'
+            ? { frontendScore: currentScore, backendScore: 0 }
+            : { frontendScore: 0, backendScore: currentScore }
+        mutateAttempt(data)
+      } else {
+        const key = mode === 'frontend' ? LOCAL_STORAGE_KEYS.frontend : LOCAL_STORAGE_KEYS.backend
+        const currentBest = parseInt(localStorage.getItem(key) || '0', 10)
+        if (currentScore > currentBest) {
+          localStorage.setItem(key, currentScore.toString())
+          setBestScore(currentScore)
+        }
+      }
+    }
+  }, [isGameOver, isLose, currentScore, mode, isAuthenticated, mutateAttempt])
 
   useEffect(() => {
     setCurrentIndex(0)
@@ -70,7 +113,6 @@ const MarathonPage = () => {
     setIsGameOver(false)
     setIsLose(false)
     setDifficultyIndex(0)
-    setBestScore(0)
   }, [lang, mode])
 
   useEffect(() => {
@@ -113,12 +155,17 @@ const MarathonPage = () => {
     setIsGameOver(false)
     setIsLose(false)
     setDifficultyIndex(0)
-    setBestScore(0)
 
     queryClient.invalidateQueries({
       queryKey: ['marathon', lang, currentDifficulty, mode],
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleModeChange = (newMode: 'frontend' | 'backend') => {
+    if (newMode !== mode) {
+      setMode(newMode)
+    }
   }
 
   return (
@@ -136,9 +183,7 @@ const MarathonPage = () => {
         >
           <h1
             suppressHydrationWarning
-            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight
-  bg-linear-to-r from-primary to-primary-2
-  bg-clip-text text-transparent"
+            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
           >
             {t('marathon.title')}
           </h1>
@@ -148,7 +193,7 @@ const MarathonPage = () => {
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setMode('frontend')}
+            onClick={() => handleModeChange('frontend')}
             className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
               mode === 'frontend'
                 ? 'bg-primary text-white border-primary shadow-primary/30'
@@ -156,13 +201,9 @@ const MarathonPage = () => {
             }`}
           >
             <span className="relative z-10 flex items-center gap-3">
-              <Image
-                src={reactIcon}
-                width={36}
-                height={36}
-                alt="Frontend"
-                className="drop-shadow-md"
-              />
+              <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
+                <Image src={reactIcon} width={48} height={48} alt="Frontend" />
+              </div>
               Frontend
             </span>
           </motion.button>
@@ -170,7 +211,7 @@ const MarathonPage = () => {
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setMode('backend')}
+            onClick={() => handleModeChange('backend')}
             className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
               mode === 'backend'
                 ? 'bg-primary-2 text-white border-primary-2 shadow-primary-2/40'
@@ -178,13 +219,9 @@ const MarathonPage = () => {
             }`}
           >
             <span className="relative z-10 flex items-center gap-3">
-              <Image
-                src={charmIcon}
-                width={36}
-                height={36}
-                alt="Backend"
-                className="drop-shadow-md"
-              />
+              <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
+                <Image src={charmIcon} width={48} height={48} alt="Backend" />
+              </div>
               Backend
             </span>
           </motion.button>
