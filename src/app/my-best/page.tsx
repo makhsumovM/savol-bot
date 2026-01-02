@@ -22,10 +22,10 @@ const MyBestPage = () => {
   if (isLoading || !data) return <Loading />
   if (isError) return <Error message={t('errors.myBestLoadError')} />
 
-  const { bestFrontendScore, bestBackendScore, frontendAchievedAt, backendAchievedAt } = data.data
+  const { bestFrontendScore, bestBackendScore, frontendAchievedAt, backendAchievedAt } = data
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-primary/10">
+    <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-background via-background to-primary/10">
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
       <div className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-primary/30 blur-3xl animate-pulse" />
       <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-primary-2/25 blur-3xl animate-pulse-slow" />
@@ -35,7 +35,7 @@ const MyBestPage = () => {
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="text-6xl md:text-8xl font-black text-center bg-gradient-to-r from-primary via-primary-2 to-primary bg-clip-text text-transparent tracking-tight mb-20"
+          className="text-6xl md:text-8xl font-black text-center bg-linear-to-r from-primary via-primary-2 to-primary bg-clip-text text-transparent tracking-tight mb-20"
         >
           {t('myBest.title')}
         </motion.h1>
@@ -47,22 +47,22 @@ const MyBestPage = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative group"
           >
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
+            <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/20 to-primary/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
 
             <div className="relative bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-3 transition-all duration-700">
               <div className="p-10 md:p-12">
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-primary to-primary-2 shadow-xl">
+                  <div className="p-4 rounded-2xl bg-linear-to-br from-primary to-primary-2 shadow-xl">
                     <Trophy size={40} className="text-white" />
                   </div>
-                  <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-2 bg-clip-text text-transparent">
+                  <h2 className="text-4xl font-bold bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
                     {t('myBest.sections.frontend.title')}
                   </h2>
                 </div>
 
                 <div className="space-y-6">
                   <div>
-                    <p className="text-6xl md:text-7xl font-black bg-gradient-to-r from-primary to-primary-2 bg-clip-text text-transparent">
+                    <p className="text-6xl md:text-7xl font-black bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
                       {bestFrontendScore.toLocaleString()}
                     </p>
                     <p className="text-xl text-foreground/80 mt-2">
@@ -80,14 +80,14 @@ const MyBestPage = () => {
 
                 <Link
                   href="/marathon?mode=frontend"
-                  className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-primary to-primary-2 text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-linear-to-r from-primary to-primary-2 text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                 >
                   <Repeat size={24} />
                   {t('myBest.sections.frontend.retry')}
                 </Link>
               </div>
 
-              <div className="h-3 bg-gradient-to-r from-primary to-primary-2" />
+              <div className="h-3 bg-linear-to-r from-primary to-primary-2" />
             </div>
           </motion.div>
 
@@ -97,22 +97,22 @@ const MyBestPage = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative group"
           >
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-2/20 to-primary-2/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
+            <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary-2/20 to-primary-2/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
 
             <div className="relative bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-3 transition-all duration-700">
               <div className="p-10 md:p-12">
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-primary-2 to-primary shadow-xl">
+                  <div className="p-4 rounded-2xl bg-linear-to-br from-primary-2 to-primary shadow-xl">
                     <Trophy size={40} className="text-white" />
                   </div>
-                  <h2 className="text-4xl font-bold bg-gradient-to-r from-primary-2 to-primary bg-clip-text text-transparent">
+                  <h2 className="text-4xl font-bold bg-linear-to-r from-primary-2 to-primary bg-clip-text text-transparent">
                     {t('myBest.sections.backend.title')}
                   </h2>
                 </div>
 
                 <div className="space-y-6">
                   <div>
-                    <p className="text-6xl md:text-7xl font-black bg-gradient-to-r from-primary-2 to-primary bg-clip-text text-transparent">
+                    <p className="text-6xl md:text-7xl font-black bg-linear-to-r from-primary-2 to-primary bg-clip-text text-transparent">
                       {bestBackendScore.toLocaleString()}
                     </p>
                     <p className="text-xl text-foreground/80 mt-2">
@@ -130,14 +130,14 @@ const MyBestPage = () => {
 
                 <Link
                   href="/marathon?mode=backend"
-                  className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-primary-2 to-primary text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-linear-to-r from-primary-2 to-primary text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                 >
                   <Repeat size={24} />
                   {t('myBest.sections.backend.retry')}
                 </Link>
               </div>
 
-              <div className="h-3 bg-gradient-to-r from-primary-2 to-primary" />
+              <div className="h-3 bg-linear-to-r from-primary-2 to-primary" />
             </div>
           </motion.div>
         </div>
