@@ -13,6 +13,7 @@ import { registerApi } from '@/api/authApi'
 import FormInput from '@/ui/input/formInput'
 import { Button } from '@/ui/button/button'
 import { useRouter } from 'next/navigation'
+import { Lock, Mail, User } from 'lucide-react'
 
 const RegisterPage = () => {
   const { t } = useTranslation()
@@ -68,6 +69,7 @@ const RegisterPage = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <FormInput
+            icon={User}
             name="fullName"
             control={control}
             label={t('register.form.fields.fullName.label')}
@@ -75,6 +77,7 @@ const RegisterPage = () => {
             type="text"
           />
           <FormInput
+            icon={Mail}
             name="email"
             control={control}
             label={t('register.form.fields.email.label')}
@@ -82,6 +85,7 @@ const RegisterPage = () => {
             type="email"
           />
           <FormInput
+            icon={Lock}
             name="password"
             control={control}
             label={t('register.form.fields.password.label')}
