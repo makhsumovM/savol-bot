@@ -163,7 +163,8 @@
       "rank": "Rank",
       "username": "Username",
       "score": "Score"
-    }
+    },
+    "inLeaderboard": "in the leaderboard"
   },
   "profile": {
     "title": "Profile",

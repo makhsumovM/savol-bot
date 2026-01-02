@@ -162,7 +162,8 @@
     "columns": {
       "rank": "Ранг",
       "username": "Имя Пользователя",
-      "score": "Счет"
+      "score": "Счет",
+      "inLeaderboard": "в таблице лидеров"
     }
   },
   "profile": {

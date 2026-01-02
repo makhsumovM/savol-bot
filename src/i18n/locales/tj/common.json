@@ -162,7 +162,8 @@
     "columns": {
       "rank": "Рутба",
       "username": "Номи корбар",
-      "score": "Ҳисоб"
+      "score": "Ҳисоб",
+      "inLeaderboard": "дар тахтаи пешсаф"
     }
   },
   "profile": {
