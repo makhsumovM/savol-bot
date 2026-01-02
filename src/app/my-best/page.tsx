@@ -19,11 +19,6 @@ const MyBestPage = () => {
     refetchOnWindowFocus: false,
   })
 
-  if (isLoading || !data) return <Loading />
-  if (isError) return <Error message={t('errors.myBestLoadError')} />
-
-  const { bestFrontendScore, bestBackendScore, frontendAchievedAt, backendAchievedAt } = data
-
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-background via-background to-primary/10">
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
@@ -40,107 +35,112 @@ const MyBestPage = () => {
           {t('myBest.title')}
         </motion.h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, x: -80 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative group"
-          >
-            <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/20 to-primary/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
+        {isLoading && <Loading />}
+        {isError && <Error message={t('errors.myBestLoadError')} />}
 
-            <div className="relative bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-3 transition-all duration-700">
-              <div className="p-10 md:p-12">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="p-4 rounded-2xl bg-linear-to-br from-primary to-primary-2 shadow-xl">
-                    <Trophy size={40} className="text-white" />
+        {data && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -80 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative group"
+            >
+              <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/20 to-primary/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
+
+              <div className="relative bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-3 transition-all duration-700">
+                <div className="p-10 md:p-12">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="p-4 rounded-2xl bg-linear-to-br from-primary to-primary-2 shadow-xl">
+                      <Trophy size={40} className="text-white" />
+                    </div>
+                    <h2 className="text-4xl font-bold bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
+                      {t('myBest.sections.frontend.title')}
+                    </h2>
                   </div>
-                  <h2 className="text-4xl font-bold bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
-                    {t('myBest.sections.frontend.title')}
-                  </h2>
+
+                  <div className="space-y-6">
+                    <div>
+                      <p className="text-6xl md:text-7xl font-black bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
+                        {data.bestFrontendScore.toLocaleString()}
+                      </p>
+                      <p className="text-xl text-foreground/80 mt-2">
+                        {t('myBest.sections.frontend.bestScore')}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Calendar size={20} />
+                      <span className="text-lg">
+                        {t('myBest.sections.frontend.achievedAt')}: {new Date(data.frontendAchievedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/marathon?mode=frontend"
+                    className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-linear-to-r from-primary to-primary-2 text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  >
+                    <Repeat size={24} />
+                    {t('myBest.sections.frontend.retry')}
+                  </Link>
                 </div>
 
-                <div className="space-y-6">
-                  <div>
-                    <p className="text-6xl md:text-7xl font-black bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
-                      {bestFrontendScore.toLocaleString()}
-                    </p>
-                    <p className="text-xl text-foreground/80 mt-2">
-                      {t('myBest.sections.frontend.bestScore')}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Calendar size={20} />
-                    <span className="text-lg">
-                      {t('myBest.sections.frontend.achievedAt')}: {new Date(frontendAchievedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </span>
-                  </div>
-                </div>
-
-                <Link
-                  href="/marathon?mode=frontend"
-                  className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-linear-to-r from-primary to-primary-2 text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <Repeat size={24} />
-                  {t('myBest.sections.frontend.retry')}
-                </Link>
+                <div className="h-3 bg-linear-to-r from-primary to-primary-2" />
               </div>
+            </motion.div>
 
-              <div className="h-3 bg-linear-to-r from-primary to-primary-2" />
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="relative group"
+            >
+              <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary-2/20 to-primary-2/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
 
-          <motion.div
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative group"
-          >
-            <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary-2/20 to-primary-2/5 blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
-
-            <div className="relative bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-3 transition-all duration-700">
-              <div className="p-10 md:p-12">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="p-4 rounded-2xl bg-linear-to-br from-primary-2 to-primary shadow-xl">
-                    <Trophy size={40} className="text-white" />
+              <div className="relative bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-3 transition-all duration-700">
+                <div className="p-10 md:p-12">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="p-4 rounded-2xl bg-linear-to-br from-primary-2 to-primary shadow-xl">
+                      <Trophy size={40} className="text-white" />
+                    </div>
+                    <h2 className="text-4xl font-bold bg-linear-to-r from-primary-2 to-primary bg-clip-text text-transparent">
+                      {t('myBest.sections.backend.title')}
+                    </h2>
                   </div>
-                  <h2 className="text-4xl font-bold bg-linear-to-r from-primary-2 to-primary bg-clip-text text-transparent">
-                    {t('myBest.sections.backend.title')}
-                  </h2>
+
+                  <div className="space-y-6">
+                    <div>
+                      <p className="text-6xl md:text-7xl font-black bg-linear-to-r from-primary-2 to-primary bg-clip-text text-transparent">
+                        {data.bestBackendScore.toLocaleString()}
+                      </p>
+                      <p className="text-xl text-foreground/80 mt-2">
+                        {t('myBest.sections.backend.bestScore')}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Calendar size={20} />
+                      <span className="text-lg">
+                        {t('myBest.sections.backend.achievedAt')}: {new Date(data.backendAchievedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/marathon?mode=backend"
+                    className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-linear-to-r from-primary-2 to-primary text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  >
+                    <Repeat size={24} />
+                    {t('myBest.sections.backend.retry')}
+                  </Link>
                 </div>
 
-                <div className="space-y-6">
-                  <div>
-                    <p className="text-6xl md:text-7xl font-black bg-linear-to-r from-primary-2 to-primary bg-clip-text text-transparent">
-                      {bestBackendScore.toLocaleString()}
-                    </p>
-                    <p className="text-xl text-foreground/80 mt-2">
-                      {t('myBest.sections.backend.bestScore')}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Calendar size={20} />
-                    <span className="text-lg">
-                      {t('myBest.sections.backend.achievedAt')}: {new Date(backendAchievedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </span>
-                  </div>
-                </div>
-
-                <Link
-                  href="/marathon?mode=backend"
-                  className="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-linear-to-r from-primary-2 to-primary text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <Repeat size={24} />
-                  {t('myBest.sections.backend.retry')}
-                </Link>
+                <div className="h-3 bg-linear-to-r from-primary-2 to-primary" />
               </div>
-
-              <div className="h-3 bg-linear-to-r from-primary-2 to-primary" />
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
+        )}
       </div>
     </section>
   )
