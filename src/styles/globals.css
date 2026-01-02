@@ -127,3 +127,27 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.drop-shadow-glow-yellow {
+  filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.8));
+}
+
+.drop-shadow-glow-gray {
+  filter: drop-shadow(0 0 20px rgba(156, 163, 175, 0.6));
+}
+
+.drop-shadow-glow-amber {
+  filter: drop-shadow(0 0 20px rgba(217, 119, 6, 0.8));
+}
+
+.bg-grid-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%236b7280' fill-opacity='0.1'%3E%3Cpath d='M0 40L40 0H0Z'/%3E%3C/g%3E%3C/svg%3E");
+}
