@@ -14,7 +14,6 @@ import { IProfile } from '@/types/auth'
 const MyRankPage = () => {
   const { t } = useTranslation()
 
-  // Загружаем ранг
   const {
     data: rankResponse,
     isPending: rankPending,
@@ -25,7 +24,6 @@ const MyRankPage = () => {
     refetchOnWindowFocus: false,
   })
 
-  // Загружаем профиль (чтобы показать имя, аватарку и лучшие результаты)
   const {
     data: profileData,
     isPending: profilePending,
@@ -60,11 +58,16 @@ const MyRankPage = () => {
   }
 
   const getRankBadgeColor = (rank: number) => {
-    if (rank === 1) return 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 border-yellow-300'
-    if (rank === 2) return 'bg-gray-100 dark:bg-gray-900/40 text-gray-700 dark:text-gray-300 border-gray-400'
-    if (rank === 3) return 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 border-amber-500'
-    if (rank === 4) return 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 border-blue-500'
-    if (rank === 5) return 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border-green-500'
+    if (rank === 1)
+      return 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 border-yellow-300'
+    if (rank === 2)
+      return 'bg-gray-100 dark:bg-gray-900/40 text-gray-700 dark:text-gray-300 border-gray-400'
+    if (rank === 3)
+      return 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 border-amber-500'
+    if (rank === 4)
+      return 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 border-blue-500'
+    if (rank === 5)
+      return 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border-green-500'
     return 'bg-muted dark:bg-muted/50 text-muted-foreground border-border'
   }
 
@@ -83,7 +86,6 @@ const MyRankPage = () => {
           {t('myRank.title')}
         </motion.h1>
 
-        {/* Основная карточка с рангом и профилем */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -91,13 +93,11 @@ const MyRankPage = () => {
           className="relative w-full max-w-2xl"
         >
           <div className="p-10 rounded-3xl shadow-2xl backdrop-blur-md bg-card/90 border border-border/50 overflow-hidden">
-            {/* Фоновый блик под рангом */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
             </div>
 
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-              {/* Аватарка */}
               <div className="relative">
                 <img
                   src={process.env.NEXT_PUBLIC_API_URL + '/' + profilePicture}
@@ -105,13 +105,16 @@ const MyRankPage = () => {
                   className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/50 shadow-xl"
                 />
                 <div className="absolute -bottom-2 -right-2">
-                  <div className={`px-4 py-2 rounded-full border-2 font-bold text-lg shadow-lg ${getRankBadgeColor(rank)}`}>
+                  <div
+                    className={`px-4 py-2 rounded-full border-2 font-bold text-lg shadow-lg ${getRankBadgeColor(
+                      rank,
+                    )}`}
+                  >
                     #{rank}
                   </div>
                 </div>
               </div>
 
-              {/* Информация */}
               <div className="flex-1 text-center md:text-left space-y-4">
                 <div>
                   <h2 className="text-3xl font-bold text-foreground">{fullName}</h2>
@@ -123,9 +126,7 @@ const MyRankPage = () => {
                 {/* Большой трофей и ранг */}
                 <div className="flex flex-col items-center md:items-start">
                   <Trophy size={80} className={`${getTrophyColor(rank)} mb-3`} />
-                  <p className="text-6xl md:text-7xl font-black tracking-tight">
-                    {rank}
-                  </p>
+                  <p className="text-6xl md:text-7xl font-black tracking-tight">{rank}</p>
                   <p className="text-xl font-medium text-muted-foreground mt-2">
                     {t('myRank.place')}
                   </p>
@@ -137,15 +138,11 @@ const MyRankPage = () => {
             <div className="mt-10 pt-8 border-t border-border/30 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground">{t('profile.bestFrontendScore')}</p>
-                <p className="text-2xl font-bold text-primary">
-                  {bestResult.bestFrontendScore}
-                </p>
+                <p className="text-2xl font-bold text-primary">{bestResult.bestFrontendScore}</p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-muted-foreground">{t('profile.bestBackendScore')}</p>
-                <p className="text-2xl font-bold text-primary-2">
-                  {bestResult.bestBackendScore}
-                </p>
+                <p className="text-2xl font-bold text-primary-2">{bestResult.bestBackendScore}</p>
               </div>
             </div>
           </div>
