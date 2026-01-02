@@ -13,6 +13,7 @@ import { loginApi } from '@/api/authApi'
 import FormInput from '@/ui/input/formInput'
 import { Button } from '@/ui/button/button'
 import { setCookie } from '@/lib/utils/cookies'
+import { Lock, User } from 'lucide-react'
 
 const LoginPage = () => {
   const { t } = useTranslation()
@@ -20,7 +21,10 @@ const LoginPage = () => {
     mutationFn: loginApi,
     onSuccess: (data) => {
       setCookie({ token: data.data.accessToken })
-      setCookie({ token: data.data.refreshToken, key: 'refreshToken' })
+      setCookie({
+        token: data.data.refreshToken,
+        key: 'refreshToken',
+      })
       toast.success(t('login.loginSuccess'))
       setTimeout(() => {
         window.location.href = '/'
@@ -70,6 +74,7 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <FormInput
+            icon={User}
             name="email"
             control={control}
             label={t('login.emailLabel')}
@@ -77,6 +82,7 @@ const LoginPage = () => {
             type="email"
           />
           <FormInput
+            icon={Lock}
             name="password"
             control={control}
             label={t('login.passwordLabel')}
