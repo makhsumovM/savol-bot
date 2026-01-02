@@ -46,7 +46,7 @@ const MyRankPage = () => {
   }
 
   const rank = rankResponse.data
-  const { fullName, profilePicture, bestResult } = profileData.data
+  const { fullName, profilePicture, bestResult } = profileData
 
   const getTrophyColor = (rank: number) => {
     if (rank === 1) return 'text-yellow-400 drop-shadow-lg'
@@ -123,7 +123,6 @@ const MyRankPage = () => {
                   </p>
                 </div>
 
-                {/* Большой трофей и ранг */}
                 <div className="flex flex-col items-center md:items-start">
                   <Trophy size={80} className={`${getTrophyColor(rank)} mb-3`} />
                   <p className="text-6xl md:text-7xl font-black tracking-tight">{rank}</p>
@@ -134,7 +133,6 @@ const MyRankPage = () => {
               </div>
             </div>
 
-            {/* Лучшие результаты */}
             <div className="mt-10 pt-8 border-t border-border/30 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground">{t('profile.bestFrontendScore')}</p>
