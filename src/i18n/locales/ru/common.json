@@ -1,93 +1,226 @@
 {
   "app": {
     "name": "SkillCheck",
-    "subtitle": "AI Тестировщик",
-    "description": "Выберите режим на первом экране, переходите к вопросам без лишних кликов и оставайтесь сосредоточенными с минимальными анимациями."
+    "subtitle": "AI-тестер",
+    "description": "Выберите режим на стартовом экране, отвечайте на вопросы с минимумом действий и сосредоточьтесь благодаря минимальным анимациям."
   },
-
+  "errors": {
+    "loadFailed": "Не удалось загрузить вопросы.",
+    "notFound": "Вопросы не найдены.",
+    "myBestLoadError": "Не удалось загрузить лучшие результаты",
+    "leaderboardLoadError": "Не удалось загрузить таблицу лидеров",
+    "profileLoadError": "Не удалось загрузить профиль",
+    "updateProfileError": "Не удалось обновить профиль"
+  },
+  "gameOver": {
+    "title": "Игра окончена",
+    "wrongAnswer": "Вы ответили неверно.",
+    "score": "Счёт за раунд:",
+    "record": "Рекорд:",
+    "restart": "Начать заново"
+  },
+  "header": {
+    "login": "Войти"
+  },
   "home": {
     "cta": {
       "startMarathon": "Начать марафон →",
-      "features": "Ритм, плотность и лёгкие анимации"
-    },
-    "ui": {
-      "pulse": "Пульсирующий интерфейс",
-      "microInteractions": "Микровзаимодействия",
-      "focusMode": "Режим фокуса",
-      "noNoise": "Без визуального шума"
-    },
-    "rows": {
-      "row1": "Ряд 1",
-      "row2": "Ряд 2",
-      "row3": "Ряд 3",
-      "hover": "наведение / касание"
+      "features": "Ритм, плотность и ненавязчивые анимации"
     }
   },
-
-  "modes": {
-    "marathon": {
-      "title": "Марафон",
-      "badge": "LIVE",
-      "description": "Бесконечная серия вопросов для тренировки концентрации."
+  "leaderboard": {
+    "title": "Таблица лидеров",
+    "columns": {
+      "rank": "Место",
+      "username": "Имя пользователя",
+      "score": "Очки"
     },
-    "classic": {
-      "title": "Рандомни",
-      "badge": "LIVE",
-      "description": "Спринт из 10–15 вопросов для быстрой самопроверки."
-    },
-    "coding": {
-      "title": "Кодинг",
-      "badge": "СКОРО",
-      "description": "Задачи по программированию с подсказками, вдохновлённые IDE."
-    }
+    "inLeaderboard": "в таблице лидеров",
+    "top5": "Топ 5 игроков",
+    "common": "Вы"
   },
-
-  "header": {
-    "nav": {
-      "marathon": "Начать марафон",
-      "random": "Случайная игра"
-    }
+  "common": {
+    "viewAll": "Посмотреть все"
   },
-
-  "random": {
-    "title": "Вопросы рандомны",
-    "noQuestions": "Ошибка при загрузке рандоменных вопросов"
+  "loading": {
+    "text": "Загрузка..."
   },
-
+  "login": {
+    "title": "Вход в ",
+    "subtitle": "Войдите, чтобы продолжить",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Пароль",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Войти",
+    "signingIn": "Входим...",
+    "createAccount": "Создать аккаунт",
+    "loginSuccess": "Вход выполнен успешно",
+    "loginFailed": "Ошибка входа"
+  },
   "marathon": {
-    "title": "Вопросы марафона",
+    "title": "Марафон",
     "score": {
       "current": "Текущий счёт",
       "record": "Рекорд",
       "difficulty": "Сложность"
     },
-    "noQuestions": "Ошибка при загрузке марафона"
+    "bestScore": "Лучший рекорд",
+    "currentScore": "Текущий счёт",
+    "difficulty": "Уровень",
+    "difficulties": {
+      "easy": "Лёгкий",
+      "medium": "Средний",
+      "hard": "Сложный",
+      "very-hard": "Очень сложный",
+      "expert": "Эксперт"
+    },
+    "noQuestions": "Не удалось загрузить вопросы марафона"
   },
-
+  "modes": {
+    "marathon": {
+      "title": "Марафон",
+      "badge": "АКТИВНО",
+      "description": "Бесконечный поток вопросов для тренировки концентрации."
+    },
+    "classic": {
+      "title": "Случайные",
+      "badge": "АКТИВНО",
+      "description": "Короткая серия из 10–15 вопросов для быстрой проверки себя."
+    },
+    "coding": {
+      "title": "Кодирование",
+      "badge": "СКОРО",
+      "description": "Задачи по программированию с подсказками в стиле IDE."
+    }
+  },
+  "myBest": {
+    "title": "Мои лучшие результаты",
+    "sections": {
+      "frontend": {
+        "title": "Frontend",
+        "bestScore": "Лучший результат",
+        "achievedAt": "Достигнут",
+        "retry": "Попробовать снова"
+      },
+      "backend": {
+        "title": "Backend",
+        "bestScore": "Лучший результат",
+        "achievedAt": "Достигнут",
+        "retry": "Попробовать снова"
+      }
+    }
+  },
+  "myRank": {
+    "title": "Моё место",
+    "yourRank": "Ваше место",
+    "currentPosition": "Ваша текущая позиция в таблице лидеров",
+    "place": "место"
+  },
+  "notfound": {
+    "title": "Страница не найдена",
+    "description": "Запрошенная страница не существует.",
+    "home": "На главную",
+    "back": "Назад",
+    "hint": "Подсказка: страница могла быть удалена, переименована или временно недоступна."
+  },
+  "profile": {
+    "title": "Профиль",
+    "joined": "Присоединился",
+    "bestFrontendScore": "Лучший результат Frontend",
+    "bestBackendScore": "Лучший результат Backend",
+    "updateProfile": "Обновить профиль",
+    "changePassword": "Сменить пароль"
+  },
+  "profileMenu": {
+    "profile": "Профиль",
+    "logout": "Выйти",
+    "logoutSuccess": "Вы успешно вышли из аккаунта"
+  },
   "question": {
     "difficulty": "Сложность",
-    "copy": "Скопировать",
+    "copy": "Копировать",
     "copied": "Скопировано"
   },
-
-  "gameOver": {
-    "title": "Игра окончена",
-    "wrongAnswer": "Вы ответили неверно. Очки за раунд:",
-    "record": "Рекорд:",
-    "restart": "Начать заново"
+  "random": {
+    "title": "Случайные вопросы",
+    "noQuestions": "Не удалось загрузить случайные вопросы"
   },
-
-  "errors": {
-    "loadFailed": "Не удалось загрузить вопросы.",
-    "notFound": "Вопросы не найдены."
+  "register": {
+    "title": "Создание аккаунта в ",
+    "subtitle": "Зарегистрируйтесь, чтобы продолжить",
+    "form": {
+      "fields": {
+        "fullName": {
+          "label": "Полное имя",
+          "placeholder": "Полное имя"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "Пароль",
+          "placeholder": "••••••••"
+        }
+      },
+      "submitButton": {
+        "default": "Зарегистрироваться",
+        "loading": "Создаём аккаунт..."
+      }
+    },
+    "footer": {
+      "text": "Уже есть аккаунт?",
+      "linkText": "Войти"
+    },
+    "toasts": {
+      "success": "Аккаунт успешно создан",
+      "error": "Не удалось создать аккаунт"
+    }
   },
-
-  "loading": {
-    "text": "Загрузка..."
-  },
-
   "theme": {
     "light": "Светлая тема",
     "dark": "Тёмная тема"
+  },
+  "updateProfileModal": {
+    "title": "Обновление профиля",
+    "fields": {
+      "fullName": {
+        "label": "Полное имя",
+        "placeholder": "Введите ваше полное имя"
+      },
+      "profilePicture": {
+        "label": "Аватар"
+      }
+    },
+    "buttons": {
+      "cancel": "Отмена",
+      "update": "Обновить",
+      "updating": "Обновляем..."
+    },
+    "success": "Профиль успешно обновлён"
+  },
+  "changePasswordModal": {
+    "title": "Смена пароля",
+    "fields": {
+      "currentPassword": {
+        "label": "Текущий пароль",
+        "placeholder": "Введите текущий пароль"
+      },
+      "newPassword": {
+        "label": "Новый пароль",
+        "placeholder": "Введите новый пароль"
+      },
+      "confirmPassword": {
+        "label": "Подтвердите пароль",
+        "placeholder": "Повторите новый пароль"
+      }
+    },
+    "buttons": {
+      "cancel": "Отмена",
+      "change": "Изменить пароль"
+    },
+    "success": "Пароль успешно изменён",
+    "error": "Не удалось изменить пароль"
   }
 }

@@ -32,7 +32,7 @@ function ToggleGroup({
       style={{ '--gap': `${spacing}px` } as React.CSSProperties}
       className={cn(
         'group/toggle-group flex w-fit items-center gap-[--gap] rounded-md shadow-sm',
-        'transition-all duration-200',
+        'transition-all duration-150',
         className,
       )}
       {...props}
@@ -64,8 +64,9 @@ function ToggleGroupItem({
           variant: context.variant || variant,
           size: context.size || size,
         }),
-        'w-auto min-w-0 shrink-0 px-3 py-2 rounded-md focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
-        'transition-all duration-200 hover:scale-105',
+        'w-auto min-w-0 shrink-0 px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-md',
+        'focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
+        'transition-all duration-150 hover:scale-102 sm:hover:scale-104',
         className,
       )}
       {...props}

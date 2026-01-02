@@ -1,55 +1,55 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useTranslation } from "react-i18next"
-import { FocusRow } from "@/ui/home/focusRow"
-import { ModeCards } from "@/ui/home/modeCards"
-import { Typewriter } from "@/ui/home/typewriterText"
-import { Gamepad, PlayCircle } from "lucide-react"
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { ModeCards } from '@/ui/home/modeCards'
+import { Typewriter } from '@/ui/home/typewriterText'
+import { Gamepad, PlayCircle } from 'lucide-react'
+import { HomeLeaderboardPreview } from '@/ui/home/homeLeaderboardPreview'
 
 export default function Home() {
   const { t } = useTranslation()
 
   const navLinks = [
     {
-      href: "/marathon",
+      href: '/marathon',
       icon: PlayCircle,
-      label: t("header.nav.marathon"),
+      label: t('modes.marathon.title'),
     },
     {
-      href: "/random",
+      href: '/random',
       icon: Gamepad,
-      label: t("header.nav.random"),
+      label: t('modes.classic.title'),
     },
   ]
 
   const modes = [
     {
-      id: "marathon",
-      title: t("modes.marathon.title"),
-      badge: t("modes.marathon.badge"),
-      desc: t("modes.marathon.description"),
+      id: 'marathon',
+      title: t('modes.marathon.title'),
+      badge: t('modes.marathon.badge'),
+      desc: t('modes.marathon.description'),
     },
     {
-      id: "random",
-      title: t("modes.classic.title"),
-      badge: t("modes.classic.badge"),
-      desc: t("modes.classic.description"),
+      id: 'random',
+      title: t('modes.classic.title'),
+      badge: t('modes.classic.badge'),
+      desc: t('modes.classic.description'),
     },
     {
-      id: "coding",
-      title: t("modes.coding.title"),
-      badge: t("modes.coding.badge"),
-      desc: t("modes.coding.description"),
+      id: 'coding',
+      title: t('modes.coding.title'),
+      badge: t('modes.coding.badge'),
+      desc: t('modes.coding.description'),
     },
   ]
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative p-2 min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
       <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-secondary/15 blur-[120px] animate-pulse-slow" />
+      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-primary-2/15 blur-[120px] animate-pulse-slow" />
 
       <div
         className="
@@ -73,9 +73,13 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 suppressHydrationWarning className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight">
-              <span style={{ color: "rgb(245, 73, 0)" }}>Skill</span>{" "}
-              <span style={{ color: "oklch(0.75 0.20 185)" }}>Check</span>
+            <h1
+              suppressHydrationWarning
+              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight
+  bg-linear-to-r from-primary to-primary-2
+  bg-clip-text text-transparent"
+            >
+              SkillCheck
             </h1>
           </motion.div>
 
@@ -88,7 +92,7 @@ export default function Home() {
               text-foreground/80
             "
           >
-            <Typewriter text={t("app.subtitle")} delay={0.5} />
+            <Typewriter text={t('app.subtitle')} delay={0.5} />
           </motion.p>
 
           <motion.p
@@ -101,7 +105,7 @@ export default function Home() {
               text-muted-foreground
             "
           >
-            <Typewriter text={t("app.description")} delay={1.1} speed={0.02} />
+            <Typewriter text={t('app.description')} delay={1.1} speed={0.02} />
           </motion.p>
 
           <nav
@@ -117,7 +121,7 @@ export default function Home() {
               <motion.div
                 key={href}
                 whileHover={{ scale: 1.05, y: -1 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                transition={{ type: 'spring', stiffness: 300 }}
               >
                 <Link
                   href={href}
@@ -141,40 +145,7 @@ export default function Home() {
           </nav>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="relative mt-8 lg:mt-0"
-        >
-          <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-secondary/10 rounded-3xl blur-xl" />
-
-          <div
-            className="
-              relative
-              rounded-2xl sm:rounded-3xl
-              border border-border/50
-              bg-card
-              p-5 sm:p-6 md:p-8
-            "
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
-              <span className="text-sm font-semibold text-primary tracking-wide">{t("home.ui.pulse")}</span>
-              <span className="text-xs text-muted-foreground/80 font-medium">{t("home.ui.microInteractions")}</span>
-            </div>
-
-            <div className="space-y-4 sm:space-y-6">
-              {[t("home.rows.row1"), t("home.rows.row2"), t("home.rows.row3")].map((row, i) => (
-                <FocusRow key={i} label={row} delay={0.3 + i * 0.12} />
-              ))}
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-border/30 flex justify-between text-xs text-muted-foreground/70 font-medium">
-              <span>{t("home.ui.focusMode")}</span>
-              <span>{t("home.ui.noNoise")}</span>
-            </div>
-          </div>
-        </motion.div>
+        <HomeLeaderboardPreview />
       </div>
 
       <ModeCards modes={modes} />
