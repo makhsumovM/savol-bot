@@ -26,8 +26,8 @@ const LoginPage = () => {
         window.location.href = '/'
       }, 500)
     },
-    onError: (error) => {
-      toast.error(error?.response?.data?.message || t('login.loginFailed'))
+    onError: () => {
+      toast.error(t('login.loginFailed'))
     },
   })
 
