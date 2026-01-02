@@ -1,5 +1,5 @@
 import { api } from '@/lib/utils/axiosConfig'
-import { IScore, MarathonQuestion } from '@/types/marathon'
+import {  ICreateMarathonAttempt, MarathonQuestion } from '@/types/marathon'
 import axios from 'axios'
 
 export const marathonApi = async (
@@ -32,4 +32,3 @@ export const createMarathonAttempt = async (data: ICreateMarathonAttempt) => {
     throw error
   }
 }
-
