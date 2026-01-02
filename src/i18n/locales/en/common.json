@@ -33,7 +33,9 @@
     "columns": {
       "rank": "Rank",
       "username": "Username",
-      "score": "Score"
+      "score": "Score",
+      "name": "Name",
+      "date": "Date"
     },
     "common": "You",
     "inLeaderboard": "in the leaderboard",
