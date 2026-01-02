@@ -11,10 +11,14 @@ import logo from '../../../public/favicon.ico'
 import { User, Activity, Dices, Award, ChartBar, Badge } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { getJwtFromCookie } from '@/lib/utils/jwt'
+import ProfileMenuModal from '@/ui/profileMenuModal/modal'
+import { useState, useRef } from 'react'
 
 const HeaderComponent = () => {
   const { t } = useTranslation()
   const pathname = usePathname()
+  const [profileMenuModalOpen, setProfileMenuModalOpen] = useState(false)
+  const profileRef = useRef<HTMLDivElement>(null)
 
   const jwt = getJwtFromCookie()
   const userName = jwt?.Email?.split('@')[0]
@@ -26,12 +30,13 @@ const HeaderComponent = () => {
     ...(jwt ? [{ href: '/my-rank', icon: Badge }] : []),
     { href: '/leaderboard', icon: ChartBar },
   ]
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="sticky top-0 z-50 flex items-center justify-between px-1 sm:px-2 md:px-3 lg:px-2 py-1 backdrop-blur-lg bg-background/80 border-b border-border shadow-sm"
+      className="relative sticky top-0 z-50 flex items-center justify-between px-2 py-1 backdrop-blur-lg bg-background/80 border-b border-border shadow-sm"
     >
       <Link href="/" className="shrink-0 z-10">
         <Image
@@ -43,7 +48,7 @@ const HeaderComponent = () => {
       </Link>
 
       <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8">
-        {navLinks.map(({ href, label, icon: Icon }) => {
+        {navLinks.map(({ href, icon: Icon }) => {
           const isActive = pathname === href
 
           return (
@@ -54,7 +59,6 @@ const HeaderComponent = () => {
             >
               <Link
                 href={href}
-                aria-label={label}
                 className={clsx(
                   'flex items-center justify-center p-3 rounded-lg transition-colors duration-200',
                   isActive
@@ -69,7 +73,7 @@ const HeaderComponent = () => {
         })}
       </nav>
 
-      <div className="flex items-center gap-1 sm:gap-2 ml-auto z-10">
+      <div className="flex items-center gap-1 sm:gap-2 ml-auto z-10 relative">
         <LanguageSwitcher />
         <ModeToggle />
 
@@ -82,11 +86,19 @@ const HeaderComponent = () => {
             <span>{t('header.login')}</span>
           </Link>
         ) : (
-          <div className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/30 text-foreground text-xs sm:text-sm font-medium">
+          <div
+            ref={profileRef}
+            onClick={() => setProfileMenuModalOpen((prev) => !prev)}
+            className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/30 text-foreground text-xs sm:text-sm font-medium cursor-pointer select-none"
+          >
             <User size={16} />
             <span>{userName}</span>
           </div>
         )}
+        <ProfileMenuModal
+          profileMenuModalOpen={profileMenuModalOpen}
+          setProfileMenuModalOpen={setProfileMenuModalOpen}
+        />
       </div>
     </motion.header>
   )
