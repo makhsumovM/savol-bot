@@ -6,3 +6,7 @@ export interface ILeaderboard {
   totalScore: number
   lastAchievedAt: string
 }
+
+export interface ILeaderboardResponse {
+  data: ILeaderboard[]
+}
