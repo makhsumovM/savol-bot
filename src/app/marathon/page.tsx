@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { marathonApi, createMarathonAttempt } from '@/api/marathonApi'
+import { getMyBest } from '@/api/my-bestApi'
 import { MarathonQuestion, ICreateMarathonAttempt } from '@/types/marathon'
+import { IMyBest } from '@/types/my-best'
 import Error from '@/ui/common/error'
 import Loading from '@/ui/common/loading'
 import QuestionCard from '@/ui/common/questionCard/questionCard'
@@ -59,6 +61,13 @@ const MarathonPage = () => {
     refetchOnMount: 'always',
   })
 
+  const { data: myBestData } = useQuery<IMyBest>({
+    queryKey: ['my-best'],
+    queryFn: getMyBest,
+    enabled: isAuthenticated,
+    refetchOnWindowFocus: false,
+  })
+
   const { mutate: mutateAttempt } = useMutation({
     mutationFn: (data: ICreateMarathonAttempt) => createMarathonAttempt(data),
     onSuccess: (response) => {
@@ -77,16 +86,17 @@ const MarathonPage = () => {
 
   useEffect(() => {
     const loadBestScore = () => {
-      if (isAuthenticated) {
-        setBestScore(0)
-      } else {
+      if (isAuthenticated && myBestData) {
+        const score = mode === 'frontend' ? myBestData.bestFrontendScore : myBestData.bestBackendScore
+        setBestScore(score || 0)
+      } else if (!isAuthenticated) {
         const key = mode === 'frontend' ? LOCAL_STORAGE_KEYS.frontend : LOCAL_STORAGE_KEYS.backend
         const saved = localStorage.getItem(key)
         setBestScore(saved ? parseInt(saved, 10) : 0)
       }
     }
     loadBestScore()
-  }, [mode, lang, isAuthenticated])
+  }, [mode, lang, isAuthenticated, myBestData])
 
   useEffect(() => {
     if (isGameOver && isLose && currentScore > 0) {
@@ -194,11 +204,10 @@ const MarathonPage = () => {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleModeChange('frontend')}
-            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
-              mode === 'frontend'
-                ? 'bg-primary text-white border-primary shadow-primary/30'
-                : 'bg-card border-border text-foreground hover:border-primary/50'
-            }`}
+            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${mode === 'frontend'
+              ? 'bg-primary text-white border-primary shadow-primary/30'
+              : 'bg-card border-border text-foreground hover:border-primary/50'
+              }`}
           >
             <span className="relative z-10 flex items-center gap-3">
               <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
@@ -212,11 +221,10 @@ const MarathonPage = () => {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleModeChange('backend')}
-            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
-              mode === 'backend'
-                ? 'bg-primary-2 text-white border-primary-2 shadow-primary-2/40'
-                : 'bg-card border-border text-foreground hover:border-primary-2/50'
-            }`}
+            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${mode === 'backend'
+              ? 'bg-primary-2 text-white border-primary-2 shadow-primary-2/40'
+              : 'bg-card border-border text-foreground hover:border-primary-2/50'
+              }`}
           >
             <span className="relative z-10 flex items-center gap-3">
               <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
@@ -226,6 +234,67 @@ const MarathonPage = () => {
             </span>
           </motion.button>
         </div>
+
+        <motion.div
+          className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/30">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm text-muted-foreground font-medium">{t('marathon.bestScore')}</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                {bestScore}
+              </span>
+            </div>
+          </div>
+
+          {/* Current Difficulty */}
+          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
+            <div className={`flex items-center justify-center w-12 h-12 rounded-xl shadow-lg ${difficultyIndex === 0 ? 'bg-gradient-to-br from-green-400 to-green-600 shadow-green-500/30' :
+              difficultyIndex === 1 ? 'bg-gradient-to-br from-blue-400 to-blue-600 shadow-blue-500/30' :
+                difficultyIndex === 2 ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-yellow-500/30' :
+                  difficultyIndex === 3 ? 'bg-gradient-to-br from-orange-400 to-orange-600 shadow-orange-500/30' :
+                    'bg-gradient-to-br from-red-500 to-red-700 shadow-red-500/30'
+              }`}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm text-muted-foreground font-medium">{t('marathon.difficulty')}</span>
+              <span className={`text-xl font-bold capitalize ${difficultyIndex === 0 ? 'text-green-500' :
+                difficultyIndex === 1 ? 'text-blue-500' :
+                  difficultyIndex === 2 ? 'text-yellow-500' :
+                    difficultyIndex === 3 ? 'text-orange-500' :
+                      'text-red-500'
+                }`}>
+                {t(`marathon.difficulties.${currentDifficulty}`)}
+              </span>
+            </div>
+          </div>
+
+          {/* Current Score */}
+          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary-2 shadow-lg shadow-primary/30">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm text-muted-foreground font-medium">{t('marathon.currentScore')}</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-2 bg-clip-text text-transparent">
+                {currentScore}
+              </span>
+            </div>
+          </div>
+        </motion.div>
 
         {isGameOver && (
           <motion.div
