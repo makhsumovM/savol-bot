@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -17,6 +18,7 @@ import reactIcon from '../../../public/react.png'
 import charmIcon from '../../../public/ccharm.png'
 import Cookies from 'js-cookie'
 import { useSearchParams } from 'next/navigation'
+import { Trophy, Zap, CheckCircle2 } from 'lucide-react'
 
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
 
@@ -79,7 +81,6 @@ const MarathonPage = () => {
     },
   })
 
-  // Загрузка лучшего результата
   useEffect(() => {
     const loadBestScore = () => {
       if (isAuthenticated && myBestData) {
@@ -94,7 +95,6 @@ const MarathonPage = () => {
     loadBestScore()
   }, [mode, lang, isAuthenticated, myBestData])
 
-  // Сохранение результата при поражении
   useEffect(() => {
     if (isGameOver && isLose && currentScore > 0) {
       if (isAuthenticated) {
@@ -114,7 +114,6 @@ const MarathonPage = () => {
     }
   }, [isGameOver, isLose, currentScore, mode, isAuthenticated, mutateAttempt])
 
-  // Сброс при смене языка или режима
   useEffect(() => {
     setCurrentIndex(0)
     setCurrentScore(0)
@@ -123,7 +122,6 @@ const MarathonPage = () => {
     setDifficultyIndex(0)
   }, [lang, mode])
 
-  // Прокрутка к GameOver
   useEffect(() => {
     if (isGameOver && gameOverRef.current) {
       gameOverRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -150,7 +148,7 @@ const MarathonPage = () => {
         setDifficultyIndex(nextDifficultyIndex)
         setCurrentIndex(0)
       } else {
-        setIsGameOver(true) // Победил все уровни
+        setIsGameOver(true)
       }
     }
   }
@@ -176,12 +174,11 @@ const MarathonPage = () => {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/10" />
       <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
       <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
 
       <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 md:py-14 space-y-6">
-        {/* Заголовок */}
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -190,13 +187,12 @@ const MarathonPage = () => {
         >
           <h1
             suppressHydrationWarning
-            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
+            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-primary to-primary-2 bg-clip-text text-transparent"
           >
             {t('marathon.title')}
           </h1>
         </motion.div>
 
-        {/* Кнопки выбора режима */}
         <div className="flex justify-center gap-6 mb-10">
           <motion.button
             whileHover={{ scale: 1.08 }}
@@ -235,19 +231,15 @@ const MarathonPage = () => {
           </motion.button>
         </div>
 
-        {/* Информационные карточки: лучший счёт, сложность, текущий счёт */}
         <motion.div
           className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {/* Лучший счёт */}
           <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/30">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-              </svg>
+              <Trophy className="w-6 h-6 text-white" />
             </div>
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground font-medium">{t('marathon.bestScore')}</span>
@@ -257,7 +249,6 @@ const MarathonPage = () => {
             </div>
           </div>
 
-          {/* Текущая сложность */}
           <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
             <div
               className={`flex items-center justify-center w-12 h-12 rounded-xl shadow-lg ${
@@ -272,9 +263,7 @@ const MarathonPage = () => {
                   : 'bg-gradient-to-br from-red-500 to-red-700 shadow-red-500/30'
               }`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+              <Zap className="w-6 h-6 text-white" />
             </div>
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground font-medium">{t('marathon.difficulty')}</span>
@@ -296,12 +285,9 @@ const MarathonPage = () => {
             </div>
           </div>
 
-          {/* Текущий счёт */}
           <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
             <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary-2 shadow-lg shadow-primary/30">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806a3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
+              <CheckCircle2 className="w-6 h-6 text-white" />
             </div>
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground font-medium">{t('marathon.currentScore')}</span>
@@ -312,7 +298,6 @@ const MarathonPage = () => {
           </div>
         </motion.div>
 
-        {/* Game Over */}
         {isGameOver && (
           <motion.div
             ref={gameOverRef}
@@ -323,14 +308,12 @@ const MarathonPage = () => {
           </motion.div>
         )}
 
-        {/* Состояния загрузки и ошибок */}
         {(isLoading || isFetching) && <Loading />}
         {isError && <Error message={t('marathon.errorLoading')} />}
         {!questions.length && !isLoading && !isFetching && !isError && (
           <Error message={t('marathon.noQuestions')} />
         )}
 
-        {/* Вопрос */}
         {currentQuestion && !isLoading && !isFetching && !isError && !isGameOver && (
           <AnimatePresence mode="wait">
             <motion.div
