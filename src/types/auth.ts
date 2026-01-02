@@ -23,3 +23,8 @@ export interface IUpdateProfile {
   fullName: string
   profilePicture: FileList
 }
+export interface IChangePassword {
+  currentPassword: string
+  newPassword: string
+  confirmPassword: string
+}
