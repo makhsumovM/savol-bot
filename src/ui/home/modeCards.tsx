@@ -24,12 +24,12 @@ const iconMap: Record<string, typeof Award> = {
 export function ModeCards({ modes }: ModeCardsProps) {
   const router = useRouter()
   return (
-    <div className="relative  mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
+    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="grid grid-cols-1 gap-20 md:grid-cols-3 md:gap-6"
       >
         {modes.map((mode, index) => {
           const Icon = iconMap[mode.id] || Award
