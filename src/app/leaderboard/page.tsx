@@ -18,9 +18,6 @@ const LeaderboardPage = () => {
     refetchOnWindowFocus: false,
   })
 
-  if (isLoading || !data) return <Loading />
-  if (isError) return <Error message={t('errors.leaderboardLoadError')} />
-
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-background via-background to-primary/10">
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
@@ -37,18 +34,23 @@ const LeaderboardPage = () => {
           {t('leaderboard.title')}
         </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-16"
-        >
-          <div className="grid gap-6 md:gap-8">
-            {data.map((player, idx) => (
-              <LeaderboardItem key={idx} player={player} index={idx} />
-            ))}
-          </div>
-        </motion.div>
+        {isLoading && <Loading />}
+        {isError && <Error message={t('errors.leaderboardLoadError')} />}
+
+        {data && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-16"
+          >
+            <div className="grid gap-6 md:gap-8">
+              {data.map((player, idx) => (
+                <LeaderboardItem key={idx} player={player} index={idx} />
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   )
