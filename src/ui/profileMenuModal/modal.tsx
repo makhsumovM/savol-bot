@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMutation } from '@tanstack/react-query'
 import { getCookie, removeCookie } from '@/lib/utils/cookies'
+import { Button } from '@/ui/button/button'
 
 interface IProfileMenuModalProps {
   profileMenuModalOpen: boolean
@@ -73,10 +74,12 @@ const ProfileMenuModal = ({
 
           <div className="h-px bg-border my-1" />
 
-          <button
+          <Button
             onClick={() => {
               const token = getCookie('refreshToken')
-              mutate({ refreshToken: token })
+              if (token) {
+                mutate({ refreshToken: token })
+              }
               removeCookie('refreshToken')
               removeCookie('token')
               setProfileMenuModalOpen(false)
@@ -89,7 +92,7 @@ const ProfileMenuModal = ({
           >
             <LogOut size={16} />
             {t('profileMenu.logout')}
-          </button>
+          </Button>
         </motion.div>
       )}
     </AnimatePresence>
