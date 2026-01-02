@@ -1,4 +1,4 @@
-export interface IMybest {
+export interface IMyBest {
   bestFrontendScore: number
   bestBackendScore: number
   frontendAchievedAt: string
