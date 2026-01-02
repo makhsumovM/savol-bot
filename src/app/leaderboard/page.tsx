@@ -44,7 +44,15 @@ const LeaderboardPage = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-16"
           >
-            <div className="grid gap-6 md:gap-8">
+            <div className="hidden md:grid md:grid-cols-[80px_1fr_150px_150px_180px] gap-4 px-6 py-4 text-sm font-semibold text-muted-foreground uppercase tracking-wider border-b border-border/30">
+              <span>#</span>
+              <span>{t('leaderboard.columns.name')}</span>
+              <span className="text-center">Frontend</span>
+              <span className="text-center">Backend</span>
+              <span className="text-right">{t('leaderboard.columns.date')}</span>
+            </div>
+
+            <div className="divide-y divide-border/20">
               {data.map((player, idx) => (
                 <LeaderboardItem key={idx} player={player} index={idx} />
               ))}
