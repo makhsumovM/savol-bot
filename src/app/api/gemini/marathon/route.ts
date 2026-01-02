@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { GoogleGenAI } from '@google/genai'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -94,11 +94,14 @@ export async function GET(request: Request) {
       apiKey: process.env.GEMINI_API_KEY!,
     })
 
+    
     const result = await client.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       config: {
         responseMimeType: 'application/json',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         responseSchema: zodToJsonSchema(QuestionsSchema),
       },
     })
