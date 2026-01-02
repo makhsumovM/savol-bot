@@ -27,7 +27,7 @@ const ProfilePage = () => {
     return <Error message={t('errors.profileLoadError')} />
   }
 
-  const { fullName, email, profilePicture, createdAt, bestResult } = data.data
+  const { fullName, email, profilePicture, createdAt, bestResult } = data
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-background via-background to-primary/10">
