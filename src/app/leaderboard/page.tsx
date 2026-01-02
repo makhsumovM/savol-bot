@@ -45,7 +45,7 @@ const LeaderboardPage = () => {
         >
           <div className="grid gap-6 md:gap-8">
             {data.map((player, idx) => (
-              <LeaderboardItem key={player.id} player={player} index={idx} />
+              <LeaderboardItem key={idx} player={player} index={idx} />
             ))}
           </div>
         </motion.div>
