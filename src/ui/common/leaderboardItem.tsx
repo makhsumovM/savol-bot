@@ -1,120 +1,133 @@
 import { motion } from 'framer-motion'
-import { Trophy } from 'lucide-react'
+import { Crown } from 'lucide-react'
 import { ILeaderboard } from '@/types/leaderboard'
-import { useTranslation } from 'react-i18next'
 
 interface LeaderboardItemProps {
   player: ILeaderboard
   index: number
 }
 
-const getRankBg = (rank: number) => {
+const getRankIcon = (rank: number) => {
   switch (rank) {
     case 1:
-      return 'from-yellow-400/20 to-yellow-600/30 dark:from-yellow-900/40 dark:to-yellow-800/20'
+      return '👑'
     case 2:
-      return 'from-gray-400/20 to-gray-600/30 dark:from-gray-900/40 dark:to-gray-800/20'
+      return '🥈'
     case 3:
-      return 'from-amber-500/20 to-amber-700/30 dark:from-amber-900/40 dark:to-amber-800/20'
-    case 4:
-      return 'from-blue-400/20 to-blue-600/30 dark:from-blue-900/40 dark:to-blue-800/20'
-    case 5:
-      return 'from-green-400/20 to-green-600/30 dark:from-green-900/40 dark:to-green-800/20'
+      return '🥉'
     default:
-      return 'from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/5'
+      return null
   }
 }
 
-const getTrophyColor = (rank: number) => {
+const getRowStyle = (rank: number) => {
   switch (rank) {
     case 1:
-      return 'text-yellow-500 drop-shadow-glow-yellow'
+      return 'bg-gradient-to-r from-yellow-500/10 via-yellow-400/5 to-transparent border-l-4 border-l-yellow-500'
     case 2:
-      return 'text-gray-400 drop-shadow-glow-gray'
+      return 'bg-gradient-to-r from-gray-400/10 via-gray-300/5 to-transparent border-l-4 border-l-gray-400'
     case 3:
-      return 'text-amber-600 drop-shadow-glow-amber'
-    case 4:
-      return 'text-blue-500'
-    case 5:
-      return 'text-green-500'
+      return 'bg-gradient-to-r from-amber-600/10 via-amber-500/5 to-transparent border-l-4 border-l-amber-600'
     default:
-      return 'text-primary'
+      return 'hover:bg-muted/30 border-l-4 border-l-transparent'
   }
 }
 
-const getRankBadge = (rank: number) => {
-  switch (rank) {
-    case 1:
-      return 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-white shadow-2xl shadow-yellow-500/50'
-    case 2:
-      return 'bg-gradient-to-r from-gray-400 to-gray-600 text-white shadow-2xl shadow-gray-500/50'
-    case 3:
-      return 'bg-gradient-to-r from-amber-500 to-amber-700 text-white shadow-2xl shadow-amber-600/50'
-    default:
-      return 'bg-primary text-white'
-  }
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  const day = date.getDate().toString().padStart(2, '0')
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const month = months[date.getMonth()]
+  const year = date.getFullYear()
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  return { date: `${day} ${month} ${year}`, time: `${hours}:${minutes}` }
 }
 
 export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
-  const { t } = useTranslation()
+  const rankIcon = getRankIcon(player.rank)
+  const { date, time } = formatDate(player.lastAchievedAt)
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -60 }}
+      initial={{ opacity: 0, x: -30 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="relative group"
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      className={`group transition-all duration-300 ${getRowStyle(player.rank)}`}
     >
-      <div
-        className={`absolute inset-0 rounded-3xl bg-linear-to-r ${getRankBg(
-          player.rank,
-        )} blur-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500`}
-      />
+      {/* Desktop Layout */}
+      <div className="hidden md:grid md:grid-cols-[80px_1fr_150px_150px_180px] gap-4 items-center px-6 py-5">
+        {/* Rank */}
+        <div className="flex items-center gap-2">
+          {rankIcon ? (
+            <span className="text-2xl">{rankIcon}</span>
+          ) : (
+            <span className="text-xl font-bold text-muted-foreground">{player.rank}</span>
+          )}
+        </div>
 
-      <div className="relative bg-card/90 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl hover:-translate-y-2 transition-all duration-500">
-        <div className="flex items-center justify-between p-6 md:p-8">
-          <div className="flex items-center gap-6 md:gap-10">
-            <div className="relative">
-              {player.rank <= 3 ? (
-                <div
-                  className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl ${getRankBadge(
-                    player.rank,
-                  )} flex items-center justify-center font-black text-3xl md:text-4xl shadow-2xl animate-pulse-slow`}
-                >
-                  {player.rank}
-                </div>
-              ) : (
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-muted/50 flex items-center justify-center">
-                  <span className="text-4xl md:text-5xl font-bold text-foreground/70">
-                    {player.rank}
-                  </span>
-                </div>
-              )}
-              <Trophy
-                size={player.rank <= 3 ? 48 : 36}
-                className={`absolute -top-4 -right-4 ${getTrophyColor(player.rank)}`}
-              />
-            </div>
+        {/* Name */}
+        <div className="flex items-center gap-3">
+          <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+            {player.fullName}
+          </span>
+          {player.rank === 1 && (
+            <Crown size={18} className="text-yellow-500" />
+          )}
+        </div>
 
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{player.fullName}</h3>
-              <p className="text-muted-foreground text-sm md:text-base mt-1">
-                Top {player.rank} {t('leaderboard.inLeaderboard')}
-              </p>
-            </div>
-          </div>
+        {/* Frontend Score */}
+        <div className="text-center">
+          <span className="text-lg font-bold text-foreground">{player.frontendScore.toFixed(2)}</span>
+          <span className="block text-xs text-muted-foreground">
+            {((player.frontendScore / (player.frontendScore + player.backendScore)) * 100).toFixed(2)}%
+          </span>
+        </div>
 
-          <div className="text-right">
-            <p className="text-4xl md:text-5xl font-black bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
-              {player.totalScore.toLocaleString()}
-            </p>
-            <p className="text-muted-foreground text-sm md:text-lg mt-1">
-              {t('leaderboard.columns.score')}
-            </p>
+        {/* Backend Score */}
+        <div className="text-center">
+          <span className="text-lg font-bold text-foreground">{player.backendScore.toFixed(2)}</span>
+          <span className="block text-xs text-muted-foreground">
+            {((player.backendScore / (player.frontendScore + player.backendScore)) * 100).toFixed(2)}%
+          </span>
+        </div>
+
+        {/* Date */}
+        <div className="text-right">
+          <span className="text-sm font-medium text-foreground">{date}</span>
+          <span className="block text-xs text-muted-foreground">{time}</span>
+        </div>
+      </div>
+
+      {/* Mobile Layout */}
+      <div className="md:hidden p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            {rankIcon ? (
+              <span className="text-2xl">{rankIcon}</span>
+            ) : (
+              <span className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-bold">
+                {player.rank}
+              </span>
+            )}
+            <span className="text-lg font-semibold text-foreground">{player.fullName}</span>
           </div>
         </div>
 
-        {player.rank <= 5 && <div className="h-2 bg-linear-to-r from-primary/50 to-primary-2/50" />}
+        <div className="grid grid-cols-3 gap-3 text-sm">
+          <div>
+            <span className="block text-muted-foreground text-xs mb-1">Frontend</span>
+            <span className="font-bold text-foreground">{player.frontendScore.toFixed(2)}</span>
+          </div>
+          <div>
+            <span className="block text-muted-foreground text-xs mb-1">Backend</span>
+            <span className="font-bold text-foreground">{player.backendScore.toFixed(2)}</span>
+          </div>
+          <div className="text-right">
+            <span className="block text-muted-foreground text-xs mb-1">Date</span>
+            <span className="font-medium text-foreground text-xs">{date}</span>
+          </div>
+        </div>
       </div>
     </motion.div>
   )
