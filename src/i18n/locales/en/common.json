@@ -1,87 +1,226 @@
 {
   "app": {
-    "name": "Savol-bot",
+    "name": "SkillCheck",
     "subtitle": "AI Tester",
-    "description": "Pick a mode on the first screen, dive into questions without extra clicks, and stay focused with minimal animations."
+    "description": "Choose a mode on the first screen, dive into questions with minimal clicks, and focus with minimal animations."
   },
-
+  "errors": {
+    "loadFailed": "Failed to load questions.",
+    "notFound": "Questions not found.",
+    "myBestLoadError": "Failed to load best scores",
+    "leaderboardLoadError": "Failed to load leaderboard",
+    "profileLoadError": "Failed to load profile",
+    "updateProfileError": "Failed to update profile"
+  },
+  "gameOver": {
+    "title": "Game Over",
+    "wrongAnswer": "You answered incorrectly.",
+    "score": "Round Score:",
+    "record": "Record:",
+    "restart": "Restart"
+  },
+  "header": {
+    "login": "Login"
+  },
   "home": {
     "cta": {
-      "startMarathon": "Start marathon →",
+      "startMarathon": "Start Marathon →",
       "features": "Rhythm, density, and subtle animations"
-    },
-    "ui": {
-      "pulse": "Pulse UI",
-      "microInteractions": "Micro-interactions",
-      "focusMode": "Focus mode",
-      "noNoise": "No visual noise"
-    },
-    "rows": {
-      "row1": "Row 1",
-      "row2": "Row 2",
-      "row3": "Row 3",
-      "hover": "hover / tap"
     }
   },
-
+  "leaderboard": {
+    "title": "Leaderboard",
+    "columns": {
+      "rank": "Rank",
+      "username": "Username",
+      "score": "Score"
+    },
+    "common": "You",
+    "inLeaderboard": "in the leaderboard",
+    "top5": "Top 5 Players"
+  },
+  "loading": {
+    "text": "Loading..."
+  },
+  "login": {
+    "title": "Login to ",
+    "subtitle": "Sign in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Sign In",
+    "signingIn": "Signing in...",
+    "createAccount": "Create Account",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed"
+  },
+  "marathon": {
+    "title": "Marathon Questions",
+    "score": {
+      "current": "Current Score",
+      "record": "Record",
+      "difficulty": "Difficulty"
+    },
+    "bestScore": "Best Record",
+    "currentScore": "Current Score",
+    "difficulty": "Level",
+    "difficulties": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "very-hard": "Very Hard",
+      "expert": "Expert"
+    },
+    "noQuestions": "Failed to load marathon questions"
+  },
   "modes": {
     "marathon": {
       "title": "Marathon",
       "badge": "LIVE",
-      "description": "An endless stream of questions to train your focus."
+      "description": "An endless stream of questions to train concentration."
     },
     "classic": {
-      "title": "Classic",
-      "badge": "COMING SOON",
-      "description": "A sprint of 10–15 questions for a quick self-test."
+      "title": "Random",
+      "badge": "LIVE",
+      "description": "A sprint of 10–15 questions for quick self-testing."
     },
     "coding": {
       "title": "Coding",
       "badge": "COMING SOON",
-      "description": "Coding challenges with hints, inspired by IDEs."
+      "description": "Programming tasks with hints, inspired by IDEs."
     }
   },
-
-  "header": {
-    "nav": {
-      "marathon": "Start marathon",
-      "random": "Random game"
+  "myBest": {
+    "title": "My Best Scores",
+    "sections": {
+      "frontend": {
+        "title": "Frontend",
+        "bestScore": "Best Score",
+        "achievedAt": "Achieved On",
+        "retry": "Try Again"
+      },
+      "backend": {
+        "title": "Backend",
+        "bestScore": "Best Score",
+        "achievedAt": "Achieved On",
+        "retry": "Try Again"
+      }
     }
   },
-
-  "marathon": {
-    "title": "Marathon Questions",
-    "score": {
-      "current": "Current score",
-      "record": "Record"
-    },
-    "noQuestions": "Error loading marathon"
+  "myRank": {
+    "title": "My Rank",
+    "yourRank": "Your Rank",
+    "currentPosition": "Your current position in the leaderboard",
+    "place": "place"
   },
-
+  "notfound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "home": "Go Home",
+    "back": "Back",
+    "hint": "Hint: the page may have been deleted, renamed, or temporarily unavailable."
+  },
+  "profile": {
+    "title": "Profile",
+    "joined": "Joined",
+    "bestFrontendScore": "Best Frontend Score",
+    "bestBackendScore": "Best Backend Score",
+    "updateProfile": "Update Profile",
+    "changePassword": "Change Password"
+  },
+  "profileMenu": {
+    "profile": "Profile",
+    "logout": "Logout",
+    "logoutSuccess": "Logged out successfully"
+  },
   "question": {
     "difficulty": "Difficulty",
     "copy": "Copy",
     "copied": "Copied"
   },
-
-  "gameOver": {
-    "title": "Game Over",
-    "wrongAnswer": "You answered incorrectly. Round score:",
-    "record": "Record:",
-    "restart": "Restart"
+  "random": {
+    "title": "Random Questions",
+    "noQuestions": "Failed to load random questions"
   },
-
-  "errors": {
-    "loadFailed": "Failed to load questions.",
-    "notFound": "No questions found."
+  "register": {
+    "title": "Create your account on ",
+    "subtitle": "Sign up to continue",
+    "form": {
+      "fields": {
+        "fullName": {
+          "label": "Full name",
+          "placeholder": "Full Name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "••••••••"
+        }
+      },
+      "submitButton": {
+        "default": "Register",
+        "loading": "Creating account..."
+      }
+    },
+    "footer": {
+      "text": "Already have an account?",
+      "linkText": "Login"
+    },
+    "toasts": {
+      "success": "Account created successfully",
+      "error": "Account creation failed"
+    }
   },
-
-  "loading": {
-    "text": "Loading..."
-  },
-
   "theme": {
-    "light": "Light mode",
-    "dark": "Dark mode"
+    "light": "Light Theme",
+    "dark": "Dark Theme"
+  },
+  "updateProfileModal": {
+    "title": "Update Profile",
+    "fields": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "profilePicture": {
+        "label": "Profile Picture"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Update",
+      "updating": "Updating..."
+    },
+    "success": "Profile updated successfully"
+  },
+  "changePasswordModal": {
+    "title": "Change Password",
+    "fields": {
+      "currentPassword": {
+        "label": "Current Password",
+        "placeholder": "Enter your current password"
+      },
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter your new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm your new password"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "change": "Change Password"
+    },
+    "success": "Password changed successfully",
+    "error": "Failed to change password"
+  },
+  "common": {
+    "viewAll": "View All"
   }
 }

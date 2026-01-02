@@ -1,87 +1,226 @@
 {
   "app": {
-    "name": "Savol-bot",
-    "subtitle": "Санҷандаи AI",
-    "description": "Режимро дар экран аввал интихоб кунед, бидуни зеркунии иловагӣ ба саволҳо гузаред ва бо анимацияҳои кам тамаркуз кунед."
+    "name": "SkillCheck",
+    "subtitle": "Тесткунандаи AI",
+    "description": "Дар экрани аввал реҷаро интихоб кунед, бо камтарин кликҳо ба саволҳо ғарқ шавед ва бо анимасияҳои минималӣ тамаркуз кунед."
   },
-
+  "errors": {
+    "loadFailed": "Боркунии саволҳо номуваффақ буд.",
+    "notFound": "Саволҳо ёфт нашуданд.",
+    "myBestLoadError": "Боркунии натиҷаҳои беҳтарин номуваффақ буд",
+    "leaderboardLoadError": "Боркунии ҷадвали пешсафон номуваффақ буд",
+    "profileLoadError": "Боркунии профил номуваффақ буд",
+    "updateProfileError": "Навсозии профил номуваффақ буд"
+  },
+  "gameOver": {
+    "title": "Бозӣ ба охир расид",
+    "wrongAnswer": "Шумо нодуруст ҷавоб додед.",
+    "score": "Холҳо барои давр:",
+    "record": "Рекорд:",
+    "restart": "Аз нав оғоз кунед"
+  },
+  "header": {
+    "login": "Ворид шудан"
+  },
   "home": {
     "cta": {
       "startMarathon": "Оғози марафон →",
-      "features": "Ритм, зичӣ ва анимацияҳои сабук"
-    },
-    "ui": {
-      "pulse": "Интерфейси зарбакунанда",
-      "microInteractions": "Микро-муомилаҳо",
-      "focusMode": "Режими тамаркуз",
-      "noNoise": "Бе садои визуалӣ"
-    },
-    "rows": {
-      "row1": "Сатр 1",
-      "row2": "Сатр 2",
-      "row3": "Сатр 3",
-      "hover": "намудор / ламс"
+      "features": "Ритм, зичӣ ва анимасияҳои нозук"
     }
   },
-
+  "leaderboard": {
+    "title": "Ҷадвали пешсафон",
+    "columns": {
+      "rank": "Ҷой",
+      "username": "Номи корбар",
+      "score": "Холҳо"
+    },
+    "inLeaderboard": "дар ҷадвали пешсафон",
+    "top5": "Беҳтарин 5 бозингар",
+    "common": "Шумо"
+  },
+  "common": {
+    "viewAll": "Ҳамаро дидан"
+  },
+  "loading": {
+    "text": "Боркунӣ..."
+  },
+  "login": {
+    "title": "Воридшавӣ ба ",
+    "subtitle": "Барои идома ворид шавед",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Парол",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Ворид шудан",
+    "signingIn": "Даромадан...",
+    "createAccount": "Эҷоди ҳисоб",
+    "loginSuccess": "Воридшавӣ муваффақ буд",
+    "loginFailed": "Хатогӣ ҳангоми воридшавӣ"
+  },
+  "marathon": {
+    "title": "Марафон",
+    "score": {
+      "current": "Холҳои ҷорӣ",
+      "record": "Рекорд",
+      "difficulty": "Мураккабӣ"
+    },
+    "bestScore": "Беҳтарин рекорд",
+    "currentScore": "Холҳои ҷорӣ",
+    "difficulty": "Сатҳ",
+    "difficulties": {
+      "easy": "Осон",
+      "medium": "Миёна",
+      "hard": "Душвор",
+      "very-hard": "Хеле душвор",
+      "expert": "Эксперт"
+    },
+    "noQuestions": "Боркунии саволҳои марафон номуваффақ буд"
+  },
   "modes": {
     "marathon": {
       "title": "Марафон",
-      "badge": "LIVE",
-      "description": "Силсилаи беохири саволҳо барои тамрини тамаркуз."
+      "badge": "ФАЪОЛ",
+      "description": "Ҷараёни беохири саволҳо барои тамрин кардани тамаркуз."
     },
     "classic": {
-      "title": "Классикӣ",
-      "badge": "ЗУД",
-      "description": "Спринт аз 10–15 савол барои санҷиши зуд."
+      "title": "Тасодуфӣ",
+      "badge": "ФАЪОЛ",
+      "description": "Даври кӯтоҳ аз 10–15 савол барои санҷиши зуд."
     },
     "coding": {
-      "title": "Барномасозӣ",
-      "badge": "ЗУД",
-      "description": "Вазифаҳои барномасозӣ бо роҳнамоиҳо, илҳом гирифта аз IDE."
+      "title": "Коднависӣ",
+      "badge": "БА ЗУДӢ",
+      "description": "Вазифаҳои барномасозӣ бо маслиҳатҳо, дар услуби IDE."
     }
   },
-
-  "header": {
-    "nav": {
-      "marathon": "Оғози марафон",
-      "random": "Бозии тасодуфӣ"
+  "myBest": {
+    "title": "Натиҷаҳои беҳтарини ман",
+    "sections": {
+      "frontend": {
+        "title": "Frontend",
+        "bestScore": "Беҳтарин натиҷа",
+        "achievedAt": "Ба даст оварда шуд",
+        "retry": "Аз нав кӯшиш кунед"
+      },
+      "backend": {
+        "title": "Backend",
+        "bestScore": "Беҳтарин натиҷа",
+        "achievedAt": "Ба даст оварда шуд",
+        "retry": "Аз нав кӯшиш кунед"
+      }
     }
   },
-
-  "marathon": {
-    "title": "Саволҳои марафон",
-    "score": {
-      "current": "Холҳои ҷорӣ",
-      "record": "Рекорд"
-    },
-    "noQuestions": "Хатогӣ ҳангоми боргирии марафон"
+  "myRank": {
+    "title": "Ҷойи ман",
+    "yourRank": "Ҷойи шумо",
+    "currentPosition": "Мавқеи ҷории шумо дар ҷадвали пешсафон",
+    "place": "ҷой"
   },
-
+  "notfound": {
+    "title": "Саҳифа ёфт нашуд",
+    "description": "Саҳифаи дархостшуда вуҷуд надорад.",
+    "home": "Ба саҳифаи асосӣ",
+    "back": "Бозгашт",
+    "hint": "Маслиҳат: саҳифа метавонад нест карда шуда бошад, номи он иваз шуда бошад ё муваққатан дастрас набошад."
+  },
+  "profile": {
+    "title": "Профил",
+    "joined": "Ҳамроҳ шуд",
+    "bestFrontendScore": "Беҳтарин натиҷаи Frontend",
+    "bestBackendScore": "Беҳтарин натиҷаи Backend",
+    "updateProfile": "Навсозии профил",
+    "changePassword": "Тағйир додани парол"
+  },
+  "profileMenu": {
+    "profile": "Профил",
+    "logout": "Баромадан",
+    "logoutSuccess": "Шумо бомуваффақият баромадед"
+  },
   "question": {
-    "difficulty": "Сатҳи душворӣ",
+    "difficulty": "Сложность",
     "copy": "Нусхабардорӣ",
     "copied": "Нусхабардорӣ шуд"
   },
-
-  "gameOver": {
-    "title": "Бозӣ хотима ёфт",
-    "wrongAnswer": "Шумо нодуруст ҷавоб додед. Холҳои давр:",
-    "record": "Рекорд:",
-    "restart": "Аз нав оғоз кардан"
+  "random": {
+    "title": "Саволҳои тасодуфӣ",
+    "noQuestions": "Боркунии саволҳои тасодуфӣ номуваффақ буд"
   },
-
-  "errors": {
-    "loadFailed": "Бор кардани саволҳо муваффақ нашуд.",
-    "notFound": "Саволҳо ёфт нашуданд."
+  "register": {
+    "title": "Эҷоди ҳисоб дар ",
+    "subtitle": "Барои идома ба қайд гиред",
+    "form": {
+      "fields": {
+        "fullName": {
+          "label": "Ному насаб",
+          "placeholder": "Ному насаб"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "password": {
+          "label": "Парол",
+          "placeholder": "••••••••"
+        }
+      },
+      "submitButton": {
+        "default": "Ба қайд гирифтан",
+        "loading": "Эҷоди ҳисоб..."
+      }
+    },
+    "footer": {
+      "text": "Аллакай ҳисоб доред?",
+      "linkText": "Ворид шудан"
+    },
+    "toasts": {
+      "success": "Ҳисоб бомуваффақият эҷод шуд",
+      "error": "Эҷоди ҳисоб номуваффақ буд"
+    }
   },
-
-  "loading": {
-    "text": "Боргирӣ..."
-  },
-
   "theme": {
-    "light": "Мавзӯи рӯшноӣ",
+    "light": "Мавзӯи равшан",
     "dark": "Мавзӯи торик"
+  },
+  "updateProfileModal": {
+    "title": "Навсозии профил",
+    "fields": {
+      "fullName": {
+        "label": "Ному насаб",
+        "placeholder": "Ному насаби худро ворид кунед"
+      },
+      "profilePicture": {
+        "label": "Аватар"
+      }
+    },
+    "buttons": {
+      "cancel": "Бекор кардан",
+      "update": "Навсозӣ",
+      "updating": "Навсозӣ..."
+    },
+    "success": "Профил бомуваффақият навсозӣ шуд"
+  },
+  "changePasswordModal": {
+    "title": "Тағйир додани парол",
+    "fields": {
+      "currentPassword": {
+        "label": "Пароли ҷорӣ",
+        "placeholder": "Пароли ҷории худро ворид кунед"
+      },
+      "newPassword": {
+        "label": "Пароли нав",
+        "placeholder": "Пароли нави худро ворид кунед"
+      },
+      "confirmNewPassword": {
+        "label": "Тасдиқи пароли нав",
+        "placeholder": "Пароли нави худро тасдиқ кунед"
+      }
+    },
+    "buttons": {
+      "cancel": "Бекор кардан",
+      "change": "Тағйир додан"
+    },
+    "success": "Парол бомуваффақият тағйир дода шуд",
+    "error": "Тағйир додани парол номуваффақ буд"
   }
 }

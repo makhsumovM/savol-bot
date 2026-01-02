@@ -1,36 +1,160 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 SkillCheck
 
-## Getting Started
+**SkillCheck** — интерактивная веб-платформа для тестирования знаний по программированию. Приложение генерирует вопросы с помощью AI (Google Gemini) и поддерживает режимы марафона с отслеживанием результатов.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![React](https://img.shields.io/badge/React-19-61dafb?logo=react)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38bdf8?logo=tailwindcss)
+
+---
+
+## ✨ Основные функции
+
+- 🎯 **Режим «Марафон»** — серия вопросов с подсчётом очков по Frontend и Backend
+- 🎲 **Режим «Случайный вопрос»** — быстрая тренировка на случайных вопросах
+- 🏆 **Таблица лидеров** — рейтинг пользователей по результатам
+- 📊 **Профиль пользователя** — личная статистика и достижения
+- 🌐 **Мультиязычность** — поддержка English, Русский, Тоҷикӣ
+- 🌙 **Тёмная/светлая тема** — переключение через `next-themes`
+- 🤖 **AI-генерация вопросов** — Google Gemini API
+
+---
+
+## 🛠 Технологии
+
+| Категория | Технологии |
+|-----------|------------|
+| **Frontend** | Next.js 16, React 19, TypeScript 5 |
+| **Стилизация** | Tailwind CSS 4, Framer Motion |
+| **State Management** | Redux Toolkit, React Query |
+| **Формы** | React Hook Form, Zod |
+| **UI-компоненты** | Radix UI, Lucide Icons |
+| **Интернационализация** | i18next, react-i18next |
+| **AI** | Google Gemini API |
+
+---
+
+## 📁 Структура проекта
+
+```
+savol-bot/
+├── src/
+│   ├── app/           # Next.js App Router (страницы)
+│   │   ├── api/       # API Routes (Gemini endpoints)
+│   │   ├── marathon/  # Страница марафона
+│   │   ├── random/    # Страница случайных вопросов
+│   │   ├── leaderboard/ # Таблица лидеров
+│   │   ├── profile/   # Профиль пользователя
+│   │   ├── login/     # Авторизация
+│   │   └── register/  # Регистрация
+│   ├── api/           # Клиентские API-функции
+│   ├── ui/            # UI-компоненты
+│   ├── lib/           # Утилиты, store, провайдеры
+│   ├── types/         # TypeScript типы
+│   ├── i18n/          # Локализация (en, ru, tj)
+│   └── styles/        # Глобальные стили
+└── public/            # Статические файлы
+```
+
+---
+
+## 🚀 Установка и запуск
+
+### Требования
+
+- Node.js 18+
+- npm / yarn / pnpm
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com/makhsumovM/savol-bot.git
+cd savol-bot
+```
+
+### 2. Установка зависимостей
+
+```bash
+npm install
+```
+
+### 3. Настройка переменных окружения
+
+Создайте файл `.env` в корне проекта:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+NEXT_PUBLIC_API_URL=your_backend_api_url
+```
+
+### 4. Запуск в режиме разработки
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Сборка для продакшена
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📖 Использование
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Режимы игры
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Режим | Описание |
+|-------|----------|
+| **🏃 Марафон** | Пройдите серию вопросов разной сложности. Выберите направление (Frontend/Backend) и сложность. Результаты сохраняются в рейтинге. |
+| **🎲 Случайный** | Быстрая тренировка — получите случайный вопрос и проверьте свои знания. |
 
-## Deploy on Vercel
+### Уровни сложности
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `easy` — базовые вопросы
+- `medium` — средний уровень
+- `hard` — сложные вопросы
+- `very-hard` — продвинутый уровень
+- `expert` — экспертный уровень
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📜 Скрипты
+
+| Команда | Описание |
+|---------|----------|
+| `npm run dev` | Запуск в режиме разработки |
+| `npm run build` | Сборка для продакшена |
+| `npm start` | Запуск production-сервера |
+| `npm run lint` | Проверка кода ESLint |
+
+---
+
+## 💡 Советы по использованию
+
+1. **Начните с лёгких вопросов** — постепенно повышайте сложность
+2. **Используйте марафон** — для системной подготовки и отслеживания прогресса
+3. **Смотрите таблицу лидеров** — сравнивайте свои результаты с другими
+4. **Переключайте язык** — практикуйтесь на удобном для вас языке
+
+---
+
+## 👤 Автор
+
+**Sultonzoda Abdulloh**  
+Frontend Developer
+
+[![Email](https://img.shields.io/badge/Email-Gmail-c14438?style=flat&logo=gmail&logoColor=white)](mailto:your-email@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdullo-sultonzoda-75a4ab3a2/)
+[![Telegram](https://img.shields.io/badge/Telegram-Chat-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/sultonzoda_abdulloh)
+
+---
+
+## 📄 Лицензия
+
+MIT License © 2024 Sultonzoda Abdulloh
