@@ -71,7 +71,9 @@
     "loadFailed": "Failed to load questions.",
     "notFound": "Questions not found.",
     "myBestLoadError": "Failed to load best scores",
-    "leaderboardLoadError": "Failed to load leaderboard"
+    "leaderboardLoadError": "Failed to load leaderboard",
+    "profileLoadError": "Failed to load profile",
+    "updateProfileError": "Failed to update profile"
   },
   "loading": {
     "text": "Loading..."
@@ -151,7 +153,9 @@
   },
   "myRank": {
     "title": "My Rank",
-    "yourRank": "Your Rank"
+    "yourRank": "Your Rank",
+    "currentPosition": "Your current position in the leaderboard",
+    "place": "place"
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -160,5 +164,35 @@
       "username": "Username",
       "score": "Score"
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "joined": "Joined",
+    "bestFrontendScore": "Best Frontend Score",
+    "bestBackendScore": "Best Backend Score",
+    "updateProfile": "Update Profile"
+  },
+  "updateProfileModal": {
+    "title": "Update Profile",
+    "fields": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "profilePicture": {
+        "label": "Profile Picture"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Update",
+      "updating": "Updating..."
+    },
+    "success": "Profile updated successfully"
+  },
+  "profileMenu": {
+    "profile": "Profile",
+    "logout": "Logout",
+    "logoutSuccess": "Logged out successfully"
   }
 }
