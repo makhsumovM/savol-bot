@@ -11,7 +11,7 @@ import logo from '../../../public/favicon.ico'
 import { User, Activity, Dices, Award, ChartBar, Badge } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { getJwtFromCookie } from '@/lib/utils/jwt'
-import ProfileMenuModal from '@/ui/profileMenuModal/modal'
+import ProfileMenuModal from '@/ui/modals/profileMenuModal/modal'
 import { useState, useRef } from 'react'
 
 const HeaderComponent = () => {
@@ -26,7 +26,6 @@ const HeaderComponent = () => {
   const navLinks = [
     { href: '/marathon', icon: Activity },
     { href: '/random', icon: Dices },
-    ...(jwt ? [{ href: '/my-best', icon: Award }] : []),
     ...(jwt ? [{ href: '/my-rank', icon: Badge }] : []),
     { href: '/leaderboard', icon: ChartBar },
   ]
@@ -36,7 +35,7 @@ const HeaderComponent = () => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="relative sticky top-0 z-50 flex items-center justify-between px-2 py-1 backdrop-blur-lg bg-background/80 border-b border-border shadow-sm"
+      className=" sticky top-0 z-50 flex items-center justify-between px-2 py-1 backdrop-blur-lg bg-background/80 border-b border-border shadow-sm"
     >
       <Link href="/" className="shrink-0 z-10">
         <Image
