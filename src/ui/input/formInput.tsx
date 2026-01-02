@@ -12,9 +12,10 @@ interface IFormInputProps<T extends FieldValues> {
   name: Path<T>
   label: string
   control: Control<T>
-  placeholder: string
-  type: string
+  placeholder?: string
+  type: 'text' | 'email' | 'password' | 'number' | 'file'
   icon?: LucideIcon
+  accept?: string
 }
 
 const FormInput = <T extends FieldValues>({
@@ -24,6 +25,7 @@ const FormInput = <T extends FieldValues>({
   type,
   placeholder,
   icon: Icon,
+  accept,
 }: IFormInputProps<T>) => {
   const [eyeOpen, setEyeOpen] = useState(false)
 
@@ -38,21 +40,36 @@ const FormInput = <T extends FieldValues>({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-       <Label htmlFor={name}>{label}</Label>
+          <Label htmlFor={name}>{label}</Label>
+
           <div className="relative">
-            {Icon && (
+            {Icon && type !== 'file' && (
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                 <Icon size={20} />
               </div>
             )}
-            <Input
-              {...field}
-              type={eyeOpen ? 'text' : type}
-              aria-invalid={fieldState.invalid}
-              placeholder={`Enter ${placeholder}`}
-              value={field.value || ''}
-              className={cn(type === 'password' ? 'pr-10' : '', Icon && 'pl-10')}
-            />
+
+            {type === 'file' ? (
+              <input
+                type="file"
+                name={field.name}
+                ref={field.ref}
+                accept={accept}
+                onBlur={field.onBlur}
+                onChange={(e) => field.onChange(e.target.files)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              />
+            ) : (
+              <Input
+                {...field}
+                type={type === 'password' && eyeOpen ? 'text' : type}
+                value={field.value ?? ''}
+                aria-invalid={fieldState.invalid}
+                placeholder={placeholder ? `Enter ${placeholder}` : undefined}
+                className={cn(type === 'password' && 'pr-10', Icon && 'pl-10')}
+              />
+            )}
+
             {type === 'password' && (
               <div
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
@@ -62,6 +79,7 @@ const FormInput = <T extends FieldValues>({
               </div>
             )}
           </div>
+
           <AnimatePresence>
             {fieldState.error && (
               <motion.p
@@ -69,7 +87,6 @@ const FormInput = <T extends FieldValues>({
                 initial={{ opacity: 0, y: -5 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.2 }}
               >
                 {fieldState.error.message}
               </motion.p>
