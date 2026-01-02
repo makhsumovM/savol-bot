@@ -1,5 +1,5 @@
 import { api } from '@/lib/utils/axiosConfig'
-import { ILogin, IRegister, IUpdateProfile } from '@/types/auth'
+import { ILogin, IRegister } from '@/types/auth'
 
 export const loginApi = async (data: ILogin) => {
   try {
