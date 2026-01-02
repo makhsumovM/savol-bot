@@ -62,6 +62,16 @@
       "record": "Record",
       "difficulty": "Difficulty"
     },
+    "bestScore": "Best Record",
+    "currentScore": "Current Score",
+    "difficulty": "Level",
+    "difficulties": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "very-hard": "Very Hard",
+      "expert": "Expert"
+    },
     "noQuestions": "Failed to load marathon questions"
   },
   "modes": {

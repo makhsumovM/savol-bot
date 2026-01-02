@@ -63,7 +63,17 @@
     "score": {
       "current": "Холҳои ҷорӣ",
       "record": "Рекорд",
-      "difficulty": "Сложность"
+      "difficulty": "Мураккабӣ"
+    },
+    "bestScore": "Беҳтарин рекорд",
+    "currentScore": "Холҳои ҷорӣ",
+    "difficulty": "Сатҳ",
+    "difficulties": {
+      "easy": "Осон",
+      "medium": "Миёна",
+      "hard": "Душвор",
+      "very-hard": "Хеле душвор",
+      "expert": "Эксперт"
     },
     "noQuestions": "Боркунии саволҳои марафон номуваффақ буд"
   },

@@ -65,6 +65,16 @@
       "record": "Рекорд",
       "difficulty": "Сложность"
     },
+    "bestScore": "Лучший рекорд",
+    "currentScore": "Текущий счёт",
+    "difficulty": "Уровень",
+    "difficulties": {
+      "easy": "Лёгкий",
+      "medium": "Средний",
+      "hard": "Сложный",
+      "very-hard": "Очень сложный",
+      "expert": "Эксперт"
+    },
     "noQuestions": "Не удалось загрузить вопросы марафона"
   },
   "modes": {
@@ -190,7 +200,6 @@
     },
     "success": "Профиль успешно обновлён"
   },
-
   "changePasswordModal": {
     "title": "Смена пароля",
     "fields": {
