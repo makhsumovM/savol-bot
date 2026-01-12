@@ -154,6 +154,7 @@ Frontend Developer
 [![Telegram](https://img.shields.io/badge/Telegram-Chat-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/sultonzoda_abdulloh)
 
 **Qosimov Yusufjon**
+
 Frontend Developer
 
 [![Email](https://img.shields.io/badge/Email-Gmail-c14438?style=flat&logo=gmail&logoColor=white)](mailto:your-email@gmail.com)
@@ -164,3 +165,4 @@ Frontend Developer
 ## 📄 Лицензия
 
 MIT License © 2026 Sultonzoda Abdulloh
+MIT License © 2026 Qosimov Yusufjon
