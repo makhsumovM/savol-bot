@@ -153,7 +153,7 @@ Frontend Developer
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdullo-sultonzoda-75a4ab3a2/)
 [![Telegram](https://img.shields.io/badge/Telegram-Chat-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/sultonzoda_abdulloh)
 
-**Qosimov Yusufjon**
+**Qosimov Yusufjon**    
 Frontend Developer
 
 [![Email](https://img.shields.io/badge/Email-Gmail-c14438?style=flat&logo=gmail&logoColor=white)](mailto:your-email@gmail.com)
@@ -163,4 +163,4 @@ Frontend Developer
 
 ## 📄 Лицензия
 
-MIT License © 2026 Sultonzoda Abdulloh
+MIT License © 2026 Makhsumov Muhammad
