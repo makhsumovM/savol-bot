@@ -163,5 +163,4 @@ Frontend Developer
 
 ## 📄 Лицензия
 
-MIT License © 2026 Sultonzoda Abdulloh  
-MIT License © 2026 Qosimov Yusufjon
+MIT License © 2026 Makhsumov Muhammad
