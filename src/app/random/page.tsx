@@ -102,9 +102,9 @@ const RandomPage = () => {
           whileHover={{ scale: 1.04 }}
           onClick={() => setType('backend')}
           className={`relative w-full sm:w-auto min-h-[56px]
-      px-6 sm:px-8 py-4 rounded-3xl font-semibold
-      text-base sm:text-lg transition-all duration-300
-      shadow-lg border ${type === 'backend'
+px-6 sm:px-8 py-4 rounded-3xl font-semibold
+text-base sm:text-lg transition-all duration-300
+shadow-lg border ${type === 'backend'
               ? 'bg-primary-2 text-white border-primary-2'
               : 'bg-card/80 backdrop-blur-md text-foreground border-border'
             }`}

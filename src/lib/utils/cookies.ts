@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-
 export enum CookieKey {
   token = 'token',
 }

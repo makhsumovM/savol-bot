@@ -29,7 +29,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="grid grid-cols-1 gap-20 md:grid-cols-3 md:gap-6"
       >
         {modes.map((mode, index) => {
           const Icon = iconMap[mode.id] || Award
@@ -41,7 +41,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
               onClick={() => router.push(mode.id)}
               transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
               whileHover={{ y: -4, scale: 1.02 }}
-              className="relative group"
+              className="relative group max-h-33"
             >
               <div className="absolute inset-0 bg-linear-to-br from-primary/10 to-primary-2/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative bg-card border border-border/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
