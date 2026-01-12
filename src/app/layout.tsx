@@ -4,7 +4,7 @@ import Providers from '@/lib/providers/providers'
 import Header from '@/ui/layout/header'
 
 export const metadata: Metadata = {
-  title: 'Savol-bot',
+  title: 'SkillCheck',
   description: 'AI тестировщик',
   icons: {
     icon: '/favicon.ico',
