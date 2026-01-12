@@ -1,7 +1,7 @@
 import { IUpdateProfile } from '@/types/auth'
 import FormInput from '@/ui/input/formInput'
 import { Image, User } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateProfileApi } from '@/api/authApi'
@@ -10,21 +10,28 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 interface IUpdateProfileModalProps {
+  fullname: string
+  setFullname: React.Dispatch<React.SetStateAction<string>>
   updateProfileModalOpen: boolean
   setUpdateProfileModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const UpdateProfileModal = ({
   setUpdateProfileModalOpen,
+  fullname,
+  setFullname,
   updateProfileModalOpen,
 }: IUpdateProfileModalProps) => {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const { control, handleSubmit } = useForm<IUpdateProfile>({
+  const { control, handleSubmit, setValue } = useForm<IUpdateProfile>({
     defaultValues: {
       fullName: '',
     },
   })
+  useEffect(() => {
+    setValue('fullName', fullname)
+  }, [fullname, setValue])
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateProfileApi,
@@ -58,9 +65,7 @@ const UpdateProfileModal = ({
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-xl flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">
-          {t('updateProfileModal.title')}
-        </h2>
+        <h2 className="text-2xl font-bold mb-4">{t('updateProfileModal.title')}</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <FormInput

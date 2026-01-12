@@ -15,6 +15,7 @@ import { Edit2, Lock } from 'lucide-react'
 const ProfilePage = () => {
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false)
   const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false)
+  const [fullname, setFullname] = useState<string>('')
   const { t } = useTranslation()
   const { data, isLoading, isError } = useQuery<IProfile>({
     queryKey: ['profile'],
@@ -67,7 +68,9 @@ const ProfilePage = () => {
                       <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                         {data.fullName}
                       </h2>
-                      <p className="mt-1 text-sm sm:text-base text-muted-foreground">{data.email}</p>
+                      <p className="mt-1 text-sm sm:text-base text-muted-foreground">
+                        {data.email}
+                      </p>
                       <p className="mt-0.5 text-xs sm:text-sm text-muted-foreground/70">
                         {t('profile.joined')}: {new Date(data.createdAt).toLocaleDateString()}
                       </p>
@@ -111,7 +114,10 @@ const ProfilePage = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => setUpdateProfileModalOpen(true)}
+          onClick={() => {
+            setUpdateProfileModalOpen(true)
+            setFullname(data?.fullName ?? '')
+          }}
           className="fixed bottom-3 right-3 z-50 flex items-center gap-2 px-4 py-3 bg-primary text-white font-bold text-sm rounded-full shadow-md backdrop-blur-md border border-white/20 transition-all duration-200 hover:shadow-primary/40"
         >
           <Edit2 className="w-5 h-5" />
@@ -124,6 +130,8 @@ const ProfilePage = () => {
         setChangePasswordModalOpen={setChangePasswordModalOpen}
       />
       <UpdateProfileModal
+        fullname={fullname}
+        setFullname={setFullname}
         updateProfileModalOpen={updateProfileModalOpen}
         setUpdateProfileModalOpen={setUpdateProfileModalOpen}
       />
