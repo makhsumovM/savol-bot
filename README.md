@@ -157,4 +157,4 @@ Frontend Developer
 
 ## 📄 Лицензия
 
-MIT License © 2024 Sultonzoda Abdulloh
+MIT License © 2026 Sultonzoda Abdulloh
