@@ -17,6 +17,8 @@ import { Lock, User } from 'lucide-react'
 
 const LoginPage = () => {
   const { t } = useTranslation()
+  const appName = t('app.name')
+  const [appFirstWord, ...appRestWords] = appName.split(' ')
   const { mutate, isPending } = useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
@@ -63,8 +65,11 @@ const LoginPage = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-primary">
             {t('login.title')}
           </h1>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
-            {t('app.name')}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight">
+            <span className="text-[#ec6216]">{appFirstWord}</span>
+            {appRestWords.length > 0 && (
+              <span className="text-[#13aeac]"> {appRestWords.join(' ')}</span>
+            )}
           </h1>
         </motion.div>
 

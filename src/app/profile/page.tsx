@@ -15,7 +15,10 @@ import { Edit2, Lock } from 'lucide-react'
 const ProfilePage = () => {
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false)
   const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false)
+  const [fullname, setFullname] = useState<string>('')
   const { t } = useTranslation()
+  const profileTitle = t('profile.title')
+  const [profileFirstWord, ...profileRestWords] = profileTitle.split(' ')
   const { data, isLoading, isError } = useQuery<IProfile>({
     queryKey: ['profile'],
     queryFn: getProfileApi,
@@ -34,9 +37,12 @@ const ProfilePage = () => {
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-primary via-primary-2 to-primary bg-clip-text text-transparent mb-6"
+          className="text-3xl sm:text-4xl font-extrabold text-center mb-6"
         >
-          {t('profile.title')}
+          <span className="text-[#ec6216]">{profileFirstWord}</span>
+          {profileRestWords.length > 0 && (
+            <span className="text-[#13aeac]"> {profileRestWords.join(' ')}</span>
+          )}
         </motion.h1>
 
         {isLoading && <Loading />}
@@ -67,7 +73,9 @@ const ProfilePage = () => {
                       <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                         {data.fullName}
                       </h2>
-                      <p className="mt-1 text-sm sm:text-base text-muted-foreground">{data.email}</p>
+                      <p className="mt-1 text-sm sm:text-base text-muted-foreground">
+                        {data.email}
+                      </p>
                       <p className="mt-0.5 text-xs sm:text-sm text-muted-foreground/70">
                         {t('profile.joined')}: {new Date(data.createdAt).toLocaleDateString()}
                       </p>
@@ -111,7 +119,10 @@ const ProfilePage = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => setUpdateProfileModalOpen(true)}
+          onClick={() => {
+            setUpdateProfileModalOpen(true)
+            setFullname(data?.fullName ?? '')
+          }}
           className="fixed bottom-3 right-3 z-50 flex items-center gap-2 px-4 py-3 bg-primary text-white font-bold text-sm rounded-full shadow-md backdrop-blur-md border border-white/20 transition-all duration-200 hover:shadow-primary/40"
         >
           <Edit2 className="w-5 h-5" />
@@ -124,6 +135,8 @@ const ProfilePage = () => {
         setChangePasswordModalOpen={setChangePasswordModalOpen}
       />
       <UpdateProfileModal
+        fullname={fullname}
+        setFullname={setFullname}
         updateProfileModalOpen={updateProfileModalOpen}
         setUpdateProfileModalOpen={setUpdateProfileModalOpen}
       />

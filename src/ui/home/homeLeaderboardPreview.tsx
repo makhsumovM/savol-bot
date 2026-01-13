@@ -12,6 +12,7 @@ import { ILeaderboard } from '@/types/leaderboard'
 import { IMyRank } from '@/types/my-rank'
 import { IProfile } from '@/types/auth'
 import Loading from '@/ui/common/loading'
+import { getCookie } from '@/lib/utils/cookies'
 
 const rankStyles = {
   1: {
@@ -44,16 +45,18 @@ export const HomeLeaderboardPreview = () => {
     queryFn: getLeaderboard,
     refetchOnWindowFocus: false,
   })
-
+  const token = getCookie('token')
   const { data: myRankResponse } = useQuery<IMyRank>({
     queryKey: ['my-rank-preview'],
     queryFn: getMyRank,
     refetchOnWindowFocus: false,
+    enabled: !!token,
   })
 
   const { data: profileData } = useQuery<IProfile>({
     queryKey: ['profile-preview'],
     queryFn: getProfileApi,
+    enabled: !!token,
     refetchOnWindowFocus: false,
   })
 

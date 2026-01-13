@@ -13,6 +13,8 @@ import { IProfile } from '@/types/auth'
 
 const MyRankPage = () => {
   const { t } = useTranslation()
+  const myRankTitle = t('myRank.title')
+  const [myRankFirstWord, ...myRankRestWords] = myRankTitle.split(' ')
 
   const {
     data: rankResponse,
@@ -49,6 +51,7 @@ const MyRankPage = () => {
     if (rank === 5) return 'text-green-400'
     return 'text-muted-foreground'
   }
+  const firstLetter = fullName?.charAt(0).toUpperCase()
 
   const getRankBadgeColor = (rank: number) => {
     if (rank === 1)
@@ -74,15 +77,18 @@ const MyRankPage = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl sm:text-6xl md:text-7xl font-black text-center bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
+          className="text-5xl sm:text-6xl md:text-7xl font-black text-center"
         >
-          {t('myRank.title')}
+          <span className="text-[#ec6216]">{myRankFirstWord}</span>
+          {myRankRestWords.length > 0 && (
+            <span className="text-[#13aeac]"> {myRankRestWords.join(' ')}</span>
+          )}
         </motion.h1>
 
         {isLoading && <Loading />}
         {hasError && <Error message={t('errors.leaderboardLoadError')} />}
 
-        {hasData && rank !== undefined && fullName && profilePicture && bestResult && (
+        {hasData && rank !== undefined && fullName && bestResult && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -96,11 +102,23 @@ const MyRankPage = () => {
 
               <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
                 <div className="relative">
-                  <img
-                    src={process.env.NEXT_PUBLIC_API_URL + '/' + profilePicture}
-                    alt={fullName}
-                    className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/50 shadow-xl"
-                  />
+                  {profilePicture ? (
+                    <img
+                      src={process.env.NEXT_PUBLIC_API_URL + '/' + profilePicture}
+                      alt={fullName}
+                      className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/50 shadow-xl"
+                    />
+                  ) : (
+                    <div
+                      className="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center
+                  bg-primary/20 border-4 border-primary/50 shadow-xl"
+                    >
+                      <span className="text-5xl md:text-6xl font-bold text-primary">
+                        {firstLetter}
+                      </span>
+                    </div>
+                  )}
+
                   <div className="absolute -bottom-2 -right-2">
                     <div
                       className={`px-4 py-2 rounded-full border-2 font-bold text-lg shadow-lg ${getRankBadgeColor(
@@ -122,7 +140,6 @@ const MyRankPage = () => {
 
                   <div className="flex flex-col items-center md:items-start">
                     <Trophy size={80} className={`${getTrophyColor(rank)} mb-3`} />
-                   
                   </div>
                 </div>
               </div>
@@ -130,11 +147,15 @@ const MyRankPage = () => {
               <div className="mt-10 pt-8 border-t border-border/30 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground">{t('profile.bestFrontendScore')}</p>
-                  <p className="text-2xl font-bold text-primary">{bestResult.bestFrontendScore ?? 0}</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {bestResult.bestFrontendScore ?? 0}
+                  </p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground">{t('profile.bestBackendScore')}</p>
-                  <p className="text-2xl font-bold text-primary-2">{bestResult.bestBackendScore ?? 0}</p>
+                  <p className="text-2xl font-bold text-primary-2">
+                    {bestResult.bestBackendScore ?? 0}
+                  </p>
                 </div>
               </div>
             </div>
