@@ -2,29 +2,75 @@ import type { Metadata } from 'next'
 import '../styles/globals.css'
 import Providers from '@/lib/providers/providers'
 import Header from '@/ui/layout/header'
+import { siteConfig } from '@/lib/seo'
+
+const metadataBase = new URL(siteConfig.url)
 
 export const metadata: Metadata = {
+  metadataBase,
   title: {
-    default: 'SkillCheck',
-    template: '%s · SkillCheck',
+    default: siteConfig.name,
+    template: `%s · ${siteConfig.name}`,
   },
-  description: 'AI тестировщик',
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  keywords: siteConfig.keywords,
+  category: siteConfig.category,
+  creator: siteConfig.creator,
+  alternates: {
+    canonical: '/',
+  },
   icons: {
     icon: '/favicon.ico',
   },
   openGraph: {
-    title: 'SkillCheck',
-    description: 'AI тестировщик',
+    title: siteConfig.name,
+    description: siteConfig.description,
     type: 'website',
-    locale: 'ru_RU',
+    locale: siteConfig.locale,
+    url: metadataBase,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 512,
+        height: 512,
+        alt: siteConfig.name,
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
-    title: 'SkillCheck',
-    description: 'AI тестировщик',
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  inLanguage: siteConfig.locale,
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+  },
+}
 
 export default function RootLayout({
   children,
@@ -32,8 +78,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased`}>
+    <html lang="ru" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="antialiased">
         <Providers>
           <Header />
           {children}
