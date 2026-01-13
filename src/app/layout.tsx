@@ -88,7 +88,9 @@ export default function RootLayout({
       <body className="antialiased">
         <Providers>
           <Header />
-          {children}
+          <main className="pb-20 md:pb-0">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
