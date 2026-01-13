@@ -178,7 +178,7 @@ export default function MarathonClient() {
       <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
       <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
 
-      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 md:py-14 space-y-6">
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-6">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -187,26 +187,26 @@ export default function MarathonClient() {
         >
           <h1
             suppressHydrationWarning
-            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
+            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
           >
             {t('marathon.title')}
           </h1>
         </motion.div>
 
-        <div className="flex justify-center gap-6 mb-10">
+        <div className="flex justify-center gap-4 mb-6">
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleModeChange('frontend')}
-            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
+            className={`relative px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 overflow-hidden shadow-md border-2 ${
               mode === 'frontend'
                 ? 'bg-primary text-white border-primary shadow-primary/30'
                 : 'bg-card border-border text-foreground hover:border-primary/50'
             }`}
           >
             <span className="relative z-10 flex items-center gap-3">
-              <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
-                <Image src={reactIcon} width={48} height={48} alt="Frontend" />
+              <div className="p-1 rounded-2xl bg-white/10 backdrop-blur-sm">
+                <Image src={reactIcon} width={28} height={28} alt="Frontend" />
               </div>
               Frontend
             </span>
@@ -216,87 +216,20 @@ export default function MarathonClient() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleModeChange('backend')}
-            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
+            className={`relative px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 overflow-hidden shadow-md border-2 ${
               mode === 'backend'
                 ? 'bg-primary-2 text-white border-primary-2 shadow-primary-2/40'
                 : 'bg-card border-border text-foreground hover:border-primary-2/50'
             }`}
           >
             <span className="relative z-10 flex items-center gap-3">
-              <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
-                <Image src={charmIcon} width={48} height={48} alt="Backend" />
+              <div className="p-1 rounded-2xl bg-white/10 backdrop-blur-sm">
+                <Image src={charmIcon} width={28} height={28} alt="Backend" />
               </div>
               Backend
             </span>
           </motion.button>
         </div>
-
-        <motion.div
-          className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
-            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/30">
-              <Trophy className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground font-medium">{t('marathon.bestScore')}</span>
-              <span className="text-2xl font-bold bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                {bestScore}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
-            <div
-              className={`flex items-center justify-center w-12 h-12 rounded-xl shadow-lg ${
-                difficultyIndex === 0
-                  ? 'bg-linear-to-br from-green-400 to-green-600 shadow-green-500/30'
-                  : difficultyIndex === 1
-                  ? 'bg-linear-to-br from-blue-400 to-blue-600 shadow-blue-500/30'
-                  : difficultyIndex === 2
-                  ? 'bg-linear-to-br from-yellow-400 to-yellow-600 shadow-yellow-500/30'
-                  : difficultyIndex === 3
-                  ? 'bg-linear-to-br from-orange-400 to-orange-600 shadow-orange-500/30'
-                  : 'bg-linear-to-br from-red-500 to-red-700 shadow-red-500/30'
-              }`}
-            >
-              <Zap className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground font-medium">{t('marathon.difficulty')}</span>
-              <span
-                className={`text-xl font-bold capitalize ${
-                  difficultyIndex === 0
-                    ? 'text-green-500'
-                    : difficultyIndex === 1
-                    ? 'text-blue-500'
-                    : difficultyIndex === 2
-                    ? 'text-yellow-500'
-                    : difficultyIndex === 3
-                    ? 'text-orange-500'
-                    : 'text-red-500'
-                }`}
-              >
-                {t(`marathon.difficulties.${currentDifficulty}`)}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
-            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-primary to-primary-2 shadow-lg shadow-primary/30">
-              <CheckCircle2 className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground font-medium">{t('marathon.currentScore')}</span>
-              <span className="text-2xl font-bold bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
-                {currentScore}
-              </span>
-            </div>
-          </div>
-        </motion.div>
 
         {isGameOver && (
           <motion.div
@@ -327,6 +260,73 @@ export default function MarathonClient() {
             </motion.div>
           </AnimatePresence>
         )}
+
+        <motion.div
+          className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+        >
+          <div className="flex items-center justify-center gap-3 bg-card/60 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 shadow-sm">
+            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-linear-to-br from-yellow-400 to-orange-500 shadow-sm shadow-yellow-500/30">
+              <Trophy className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs text-muted-foreground font-medium">{t('marathon.bestScore')}</span>
+              <span className="text-lg font-bold bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                {bestScore}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 bg-card/60 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 shadow-sm">
+            <div
+              className={`flex items-center justify-center w-9 h-9 rounded-lg shadow-sm ${
+                difficultyIndex === 0
+                  ? 'bg-linear-to-br from-green-400 to-green-600 shadow-green-500/30'
+                  : difficultyIndex === 1
+                  ? 'bg-linear-to-br from-blue-400 to-blue-600 shadow-blue-500/30'
+                  : difficultyIndex === 2
+                  ? 'bg-linear-to-br from-yellow-400 to-yellow-600 shadow-yellow-500/30'
+                  : difficultyIndex === 3
+                  ? 'bg-linear-to-br from-orange-400 to-orange-600 shadow-orange-500/30'
+                  : 'bg-linear-to-br from-red-500 to-red-700 shadow-red-500/30'
+              }`}
+            >
+              <Zap className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs text-muted-foreground font-medium">{t('marathon.difficulty')}</span>
+              <span
+                className={`text-base font-semibold capitalize ${
+                  difficultyIndex === 0
+                    ? 'text-green-500'
+                    : difficultyIndex === 1
+                    ? 'text-blue-500'
+                    : difficultyIndex === 2
+                    ? 'text-yellow-500'
+                    : difficultyIndex === 3
+                    ? 'text-orange-500'
+                    : 'text-red-500'
+                }`}
+              >
+                {t(`marathon.difficulties.${currentDifficulty}`)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 bg-card/60 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 shadow-sm">
+            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-linear-to-br from-primary to-primary-2 shadow-sm shadow-primary/30">
+              <CheckCircle2 className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs text-muted-foreground font-medium">{t('marathon.currentScore')}</span>
+              <span className="text-lg font-bold bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
+                {currentScore}
+              </span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
