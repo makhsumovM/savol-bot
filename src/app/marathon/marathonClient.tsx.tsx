@@ -32,6 +32,8 @@ export default function MarathonClient() {
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const lang = i18n.language
+  const marathonTitle = t('marathon.title')
+  const [marathonFirstWord, ...marathonRestWords] = marathonTitle.split(' ')
   const gameOverRef = useRef<HTMLDivElement>(null)
 
   const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as 'frontend' | 'backend'
@@ -178,123 +180,115 @@ export default function MarathonClient() {
       <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
       <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
 
-      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 md:py-14 space-y-6">
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
         <motion.div
-          className="text-center"
+          className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left mb-4 sm:mb-6"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
           <h1
             suppressHydrationWarning
-            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
+            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
           >
-            {t('marathon.title')}
+            <span className="text-[#ec6216]">{marathonFirstWord}</span>
+            {marathonRestWords.length > 0 && (
+              <span className="text-[#13aeac]"> {marathonRestWords.join(' ')}</span>
+            )}
           </h1>
-        </motion.div>
-
-        <div className="flex justify-center gap-6 mb-10">
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleModeChange('frontend')}
-            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
-              mode === 'frontend'
-                ? 'bg-primary text-white border-primary shadow-primary/30'
-                : 'bg-card border-border text-foreground hover:border-primary/50'
-            }`}
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
-                <Image src={reactIcon} width={48} height={48} alt="Frontend" />
-              </div>
-              Frontend
-            </span>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleModeChange('backend')}
-            className={`relative px-6 py-2.5 rounded-xl font-bold text-lg transition-all duration-300 overflow-hidden shadow-xl border-4 ${
-              mode === 'backend'
-                ? 'bg-primary-2 text-white border-primary-2 shadow-primary-2/40'
-                : 'bg-card border-border text-foreground hover:border-primary-2/50'
-            }`}
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              <div className="p-1 rounded-2xl bg-white/20 backdrop-blur-sm">
-                <Image src={charmIcon} width={48} height={48} alt="Backend" />
-              </div>
-              Backend
-            </span>
-          </motion.button>
-        </div>
-
-        <motion.div
-          className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
-            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/30">
-              <Trophy className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground font-medium">{t('marathon.bestScore')}</span>
-              <span className="text-2xl font-bold bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                {bestScore}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
-            <div
-              className={`flex items-center justify-center w-12 h-12 rounded-xl shadow-lg ${
-                difficultyIndex === 0
-                  ? 'bg-linear-to-br from-green-400 to-green-600 shadow-green-500/30'
-                  : difficultyIndex === 1
-                  ? 'bg-linear-to-br from-blue-400 to-blue-600 shadow-blue-500/30'
-                  : difficultyIndex === 2
-                  ? 'bg-linear-to-br from-yellow-400 to-yellow-600 shadow-yellow-500/30'
-                  : difficultyIndex === 3
-                  ? 'bg-linear-to-br from-orange-400 to-orange-600 shadow-orange-500/30'
-                  : 'bg-linear-to-br from-red-500 to-red-700 shadow-red-500/30'
+          <div className="flex sm:flex-row justify-center gap-3 sm:gap-4">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
+              onClick={() => handleModeChange('frontend')}
+              className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                mode === 'frontend'
+                  ? 'bg-primary text-white border-primary'
+                  : 'bg-card/80 backdrop-blur-md text-foreground border-border'
               }`}
             >
-              <Zap className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground font-medium">{t('marathon.difficulty')}</span>
-              <span
-                className={`text-xl font-bold capitalize ${
-                  difficultyIndex === 0
-                    ? 'text-green-500'
-                    : difficultyIndex === 1
-                    ? 'text-blue-500'
-                    : difficultyIndex === 2
-                    ? 'text-yellow-500'
-                    : difficultyIndex === 3
-                    ? 'text-orange-500'
-                    : 'text-red-500'
-                }`}
-              >
-                {t(`marathon.difficulties.${currentDifficulty}`)}
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <Image
+                  src={reactIcon}
+                  alt="Frontend"
+                  width={22}
+                  height={22}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+                Frontend
               </span>
-            </div>
+              {mode === 'frontend' && (
+                <motion.div
+                  layoutId="modeIndicator"
+                  className="absolute inset-0 rounded-3xl bg-primary z-0"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                />
+              )}
+            </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
+              onClick={() => handleModeChange('backend')}
+              className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                mode === 'backend'
+                  ? 'bg-primary-2 text-white border-primary-2'
+                  : 'bg-card/80 backdrop-blur-md text-foreground border-border'
+              }`}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <Image
+                  src={charmIcon}
+                  alt="Backend"
+                  width={22}
+                  height={22}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+                Backend
+              </span>
+              {mode === 'backend' && (
+                <motion.div
+                  layoutId="modeIndicator"
+                  className="absolute inset-0 rounded-3xl bg-primary-2 z-0"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                />
+              )}
+            </motion.button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.08 }}
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+              <Trophy className="w-3.5 h-3.5 text-foreground/70" />
+            </span>
+            <span className="uppercase tracking-wide">{t('marathon.bestScore')}</span>
+            <span className="font-semibold text-foreground/80">{bestScore}</span>
           </div>
 
-          <div className="flex items-center justify-center gap-3 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl px-6 py-4 shadow-lg">
-            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-primary to-primary-2 shadow-lg shadow-primary/30">
-              <CheckCircle2 className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground font-medium">{t('marathon.currentScore')}</span>
-              <span className="text-2xl font-bold bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent">
-                {currentScore}
-              </span>
-            </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+              <Zap className="w-3.5 h-3.5 text-foreground/70" />
+            </span>
+            <span className="uppercase tracking-wide">{t('marathon.difficulty')}</span>
+            <span className="font-semibold text-foreground/80">
+              {t(`marathon.difficulties.${currentDifficulty}`)}
+            </span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+              <CheckCircle2 className="w-3.5 h-3.5 text-foreground/70" />
+            </span>
+            <span className="uppercase tracking-wide">{t('marathon.currentScore')}</span>
+            <span className="font-semibold text-foreground/80">{currentScore}</span>
           </div>
         </motion.div>
 

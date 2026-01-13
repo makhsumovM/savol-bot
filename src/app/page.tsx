@@ -75,11 +75,10 @@ export default function Home() {
           >
             <h1
               suppressHydrationWarning
-              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight
-  bg-linear-to-r from-primary to-primary-2
-  bg-clip-text text-transparent"
+              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight"
             >
-              SkillCheck
+              <span className="text-[#ec6216]">Skill</span>
+              <span className="text-[#13aeac]">Check</span>
             </h1>
           </motion.div>
 
