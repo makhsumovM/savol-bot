@@ -259,6 +259,39 @@ export default function MarathonClient() {
           </div>
         </motion.div>
 
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.08 }}
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+              <Trophy className="w-3.5 h-3.5 text-foreground/70" />
+            </span>
+            <span className="uppercase tracking-wide">{t('marathon.bestScore')}</span>
+            <span className="font-semibold text-foreground/80">{bestScore}</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+              <Zap className="w-3.5 h-3.5 text-foreground/70" />
+            </span>
+            <span className="uppercase tracking-wide">{t('marathon.difficulty')}</span>
+            <span className="font-semibold text-foreground/80">
+              {t(`marathon.difficulties.${currentDifficulty}`)}
+            </span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+              <CheckCircle2 className="w-3.5 h-3.5 text-foreground/70" />
+            </span>
+            <span className="uppercase tracking-wide">{t('marathon.currentScore')}</span>
+            <span className="font-semibold text-foreground/80">{currentScore}</span>
+          </div>
+        </motion.div>
+
         {isGameOver && (
           <motion.div
             ref={gameOverRef}
@@ -288,45 +321,6 @@ export default function MarathonClient() {
             </motion.div>
           </AnimatePresence>
         )}
-
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 lg:gap-4"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.12 }}
-        >
-          <div className="flex items-center gap-3 rounded-xl border border-border/50 bg-card/50 px-3 py-2.5 text-muted-foreground shadow-sm">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/70">
-              <Trophy className="w-4 h-4 text-foreground/70" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[11px] uppercase tracking-wide">{t('marathon.bestScore')}</span>
-              <span className="text-base font-semibold text-foreground/80">{bestScore}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 rounded-xl border border-border/50 bg-card/50 px-3 py-2.5 text-muted-foreground shadow-sm">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/70">
-              <Zap className="w-4 h-4 text-foreground/70" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[11px] uppercase tracking-wide">{t('marathon.difficulty')}</span>
-              <span className="text-base font-semibold text-foreground/80">
-                {t(`marathon.difficulties.${currentDifficulty}`)}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 rounded-xl border border-border/50 bg-card/50 px-3 py-2.5 text-muted-foreground shadow-sm">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-muted/70">
-              <CheckCircle2 className="w-4 h-4 text-foreground/70" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[11px] uppercase tracking-wide">{t('marathon.currentScore')}</span>
-              <span className="text-base font-semibold text-foreground/80">{currentScore}</span>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
