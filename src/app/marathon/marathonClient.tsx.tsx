@@ -178,9 +178,9 @@ export default function MarathonClient() {
       <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
       <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
 
-      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-6">
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-6">
         <motion.div
-          className="text-center"
+          className="flex flex-col items-center gap-4 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
@@ -191,10 +191,7 @@ export default function MarathonClient() {
           >
             {t('marathon.title')}
           </h1>
-        </motion.div>
-
-        <div className="flex justify-center mb-5">
-          <div className="flex sm:flex-row justify-center gap-3 sm:gap-4 px-2">
+          <div className="flex sm:flex-row justify-center gap-3 sm:gap-4">
             <motion.button
               whileTap={{ scale: 0.98 }}
               whileHover={{ scale: 1.02 }}
@@ -255,7 +252,7 @@ export default function MarathonClient() {
               )}
             </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         {isGameOver && (
           <motion.div

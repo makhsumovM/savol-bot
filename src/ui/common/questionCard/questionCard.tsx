@@ -81,7 +81,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       transition={{ duration: 0.5 }}
       className={`w-full rounded-xl border bg-card ring-1 ring-primary/10 ${
         difficultyShadows[question.difficulty] || 'shadow-lg'
-      } p-4 sm:p-4 lg:p-5`}
+      } p-4 sm:p-5 lg:p-6`}
     >
       <header className="flex items-start justify-between gap-3 pb-3 border-b border-border/60">
         <div className="flex items-center gap-2.5">
@@ -89,7 +89,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             <span className="text-xs font-semibold text-primary">{index + 1}</span>
           </div>
 
-          <h2 className="text-sm sm:text-sm font-semibold leading-snug">
+          <h2 className="text-sm sm:text-base lg:text-lg font-semibold leading-snug">
             {question.question}
           </h2>
         </div>
@@ -128,7 +128,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.05 }}
             onClick={() => handleAnswer(i)}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border text-[12px] sm:text-sm font-medium leading-snug ${getAnswerClasses(
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border text-[12px] sm:text-sm lg:text-base font-medium leading-snug ${getAnswerClasses(
               i,
             )}`}
           >
