@@ -68,15 +68,14 @@ export default function QuestionCardR({
         border border-slate-200 dark:border-white/10
         p-4 sm:p-6 md:p-8
         space-y-4 sm:space-y-6
-        shadow-xl
-      "
+        shadow-xl"
     >
       <header className="flex items-start justify-between gap-3 border-b border-slate-200 dark:border-white/10 pb-3 sm:pb-4">
         <div className="flex gap-3 sm:gap-4">
-          <div className="w-7 h-7  sm:w-8 sm:h-8 rounded-full bg-orange-500/20 text-orange-500 shrink-0 flex items-center justify-center font-bold text-xs sm:text-sm">
+          <div className="w-7 h-7  sm:w-8 sm:h-8  rounded-full bg-orange-500/20 text-orange-500 shrink-0 flex items-center justify-center font-bold text-xs sm:text-sm">
             {index + 1}
           </div>
-          <h2 className="text-base sm:text-lg md:text-xl font-semibold text-slate-900 dark:text-white">
+          <h2 className="text-base  sm:text-lg md:text-xl font-semibold text-slate-900 dark:text-white">
             {question.question}
           </h2>
         </div>
@@ -97,7 +96,6 @@ export default function QuestionCardR({
           >
             {question.code}
           </SyntaxHighlighter>
-
           <button
             onClick={() => {
               navigator.clipboard.writeText(question.code!)
