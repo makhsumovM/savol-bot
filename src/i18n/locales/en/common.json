@@ -224,5 +224,14 @@
   },
   "common": {
     "viewAll": "View All"
+  },
+  "bottomNav": {
+    "home": "Home",
+    "marathon": "Marathon",
+    "random": "Random",
+    "myRank": "Rank",
+    "leaderboard": "Leaders",
+    "profile": "Profile",
+    "login": "Login"
   }
 }
