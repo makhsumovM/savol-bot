@@ -194,36 +194,66 @@ export default function MarathonClient() {
         </motion.div>
 
         <div className="flex justify-center mb-5">
-          <div className="relative inline-flex items-center rounded-full border border-border/70 bg-card/70 p-1 shadow-sm">
-            <motion.span
-              layoutId="mode-pill"
-              className="absolute inset-y-1 rounded-full bg-foreground/5 ring-1 ring-border/50"
-              transition={{ type: 'spring', stiffness: 280, damping: 30 }}
-              style={{
-                width: 'calc(50% - 4px)',
-                left: mode === 'frontend' ? '4px' : 'calc(50% + 0px)',
-              }}
-            />
-            <button
-              type="button"
+          <div className="flex sm:flex-row justify-center gap-3 sm:gap-4 px-2">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
               onClick={() => handleModeChange('frontend')}
-              className="relative z-10 flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold text-foreground transition hover:text-foreground/80"
+              className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                mode === 'frontend'
+                  ? 'bg-primary text-white border-primary'
+                  : 'bg-card/80 backdrop-blur-md text-foreground border-border'
+              }`}
             >
-              <div className="p-1 rounded-full bg-muted/60">
-                <Image src={reactIcon} width={22} height={22} alt="Frontend" />
-              </div>
-              Frontend
-            </button>
-            <button
-              type="button"
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <Image
+                  src={reactIcon}
+                  alt="Frontend"
+                  width={22}
+                  height={22}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+                Frontend
+              </span>
+              {mode === 'frontend' && (
+                <motion.div
+                  layoutId="modeIndicator"
+                  className="absolute inset-0 rounded-3xl bg-primary z-0"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                />
+              )}
+            </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
               onClick={() => handleModeChange('backend')}
-              className="relative z-10 flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold text-foreground transition hover:text-foreground/80"
+              className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                mode === 'backend'
+                  ? 'bg-primary-2 text-white border-primary-2'
+                  : 'bg-card/80 backdrop-blur-md text-foreground border-border'
+              }`}
             >
-              <div className="p-1 rounded-full bg-muted/60">
-                <Image src={charmIcon} width={22} height={22} alt="Backend" />
-              </div>
-              Backend
-            </button>
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <Image
+                  src={charmIcon}
+                  alt="Backend"
+                  width={22}
+                  height={22}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+                Backend
+              </span>
+              {mode === 'backend' && (
+                <motion.div
+                  layoutId="modeIndicator"
+                  className="absolute inset-0 rounded-3xl bg-primary-2 z-0"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                />
+              )}
+            </motion.button>
           </div>
         </div>
 
