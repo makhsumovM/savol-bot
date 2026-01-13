@@ -43,12 +43,12 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
 
   const answerStyle = (i: number) => {
     if (!answered)
-      return 'border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 cursor-pointer'
+      return 'border border-border/60 bg-card hover:bg-accent/20 hover:border-primary/30 cursor-pointer transition-colors'
     if (i === question.correctIndex)
-      return 'border border-green-500 bg-green-500/20'
+      return 'border border-green-500 bg-green-500/15'
     if (i === selected)
-      return 'border border-red-500 bg-red-500/20'
-    return 'border border-white/5 opacity-50'
+      return 'border border-red-500 bg-red-500/15'
+    return 'border border-border/40 opacity-50'
   }
 
   return (
@@ -56,35 +56,35 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45 }}
-      className="max-w-3xl mx-auto rounded-2xl bg-[#1e1f24] border border-white/10 p-8 space-y-6 shadow-xl"
+      className="max-w-3xl mx-auto rounded-xl bg-card border border-border/60 ring-1 ring-primary/10 p-4 sm:p-5 space-y-4 shadow-lg"
     >
-      <header className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-        <div className="flex gap-4">
-          <div className="w-8 h-8 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-sm">
+      <header className="flex items-start justify-between gap-3 border-b border-border/60 pb-3">
+        <div className="flex gap-3">
+          <div className="w-7 h-7 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-semibold text-xs">
             {index + 1}
           </div>
-          <h2 className="text-lg sm:text-xl font-semibold text-white leading-snug">
+          <h2 className="text-sm sm:text-sm font-semibold text-foreground leading-snug">
             {question.question}
           </h2>
         </div>
 
         <span
-          className={`px-3 py-1 rounded-md text-xs font-semibold border ${difficultyClass}`}
+          className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border ${difficultyClass}`}
         >
           {question.difficulty}
         </span>
       </header>
 
       {question.code && (
-        <div className="relative rounded-xl overflow-hidden border border-white/10 bg-black/40">
+        <div className="relative rounded-xl overflow-hidden border border-border/60 bg-muted/40">
           <SyntaxHighlighter
             language="javascript"
             style={oneDark}
             customStyle={{
               margin: 0,
-              padding: '1rem',
+              padding: '0.85rem',
               background: 'transparent',
-              fontSize: '0.85rem',
+              fontSize: '0.8rem',
             }}
           >
             {question.code}
@@ -96,7 +96,7 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
               setCopied(true)
               setTimeout(() => setCopied(false), 1200)
             }}
-            className="absolute top-3 right-3 text-xs flex items-center gap-1 px-2 py-1 rounded bg-black/60 border border-white/10 text-white/70 hover:text-white"
+            className="absolute top-3 right-3 text-[11px] flex items-center gap-1 px-2 py-1 rounded bg-card/90 border border-border text-muted-foreground hover:text-foreground"
           >
             {copied ? <Check size={14} /> : <Copy size={14} />}
             {copied ? 'Copied' : 'Copy'}
@@ -104,21 +104,21 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
         </div>
       )}
 
-      <ul className="space-y-4">
+      <ul className="space-y-2">
         {question.answers.map((ans, i) => (
           <motion.li
             key={i}
             onClick={() => handleAnswer(i)}
             whileHover={!answered ? { scale: 1.01 } : undefined}
-            className={`flex items-center gap-4 px-4 py-4 rounded-xl transition ${answerStyle(
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition text-[12px] sm:text-sm font-medium ${answerStyle(
               i
             )}`}
           >
-            <div className="w-10 h-10 rounded-lg border border-white/20 flex items-center justify-center font-bold text-white/80">
+            <div className="w-7 h-7 rounded-lg border border-border flex items-center justify-center font-bold text-foreground/80 text-xs">
               {letters[i]}
             </div>
 
-            <span className="text-white/90 flex-1">{ans}</span>
+            <span className="text-foreground flex-1">{ans}</span>
 
             {answered && i === question.correctIndex && (
               <Check className="text-green-400" />
@@ -128,9 +128,9 @@ const QuestionCardR = ({ question, index, onAnswered }: QuestionCardProps) => {
       </ul>
 
       {answered && (
-        <footer className="pt-4 border-t border-white/10 text-right">
+        <footer className="pt-3 border-t border-border/60 text-right">
           <span
-            className={`inline-block px-4 py-1 rounded-md font-semibold text-sm ${
+            className={`inline-block px-3 py-1 rounded-md font-semibold text-xs ${
               selected === question.correctIndex
                 ? 'bg-green-500/20 text-green-400'
                 : 'bg-red-500/20 text-red-400'
