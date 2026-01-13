@@ -57,9 +57,9 @@ const RandomPage = () => {
 
   return (
     <section className="min-h-screen px-4 sm:px-6 py-8 sm:py-10 md:py-12">
-      <div className="mx-auto max-w-4xl space-y-6">
+      <div className="mx-auto max-w-4xl space-y-7 sm:space-y-8">
         <motion.div
-          className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left mb-3 sm:mb-5"
+          className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left mb-4 sm:mb-6"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >

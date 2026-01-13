@@ -17,6 +17,8 @@ const ProfilePage = () => {
   const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false)
   const [fullname, setFullname] = useState<string>('')
   const { t } = useTranslation()
+  const profileTitle = t('profile.title')
+  const [profileFirstWord, ...profileRestWords] = profileTitle.split(' ')
   const { data, isLoading, isError } = useQuery<IProfile>({
     queryKey: ['profile'],
     queryFn: getProfileApi,
@@ -35,9 +37,12 @@ const ProfilePage = () => {
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-primary via-primary-2 to-primary bg-clip-text text-transparent mb-6"
+          className="text-3xl sm:text-4xl font-extrabold text-center mb-6"
         >
-          {t('profile.title')}
+          <span className="text-[#ec6216]">{profileFirstWord}</span>
+          {profileRestWords.length > 0 && (
+            <span className="text-[#13aeac]"> {profileRestWords.join(' ')}</span>
+          )}
         </motion.h1>
 
         {isLoading && <Loading />}

@@ -11,6 +11,8 @@ import { LeaderboardItem } from '@/ui/common/leaderboardItem'
 
 const LeaderboardPage = () => {
   const { t } = useTranslation()
+  const leaderboardTitle = t('leaderboard.title')
+  const [leaderboardFirstWord, ...leaderboardRestWords] = leaderboardTitle.split(' ')
 
   const { data, isLoading, isError } = useQuery<ILeaderboard[]>({
     queryKey: ['leaderboard'],
@@ -29,9 +31,12 @@ const LeaderboardPage = () => {
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="text-6xl md:text-8xl font-black text-center bg-linear-to-r from-primary via-primary-2 to-primary bg-clip-text text-transparent tracking-tight"
+          className="text-6xl md:text-8xl font-black text-center tracking-tight"
         >
-          {t('leaderboard.title')}
+          <span className="text-[#ec6216]">{leaderboardFirstWord}</span>
+          {leaderboardRestWords.length > 0 && (
+            <span className="text-[#13aeac]"> {leaderboardRestWords.join(' ')}</span>
+          )}
         </motion.h1>
 
         {isLoading && <Loading />}

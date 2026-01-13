@@ -35,7 +35,7 @@ const HeaderComponent = () => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className=" sticky top-0 z-50 flex items-center justify-between px-2 py-1 backdrop-blur-lg bg-background/80 border-b border-border shadow-sm"
+      className=" sticky top-0 z-50 flex items-center justify-between px-3 py-2 backdrop-blur-lg bg-background/80 border-b border-border/70 shadow-sm"
     >
       <Link href="/" className="shrink-0 z-10">
         <Image
@@ -46,26 +46,26 @@ const HeaderComponent = () => {
         />
       </Link>
 
-      <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8">
+      <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-6">
         {navLinks.map(({ href, icon: Icon }) => {
           const isActive = pathname === href
 
           return (
             <motion.div
               key={href}
-              whileHover={{ scale: 1.1, y: -2 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              whileHover={{ scale: 1.04, y: -1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
             >
               <Link
                 href={href}
                 className={clsx(
-                  'flex items-center justify-center p-3 rounded-lg transition-colors duration-200',
+                  'flex items-center justify-center p-2.5 rounded-lg transition-colors duration-200',
                   isActive
                     ? 'text-primary bg-accent/20'
                     : 'text-foreground hover:text-primary hover:bg-accent/30',
                 )}
               >
-                <Icon size={24} />
+                <Icon size={22} />
               </Link>
             </motion.div>
           )
@@ -79,7 +79,7 @@ const HeaderComponent = () => {
         {!jwt ? (
           <Link
             href="/login"
-            className="hidden md:flex h-9.5 items-center gap-1 sm:gap-2 px-2.5 rounded-lg bg-primary text-primary-foreground text-xs sm:text-sm font-medium shadow-sm hover:shadow-md hover:bg-primary/90 transition-all duration-200 hover:-translate-y-0.5"
+            className="hidden md:flex h-9.5 items-center gap-1 sm:gap-2 px-2.5 rounded-lg bg-primary text-primary-foreground text-xs sm:text-sm font-medium shadow-sm hover:bg-primary/90 transition-all duration-200"
           >
             <User size={16} />
             <span>{t('header.login')}</span>
@@ -88,7 +88,7 @@ const HeaderComponent = () => {
           <div
             ref={profileRef}
             onClick={() => setProfileMenuModalOpen((prev) => !prev)}
-            className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/30 text-foreground text-xs sm:text-sm font-medium cursor-pointer select-none"
+            className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/20 text-foreground text-xs sm:text-sm font-medium cursor-pointer select-none hover:bg-accent/30 transition-colors"
           >
             <User size={16} />
             <span>{userName}</span>

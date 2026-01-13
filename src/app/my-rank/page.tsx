@@ -13,6 +13,8 @@ import { IProfile } from '@/types/auth'
 
 const MyRankPage = () => {
   const { t } = useTranslation()
+  const myRankTitle = t('myRank.title')
+  const [myRankFirstWord, ...myRankRestWords] = myRankTitle.split(' ')
 
   const {
     data: rankResponse,
@@ -75,9 +77,12 @@ const MyRankPage = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl sm:text-6xl md:text-7xl font-black text-center bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
+          className="text-5xl sm:text-6xl md:text-7xl font-black text-center"
         >
-          {t('myRank.title')}
+          <span className="text-[#ec6216]">{myRankFirstWord}</span>
+          {myRankRestWords.length > 0 && (
+            <span className="text-[#13aeac]"> {myRankRestWords.join(' ')}</span>
+          )}
         </motion.h1>
 
         {isLoading && <Loading />}
