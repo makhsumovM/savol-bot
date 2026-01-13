@@ -1,23 +1,25 @@
 'use client'
 
-import { ModeToggle } from '@/ui/common/modeToggle/modeToggle'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
-import LanguageSwitcher from '@/ui/common/languageSwitcher/languageSwitcher'
-import clsx from 'clsx'
-import Image from 'next/image'
-import logo from '../../../public/favicon.ico'
-import { User, Activity, Dices, Award, ChartBar, Badge } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 import { getJwtFromCookie } from '@/lib/utils/jwt'
+import LanguageSwitcher from '@/ui/common/languageSwitcher/languageSwitcher'
+import { ModeToggle } from '@/ui/common/modeToggle/modeToggle'
 import ProfileMenuModal from '@/ui/modals/profileMenuModal/modal'
-import { useState, useRef } from 'react'
+import clsx from 'clsx'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Activity, Badge, ChartBar, Dices, Menu, User, X } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import logo from '../../../public/favicon.ico'
+import { Button } from '@/ui/button/button'
 
 const HeaderComponent = () => {
   const { t } = useTranslation()
   const pathname = usePathname()
   const [profileMenuModalOpen, setProfileMenuModalOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
 
   const jwt = getJwtFromCookie()
@@ -94,11 +96,77 @@ const HeaderComponent = () => {
             <span>{userName}</span>
           </div>
         )}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </Button>
         <ProfileMenuModal
           profileMenuModalOpen={profileMenuModalOpen}
           setProfileMenuModalOpen={setProfileMenuModalOpen}
         />
       </div>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="absolute top-full left-0 right-0 bg-background border-b border-border md:hidden overflow-hidden shadow-lg"
+          >
+            <nav className="flex flex-col p-4 gap-2">
+              {navLinks.map(({ href, icon: Icon }) => {
+                const isActive = pathname === href
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={clsx(
+                      'flex items-center gap-3 p-3 rounded-lg transition-colors duration-200',
+                      isActive
+                        ? 'text-primary bg-accent/20'
+                        : 'text-foreground hover:text-primary hover:bg-accent/30',
+                    )}
+                  >
+                    <Icon size={20} />
+                    <span className="font-medium text-sm">
+                      {t(
+                        `${href
+                          .replace('/', '')
+                          .replace(/-([a-z])/g, (g) => g[1].toUpperCase())}.title`,
+                      )}
+                    </span>
+                  </Link>
+                )
+              })}
+              {!jwt ? (
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 p-3 rounded-lg text-primary-foreground bg-primary hover:bg-primary/90 transition-colors mt-2"
+                >
+                  <User size={20} />
+                  <span className="font-medium text-sm">{t('header.login')}</span>
+                </Link>
+              ) : (
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 p-3 rounded-lg text-foreground bg-accent/30 hover:bg-accent/40 transition-colors mt-2"
+                >
+                  <User size={20} />
+                  <span className="font-medium text-sm">{userName}</span>
+                </Link>
+              )}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   )
 }
