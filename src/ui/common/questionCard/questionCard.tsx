@@ -54,17 +54,19 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
 
     if (i === question.correctIndex) {
       return `
-        bg-green-100 dark:bg-green-800
-        ring-2 ring-green-400
-        transition-colors duration-500
+        bg-green-500/20 dark:bg-green-500/30
+        border-green-500 ring-2 ring-green-500/50
+        text-green-700 dark:text-green-300
+        transition-all duration-500
       `
     }
 
     if (i === selected) {
       return `
-        bg-red-100 dark:bg-red-800
-        ring-2 ring-red-400
-        transition-colors duration-500
+        bg-red-500/20 dark:bg-red-500/30
+        border-red-500 ring-2 ring-red-500/50
+        text-red-700 dark:text-red-300
+        transition-all duration-500
       `
     }
 

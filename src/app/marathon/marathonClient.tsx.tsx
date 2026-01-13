@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
-import { marathonApi, createMarathonAttempt } from '@/api/marathonApi'
+import { createMarathonAttempt, marathonApi } from '@/api/marathonApi'
 import { getMyBest } from '@/api/my-bestApi'
-import { MarathonQuestion, ICreateMarathonAttempt } from '@/types/marathon'
+import { ICreateMarathonAttempt, MarathonQuestion } from '@/types/marathon'
 import { IMyBest } from '@/types/my-best'
 import Error from '@/ui/common/error'
+import GameOver from '@/ui/common/gameOver/gameOver'
 import Loading from '@/ui/common/loading'
 import QuestionCard from '@/ui/common/questionCard/questionCard'
-import GameOver from '@/ui/common/gameOver/gameOver'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
-import Image from 'next/image'
-import reactIcon from '../../../public/react.png'
-import charmIcon from '../../../public/ccharm.png'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { AnimatePresence, motion } from 'framer-motion'
 import Cookies from 'js-cookie'
+import { CheckCircle2, Trophy, Zap } from 'lucide-react'
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
-import { Trophy, Zap, CheckCircle2 } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import charmIcon from '../../../public/ccharm.png'
+import reactIcon from '../../../public/react.png'
 
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
 
@@ -36,7 +36,9 @@ export default function MarathonClient() {
   const [marathonFirstWord, ...marathonRestWords] = marathonTitle.split(' ')
   const gameOverRef = useRef<HTMLDivElement>(null)
 
-  const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as 'frontend' | 'backend'
+  const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as
+    | 'frontend'
+    | 'backend'
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
@@ -75,7 +77,10 @@ export default function MarathonClient() {
     onSuccess: (response) => {
       if (mode === 'frontend') {
         setBestScore(response.data.bestFrontendScore)
-        localStorage.setItem(LOCAL_STORAGE_KEYS.frontend, response.data.bestFrontendScore.toString())
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.frontend,
+          response.data.bestFrontendScore.toString(),
+        )
       } else {
         setBestScore(response.data.bestBackendScore)
         localStorage.setItem(LOCAL_STORAGE_KEYS.backend, response.data.bestBackendScore.toString())
@@ -86,7 +91,8 @@ export default function MarathonClient() {
   useEffect(() => {
     const loadBestScore = () => {
       if (isAuthenticated && myBestData) {
-        const score = mode === 'frontend' ? myBestData.bestFrontendScore : myBestData.bestBackendScore
+        const score =
+          mode === 'frontend' ? myBestData.bestFrontendScore : myBestData.bestBackendScore
         setBestScore(score || 0)
       } else {
         const key = mode === 'frontend' ? LOCAL_STORAGE_KEYS.frontend : LOCAL_STORAGE_KEYS.backend
@@ -123,36 +129,36 @@ export default function MarathonClient() {
     setIsLose(false)
     setDifficultyIndex(0)
   }, [lang, mode])
-
   useEffect(() => {
     if (isGameOver && gameOverRef.current) {
       gameOverRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }, [isGameOver])
-
   const currentQuestion = questions[currentIndex]
 
   const handleAnswer = (isCorrect: boolean) => {
     if (!isCorrect) {
       setIsLose(true)
-      setIsGameOver(true)
+      setTimeout(() => {
+        setIsGameOver(true)
+      }, 1500)
       return
     }
-
     setCurrentScore((prev) => prev + 1)
-    const nextIndex = currentIndex + 1
-
-    if (nextIndex < questions.length) {
-      setCurrentIndex(nextIndex)
-    } else {
-      const nextDifficultyIndex = difficultyIndex + 1
-      if (nextDifficultyIndex < difficulties.length) {
-        setDifficultyIndex(nextDifficultyIndex)
-        setCurrentIndex(0)
+    setTimeout(() => {
+      const nextIndex = currentIndex + 1
+      if (nextIndex < questions.length) {
+        setCurrentIndex(nextIndex)
       } else {
-        setIsGameOver(true)
+        const nextDifficultyIndex = difficultyIndex + 1
+        if (nextDifficultyIndex < difficulties.length) {
+          setDifficultyIndex(nextDifficultyIndex)
+          setCurrentIndex(0)
+        } else {
+          setIsGameOver(true)
+        }
       }
-    }
+    }, 1000)
   }
 
   const handleRestart = () => {
@@ -201,7 +207,7 @@ export default function MarathonClient() {
               whileTap={{ scale: 0.98 }}
               whileHover={{ scale: 1.02 }}
               onClick={() => handleModeChange('frontend')}
-              className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+              className={`relative w-full sm:w-auto min-h-11 px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
                 mode === 'frontend'
                   ? 'bg-primary text-white border-primary'
                   : 'bg-card/80 backdrop-blur-md text-foreground border-border'
@@ -231,7 +237,7 @@ export default function MarathonClient() {
               whileTap={{ scale: 0.98 }}
               whileHover={{ scale: 1.02 }}
               onClick={() => handleModeChange('backend')}
-              className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+              className={`relative w-full sm:w-auto min-h-11 px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
                 mode === 'backend'
                   ? 'bg-primary-2 text-white border-primary-2'
                   : 'bg-card/80 backdrop-blur-md text-foreground border-border'
@@ -308,7 +314,7 @@ export default function MarathonClient() {
           <Error message={t('marathon.noQuestions')} />
         )}
 
-        {currentQuestion && !isLoading && !isFetching && !isError && !isGameOver && (
+        {currentQuestion && !isLoading && !isFetching && !isError && (!isGameOver || isLose) && (
           <AnimatePresence mode="wait">
             <motion.div
               key={`${lang}-${currentDifficulty}-${currentIndex}-${mode}`}
@@ -317,7 +323,11 @@ export default function MarathonClient() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.4 }}
             >
-              <QuestionCard question={currentQuestion} index={currentIndex} onAnswered={handleAnswer} />
+              <QuestionCard
+                question={currentQuestion}
+                index={currentIndex}
+                onAnswered={handleAnswer}
+              />
             </motion.div>
           </AnimatePresence>
         )}
