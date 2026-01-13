@@ -15,6 +15,8 @@ import react from '../../../public/react.png'
 const RandomPage = () => {
   const { t, i18n } = useTranslation()
   const lang = i18n.language
+  const randomTitle = t('random.title')
+  const [randomFirstWord, ...randomRestWords] = randomTitle.split(' ')
 
   const [type, setType] = useState<'frontend' | 'backend'>('frontend')
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -57,17 +59,20 @@ const RandomPage = () => {
     <section className="min-h-screen px-4 sm:px-6 py-8 sm:py-10 md:py-12">
       <div className="mx-auto max-w-4xl space-y-6">
         <motion.div
-          className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left"
+          className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left mb-3 sm:mb-5"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <motion.h1
             suppressHydrationWarning
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            {t('random.title')}
+            <span className="text-[#ec6216]">{randomFirstWord}</span>
+            {randomRestWords.length > 0 && (
+              <span className="text-[#13aeac]"> {randomRestWords.join(' ')}</span>
+            )}
           </motion.h1>
           <div className="flex sm:flex-row justify-center gap-3 sm:gap-4">
             <motion.button

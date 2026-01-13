@@ -32,6 +32,8 @@ export default function MarathonClient() {
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const lang = i18n.language
+  const marathonTitle = t('marathon.title')
+  const [marathonFirstWord, ...marathonRestWords] = marathonTitle.split(' ')
   const gameOverRef = useRef<HTMLDivElement>(null)
 
   const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as 'frontend' | 'backend'
@@ -180,16 +182,19 @@ export default function MarathonClient() {
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-6">
         <motion.div
-          className="flex flex-col items-center gap-4 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left"
+          className="flex flex-col items-center gap-4 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left mb-3 sm:mb-5"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
           <h1
             suppressHydrationWarning
-            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight bg-linear-to-r from-primary to-primary-2 bg-clip-text text-transparent"
+            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
           >
-            {t('marathon.title')}
+            <span className="text-[#ec6216]">{marathonFirstWord}</span>
+            {marathonRestWords.length > 0 && (
+              <span className="text-[#13aeac]"> {marathonRestWords.join(' ')}</span>
+            )}
           </h1>
           <div className="flex sm:flex-row justify-center gap-3 sm:gap-4">
             <motion.button
