@@ -10,6 +10,9 @@ import { getMyRank } from '@/api/my-rankApi'
 import { getProfileApi } from '@/api/authApi'
 import { IMyRank } from '@/types/my-rank'
 import { IProfile } from '@/types/auth'
+import Image from 'next/image'
+import charmIcon from '../../../public/ccharm.png'
+import reactIcon from '../../../public/react.png'
 
 const MyRankPage = () => {
   const { t } = useTranslation()
@@ -44,118 +47,154 @@ const MyRankPage = () => {
   const { fullName, profilePicture, bestResult } = profileData || {}
 
   const getTrophyColor = (rank: number) => {
-    if (rank === 1) return 'text-yellow-400 drop-shadow-lg'
-    if (rank === 2) return 'text-gray-300'
-    if (rank === 3) return 'text-amber-600'
-    if (rank === 4) return 'text-blue-400'
-    if (rank === 5) return 'text-green-400'
+    if (rank === 1) return 'text-yellow-400 drop-shadow-md'
+    if (rank === 2) return 'text-gray-300 drop-shadow-md'
+    if (rank === 3) return 'text-amber-600 drop-shadow-md'
     return 'text-muted-foreground'
   }
-  const firstLetter = fullName?.charAt(0).toUpperCase()
 
-  const getRankBadgeColor = (rank: number) => {
-    if (rank === 1)
-      return 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 border-yellow-300'
-    if (rank === 2)
-      return 'bg-gray-100 dark:bg-gray-900/40 text-gray-700 dark:text-gray-300 border-gray-400'
-    if (rank === 3)
-      return 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 border-amber-500'
-    if (rank === 4)
-      return 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 border-blue-500'
-    if (rank === 5)
-      return 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border-green-500'
-    return 'bg-muted dark:bg-muted/50 text-muted-foreground border-border'
-  }
+  const firstLetter = fullName?.charAt(0).toUpperCase()
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-background via-background to-primary/10">
-      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-primary-2/15 blur-[120px] animate-pulse-slow" />
+    <section className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
+      <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
+      <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
 
-      <div className="relative max-w-5xl mx-auto px-6 sm:px-8 py-16 space-y-16 flex flex-col items-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -30 }}
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
+        <motion.div
+          className="flex flex-col items-center gap-4 text-center md:items-start md:text-left mb-4 sm:mb-6"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl sm:text-6xl md:text-7xl font-black text-center"
+          transition={{ duration: 0.7 }}
         >
-          <span className="text-[#ec6216]">{myRankFirstWord}</span>
-          {myRankRestWords.length > 0 && (
-            <span className="text-[#13aeac]"> {myRankRestWords.join(' ')}</span>
-          )}
-        </motion.h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight">
+            <span className="text-[#ec6216]">{myRankFirstWord}</span>
+            {myRankRestWords.length > 0 && (
+              <span className="text-[#13aeac]"> {myRankRestWords.join(' ')}</span>
+            )}
+          </h1>
+        </motion.div>
 
         {isLoading && <Loading />}
         {hasError && <Error message={t('errors.leaderboardLoadError')} />}
 
         {hasData && rank !== undefined && fullName && bestResult && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-2xl"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="w-full"
           >
-            <div className="p-10 rounded-3xl shadow-2xl backdrop-blur-md bg-card/90 border border-border/50 overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
-              </div>
+            <div className="rounded-3xl border border-border/50 bg-card/80 backdrop-blur-md p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+              <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                <div className="relative">
-                  {profilePicture ? (
-                    <img
-                      src={process.env.NEXT_PUBLIC_API_URL + '/' + profilePicture}
-                      alt={fullName}
-                      className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/50 shadow-xl"
-                    />
-                  ) : (
-                    <div
-                      className="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center
-                  bg-primary/20 border-4 border-primary/50 shadow-xl"
-                    >
-                      <span className="text-5xl md:text-6xl font-bold text-primary">
-                        {firstLetter}
-                      </span>
+              <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                <div className="relative group">
+                  <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full p-1 bg-gradient-to-br from-primary/50 to-secondary/50 shadow-xl">
+                    <div className="w-full h-full rounded-full overflow-hidden border-4 border-background bg-muted">
+                      {profilePicture ? (
+                        <img
+                          src={apiUrl + '/' + profilePicture}
+                          alt={fullName}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-5xl">
+                          {firstLetter}
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
 
-                  <div className="absolute -bottom-2 -right-2">
-                    <div
-                      className={`px-4 py-2 rounded-full border-2 font-bold text-lg shadow-lg ${getRankBadgeColor(
-                        rank,
-                      )}`}
-                    >
-                      #{rank}
-                    </div>
+                  <div
+                    className={`absolute -bottom-2 -right-2 px-4 py-1.5 rounded-full border-2 bg-background font-bold text-lg shadow-lg flex items-center gap-2 ${
+                      rank === 1
+                        ? 'border-yellow-400 text-yellow-500'
+                        : rank === 2
+                        ? 'border-gray-400 text-gray-500'
+                        : rank === 3
+                        ? 'border-amber-500 text-amber-600'
+                        : 'border-primary/30 text-primary'
+                    }`}
+                  >
+                    <span className="text-xs uppercase text-muted-foreground mr-1">Rank</span>#
+                    {rank}
                   </div>
                 </div>
 
-                <div className="flex-1 text-center md:text-left space-y-4">
+                <div className="flex-1 text-center md:text-left space-y-6">
                   <div>
-                    <h2 className="text-3xl font-bold text-foreground">{fullName}</h2>
-                    <p className="text-lg text-muted-foreground mt-1">
+                    <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+                      {fullName}
+                    </h2>
+                    <p className="text-muted-foreground mt-1 text-lg font-medium">
                       {t('myRank.currentPosition')}
                     </p>
                   </div>
 
-                  <div className="flex flex-col items-center md:items-start">
-                    <Trophy size={80} className={`${getTrophyColor(rank)} mb-3`} />
+                  <div className="flex items-center justify-center md:justify-start gap-4">
+                    {rank <= 3 ? (
+                      <div className="flex items-center gap-2">
+                        <Trophy size={48} className={getTrophyColor(rank)} />
+                        <span className="text-lg font-bold text-foreground/80">
+                          {rank === 1
+                            ? 'Champion!'
+                            : rank === 2
+                            ? 'Runner Up!'
+                            : 'Bronze Medalist!'}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-muted-foreground/60">
+                        <Trophy size={32} />
+                        <span>Keep pushing!</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-10 pt-8 border-t border-border/30 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">{t('profile.bestFrontendScore')}</p>
-                  <p className="text-2xl font-bold text-primary">
-                    {bestResult.bestFrontendScore ?? 0}
-                  </p>
+              <div className="mt-10 pt-8 border-t border-border/30 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-background/40 rounded-2xl p-4 border border-border/40 flex items-center gap-4 transition-transform hover:scale-[1.02]">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <Image
+                      src={reactIcon}
+                      alt="Frontend"
+                      width={28}
+                      height={28}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                      {t('profile.bestFrontendScore')}
+                    </p>
+                    <p className="text-2xl font-black text-foreground">
+                      {bestResult.bestFrontendScore ?? 0}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">{t('profile.bestBackendScore')}</p>
-                  <p className="text-2xl font-bold text-primary-2">
-                    {bestResult.bestBackendScore ?? 0}
-                  </p>
+
+                <div className="bg-background/40 rounded-2xl p-4 border border-border/40 flex items-center gap-4 transition-transform hover:scale-[1.02]">
+                  <div className="w-12 h-12 rounded-xl bg-primary-2/10 flex items-center justify-center shrink-0">
+                    <Image
+                      src={charmIcon}
+                      alt="Backend"
+                      width={28}
+                      height={28}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                      {t('profile.bestBackendScore')}
+                    </p>
+                    <p className="text-2xl font-black text-foreground">
+                      {bestResult.bestBackendScore ?? 0}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

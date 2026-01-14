@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Crown, Medal, Calendar, Clock, Code2, Server, Sparkles } from 'lucide-react'
+import { Crown, Medal, Calendar, Clock, Code2, Server } from 'lucide-react'
 import { ILeaderboard } from '@/types/leaderboard'
 
 interface LeaderboardItemProps {
@@ -69,7 +69,20 @@ const rankConfig = {
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   const day = date.getDate().toString().padStart(2, '0')
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
   const month = months[date.getMonth()]
   const year = date.getFullYear()
   const hours = date.getHours().toString().padStart(2, '0')
@@ -80,6 +93,7 @@ const formatDate = (dateString: string) => {
 export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
   const config = rankConfig[player.rank as 1 | 2 | 3 | 4 | 5] ?? rankConfig.default
   const { date, time } = formatDate(player.lastAchievedAt)
+  const firstLetter = player.fullName?.charAt(0).toUpperCase()
   const totalScore = player.frontendScore + player.backendScore
   const frontendPercent = totalScore > 0 ? (player.frontendScore / totalScore) * 100 : 0
   const backendPercent = totalScore > 0 ? (player.backendScore / totalScore) * 100 : 0
@@ -110,7 +124,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
 
       {player.rank === 1 && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent -translate-x-full"
+          className="absolute inset-0 bg-linear-to-r from-transparent via-yellow-400/10 to-transparent -translate-x-full"
           animate={{ translateX: ['150%', '-150%'] }}
           transition={{ duration: 4, repeat: Infinity, repeatDelay: 3 }}
         />
@@ -126,23 +140,26 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
               ${config.bg} ${config.border} ${config.text}
             `}
           >
-            {config.icon ?? (
-              <span className="text-lg font-bold">{player.rank}</span>
-            )}
+            {config.icon ?? <span className="text-lg font-bold">{player.rank}</span>}
           </motion.div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            {player.profilePicture ? (
+              <img
+                src={profilePicture}
+                alt={`${fullName}'s profile picture`}
+                className="rounded-full w-10 h-10 object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-5xl">
+                {firstLetter}
+              </div>
+            )}
             <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
               {player.fullName}
             </span>
-            {player.rank <= 3 && (
-              <span className={`text-xs font-medium ${config.text} flex items-center gap-1`}>
-                <Sparkles className="w-3 h-3" />
-                Top {player.rank}
-              </span>
-            )}
           </div>
         </div>
 
@@ -158,7 +175,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
               initial={{ width: 0 }}
               animate={{ width: `${frontendPercent}%` }}
               transition={{ duration: 0.8, delay: index * 0.05 }}
-              className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
+              className="h-full bg-linear-to-r from-primary to-primary/70 rounded-full"
             />
           </div>
           <span className="text-[10px] text-muted-foreground mt-0.5 block">
@@ -178,7 +195,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
               initial={{ width: 0 }}
               animate={{ width: `${backendPercent}%` }}
               transition={{ duration: 0.8, delay: index * 0.05 + 0.1 }}
-              className="h-full bg-gradient-to-r from-primary-2 to-primary-2/70 rounded-full"
+              className="h-full bg-linear-to-r from-primary-2 to-primary-2/70 rounded-full"
             />
           </div>
           <span className="text-[10px] text-muted-foreground mt-0.5 block">
@@ -209,9 +226,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
                 ${config.bg} ${config.border} ${config.text}
               `}
             >
-              {config.icon ?? (
-                <span className="text-sm font-bold">{player.rank}</span>
-              )}
+              {config.icon ?? <span className="text-sm font-bold">{player.rank}</span>}
             </motion.div>
             <div>
               <span className="text-base font-semibold text-foreground block">
@@ -242,7 +257,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
                 initial={{ width: 0 }}
                 animate={{ width: `${frontendPercent}%` }}
                 transition={{ duration: 0.8 }}
-                className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
+                className="h-full bg-linear-to-r from-primary to-primary/70 rounded-full"
               />
             </div>
           </div>
@@ -259,7 +274,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
                 initial={{ width: 0 }}
                 animate={{ width: `${backendPercent}%` }}
                 transition={{ duration: 0.8 }}
-                className="h-full bg-gradient-to-r from-primary-2 to-primary-2/70 rounded-full"
+                className="h-full bg-linear-to-r from-primary-2 to-primary-2/70 rounded-full"
               />
             </div>
           </div>

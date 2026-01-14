@@ -70,7 +70,7 @@ const LeaderboardPage = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-4 text-muted-foreground max-w-2xl mx-auto"
           >
-            {t('leaderboard.description', 'Лучшие разработчики по результатам марафона')}
+            {t('leaderboard.description')}
           </motion.p>
         </motion.div>
 

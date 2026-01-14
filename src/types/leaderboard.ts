@@ -3,6 +3,7 @@ export interface ILeaderboard {
   fullName: string
   frontendScore: number
   backendScore: number
+  profilePicture: string
   totalScore: number
   lastAchievedAt: string
 }
