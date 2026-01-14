@@ -99,28 +99,6 @@ const ProfileMenuModal = ({
               />
             </motion.button>
 
-            <motion.button
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.04, duration: 0.15 }}
-              onClick={() => {
-                setProfileMenuModalOpen(false)
-                router.push('/settings')
-              }}
-              className="group flex w-full items-center justify-between gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-200"
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex items-center justify-center w-6 h-6 rounded-md bg-muted/50 text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary transition-colors">
-                  <Settings size={12} />
-                </div>
-                <span>{t('profileMenu.settings', 'Settings')}</span>
-              </div>
-              <ChevronRight
-                size={12}
-                className="text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all"
-              />
-            </motion.button>
-
             <div className="my-1 mx-2 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
 
             <motion.button
