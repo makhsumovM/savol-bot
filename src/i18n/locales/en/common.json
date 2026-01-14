@@ -130,7 +130,14 @@
     "bestFrontendScore": "Best Frontend Score",
     "bestBackendScore": "Best Backend Score",
     "updateProfile": "Update Profile",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "totalScore": "Total Score",
+    "rank": "Rank",
+    "status": "Status",
+    "active": "Active",
+    "scores": "Scores",
+    "member": "Member",
+    "total": "Total"
   },
   "profileMenu": {
     "profile": "Profile",

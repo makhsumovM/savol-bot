@@ -4,7 +4,6 @@
     "subtitle": "AI Tester",
     "description": "Бесплатная платформа с AI для практики и проверки навыков программирования. Поддержка JS, TS, React, Next.js, Node.js и AI-вопросы."
   },
-
   "errors": {
     "loadFailed": "Не удалось загрузить вопросы.",
     "notFound": "Вопросы не найдены.",
@@ -134,7 +133,14 @@
     "bestFrontendScore": "Лучший результат Frontend",
     "bestBackendScore": "Лучший результат Backend",
     "updateProfile": "Обновить профиль",
-    "changePassword": "Сменить пароль"
+    "changePassword": "Сменить пароль",
+    "totalScore": "Общий счёт",
+    "rank": "Ранг",
+    "status": "Статус",
+    "active": "Активен",
+    "scores": "Очки",
+    "member": "Участник",
+    "total": "Всего"
   },
   "profileMenu": {
     "profile": "Профиль",

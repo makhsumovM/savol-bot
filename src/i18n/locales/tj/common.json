@@ -133,7 +133,14 @@
     "bestFrontendScore": "Беҳтарин натиҷаи Frontend",
     "bestBackendScore": "Беҳтарин натиҷаи Backend",
     "updateProfile": "Навсозии профил",
-    "changePassword": "Тағйир додани парол"
+    "changePassword": "Тағйир додани парол",
+    "totalScore": "Холҳои умумӣ",
+    "rank": "Рутба",
+    "status": "Статус",
+    "active": "Фаъол",
+    "scores": "Холҳо",
+    "member": "Иштирокчӣ",
+    "total": "Ҷамъ"
   },
   "profileMenu": {
     "profile": "Профил",
