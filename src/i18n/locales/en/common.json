@@ -2,7 +2,7 @@
   "app": {
     "name": "SkillCheck",
     "subtitle": "AI Tester",
-    "description": "Free AI-powered platform for programmers to practice coding tests, prepare for technical interviews, and improve frontend & backend skills with real-time scoring. Supports JavaScript, TypeScript, React, Next.js, and Node.js, with multi-language support and AI-generated questions."
+    "description": "Free AI platform to practice and test programming skills. Supports JS, TS, React, Next.js, Node.js, and AI-generated questions."
   },
   "errors": {
     "loadFailed": "Failed to load questions.",
