@@ -30,7 +30,6 @@ const HeaderComponent = () => {
     { href: '/leaderboard', icon: ChartBar, label: 'leaderboard' },
   ]
 
-  // Bottom nav links for mobile (includes home and profile/login)
   const mobileNavLinks = [
     { href: '/', icon: Home, label: 'home' },
     ...navLinks,
@@ -39,7 +38,6 @@ const HeaderComponent = () => {
 
   return (
     <>
-      {/* Desktop & Mobile Header */}
       <motion.header
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,12 +48,11 @@ const HeaderComponent = () => {
           <Image
             src={logo}
             alt="Logo"
-            className="w-25 sm:w-25 md:w-32 h-auto object-contain"
+            className="w-30 sm:w-25 md:w-32 h-auto object-contain"
             priority
           />
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-6">
           {navLinks.map(({ href, icon: Icon }) => {
             const isActive = pathname === href
@@ -86,7 +83,6 @@ const HeaderComponent = () => {
           <LanguageSwitcher />
           <ModeToggle />
 
-          {/* Desktop Profile/Login */}
           {!jwt ? (
             <Link
               href="/login"
@@ -113,7 +109,6 @@ const HeaderComponent = () => {
         </div>
       </motion.header>
 
-      {/* Mobile Bottom Navigation */}
       <motion.nav
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -122,7 +117,8 @@ const HeaderComponent = () => {
       >
         <div className="flex items-center justify-around px-2 py-2 safe-area-inset-bottom">
           {mobileNavLinks.map(({ href, icon: Icon, label }) => {
-            const isActive = pathname === href ||
+            const isActive =
+              pathname === href ||
               (href === '/profile' && pathname === '/profile') ||
               (href === '/login' && pathname === '/login')
 
@@ -136,12 +132,9 @@ const HeaderComponent = () => {
                   whileTap={{ scale: 0.9 }}
                   className={clsx(
                     'relative flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300',
-                    isActive
-                      ? 'bg-primary/15 dark:bg-primary/20'
-                      : 'hover:bg-accent/30',
+                    isActive ? 'bg-primary/15 dark:bg-primary/20' : 'hover:bg-accent/30',
                   )}
                 >
-                  {/* Active indicator glow */}
                   {isActive && (
                     <motion.div
                       layoutId="bottomNavIndicator"
@@ -159,27 +152,7 @@ const HeaderComponent = () => {
                         : 'text-muted-foreground group-hover:text-foreground',
                     )}
                   />
-
-                  {/* Active dot indicator */}
-                  {isActive && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-primary"
-                    />
-                  )}
                 </motion.div>
-
-                <span
-                  className={clsx(
-                    'text-[10px] font-medium mt-0.5 transition-colors duration-200',
-                    isActive
-                      ? 'text-primary'
-                      : 'text-muted-foreground group-hover:text-foreground',
-                  )}
-                >
-                  {t(`bottomNav.${label}`)}
-                </span>
               </Link>
             )
           })}

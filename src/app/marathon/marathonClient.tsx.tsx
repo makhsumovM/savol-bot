@@ -17,7 +17,7 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import charmIcon from '../../../public/ccharm.png'
+import charmIcon from '../../../public/c#.png'
 import reactIcon from '../../../public/react.png'
 
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
