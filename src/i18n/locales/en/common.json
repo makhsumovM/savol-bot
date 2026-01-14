@@ -17,7 +17,8 @@
     "wrongAnswer": "You answered incorrectly.",
     "score": "Round Score:",
     "record": "Record:",
-    "restart": "Restart"
+    "restart": "Restart",
+    "newRecord": "New Record!"
   },
   "header": {
     "login": "Login"
@@ -29,7 +30,7 @@
     }
   },
   "leaderboard": {
-    "title": "Leaderboard",
+    "title": "Leaderboard Rankings",
     "columns": {
       "rank": "Rank",
       "username": "Username",

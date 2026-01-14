@@ -160,7 +160,7 @@ export const HomeLeaderboardPreview = () => {
                       transition-all duration-300
                       ${
                         isMe
-                          ? 'border-2 border-primary bg-primary/15 shadow-lg shadow-primary/25'
+                          ? 'border-2 border-primary-2 bg-primary/19 shadow-lg shadow-primary-2/25'
                           : `border ${style.border} ${style.bg} hover:border-primary/30 ${style.glow} shadow-lg`
                       }
                     `}

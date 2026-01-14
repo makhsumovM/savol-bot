@@ -3,12 +3,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Trophy, Code2, Server, Calendar, Sparkles } from 'lucide-react'
+import { Trophy, Calendar, Sparkles } from 'lucide-react'
 import Error from '@/ui/common/error'
 import Loading from '@/ui/common/loading'
 import { getLeaderboard } from '@/api/leaderboardApi'
 import { ILeaderboard } from '@/types/leaderboard'
+import charmIcon from '../../../public/ccharm.png'
+import reactIcon from '../../../public/react.png'
 import { LeaderboardItem } from '@/ui/common/leaderboardItem'
+import Image from 'next/image'
 
 const LeaderboardPage = () => {
   const { t } = useTranslation()
@@ -31,7 +34,10 @@ const LeaderboardPage = () => {
         className="absolute -bottom-40 -left-40 h-72 w-72 sm:h-[450px] sm:w-[450px] rounded-full bg-primary-2/20 blur-[120px] animate-pulse"
         style={{ animationDelay: '1s' }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-64 w-64 rounded-full bg-violet-500/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-64 w-64 rounded-full bg-violet-500/10 blur-[100px] animate-pulse"
+        style={{ animationDelay: '2s' }}
+      />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
         <motion.div
@@ -47,9 +53,7 @@ const LeaderboardPage = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
           >
             <Trophy className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">
-              {t('leaderboard.top5')}
-            </span>
+            <span className="text-sm font-medium text-primary">{t('leaderboard.top5')}</span>
             <Sparkles className="w-4 h-4 text-primary" />
           </motion.div>
 
@@ -94,11 +98,23 @@ const LeaderboardPage = () => {
                     {t('leaderboard.columns.name')}
                   </span>
                   <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-center flex items-center justify-center gap-2">
-                    <Code2 className="w-4 h-4 text-primary" />
+                    <Image
+                      src={reactIcon}
+                      alt="Frontend"
+                      width={22}
+                      height={22}
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                    />
                     Frontend
                   </span>
                   <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-center flex items-center justify-center gap-2">
-                    <Server className="w-4 h-4 text-primary-2" />
+                    <Image
+                      src={charmIcon}
+                      alt="Backend"
+                      width={22}
+                      height={22}
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                    />
                     Backend
                   </span>
                   <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-right flex items-center justify-end gap-2">

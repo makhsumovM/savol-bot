@@ -92,20 +92,22 @@ const HeaderComponent = () => {
               <span>{t('header.login')}</span>
             </Link>
           ) : (
-            <div
-              ref={profileRef}
-              onClick={() => setProfileMenuModalOpen((prev) => !prev)}
-              className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/20 text-foreground text-xs sm:text-sm font-medium cursor-pointer select-none hover:bg-accent/30 transition-colors"
-            >
-              <User size={16} />
-              <span>{userName}</span>
+            <div className="relative">
+              <div
+                ref={profileRef}
+                onClick={() => setProfileMenuModalOpen((prev) => !prev)}
+                className="hidden md:flex h-9.5 items-center gap-2 px-3 rounded-lg bg-accent/20 text-foreground text-xs sm:text-sm font-medium cursor-pointer select-none hover:bg-accent/30 transition-colors"
+              >
+                <User size={16} />
+                <span>{userName}</span>
+              </div>
+
+              <ProfileMenuModal
+                profileMenuModalOpen={profileMenuModalOpen}
+                setProfileMenuModalOpen={setProfileMenuModalOpen}
+              />
             </div>
           )}
-
-          <ProfileMenuModal
-            profileMenuModalOpen={profileMenuModalOpen}
-            setProfileMenuModalOpen={setProfileMenuModalOpen}
-          />
         </div>
       </motion.header>
 

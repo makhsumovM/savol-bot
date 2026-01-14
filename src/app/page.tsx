@@ -91,7 +91,7 @@ export default function Home() {
               text-foreground/80
             "
           >
-            <Typewriter text={t('app.subtitle')} delay={0.5} />
+            {t('app.subtitle')}
           </motion.p>
 
           <motion.p
