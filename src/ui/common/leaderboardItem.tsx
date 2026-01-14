@@ -1,5 +1,7 @@
+'use client'
+
 import { motion } from 'framer-motion'
-import { Crown } from 'lucide-react'
+import { Crown, Medal, Calendar, Clock, Code2, Server, Sparkles } from 'lucide-react'
 import { ILeaderboard } from '@/types/leaderboard'
 
 interface LeaderboardItemProps {
@@ -7,30 +9,61 @@ interface LeaderboardItemProps {
   index: number
 }
 
-const getRankIcon = (rank: number) => {
-  switch (rank) {
-    case 1:
-      return '👑'
-    case 2:
-      return '🥈'
-    case 3:
-      return '🥉'
-    default:
-      return null
-  }
-}
-
-const getRowStyle = (rank: number) => {
-  switch (rank) {
-    case 1:
-      return 'bg-gradient-to-r from-yellow-500/10 via-yellow-400/5 to-transparent border-l-4 border-l-yellow-500'
-    case 2:
-      return 'bg-gradient-to-r from-gray-400/10 via-gray-300/5 to-transparent border-l-4 border-l-gray-400'
-    case 3:
-      return 'bg-gradient-to-r from-amber-600/10 via-amber-500/5 to-transparent border-l-4 border-l-amber-600'
-    default:
-      return 'hover:bg-muted/30 border-l-4 border-l-transparent'
-  }
+const rankConfig = {
+  1: {
+    icon: <Crown className="w-5 h-5" />,
+    emoji: null,
+    bg: 'bg-gradient-to-br from-yellow-400/25 via-amber-500/20 to-orange-400/15',
+    border: 'border-yellow-500/50',
+    text: 'text-yellow-400',
+    glow: 'shadow-lg shadow-yellow-500/20',
+    badge: 'bg-gradient-to-r from-yellow-500 to-amber-500',
+  },
+  2: {
+    icon: <Medal className="w-5 h-5" />,
+    emoji: null,
+    bg: 'bg-gradient-to-br from-slate-300/20 via-gray-400/15 to-slate-500/10',
+    border: 'border-slate-400/40',
+    text: 'text-slate-300',
+    glow: 'shadow-lg shadow-slate-400/15',
+    badge: 'bg-gradient-to-r from-slate-400 to-gray-500',
+  },
+  3: {
+    icon: <Medal className="w-5 h-5" />,
+    emoji: null,
+    bg: 'bg-gradient-to-br from-amber-600/20 via-orange-600/15 to-amber-700/10',
+    border: 'border-amber-600/40',
+    text: 'text-amber-500',
+    glow: 'shadow-lg shadow-amber-500/15',
+    badge: 'bg-gradient-to-r from-amber-600 to-orange-600',
+  },
+  4: {
+    icon: <Medal className="w-4 h-4" />,
+    emoji: null,
+    bg: 'bg-gradient-to-br from-blue-500/15 via-blue-600/10 to-indigo-500/10',
+    border: 'border-blue-500/30',
+    text: 'text-blue-400',
+    glow: 'shadow-md shadow-blue-500/10',
+    badge: 'bg-gradient-to-r from-blue-500 to-indigo-500',
+  },
+  5: {
+    icon: <Medal className="w-4 h-4" />,
+    emoji: null,
+    bg: 'bg-gradient-to-br from-violet-500/15 via-purple-600/10 to-fuchsia-500/10',
+    border: 'border-violet-500/30',
+    text: 'text-violet-400',
+    glow: 'shadow-md shadow-violet-500/10',
+    badge: 'bg-gradient-to-r from-violet-500 to-purple-500',
+  },
+  default: {
+    icon: null,
+    emoji: null,
+    bg: 'bg-card/50',
+    border: 'border-border/30',
+    text: 'text-muted-foreground',
+    glow: '',
+    badge: 'bg-muted',
+  },
 }
 
 const formatDate = (dateString: string) => {
@@ -45,83 +78,190 @@ const formatDate = (dateString: string) => {
 }
 
 export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
-  const rankIcon = getRankIcon(player.rank)
+  const config = rankConfig[player.rank as 1 | 2 | 3 | 4 | 5] ?? rankConfig.default
   const { date, time } = formatDate(player.lastAchievedAt)
+  const totalScore = player.frontendScore + player.backendScore
+  const frontendPercent = totalScore > 0 ? (player.frontendScore / totalScore) * 100 : 0
+  const backendPercent = totalScore > 0 ? (player.backendScore / totalScore) * 100 : 0
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className={`group transition-all duration-300 ${getRowStyle(player.rank)}`}
+      initial={{ opacity: 0, x: -30, scale: 0.98 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        delay: index * 0.04,
+        type: 'spring',
+        stiffness: 150,
+        damping: 20,
+      }}
+      whileHover={{ scale: 1.01, y: -2 }}
+      className={`
+        group relative overflow-hidden
+        rounded-xl border backdrop-blur-sm
+        transition-all duration-300 cursor-pointer
+        ${config.bg} ${config.border} ${config.glow}
+        hover:border-primary/40
+      `}
     >
-      <div className="hidden md:grid md:grid-cols-[80px_1fr_150px_150px_180px] gap-4 items-center px-6 py-5">
-        <div className="flex items-center gap-2">
-          {rankIcon ? (
-            <span className="text-2xl">{rankIcon}</span>
-          ) : (
-            <span className="text-xl font-bold text-muted-foreground">{player.rank}</span>
-          )}
+      {player.rank <= 5 && (
+        <div className={`absolute inset-0 ${config.bg} opacity-30 blur-xl -z-10`} />
+      )}
+
+      {player.rank === 1 && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent -translate-x-full"
+          animate={{ translateX: ['150%', '-150%'] }}
+          transition={{ duration: 4, repeat: Infinity, repeatDelay: 3 }}
+        />
+      )}
+
+      <div className="hidden md:grid md:grid-cols-[80px_1fr_150px_150px_180px] gap-4 items-center px-6 py-4">
+        <div className="flex items-center justify-center">
+          <motion.div
+            whileHover={{ rotate: player.rank === 1 ? [0, -10, 10, 0] : 0, scale: 1.1 }}
+            className={`
+              flex items-center justify-center w-12 h-12 rounded-xl
+              border transition-all duration-300
+              ${config.bg} ${config.border} ${config.text}
+            `}
+          >
+            {config.icon ?? (
+              <span className="text-lg font-bold">{player.rank}</span>
+            )}
+          </motion.div>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-            {player.fullName}
-          </span>
-          {player.rank === 1 && (
-            <Crown size={18} className="text-yellow-500" />
-          )}
+          <div className="flex flex-col">
+            <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+              {player.fullName}
+            </span>
+            {player.rank <= 3 && (
+              <span className={`text-xs font-medium ${config.text} flex items-center gap-1`}>
+                <Sparkles className="w-3 h-3" />
+                Top {player.rank}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="text-center">
-          <span className="text-lg font-bold text-foreground">{player.frontendScore.toFixed(2)}</span>
-          <span className="block text-xs text-muted-foreground">
-            {((player.frontendScore / (player.frontendScore + player.backendScore)) * 100).toFixed(2)}%
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <Code2 className="w-4 h-4 text-primary" />
+            <span className="text-lg font-bold text-foreground tabular-nums">
+              {player.frontendScore.toFixed(0)}
+            </span>
+          </div>
+          <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${frontendPercent}%` }}
+              transition={{ duration: 0.8, delay: index * 0.05 }}
+              className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
+            />
+          </div>
+          <span className="text-[10px] text-muted-foreground mt-0.5 block">
+            {frontendPercent.toFixed(0)}%
           </span>
         </div>
 
-        {/* Backend Score */}
         <div className="text-center">
-          <span className="text-lg font-bold text-foreground">{player.backendScore.toFixed(2)}</span>
-          <span className="block text-xs text-muted-foreground">
-            {((player.backendScore / (player.frontendScore + player.backendScore)) * 100).toFixed(2)}%
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <Server className="w-4 h-4 text-primary-2" />
+            <span className="text-lg font-bold text-foreground tabular-nums">
+              {player.backendScore.toFixed(0)}
+            </span>
+          </div>
+          <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${backendPercent}%` }}
+              transition={{ duration: 0.8, delay: index * 0.05 + 0.1 }}
+              className="h-full bg-gradient-to-r from-primary-2 to-primary-2/70 rounded-full"
+            />
+          </div>
+          <span className="text-[10px] text-muted-foreground mt-0.5 block">
+            {backendPercent.toFixed(0)}%
           </span>
         </div>
 
-        {/* Date */}
         <div className="text-right">
-          <span className="text-sm font-medium text-foreground">{date}</span>
-          <span className="block text-xs text-muted-foreground">{time}</span>
+          <div className="flex items-center justify-end gap-2 text-sm font-medium text-foreground">
+            <Calendar className="w-4 h-4 text-muted-foreground" />
+            {date}
+          </div>
+          <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground mt-1">
+            <Clock className="w-3 h-3" />
+            {time}
+          </div>
         </div>
       </div>
 
-      {/* Mobile Layout */}
       <div className="md:hidden p-4">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            {rankIcon ? (
-              <span className="text-2xl">{rankIcon}</span>
-            ) : (
-              <span className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-bold">
-                {player.rank}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className={`
+                flex items-center justify-center w-10 h-10 rounded-xl
+                border transition-all duration-300
+                ${config.bg} ${config.border} ${config.text}
+              `}
+            >
+              {config.icon ?? (
+                <span className="text-sm font-bold">{player.rank}</span>
+              )}
+            </motion.div>
+            <div>
+              <span className="text-base font-semibold text-foreground block">
+                {player.fullName}
               </span>
-            )}
-            <span className="text-lg font-semibold text-foreground">{player.fullName}</span>
+              {player.rank <= 3 && (
+                <span className={`text-xs ${config.text}`}>Top {player.rank}</span>
+              )}
+            </div>
+          </div>
+          <div className="text-right text-xs text-muted-foreground">
+            <span className="block">{date}</span>
+            <span>{time}</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 text-sm">
-          <div>
-            <span className="block text-muted-foreground text-xs mb-1">Frontend</span>
-            <span className="font-bold text-foreground">{player.frontendScore.toFixed(2)}</span>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-background/50 rounded-lg p-3 border border-border/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Code2 className="w-4 h-4 text-primary" />
+              <span className="text-xs text-muted-foreground">Frontend</span>
+            </div>
+            <span className="text-xl font-bold text-foreground tabular-nums">
+              {player.frontendScore.toFixed(0)}
+            </span>
+            <div className="h-1 w-full bg-muted/50 rounded-full overflow-hidden mt-2">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${frontendPercent}%` }}
+                transition={{ duration: 0.8 }}
+                className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
+              />
+            </div>
           </div>
-          <div>
-            <span className="block text-muted-foreground text-xs mb-1">Backend</span>
-            <span className="font-bold text-foreground">{player.backendScore.toFixed(2)}</span>
-          </div>
-          <div className="text-right">
-            <span className="block text-muted-foreground text-xs mb-1">Date</span>
-            <span className="font-medium text-foreground text-xs">{date}</span>
+          <div className="bg-background/50 rounded-lg p-3 border border-border/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Server className="w-4 h-4 text-primary-2" />
+              <span className="text-xs text-muted-foreground">Backend</span>
+            </div>
+            <span className="text-xl font-bold text-foreground tabular-nums">
+              {player.backendScore.toFixed(0)}
+            </span>
+            <div className="h-1 w-full bg-muted/50 rounded-full overflow-hidden mt-2">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${backendPercent}%` }}
+                transition={{ duration: 0.8 }}
+                className="h-full bg-gradient-to-r from-primary-2 to-primary-2/70 rounded-full"
+              />
+            </div>
           </div>
         </div>
       </div>

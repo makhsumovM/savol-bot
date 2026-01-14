@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { Trophy, Code2, Server, Calendar, Sparkles } from 'lucide-react'
 import Error from '@/ui/common/error'
 import Loading from '@/ui/common/loading'
 import { getLeaderboard } from '@/api/leaderboardApi'
@@ -21,23 +22,53 @@ const LeaderboardPage = () => {
   })
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-background via-background to-primary/10">
-      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-      <div className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-primary/30 blur-3xl animate-pulse" />
-      <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-primary-2/25 blur-3xl animate-pulse-slow" />
+    <section className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
 
-      <div className="relative max-w-7xl mx-auto px-6 py-20">
-        <motion.h1
-          initial={{ opacity: 0, y: -40 }}
+      <div className="absolute -top-40 -right-40 h-80 w-80 sm:h-[500px] sm:w-[500px] rounded-full bg-primary/25 blur-[120px] animate-pulse" />
+      <div
+        className="absolute -bottom-40 -left-40 h-72 w-72 sm:h-[450px] sm:w-[450px] rounded-full bg-primary-2/20 blur-[120px] animate-pulse"
+        style={{ animationDelay: '1s' }}
+      />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-64 w-64 rounded-full bg-violet-500/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="text-6xl md:text-8xl font-black text-center tracking-tight"
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="text-center mb-12 sm:mb-16"
         >
-          <span className="text-[#ec6216]">{leaderboardFirstWord}</span>
-          {leaderboardRestWords.length > 0 && (
-            <span className="text-[#13aeac]"> {leaderboardRestWords.join(' ')}</span>
-          )}
-        </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+          >
+            <Trophy className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">
+              {t('leaderboard.top5')}
+            </span>
+            <Sparkles className="w-4 h-4 text-primary" />
+          </motion.div>
+
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight">
+            <span className="text-[#ec6216]">{leaderboardFirstWord}</span>
+            {leaderboardRestWords.length > 0 && (
+              <span className="text-[#13aeac]"> {leaderboardRestWords.join(' ')}</span>
+            )}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-4 text-muted-foreground max-w-2xl mx-auto"
+          >
+            {t('leaderboard.description', 'Лучшие разработчики по результатам марафона')}
+          </motion.p>
+        </motion.div>
 
         {isLoading && <Loading />}
         {isError && <Error message={t('errors.leaderboardLoadError')} />}
@@ -47,21 +78,55 @@ const LeaderboardPage = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16"
           >
-            <div className="hidden md:grid md:grid-cols-[80px_1fr_150px_150px_180px] gap-4 px-6 py-4 text-sm font-semibold text-muted-foreground uppercase tracking-wider border-b border-border/30">
-              <span>#</span>
-              <span>{t('leaderboard.columns.name')}</span>
-              <span className="text-center">Frontend</span>
-              <span className="text-center">Backend</span>
-              <span className="text-right">{t('leaderboard.columns.date')}</span>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="hidden md:block relative mb-4 overflow-hidden"
+            >
+              <div className="rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm px-6 py-4">
+                <div className="grid grid-cols-[80px_1fr_150px_150px_180px] gap-4 items-center">
+                  <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-center">
+                    #
+                  </span>
+                  <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+                    {t('leaderboard.columns.name')}
+                  </span>
+                  <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-center flex items-center justify-center gap-2">
+                    <Code2 className="w-4 h-4 text-primary" />
+                    Frontend
+                  </span>
+                  <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-center flex items-center justify-center gap-2">
+                    <Server className="w-4 h-4 text-primary-2" />
+                    Backend
+                  </span>
+                  <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider text-right flex items-center justify-end gap-2">
+                    <Calendar className="w-4 h-4" />
+                    {t('leaderboard.columns.date')}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
 
-            <div className="divide-y divide-border/20">
+            <div className="space-y-3">
               {data.map((player, idx) => (
                 <LeaderboardItem key={idx} player={player} index={idx} />
               ))}
             </div>
+
+            {data.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-20"
+              >
+                <Trophy className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
+                <p className="text-muted-foreground">
+                  {t('leaderboard.empty', 'Пока нет участников в рейтинге')}
+                </p>
+              </motion.div>
+            )}
           </motion.div>
         )}
       </div>
