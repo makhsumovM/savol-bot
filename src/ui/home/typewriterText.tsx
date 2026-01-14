@@ -1,36 +1,110 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 interface TypewriterProps {
   text: string
   delay?: number
   speed?: number
+  cursor?: boolean
+  cursorChar?: string
+  onComplete?: () => void
 }
 
-export function Typewriter({ text, delay = 0, speed = 0.05 }: TypewriterProps) {
+export function Typewriter({
+  text,
+  delay = 0,
+  speed = 50,
+  cursor = true,
+  cursorChar = "|",
+  onComplete
+}: TypewriterProps) {
   const [displayedText, setDisplayedText] = useState("")
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [started, setStarted] = useState(false)
+  const [showCursor, setShowCursor] = useState(true)
+  const [isComplete, setIsComplete] = useState(false)
+  const prevTextRef = useRef(text)
+  const animationRef = useRef<NodeJS.Timeout | null>(null)
+  const cursorIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
+  // Reset when text changes (language change fix)
   useEffect(() => {
-    const startTimeout = setTimeout(() => {
-      setStarted(true)
-    }, delay * 1000)
+    if (prevTextRef.current !== text) {
+      // Clear any running animation
+      if (animationRef.current) {
+        clearTimeout(animationRef.current)
+      }
+      // Reset state
+      setDisplayedText("")
+      setIsComplete(false)
+      prevTextRef.current = text
+    }
+  }, [text])
 
-    return () => clearTimeout(startTimeout)
-  }, [delay])
-
+  // Main typewriter effect
   useEffect(() => {
-    if (!started || currentIndex >= text.length) return
+    if (!text) return
 
-    const timeout = setTimeout(() => {
-      setDisplayedText((prev) => prev + text[currentIndex])
-      setCurrentIndex((prev) => prev + 1)
-    }, speed * 1000)
+    let currentIndex = 0
+    setDisplayedText("")
+    setIsComplete(false)
 
-    return () => clearTimeout(timeout)
-  }, [currentIndex, text, speed, started])
+    const startTyping = () => {
+      const typeNextChar = () => {
+        if (currentIndex < text.length) {
+          setDisplayedText(text.slice(0, currentIndex + 1))
+          currentIndex++
+          // Variable speed for natural feel
+          const variance = Math.random() * 30 - 15
+          animationRef.current = setTimeout(typeNextChar, speed + variance)
+        } else {
+          setIsComplete(true)
+          onComplete?.()
+        }
+      }
+      typeNextChar()
+    }
 
-  return <span suppressHydrationWarning>{displayedText}</span>
+    // Initial delay before starting
+    animationRef.current = setTimeout(startTyping, delay)
+
+    return () => {
+      if (animationRef.current) {
+        clearTimeout(animationRef.current)
+      }
+    }
+  }, [text, delay, speed, onComplete])
+
+  // Cursor blink effect
+  useEffect(() => {
+    if (cursor) {
+      cursorIntervalRef.current = setInterval(() => {
+        setShowCursor(prev => !prev)
+      }, 530)
+
+      return () => {
+        if (cursorIntervalRef.current) {
+          clearInterval(cursorIntervalRef.current)
+        }
+      }
+    }
+  }, [cursor])
+
+  return (
+    <span suppressHydrationWarning className="inline">
+      {displayedText}
+      {cursor && (
+        <span
+          className={`
+            inline-block ml-0.5 font-light
+            transition-opacity duration-100
+            ${showCursor ? 'opacity-100' : 'opacity-0'}
+            ${isComplete ? 'animate-pulse' : ''}
+          `}
+          aria-hidden="true"
+        >
+          {cursorChar}
+        </span>
+      )}
+    </span>
+  )
 }

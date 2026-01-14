@@ -55,9 +55,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className={`group transition-all duration-300 ${getRowStyle(player.rank)}`}
     >
-      {/* Desktop Layout */}
       <div className="hidden md:grid md:grid-cols-[80px_1fr_150px_150px_180px] gap-4 items-center px-6 py-5">
-        {/* Rank */}
         <div className="flex items-center gap-2">
           {rankIcon ? (
             <span className="text-2xl">{rankIcon}</span>
@@ -66,7 +64,6 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           )}
         </div>
 
-        {/* Name */}
         <div className="flex items-center gap-3">
           <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
             {player.fullName}
@@ -76,7 +73,6 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           )}
         </div>
 
-        {/* Frontend Score */}
         <div className="text-center">
           <span className="text-lg font-bold text-foreground">{player.frontendScore.toFixed(2)}</span>
           <span className="block text-xs text-muted-foreground">

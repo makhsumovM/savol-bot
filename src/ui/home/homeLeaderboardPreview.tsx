@@ -1,10 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { Crown, User } from 'lucide-react'
+import { Crown, Medal, User, Sparkles, ChevronRight, Trophy } from 'lucide-react'
 import { getLeaderboard } from '@/api/leaderboardApi'
 import { getMyRank } from '@/api/my-rankApi'
 import { getProfileApi } from '@/api/authApi'
@@ -16,24 +16,46 @@ import { getCookie } from '@/lib/utils/cookies'
 
 const rankStyles = {
   1: {
-    bg: 'bg-yellow-500/15',
-    text: 'text-yellow-500',
-    label: <Crown className="w-4 h-4" />,
+    bg: 'bg-gradient-to-br from-yellow-400/25 via-amber-500/20 to-orange-400/15',
+    border: 'border-yellow-500/50',
+    text: 'text-yellow-400',
+    glow: 'shadow-yellow-500/30',
+    icon: <Crown className="w-4 h-4" />,
   },
   2: {
-    bg: 'bg-gray-400/15',
-    text: 'text-gray-300',
-    label: '2',
+    bg: 'bg-gradient-to-br from-slate-300/20 via-gray-400/15 to-slate-500/10',
+    border: 'border-slate-400/40',
+    text: 'text-slate-300',
+    glow: 'shadow-slate-400/20',
+    icon: <Medal className="w-4 h-4" />,
   },
   3: {
-    bg: 'bg-amber-600/15',
+    bg: 'bg-gradient-to-br from-amber-600/20 via-orange-600/15 to-amber-700/10',
+    border: 'border-amber-600/40',
     text: 'text-amber-500',
-    label: '3',
+    glow: 'shadow-amber-500/20',
+    icon: <Medal className="w-4 h-4" />,
+  },
+  4: {
+    bg: 'bg-gradient-to-br from-blue-500/15 via-blue-600/10 to-indigo-500/10',
+    border: 'border-blue-500/30',
+    text: 'text-blue-400',
+    glow: 'shadow-blue-500/15',
+    icon: <Medal className="w-4 h-4" />,
+  },
+  5: {
+    bg: 'bg-gradient-to-br from-violet-500/15 via-purple-600/10 to-fuchsia-500/10',
+    border: 'border-violet-500/30',
+    text: 'text-violet-400',
+    glow: 'shadow-violet-500/15',
+    icon: <Medal className="w-4 h-4" />,
   },
   default: {
-    bg: 'bg-primary/10',
-    text: 'text-primary',
-    label: null,
+    bg: 'bg-background/50',
+    border: 'border-border/30',
+    text: 'text-foreground/70',
+    glow: '',
+    icon: null,
   },
 }
 
@@ -79,107 +101,188 @@ export const HomeLeaderboardPreview = () => {
       transition={{ duration: 0.7, delay: 0.15 }}
       className="relative mt-8 lg:mt-0"
     >
-      <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-primary-2/10 rounded-3xl blur-xl" />
-      <div className="relative rounded-2xl sm:rounded-3xl border border-border/50 bg-card p-5 sm:p-6 shadow-lg">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-semibold text-primary tracking-wide uppercase">
-            {t('leaderboard.title')}
-          </span>
+      <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/25 blur-[80px] animate-pulse" />
+      <div
+        className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] animate-pulse"
+        style={{ animationDelay: '1s' }}
+      />
+      <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 rounded-3xl blur-xl" />
+
+      <div className="relative rounded-2xl sm:rounded-3xl border border-border/40 bg-card/80 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black/10">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <motion.div
+              animate={{ rotate: [0, 15, -15, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            >
+              <Sparkles className="w-4 h-4 text-primary" />
+            </motion.div>
+            <span className="text-xs font-bold text-primary tracking-wider uppercase">
+              {t('leaderboard.title')}
+            </span>
+          </div>
           <Link
             href="/leaderboard"
-            className="text-xs text-muted-foreground hover:text-primary transition-colors"
+            className="group flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-all duration-300"
           >
             {t('common.viewAll')}
+            <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
         {isLoading && <Loading variant="small" />}
 
         {!isLoading && (
-          <div className="space-y-3">
-            {top5?.map((player, index) => {
-              const style = rankStyles[player.rank as 1 | 2 | 3] ?? rankStyles.default
-              const isMe = player.rank === myRank
+          <div className="space-y-2.5">
+            <AnimatePresence mode="popLayout">
+              {top5?.map((player, index) => {
+                const style = rankStyles[player.rank as 1 | 2 | 3] ?? rankStyles.default
+                const isMe = player.rank === myRank
 
-              return (
-                <motion.div
-                  key={player.rank}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 + index * 0.08 }}
-                  className={`
-                    flex items-center  justify-between rounded-xl px-3 py-2 backdrop-blur-md
-                    hover:scale-[1.02] transition-all duration-200
-                    ${
-                      isMe
-                        ? 'border-2 text-primary-2 border-primary-2 shadow-md '
-                        : 'border border-border/40 bg-background/70'
-                    }
-                  `}
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold ${
-                        isMe ? 'bg-primary/40 text-primary-2 ' : style.bg + ' ' + style.text
-                      }`}
-                    >
-                      {style.label ?? player.rank}
-                    </div>
-                    <span
-                      className={`text-xs sm:text-sm font-medium truncate max-w-[120px] sm:max-w-40 ${
-                        isMe ? 'text-primary-2  font-semibold' : 'text-foreground'
-                      }`}
-                    >
-                      {player.fullName}
-                      {isMe && (
-                        <span className="ml-2 text- text-primary-2">
-                          ({t('leaderboard.common')})
-                        </span>
-                      )}
-                    </span>
-                  </div>
-                  <span
-                    className={`text-xs sm:text-sm font-semibold ${
-                      isMe ? 'text-primary-2' : 'text-foreground/80'
-                    }`}
+                return (
+                  <motion.div
+                    key={player.rank}
+                    layout
+                    initial={{ opacity: 0, x: -30, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: 30, scale: 0.95 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.05 + index * 0.08,
+                      type: 'spring',
+                      stiffness: 200,
+                      damping: 20,
+                    }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className={`
+                      relative flex items-center justify-between rounded-xl px-3.5 py-2.5
+                      backdrop-blur-md cursor-pointer
+                      transition-all duration-300
+                      ${
+                        isMe
+                          ? 'border-2 border-primary bg-primary/15 shadow-lg shadow-primary/25'
+                          : `border ${style.border} ${style.bg} hover:border-primary/30 ${style.glow} shadow-lg`
+                      }
+                    `}
                   >
-                    {player.totalScore.toLocaleString()}
-                  </span>
-                </motion.div>
-              )
-            })}
+                    {player.rank <= 5 && !isMe && (
+                      <div
+                        className={`absolute inset-0 rounded-xl ${style.bg} opacity-50 blur-sm -z-10`}
+                      />
+                    )}
+
+                    <div className="flex items-center gap-3">
+                      <motion.div
+                        whileHover={{ rotate: player.rank === 1 ? [0, -10, 10, 0] : 0 }}
+                        className={`
+                          flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold
+                          transition-all duration-300
+                          ${
+                            isMe
+                              ? 'bg-primary/30 text-primary shadow-inner'
+                              : `${style.bg} ${style.text} border ${style.border}`
+                          }
+                        `}
+                      >
+                        {style.icon ?? player.rank}
+                      </motion.div>
+                      <div className="flex flex-col">
+                        <span
+                          className={`
+                            text-sm font-medium truncate max-w-[100px] sm:max-w-[140px]
+                            ${isMe ? 'text-primary font-semibold' : 'text-foreground'}
+                          `}
+                        >
+                          {player.fullName}
+                        </span>
+                        {isMe && (
+                          <span className="text-[10px] text-primary/80 font-medium">
+                            {t('leaderboard.common')}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <motion.span
+                        initial={{ scale: 1 }}
+                        whileHover={{ scale: 1.1 }}
+                        className={`
+                          text-sm font-bold tabular-nums
+                          ${isMe ? 'text-primary' : 'text-foreground/80'}
+                        `}
+                      >
+                        {player.totalScore.toLocaleString()}
+                      </motion.span>
+                      <span className="text-[10px] text-muted-foreground">pts</span>
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </AnimatePresence>
 
             {!isInTop5 && myRank && myProfile && myRank > 5 && myTotalScore > 0 && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="flex items-center justify-between rounded-xl px-3 py-3 backdrop-blur-md
-                           border-2 border-primary bg-primary/20 shadow-lg shadow-primary/40
-                           hover:scale-[1.03] transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/40 text-primary font-bold">
-                    <User className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-semibold text-primary">
-                      {myProfile.fullName} ({t('common.you')})
-                    </span>
-                    <p className="text-xs text-primary/80 mt-0.5">#{myRank}</p>
-                  </div>
+              <>
+                <div className="flex items-center gap-2 py-2">
+                  <div className="flex-1 h-px bg-linear-to-r from-transparent via-border/50 to-transparent" />
+                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                    {t('common.you')}
+                  </span>
+                  <div className="flex-1 h-px bg-linear-to-r from-transparent via-border/50 to-transparent" />
                 </div>
-                <span className="text-sm font-bold text-primary">
-                  {myTotalScore.toLocaleString()}
-                </span>
-              </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.6, type: 'spring' }}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="
+                    relative flex items-center justify-between rounded-xl px-3.5 py-3
+                    backdrop-blur-md cursor-pointer
+                    border-2 border-primary-2 bg-linear-to-r from-primary-2/20 via-primary-2/10 to-primary-2/20
+                    shadow-lg shadow-primary-2/30
+                    transition-all duration-300
+                    overflow-hidden
+                  "
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full"
+                    animate={{ translateX: ['100%', '-100%'] }}
+                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+                  />
+
+                  <div className="flex items-center gap-3 relative z-10">
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary-2/30 text-primary-2 shadow-inner">
+                      <User className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-semibold text-primary-2">
+                        {myProfile.fullName}
+                      </span>
+                      <span className="text-xs text-primary-2/70 font-medium">
+                        #{myRank} • {t('common.you')}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 relative z-10">
+                    <span className="text-sm font-bold text-primary-2 tabular-nums">
+                      {myTotalScore.toLocaleString()}
+                    </span>
+                    <span className="text-[10px] text-primary-2/70">pts</span>
+                  </div>
+                </motion.div>
+              </>
             )}
           </div>
         )}
-
-        <div className="mt-4 pt-3 border-t border-border/30 flex justify-between text-[10px] text-muted-foreground">
-          <span>{t('leaderboard.top5')}</span>
-          <span>{t('leaderboard.columns.score')}</span>
+        <div className="mt-5 pt-4 border-t border-border/20">
+          <div className="flex justify-between text-[10px] text-muted-foreground/80 uppercase tracking-wider">
+            <span className="flex items-center gap-1.5">
+              <Trophy className="w-3 h-3" />
+              {t('leaderboard.top5')}
+            </span>
+            <span>{t('leaderboard.columns.score')}</span>
+          </div>
         </div>
       </div>
     </motion.div>
