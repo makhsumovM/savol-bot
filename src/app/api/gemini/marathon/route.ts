@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from '@google/genai'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -20,7 +19,8 @@ const backendTopics = {
   medium: 'Collections, LINQ, Exceptions, Async/Await Basics',
   hard: 'ASP.NET Core Fundamentals, Dependency Injection, Middleware, Entity Framework Basics',
   'very-hard': 'Advanced ASP.NET Core (Authentication, Authorization, Performance, Caching)',
-  expert: 'Senior .NET Architecture, Microservices, Design Patterns, Concurrency, Performance Optimization',
+  expert:
+    'Senior .NET Architecture, Microservices, Design Patterns, Concurrency, Performance Optimization',
 }
 
 const QuestionSchema = z.object({
@@ -38,17 +38,17 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url)
     const lang = url.searchParams.get('lang') || 'en'
-    const difficulty = url.searchParams.get('difficulty')
-    const type = url.searchParams.get('type')
+    const difficulty = url.searchParams.get('difficulty') || ''
+    const type = url.searchParams.get('type') || ''
 
-    if (!validDifficulties.includes(difficulty as any)) {
+    if (!validDifficulties.includes(difficulty)) {
       return NextResponse.json({ error: 'Invalid difficulty' }, { status: 400 })
     }
 
-    if (!validTypes.includes(type as any)) {
+    if (!validTypes.includes(type)) {
       return NextResponse.json(
         { error: 'Invalid type. Use "frontend" or "backend"' },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -94,7 +94,6 @@ export async function GET(request: Request) {
       apiKey: process.env.GEMINI_API_KEY!,
     })
 
-    
     const result = await client.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
