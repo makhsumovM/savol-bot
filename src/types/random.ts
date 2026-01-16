@@ -1,8 +1,7 @@
 export interface RandomQuestion {
   question: string
   code: string | null
-  answers: string[]
-  correctIndex: number
-  difficulty: 'easy' | 'medium' | 'hard' | 'very-hard' | 'expert'
-   type: 'frontend' | 'backend'
+  codeLanguage: 'javascript' | 'typescript' | 'html' | 'css' | 'tsx' | 'csharp' | null
+  answers: [string, string, string, string]
+  correctIndex: 0 | 1 | 2 | 3
 }
