@@ -17,7 +17,6 @@ export const marathonApi = async (
     })
 
     const questions: MarathonQuestion[] = JSON.parse(response.data.result)
-
     return questions
   } catch (error) {
     console.error('Error fetching marathon questions:', error)
