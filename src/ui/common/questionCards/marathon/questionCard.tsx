@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Copy, Check } from 'lucide-react'
 import type { MarathonQuestion } from '@/types/marathon'
-import CodeBlock from '@/ui/common/questionCard/codeBlock'
+import CodeBlock from '@/ui/common/questionCards/marathon/codeBlock'
+import { motion } from 'framer-motion'
+import { Check, Copy } from 'lucide-react'
+import { useState } from 'react'
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -138,9 +138,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
               {letters[i]}
             </span>
 
-            <span className="flex-1 min-w-0 wrap-break-word hyphens-auto">
-              {ans}
-            </span>
+            <span className="flex-1 min-w-0 wrap-break-word hyphens-auto">{ans}</span>
 
             {answered && i === question.correctIndex && (
               <Check className="w-4 h-4 text-green-500 shrink-0" />
