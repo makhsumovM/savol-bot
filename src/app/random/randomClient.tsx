@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,7 @@ import { RandomQuestion } from '@/types/random'
 import Image from 'next/image'
 import react from '../../../public/react.png'
 import QuestionCard from '@/ui/common/questionCards/random/questionCard'
-import { randomApi } from '@/api/randomAPi'
+import { randomApi } from '@/api/randomApi'
 
 
 const QUESTIONS_PER_BLOCK = 10
@@ -73,7 +73,7 @@ export default function RandomClient() {
                 whileTap={{ scale: 0.98 }}
                 whileHover={{ scale: 1.02 }}
                 onClick={() => setType(mode as 'frontend' | 'backend')}
-                className={`relative w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                className={`relative w-full sm:w-auto min-h-11 px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
                   type === mode
                     ? mode === 'frontend'
                       ? 'bg-primary text-white border-primary'

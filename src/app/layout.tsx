@@ -162,6 +162,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(educationalAppJsonLd) }}
         />
+        <meta
+          name="google-site-verification"
+          content="gSrZyl2wPCVWzZfpHA8e2fXPoeo9bpXdUDwhnyEJKR8"
+        />
       </head>
       <body className="antialiased">
         <Providers>
