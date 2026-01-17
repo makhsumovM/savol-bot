@@ -23,13 +23,20 @@ import {
   Zap,
   Target,
   Award,
+  Settings,
+  Languages,
+  Moon,
+  Sun,
+  Monitor,
 } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
 const ProfilePage = () => {
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false)
   const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false)
   const [fullname, setFullname] = useState<string>('')
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const { theme, setTheme } = useTheme()
   const profileTitle = t('profile.title')
   const [profileFirstWord, ...profileRestWords] = profileTitle.split(' ')
 
