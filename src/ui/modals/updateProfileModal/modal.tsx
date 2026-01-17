@@ -1,4 +1,5 @@
 import { IUpdateProfile } from '@/types/auth'
+import { motion } from 'framer-motion'
 import FormInput from '@/ui/input/formInput'
 import { Image, User } from 'lucide-react'
 import React, { useEffect } from 'react'
@@ -63,46 +64,61 @@ const UpdateProfileModal = ({
   if (!updateProfileModalOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-xl flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">{t('updateProfileModal.title')}</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        className="relative w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-card/80 backdrop-blur-xl shadow-2xl"
+      >
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <FormInput
-            control={control}
-            label={t('updateProfileModal.fields.fullName.label')}
-            name="fullName"
-            placeholder={t('updateProfileModal.fields.fullName.placeholder')}
-            type="text"
-            icon={User}
-          />
+        <div className="relative p-6 sm:p-8">
+          <h2 className="text-2xl font-black text-center mb-6 text-primary-2">
+            {t('updateProfileModal.title')}
+          </h2>
 
-          <FormInput
-            control={control}
-            name="profilePicture"
-            label={t('updateProfileModal.fields.profilePicture.label')}
-            type="file"
-            accept="image/*"
-            icon={Image}
-          />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <FormInput
+              control={control}
+              label={t('updateProfileModal.fields.fullName.label')}
+              name="fullName"
+              placeholder={t('updateProfileModal.fields.fullName.placeholder')}
+              type="text"
+              icon={User}
+            />
 
-          <div className="flex gap-2 mt-6 justify-end">
-            <Button
-              type="button"
-              onClick={() => setUpdateProfileModalOpen(false)}
-              variant="outline"
-            >
-              {t('updateProfileModal.buttons.cancel')}
-            </Button>
+            <FormInput
+              control={control}
+              name="profilePicture"
+              label={t('updateProfileModal.fields.profilePicture.label')}
+              type="file"
+              accept="image/*"
+              icon={Image}
+            />
 
-            <Button type="submit" disabled={isPending}>
-              {isPending
-                ? t('updateProfileModal.buttons.updating')
-                : t('updateProfileModal.buttons.update')}
-            </Button>
-          </div>
-        </form>
-      </div>
+            <div className="flex gap-3 mt-8 pt-2">
+              <Button
+                type="button"
+                onClick={() => setUpdateProfileModalOpen(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                {t('updateProfileModal.buttons.cancel')}
+              </Button>
+
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="flex-1 bg-primary text-white border-0 hover:opacity-90 transition-opacity"
+              >
+                {isPending
+                  ? t('updateProfileModal.buttons.updating')
+                  : t('updateProfileModal.buttons.update')}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </motion.div>
     </div>
   )
 }
