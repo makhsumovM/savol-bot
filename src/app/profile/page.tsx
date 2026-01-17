@@ -23,20 +23,13 @@ import {
   Zap,
   Target,
   Award,
-  Settings,
-  Languages,
-  Moon,
-  Sun,
-  Monitor,
 } from 'lucide-react'
-import { useTheme } from 'next-themes'
 
 const ProfilePage = () => {
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false)
   const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false)
   const [fullname, setFullname] = useState<string>('')
-  const { t, i18n } = useTranslation()
-  const { theme, setTheme } = useTheme()
+  const { t } = useTranslation()
   const profileTitle = t('profile.title')
   const [profileFirstWord, ...profileRestWords] = profileTitle.split(' ')
 
@@ -130,16 +123,15 @@ const ProfilePage = () => {
             />
             <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 rounded-3xl blur-xl" />
             <div className="relative rounded-2xl sm:rounded-3xl border border-border/40 bg-card/80 backdrop-blur-xl p-5 sm:p-8 shadow-2xl shadow-black/10">
-              {/* Profile Header */}
               <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-6">
                 <motion.div
                   className="relative group"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-primary-2 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500 scale-110" />
+                  <div className="absolute inset-0 rounded-full bg-linear-to-r from-primary to-primary-2 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500 scale-110" />
                   <div
-                    className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-primary-2/30 animate-pulse"
+                    className="absolute inset-0 rounded-full bg-linear-to-br from-primary/30 to-primary-2/30 animate-pulse"
                     style={{ animationDuration: '3s' }}
                   />
                   <img
@@ -174,7 +166,6 @@ const ProfilePage = () => {
                 </div>
               </div>
 
-              {/* Divider */}
               <div className="flex items-center gap-2 py-4">
                 <div className="flex-1 h-px bg-linear-to-r from-transparent via-border/50 to-transparent" />
                 <span className="text-[10px] text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
@@ -184,11 +175,10 @@ const ProfilePage = () => {
                 <div className="flex-1 h-px bg-linear-to-r from-transparent via-border/50 to-transparent" />
               </div>
 
-              {/* Score Cards - Enhanced like Leaderboard */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <motion.div
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="relative rounded-xl px-4 py-5 backdrop-blur-md border-2 border-primary/40 bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 shadow-lg shadow-primary/20 overflow-hidden"
+                  className="relative rounded-xl px-4 py-5 backdrop-blur-md border-2 border-primary/40 bg-linear-to-br from-primary/20 via-primary/10 to-primary/5 shadow-lg shadow-primary/20 overflow-hidden"
                 >
                   <motion.div
                     className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full"
@@ -215,7 +205,7 @@ const ProfilePage = () => {
 
                 <motion.div
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="relative rounded-xl px-4 py-5 backdrop-blur-md border-2 border-primary-2/40 bg-gradient-to-br from-primary-2/20 via-primary-2/10 to-primary-2/5 shadow-lg shadow-primary-2/20 overflow-hidden"
+                  className="relative rounded-xl px-4 py-5 backdrop-blur-md border-2 border-primary-2/40 bg-linear-to-br from-primary-2/20 via-primary-2/10 to-primary-2/5 shadow-lg shadow-primary-2/20 overflow-hidden"
                 >
                   <motion.div
                     className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full"
@@ -241,8 +231,7 @@ const ProfilePage = () => {
                 </motion.div>
               </div>
 
-              {/* Action Button */}
-              <div className="mt-6 flex justify-center sm:justify-start">
+              <div className="mt-6 flex flex-wrap justify-center sm:justify-start gap-4">
                 <motion.button
                   whileTap={{ scale: 0.98 }}
                   whileHover={{ scale: 1.02 }}
@@ -254,9 +243,23 @@ const ProfilePage = () => {
                     {t('profile.changePassword')}
                   </span>
                 </motion.button>
+
+                <motion.button
+                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => {
+                    setUpdateProfileModalOpen(true)
+                    setFullname(data?.fullName ?? '')
+                  }}
+                  className="relative min-h-11 px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border bg-linear-to-r from-primary to-primary/90 text-white border-primary hover:shadow-primary/40"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2.5">
+                    <Edit2 className="w-5 h-5" />
+                    {t('profile.updateProfile')}
+                  </span>
+                </motion.button>
               </div>
 
-              {/* Footer Stats */}
               <div className="mt-6 pt-4 border-t border-border/20">
                 <div className="flex justify-between text-[10px] text-muted-foreground/80 uppercase tracking-wider">
                   <span className="flex items-center gap-1.5">
@@ -272,23 +275,6 @@ const ProfilePage = () => {
             </div>
           </motion.div>
         )}
-
-        {/* Floating Edit Button */}
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            setUpdateProfileModalOpen(true)
-            setFullname(data?.fullName ?? '')
-          }}
-          className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-5 py-3.5 bg-gradient-to-r from-primary to-primary/80 text-white font-bold text-sm rounded-full shadow-xl backdrop-blur-md border border-white/20 transition-all duration-300 hover:shadow-primary/50"
-        >
-          <Edit2 className="w-5 h-5" />
-          <span className="hidden sm:inline">{t('profile.updateProfile')}</span>
-        </motion.button>
       </div>
 
       <ChangePasswordModal
