@@ -65,7 +65,7 @@ const FormInput = <T extends FieldValues>({
                 type={type === 'password' && eyeOpen ? 'text' : type}
                 value={field.value ?? ''}
                 aria-invalid={fieldState.invalid}
-                placeholder={placeholder ? `Enter ${placeholder}` : undefined}
+                placeholder={placeholder ? ` ${placeholder}` : undefined}
                 className={cn(type === 'password' && 'pr-10', Icon && 'pl-10')}
               />
             )}
