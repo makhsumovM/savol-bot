@@ -3,6 +3,7 @@ import { IChangePassword } from '@/types/auth'
 import FormInput from '@/ui/input/formInput'
 import { Button } from '@/ui/button/button'
 import { useMutation } from '@tanstack/react-query'
+import { motion } from 'framer-motion'
 import { Lock } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -45,51 +46,68 @@ const ChangePasswordModal = ({
   if (!changePasswordModalOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-xl flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-6">{t('changePasswordModal.title')}</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        className="relative w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-card/80 backdrop-blur-xl shadow-2xl"
+      >
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <FormInput
-            name="currentPassword"
-            control={control}
-            label={t('changePasswordModal.fields.currentPassword.label')}
-            placeholder={t('changePasswordModal.fields.currentPassword.placeholder')}
-            type="password"
-            icon={Lock}
-          />
+        <div className="relative p-6 sm:p-8">
+          <h2 className="text-2xl font-black text-center mb-6 text-primary-2  ">
+            {t('changePasswordModal.title')}
+          </h2>
 
-          <FormInput
-            name="newPassword"
-            control={control}
-            label={t('changePasswordModal.fields.newPassword.label')}
-            placeholder={t('changePasswordModal.fields.newPassword.placeholder')}
-            type="password"
-            icon={Lock}
-          />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <FormInput
+              name="currentPassword"
+              control={control}
+              label={t('changePasswordModal.fields.currentPassword.label')}
+              placeholder={t('changePasswordModal.fields.currentPassword.placeholder')}
+              type="password"
+              icon={Lock}
+            />
 
-          <FormInput
-            name="confirmPassword"
-            control={control}
-            label={t('changePasswordModal.fields.confirmPassword.label')}
-            placeholder={t('changePasswordModal.fields.confirmPassword.placeholder')}
-            type="password"
-            icon={Lock}
-          />
+            <FormInput
+              name="newPassword"
+              control={control}
+              label={t('changePasswordModal.fields.newPassword.label')}
+              placeholder={t('changePasswordModal.fields.newPassword.placeholder')}
+              type="password"
+              icon={Lock}
+            />
 
-          <div className="flex gap-3 mt-8 justify-end">
-            <Button
-              type="button"
-              onClick={() => setChangePasswordModalOpen(false)}
-              variant="outline"
-            >
-              {t('changePasswordModal.buttons.cancel')}
-            </Button>
+            <FormInput
+              name="confirmPassword"
+              control={control}
+              label={t('changePasswordModal.fields.confirmPassword.label')}
+              placeholder={t('changePasswordModal.fields.confirmPassword.placeholder')}
+              type="password"
+              icon={Lock}
+            />
 
-            <Button type="submit">{t('changePasswordModal.buttons.change')}</Button>
-          </div>
-        </form>
-      </div>
+            <div className="flex gap-3 mt-8 pt-2">
+              <Button
+                type="button"
+                onClick={() => setChangePasswordModalOpen(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                {t('changePasswordModal.buttons.cancel')}
+              </Button>
+
+              <Button
+                type="submit"
+
+                className="flex-1 bg-primary text-white border-0 hover:opacity-90 transition-opacity"
+              >
+                {t('changePasswordModal.buttons.change')}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </motion.div>
     </div>
   )
 }
