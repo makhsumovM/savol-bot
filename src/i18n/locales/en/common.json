@@ -1,37 +1,37 @@
 {
   "app": {
     "name": "SkillCheck",
-    "subtitle": "AI Tester",
-    "description": "Free AI platform to practice and test programming skills. Supports JS, TS, React, Next.js, Node.js, and AI-generated questions."
+    "subtitle": "AI Skill Tester",
+    "description": "A free AI-powered platform to practice and test your programming skills. Supports JavaScript, TypeScript, React, Next.js, Node.js, and AI-generated questions."
   },
   "errors": {
-    "loadFailed": "Failed to load questions.",
-    "notFound": "Questions not found.",
-    "myBestLoadError": "Failed to load best scores",
-    "leaderboardLoadError": "Failed to load leaderboard",
-    "profileLoadError": "Failed to load profile",
-    "updateProfileError": "Failed to update profile"
+    "loadFailed": "Unable to load questions.",
+    "notFound": "No questions found.",
+    "myBestLoadError": "Unable to load your best scores.",
+    "leaderboardLoadError": "Unable to load the leaderboard.",
+    "profileLoadError": "Unable to load profile data.",
+    "updateProfileError": "Profile update failed."
   },
   "gameOver": {
     "title": "Game Over",
-    "wrongAnswer": "You answered incorrectly.",
+    "wrongAnswer": "That answer was incorrect.",
     "score": "Round Score:",
-    "record": "Record:",
-    "restart": "Restart",
-    "newRecord": "New Record!"
+    "record": "Best Record:",
+    "restart": "Play Again",
+    "newRecord": "New High Score!"
   },
   "header": {
-    "login": "Login"
+    "login": "Sign In"
   },
   "home": {
     "cta": {
       "startMarathon": "Start Marathon →",
-      "features": "Rhythm, density, and subtle animations"
+      "features": "Smooth rhythm, balanced difficulty, and subtle animations"
     }
   },
   "leaderboard": {
-    "title": "Leaderboard Rankings",
-    "description":"See how you rank against other players.",
+    "title": "Leaderboard",
+    "description": "Compare your results with other players.",
     "columns": {
       "rank": "Rank",
       "username": "Username",
@@ -40,30 +40,33 @@
       "date": "Date"
     },
     "common": "You",
-    "inLeaderboard": "in the leaderboard",
+    "inLeaderboard": "on the leaderboard",
     "top5": "Top 5 Players"
   },
   "loading": {
     "text": "Loading..."
   },
   "login": {
-    "title": "Login to ",
-    "subtitle": "Sign in to continue",
+    "title": "Sign in to ",
+    "subtitle": "Continue to your account",
     "emailLabel": "Email",
-    "emailPlaceholder": "you@example.com",
+    "emailPlaceholder": "Enter your email",
     "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
+    "passwordPlaceholder": "Enter your password",
     "loginButton": "Sign In",
     "signingIn": "Signing in...",
-    "createAccount": "Create Account",
-    "loginSuccess": "Login successful",
-    "loginFailed": "Login failed"
+    "footer": {
+      "text": "Don’t have an account?",
+      "linkText": "Register"
+    },
+    "loginSuccess": "Successfully signed in.",
+    "loginFailed": "Invalid email or password."
   },
   "marathon": {
-    "title": "Marathon Questions",
+    "title": "Marathon Mode",
     "score": {
       "current": "Current Score",
-      "record": "Record",
+      "record": "Best Score",
       "difficulty": "Difficulty"
     },
     "bestScore": "Best Record",
@@ -76,23 +79,23 @@
       "very-hard": "Very Hard",
       "expert": "Expert"
     },
-    "noQuestions": "Failed to load marathon questions"
+    "noQuestions": "Unable to load marathon questions."
   },
   "modes": {
     "marathon": {
       "title": "Marathon",
       "badge": "LIVE",
-      "description": "An endless stream of questions to train concentration."
+      "description": "An endless stream of questions to train focus and endurance."
     },
     "classic": {
       "title": "Random",
       "badge": "LIVE",
-      "description": "A sprint of 10–15 questions for quick self-testing."
+      "description": "A quick session of 10–15 questions for rapid self-testing."
     },
     "coding": {
       "title": "Coding",
       "badge": "COMING SOON",
-      "description": "Programming tasks with hints, inspired by IDEs."
+      "description": "Hands-on coding challenges with hints, inspired by real IDEs."
     }
   },
   "myBest": {
@@ -113,24 +116,24 @@
     }
   },
   "myRank": {
-    "title": "My Rank",
+    "title": "My Ranking",
     "yourRank": "Your Rank",
-    "currentPosition": "Your current position in the leaderboard",
+    "currentPosition": "Your current position on the leaderboard",
     "place": "place"
   },
   "notfound": {
     "title": "Page Not Found",
-    "description": "The page you are looking for does not exist.",
-    "home": "Go Home",
-    "back": "Back",
-    "hint": "Hint: the page may have been deleted, renamed, or temporarily unavailable."
+    "description": "The page you’re looking for doesn’t exist.",
+    "home": "Go to Home",
+    "back": "Go Back",
+    "hint": "Tip: the page may have been moved, renamed, or deleted."
   },
   "profile": {
     "title": "Profile",
     "joined": "Joined",
     "bestFrontendScore": "Best Frontend Score",
     "bestBackendScore": "Best Backend Score",
-    "updateProfile": "Update Profile",
+    "updateProfile": "Edit Profile",
     "changePassword": "Change Password",
     "totalScore": "Total Score",
     "rank": "Rank",
@@ -142,56 +145,56 @@
   },
   "profileMenu": {
     "profile": "Profile",
-    "logout": "Logout",
-    "logoutSuccess": "Logged out successfully"
+    "logout": "Log Out",
+    "logoutSuccess": "Successfully logged out."
   },
   "question": {
     "difficulty": "Difficulty",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied!"
   },
   "random": {
     "title": "Random Questions",
-    "noQuestions": "Failed to load random questions"
+    "noQuestions": "Unable to load random questions."
   },
   "register": {
-    "title": "Create your account on ",
-    "subtitle": "Sign up to continue",
+    "title": "Create an account on ",
+    "subtitle": "Sign up to get started",
     "form": {
       "fields": {
         "fullName": {
-          "label": "Full name",
-          "placeholder": "Full Name"
+          "label": "Full Name",
+          "placeholder": "Enter your full name"
         },
         "email": {
           "label": "Email",
-          "placeholder": "you@example.com"
+          "placeholder": "Enter your email"
         },
         "password": {
           "label": "Password",
-          "placeholder": "••••••••"
+          "placeholder": "Enter your password"
         }
       },
       "submitButton": {
-        "default": "Register",
+        "default": "Create Account",
         "loading": "Creating account..."
       }
     },
     "footer": {
       "text": "Already have an account?",
-      "linkText": "Login"
+      "linkText": "Sign In"
     },
     "toasts": {
-      "success": "Account created successfully",
-      "error": "Account creation failed"
+      "success": "Account created successfully.",
+      "error": "Failed to create account."
     }
   },
   "theme": {
-    "light": "Light Theme",
-    "dark": "Dark Theme"
+    "light": "Light Mode",
+    "dark": "Dark Mode"
   },
   "updateProfileModal": {
-    "title": "Update Profile",
+    "title": "Edit Profile",
     "fields": {
       "fullName": {
         "label": "Full Name",
@@ -203,10 +206,10 @@
     },
     "buttons": {
       "cancel": "Cancel",
-      "update": "Update",
-      "updating": "Updating..."
+      "update": "Save Changes",
+      "updating": "Saving..."
     },
-    "success": "Profile updated successfully"
+    "success": "Profile updated successfully."
   },
   "changePasswordModal": {
     "title": "Change Password",
@@ -217,19 +220,19 @@
       },
       "newPassword": {
         "label": "New Password",
-        "placeholder": "Enter your new password"
+        "placeholder": "Enter a new password"
       },
       "confirmPassword": {
         "label": "Confirm Password",
-        "placeholder": "Confirm your new password"
+        "placeholder": "Re-enter your new password"
       }
     },
     "buttons": {
       "cancel": "Cancel",
       "change": "Change Password"
     },
-    "success": "Password changed successfully",
-    "error": "Failed to change password"
+    "success": "Password updated successfully.",
+    "error": "Failed to update password."
   },
   "common": {
     "viewAll": "View All"
