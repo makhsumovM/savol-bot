@@ -1,6 +1,6 @@
-# 🧠 SkillCheck — AI Platform for Developer Testing & Interview Preparation
+# 🧠 SkillCheck — AI Платформа для Тестирования Программистов и Подготовки к Интервью
 
-> **Free AI-powered platform for programmers** to practice coding tests, prepare for technical interviews, and improve frontend & backend skills with real-time scoring.
+> **SkillCheck** — это современная open-source платформа, помогающая разработчикам проверять свои знания, готовиться к техническим собеседованиям и соревноваться в глобальном рейтинге. Все вопросы генерируются нейросетью Google Gemini в реальном времени, что гарантирует бесконечное разнообразие контента.
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-skillcheck.kavsaracademy.tj-brightgreen?style=for-the-badge)](https://skillcheck.kavsaracademy.tj/)
 
@@ -29,6 +29,7 @@
 ## 🔍 SEO Keywords
 
 **English:**
+
 - AI programming tests online
 - Technical interview preparation
 - Frontend developer quiz
@@ -36,6 +37,7 @@
 - Coding practice platform
 
 **Русский:**
+
 - AI тесты по программированию
 - Подготовка к собеседованию программиста
 - Frontend Backend тесты онлайн
@@ -47,30 +49,30 @@
 
 ## ✨ Key Features
 
-| Feature | Description |
-|---------|-------------|
-| 🏃 **Marathon Mode** | Series of questions with scoring — choose Frontend or Backend direction |
-| 🎲 **Random Question** | Quick practice with randomly generated questions |
-| 🏆 **Leaderboard** | Global ranking based on your results |
-| 📊 **User Profile** | Personal statistics, achievements, and progress tracking |
-| 🌐 **Multi-language** | Support for English, Russian, and Tajik |
-| 🌙 **Dark/Light Theme** | Switch between themes with `next-themes` |
-| 🤖 **AI-Generated Questions** | Powered by Google Gemini API |
+| Feature                       | Description                                                             |
+| ----------------------------- | ----------------------------------------------------------------------- |
+| 🏃 **Marathon Mode**          | Series of questions with scoring — choose Frontend or Backend direction |
+| 🎲 **Random Question**        | Quick practice with randomly generated questions                        |
+| 🏆 **Leaderboard**            | Global ranking based on your results                                    |
+| 📊 **User Profile**           | Personal statistics, achievements, and progress tracking                |
+| 🌐 **Multi-language**         | Support for English, Russian, and Tajik                                 |
+| 🌙 **Dark/Light Theme**       | Switch between themes with `next-themes`                                |
+| 🤖 **AI-Generated Questions** | Powered by Google Gemini API                                            |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category | Technologies |
-|----------|--------------|
+| Category      | Technologies                      |
+| ------------- | --------------------------------- |
 | **Framework** | Next.js 16 (App Router), React 19 |
-| **Language** | TypeScript 5 |
-| **Styling** | Tailwind CSS 4, Framer Motion |
-| **State** | Redux Toolkit, React Query |
-| **Forms** | React Hook Form, Zod |
-| **UI** | Radix UI, Lucide Icons |
-| **i18n** | i18next, react-i18next |
-| **AI** | Google Gemini API |
+| **Language**  | TypeScript 5                      |
+| **Styling**   | Tailwind CSS 4, Framer Motion     |
+| **State**     | Redux Toolkit, React Query        |
+| **Forms**     | React Hook Form, Zod              |
+| **UI**        | Radix UI, Lucide Icons            |
+| **i18n**      | i18next, react-i18next            |
+| **AI**        | Google Gemini API                 |
 
 ---
 
@@ -152,31 +154,31 @@ NEXT_PUBLIC_SITE_URL=https://skillcheck.kavsaracademy.tj
 
 ### Game Modes
 
-| Mode | Description |
-|------|-------------|
+| Mode            | Description                                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | **🏃 Marathon** | Complete a series of questions with increasing difficulty. Choose Frontend or Backend. Your score is saved to the leaderboard. |
-| **🎲 Random** | Quick practice — get a random question and test your knowledge instantly. |
+| **🎲 Random**   | Quick practice — get a random question and test your knowledge instantly.                                                      |
 
 ### Difficulty Levels
 
-| Level | Description |
-|-------|-------------|
-| `easy` | Basic concepts |
-| `medium` | Intermediate level |
-| `hard` | Advanced questions |
+| Level       | Description             |
+| ----------- | ----------------------- |
+| `easy`      | Basic concepts          |
+| `medium`    | Intermediate level      |
+| `hard`      | Advanced questions      |
 | `very-hard` | Expert-level challenges |
-| `expert` | Top-tier questions |
+| `expert`    | Top-tier questions      |
 
 ---
 
 ## 📜 Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm start` | Start production server |
-| `npm run lint` | Run ESLint |
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm run dev`   | Start development server |
+| `npm run build` | Build for production     |
+| `npm start`     | Start production server  |
+| `npm run lint`  | Run ESLint               |
 
 ---
 
