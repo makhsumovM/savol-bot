@@ -122,8 +122,6 @@ ${topicDescription}
 
 ТОЛЬКО ПОСЛЕ ЭТОГО ВЫВОДИ ЧИСТЫЙ JSON.
 `
-
-
     const client = new GoogleGenAI({
       apiKey: process.env.GEMINI_API_KEY!,
     })
