@@ -113,10 +113,10 @@ const MyRankPage = () => {
                       rank === 1
                         ? 'border-yellow-400 text-yellow-500'
                         : rank === 2
-                        ? 'border-gray-400 text-gray-500'
-                        : rank === 3
-                        ? 'border-amber-500 text-amber-600'
-                        : 'border-primary/30 text-primary'
+                          ? 'border-gray-400 text-gray-500'
+                          : rank === 3
+                            ? 'border-amber-500 text-amber-600'
+                            : 'border-primary/30 text-primary'
                     }`}
                   >
                     <span className="text-xs uppercase text-muted-foreground mr-1">Rank</span>#
@@ -134,25 +134,6 @@ const MyRankPage = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-center md:justify-start gap-4">
-                    {rank <= 3 ? (
-                      <div className="flex items-center gap-2">
-                        <Trophy size={48} className={getTrophyColor(rank)} />
-                        <span className="text-lg font-bold text-foreground/80">
-                          {rank === 1
-                            ? 'Champion!'
-                            : rank === 2
-                            ? 'Runner Up!'
-                            : 'Bronze Medalist!'}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2 text-muted-foreground/60">
-                        <Trophy size={32} />
-                        <span>Keep pushing!</span>
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
 
