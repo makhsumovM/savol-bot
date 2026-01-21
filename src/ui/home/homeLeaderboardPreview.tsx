@@ -146,24 +146,36 @@ export const HomeLeaderboardPreview = () => {
                     initial={{ opacity: 0, x: -30, scale: 0.95 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: 30, scale: 0.95 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: 0.05 + index * 0.08,
-                      type: 'spring',
-                      stiffness: 200,
-                      damping: 20,
-                    }}
                     whileHover={{ scale: 1.02, y: -2 }}
+                    transition={{
+                      duration: 0.25,
+                      delay: 0.02 + index * 0.05,
+                      type: 'spring',
+                      stiffness: 250,
+                      damping: 25,
+                      scale: {
+                        type: 'spring',
+                        stiffness: 350,
+                        damping: 25,
+                        duration: 0.15,
+                      },
+                      y: {
+                        type: 'spring',
+                        stiffness: 350,
+                        damping: 25,
+                        duration: 0.15,
+                      },
+                    }}
                     className={`
-                      relative flex items-center justify-between rounded-xl px-3.5 py-2.5
-                      backdrop-blur-md cursor-pointer
-                      transition-all duration-300
-                      ${
-                        isMe
-                          ? 'border-2 border-primary-2 bg-primary/19 shadow-lg shadow-primary-2/25'
-                          : `border ${style.border} ${style.bg} hover:border-primary/30 ${style.glow} shadow-lg`
-                      }
-                    `}
+      relative flex items-center justify-between rounded-xl px-3.5 py-2.5
+      backdrop-blur-md cursor-pointer
+      transition-all duration-300
+      ${
+        isMe
+          ? 'border-2 border-primary-2 bg-primary/19 shadow-lg shadow-primary-2/25'
+          : `border ${style.border} ${style.bg} hover:border-primary/30 ${style.glow} shadow-lg`
+      }
+    `}
                   >
                     {player.rank <= 5 && !isMe && (
                       <div
@@ -174,24 +186,25 @@ export const HomeLeaderboardPreview = () => {
                     <div className="flex items-center gap-3">
                       <motion.div
                         whileHover={{ rotate: player.rank === 1 ? [0, -10, 10, 0] : 0 }}
+                        transition={{ duration: 0.4 }}
                         className={`
-                          flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold
-                          transition-all duration-300
-                          ${
-                            isMe
-                              ? 'bg-primary/30 text-primary shadow-inner'
-                              : `${style.bg} ${style.text} border ${style.border}`
-                          }
-                        `}
+          flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold
+          transition-all duration-300
+          ${
+            isMe
+              ? 'bg-primary/30 text-primary shadow-inner'
+              : `${style.bg} ${style.text} border ${style.border}`
+          }
+        `}
                       >
                         {style.icon ?? player.rank}
                       </motion.div>
                       <div className="flex flex-col">
                         <span
                           className={`
-                            text-sm font-medium truncate max-w-[100px] sm:max-w-[140px]
-                            ${isMe ? 'text-primary font-semibold' : 'text-foreground'}
-                          `}
+            text-sm font-medium truncate max-w-[100px] sm:max-w-[140px]
+            ${isMe ? 'text-primary font-semibold' : 'text-foreground'}
+          `}
                         >
                           {player.fullName}
                         </span>
@@ -207,10 +220,11 @@ export const HomeLeaderboardPreview = () => {
                       <motion.span
                         initial={{ scale: 1 }}
                         whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.2 }}
                         className={`
-                          text-sm font-bold tabular-nums
-                          ${isMe ? 'text-primary' : 'text-foreground/80'}
-                        `}
+          text-sm font-bold tabular-nums
+          ${isMe ? 'text-primary' : 'text-foreground/80'}
+        `}
                       >
                         {player.totalScore.toLocaleString()}
                       </motion.span>
