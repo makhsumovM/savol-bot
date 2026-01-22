@@ -10,7 +10,7 @@ import { RandomQuestion } from '@/types/random'
 import Image from 'next/image'
 import react from '../../../public/react.png'
 import QuestionCard from '@/ui/common/questionCards/random/questionCard'
-import { randomApi } from '@/api/randomApi'
+import { randomApi } from '@/app/random/randomApi'
 
 
 const QUESTIONS_PER_BLOCK = 10
