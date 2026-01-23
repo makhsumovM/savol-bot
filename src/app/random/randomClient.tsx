@@ -10,9 +10,8 @@ import { RandomQuestion } from '@/types/random'
 import Image from 'next/image'
 import react from '../../../public/react.png'
 import QuestionCard from '@/ui/common/questionCards/random/questionCard'
-import { randomApi } from '../../api/randomApi';
+import { randomApi } from '@/api/randomAPi'
 
-const QUESTIONS_PER_BLOCK = 10
 export default function RandomClient() {
   const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
@@ -37,7 +36,7 @@ export default function RandomClient() {
   const handleAnswer = (isCorrect: boolean) => {
     setTimeout(() => {
       const nextIndex = currentIndex + 1
-      if (nextIndex < QUESTIONS_PER_BLOCK) {
+      if (nextIndex < 10) {
         setCurrentIndex(nextIndex)
       } else {
         setBlockNumber((prev) => prev + 1)
