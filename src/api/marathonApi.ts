@@ -8,7 +8,7 @@ export const marathonApi = async (
   type: 'frontend' | 'backend' = 'frontend',
 ) => {
   try {
-    const response = await axios.get('/api/gemini/marathon', {
+    const response = await axios.get('/api/ai/marathon', {
       params: {
         lang,
         difficulty,

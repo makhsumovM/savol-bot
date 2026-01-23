@@ -3,7 +3,7 @@ import { RandomQuestion } from '@/types/random'
 
 export const randomApi = async (lang: string, type: 'frontend' | 'backend' = 'frontend') => {
   try {
-    const response = await axios.get('/api/gemini/random', {
+    const response = await axios.get('/api/ai/random', {
       params: { lang, type },
     })
     const resultString = response.data.result
