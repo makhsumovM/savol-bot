@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
 
-  icons: 'favicon.ico',
+  icons: 'icon.png',
 
   openGraph: {
     type: 'website',
