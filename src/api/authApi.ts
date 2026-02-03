@@ -51,32 +51,8 @@ export const logoutApi = async ({ refreshToken }: { refreshToken: string }) => {
   }
 }
 
-const REFRESH_TOKEN_KEY = 'refreshToken'
 
-export const refreshTokenApi = async () => {
-  const refreshToken = getCookie(REFRESH_TOKEN_KEY)
 
-  if (!refreshToken) {
-    throw new Error('No refresh token')
-  }
-
-  try {
-    const response = await api.post('/auth/refresh', { refreshToken })
-    const { accessToken, refreshToken: newRefreshToken } = response.data
-
-    setCookie({ token: accessToken })
-
-    if (newRefreshToken) {
-      setCookie({ token: newRefreshToken, key: REFRESH_TOKEN_KEY })
-    }
-
-    return accessToken
-  } catch (error) {
-    removeCookie(CookieKey.token)
-    removeCookie(REFRESH_TOKEN_KEY)
-    throw error
-  }
-}
 export const changePasswordApi = async (data: IChangePassword) => {
   try {
     const response = await api.post('/auth/change-password', data)
