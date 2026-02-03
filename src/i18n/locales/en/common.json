@@ -21,7 +21,14 @@
     "newRecord": "New High Score!"
   },
   "header": {
-    "login": "Sign In"
+ "home": "Home",
+    "marathon": "Marathon",
+    "random": "Random",
+    "myRank": "My Rank",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "login": "Login"
+
   },
   "home": {
     "cta": {
@@ -41,7 +48,7 @@
     },
     "common": "You",
     "inLeaderboard": "on the leaderboard",
-    "top5": "Top 5 Players"
+    "top": "Top Players"
   },
   "loading": {
     "text": "Loading..."

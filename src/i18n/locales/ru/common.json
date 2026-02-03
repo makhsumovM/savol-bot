@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "SkillCheck",
-    "subtitle": "AI-тестер навыков",
+    "subtitle": "ИИ-тестер навыков",
     "description": "Бесплатная платформа на базе ИИ для практики и проверки навыков программирования. Поддерживает JavaScript, TypeScript, React, Next.js, Node.js и вопросы, сгенерированные ИИ."
   },
   "errors": {
@@ -21,7 +21,13 @@
     "newRecord": "Новый рекорд!"
   },
   "header": {
-    "login": "Войти"
+    "home": "Дома",
+    "marathon": "Марафон",
+    "random": "Случайно",
+    "myRank": "Мой рейтинг",
+    "leaderboard": "Таблица лидеров",
+    "profile": "Профиль",
+    "login": "Вход"
   },
   "home": {
     "cta": {
@@ -41,7 +47,7 @@
     },
     "common": "Вы",
     "inLeaderboard": "в таблице лидеров",
-    "top5": "Топ 5 игроков"
+    "top": "Топ  Игроков"
   },
   "loading": {
     "text": "Загрузка..."

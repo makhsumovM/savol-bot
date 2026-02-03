@@ -117,48 +117,59 @@ const HeaderComponent = () => {
         transition={{ duration: 0.4, delay: 0.1 }}
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-xl bg-background/90 border-t border-border/70 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.3)]"
       >
-        <div className="flex items-center justify-around px-2 py-2 safe-area-inset-bottom">
-          {mobileNavLinks.map(({ href, icon: Icon, label }) => {
-            const isActive =
-              pathname === href ||
-              (href === '/profile' && pathname === '/profile') ||
-              (href === '/login' && pathname === '/login')
+     <div className="flex items-center justify-around px-1 py-2 safe-area-inset-bottom">
+  {mobileNavLinks.map(({ href, icon: Icon, label }) => {
+    const isActive =
+      pathname === href ||
+      (href === '/profile' && pathname === '/profile') ||
+      (href === '/login' && pathname === '/login')
 
-            return (
-              <Link
-                key={href}
-                href={href}
-                className="flex flex-col items-center justify-center flex-1 py-1 group"
-              >
-                <motion.div
-                  whileTap={{ scale: 0.9 }}
-                  className={clsx(
-                    'relative flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300',
-                    isActive ? 'bg-primary/15 dark:bg-primary/20' : 'hover:bg-accent/30',
-                  )}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="bottomNavIndicator"
-                      className="absolute inset-0 rounded-2xl bg-primary/10 dark:bg-primary/15"
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    />
-                  )}
+    return (
+      <Link
+        key={href}
+        href={href}
+        className="flex flex-col items-center justify-center flex-1 min-w-0 group"
+      >
+        <motion.div
+          whileTap={{ scale: 0.9 }}
+          className={clsx(
+            'relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-2xl transition-all duration-300',
+            isActive ? 'bg-primary/15 dark:bg-primary/20' : 'hover:bg-accent/30',
+          )}
+        >
+          {isActive && (
+            <motion.div
+              layoutId="bottomNavIndicator"
+              className="absolute inset-0 rounded-2xl bg-primary/10 dark:bg-primary/15"
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            />
+          )}
 
-                  <Icon
-                    size={22}
-                    className={clsx(
-                      'relative z-10 transition-colors duration-200',
-                      isActive
-                        ? 'text-primary'
-                        : 'text-muted-foreground group-hover:text-foreground',
-                    )}
-                  />
-                </motion.div>
-              </Link>
-            )
-          })}
-        </div>
+          <Icon
+            size={20}
+            className={clsx(
+              'relative z-10 transition-colors duration-200',
+              isActive
+                ? 'text-primary'
+                : 'text-muted-foreground group-hover:text-foreground',
+            )}
+          />
+        </motion.div>
+
+        <span
+          className={clsx(
+            'text-[10px] sm:text-xs mt-1 transition-colors duration-200 text-center px-1 line-clamp-1',
+            isActive
+              ? 'text-primary font-medium'
+              : 'text-muted-foreground group-hover:text-foreground',
+          )}
+        >
+          {t(`header.${label}`)}
+        </span>
+      </Link>
+    )
+  })}
+</div>
       </motion.nav>
     </>
   )
