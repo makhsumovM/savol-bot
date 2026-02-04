@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { cn } from '@/lib/utils/shadUtils'
 import { ModeCards } from '@/ui/home/modeCards'
 import { Typewriter } from '@/ui/home/typewriterText'
 import { Gamepad, PlayCircle } from 'lucide-react'
