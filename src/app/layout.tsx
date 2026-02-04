@@ -37,6 +37,12 @@ export const metadata: Metadata = {
   },
 
   icons: 'icon.png',
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}${siteConfig.ogImage}`],
+  },
 
   openGraph: {
     type: 'website',
@@ -44,6 +50,7 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: siteConfig.title,
+
     description: siteConfig.description,
     images: [
       {
