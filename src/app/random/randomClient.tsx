@@ -34,6 +34,7 @@ export default function RandomClient() {
   })
 
   const handleAnswer = (isCorrect: boolean) => {
+    void isCorrect
     setTimeout(() => {
       const nextIndex = currentIndex + 1
       if (nextIndex < 10) {
