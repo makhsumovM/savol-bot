@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Check } from 'lucide-react'
+import Image from 'next/image'
 
 const languages = [
   { code: 'tj', label: 'Тоҷикӣ', shortLabel: 'TJ', flagSrc: '/tj.png' },
@@ -13,7 +13,6 @@ const languages = [
 ]
 
 export default function LanguageSwitcher() {
-  const { t } = useTranslation()
   const [currentLang, setCurrentLang] = useState(i18n.language)
   const [open, setOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -55,10 +54,12 @@ export default function LanguageSwitcher() {
         "
       >
         <span className="relative flex items-center gap-2 flex-1">
-          <img
+          <Image
             src={currentLanguage.flagSrc}
             alt={currentLanguage.label}
-            className="w-5 h-5 rounded-full object-cover"
+            width={20}
+            height={20}
+            className="rounded-full object-cover"
           />
           <span className="text-xs font-semibold">{currentLanguage.shortLabel}</span>
         </span>
@@ -106,10 +107,12 @@ export default function LanguageSwitcher() {
                       />
                     )}
                     <span className="flex items-center gap-2 flex-1">
-                      <img
+                      <Image
                         src={lang.flagSrc}
                         alt={lang.label}
-                        className="w-5 h-5 rounded-full object-cover transition-transform group-hover/item:scale-110 duration-200"
+                        width={20}
+                        height={20}
+                        className="rounded-full object-cover transition-transform group-hover/item:scale-110 duration-200"
                       />
                       <span className="text-xs font-medium">{lang.label}</span>
                     </span>

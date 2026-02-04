@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
-import { User, LogOut, Settings, ChevronRight } from 'lucide-react'
+import { User, LogOut, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { logoutApi } from '@/api/authApi'

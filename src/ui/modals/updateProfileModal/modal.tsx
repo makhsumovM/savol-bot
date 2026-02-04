@@ -12,7 +12,6 @@ import { toast } from 'sonner'
 
 interface IUpdateProfileModalProps {
   fullname: string
-  setFullname: React.Dispatch<React.SetStateAction<string>>
   updateProfileModalOpen: boolean
   setUpdateProfileModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -20,7 +19,6 @@ interface IUpdateProfileModalProps {
 const UpdateProfileModal = ({
   setUpdateProfileModalOpen,
   fullname,
-  setFullname,
   updateProfileModalOpen,
 }: IUpdateProfileModalProps) => {
   const { t } = useTranslation()

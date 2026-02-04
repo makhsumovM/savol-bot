@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Calendar, Clock, Code2, Crown, Medal, Server } from 'lucide-react'
 import { ILeaderboard } from '@/types/leaderboard'
+import Image from 'next/image'
 
 interface LeaderboardItemProps {
   player: ILeaderboard
@@ -150,10 +151,13 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           <div className="flex items-center gap-2">
             <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border/50">
               {player.profilePicture ? (
-                <img
-                  src={apiUrl + '/' + player.profilePicture}
+                <Image
+                  src={`${apiUrl}/${player.profilePicture}`}
                   alt={player.fullName}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                  unoptimized
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-lg">
@@ -241,10 +245,13 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
 
           <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border/50">
             {player.profilePicture ? (
-              <img
-                src={apiUrl + '/' + player.profilePicture}
+              <Image
+                src={`${apiUrl}/${player.profilePicture}`}
                 alt={player.fullName}
-                className="w-full h-full object-cover"
+                fill
+                sizes="40px"
+                className="object-cover"
+                unoptimized
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-lg">
