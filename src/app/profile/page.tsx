@@ -39,6 +39,10 @@ const ProfilePage = () => {
   const totalScore =
     (data?.bestResult?.bestFrontendScore ?? 0) + (data?.bestResult?.bestBackendScore ?? 0)
   const myRank = myRankData?.statusCode === 200 ? myRankData.data : null
+  const profileImageUrl = data?.profilePicture
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${data.profilePicture}`
+    : null
+  const profileInitial = data?.fullName?.charAt(0).toUpperCase()
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -100,11 +104,22 @@ const ProfilePage = () => {
                 <div className="relative group hover:scale-102 transition-transform">
                   <div className="absolute inset-0 rounded-full bg-linear-to-r from-primary to-primary-2 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500 scale-110" />
                   <div className="absolute inset-0 rounded-full bg-linear-to-br from-primary/30 to-primary-2/30 animate-pulse" style={{ animationDuration: '3s' }} />
-                  <img
-                    src={process.env.NEXT_PUBLIC_API_URL + '/' + data.profilePicture}
-                    alt={data.fullName}
-                    className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-background shadow-2xl ring-4 ring-primary/30 group-hover:ring-primary/50 transition-all duration-500"
-                  />
+                  <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-background shadow-2xl ring-4 ring-primary/30 group-hover:ring-primary/50 transition-all duration-500">
+                    {profileImageUrl ? (
+                      <Image
+                        src={profileImageUrl}
+                        alt={data.fullName}
+                        fill
+                        sizes="(max-width: 640px) 112px, 144px"
+                        className="object-cover"
+                        unoptimized
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-3xl font-bold">
+                        {profileInitial}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex-1 text-center sm:text-left">
@@ -236,7 +251,6 @@ const ProfilePage = () => {
       />
       <UpdateProfileModal
         fullname={fullname}
-        setFullname={setFullname}
         updateProfileModalOpen={updateProfileModalOpen}
         setUpdateProfileModalOpen={setUpdateProfileModalOpen}
       />
