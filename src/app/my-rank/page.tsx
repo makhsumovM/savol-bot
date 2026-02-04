@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Error from '@/ui/common/error'
 import Loading from '@/ui/common/loading'
-import { Trophy } from 'lucide-react'
 import { getMyRank } from '@/api/my-rankApi'
 import { getProfileApi } from '@/api/authApi'
 import { IMyRank } from '@/types/my-rank'
@@ -45,13 +44,6 @@ const MyRankPage = () => {
 
   const rank = rankResponse?.data
   const { fullName, profilePicture, bestResult } = profileData || {}
-
-  const getTrophyColor = (rank: number) => {
-    if (rank === 1) return 'text-yellow-400 drop-shadow-md'
-    if (rank === 2) return 'text-gray-300 drop-shadow-md'
-    if (rank === 3) return 'text-amber-600 drop-shadow-md'
-    return 'text-muted-foreground'
-  }
 
   const firstLetter = fullName?.charAt(0).toUpperCase()
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
@@ -95,11 +87,16 @@ const MyRankPage = () => {
                   <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full p-1 bg-gradient-to-br from-primary/50 to-secondary/50 shadow-xl">
                     <div className="w-full h-full rounded-full overflow-hidden border-4 border-background bg-muted">
                       {profilePicture ? (
-                        <img
-                          src={apiUrl + '/' + profilePicture}
-                          alt={fullName}
-                          className="w-full h-full object-cover"
-                        />
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={`${apiUrl}/${profilePicture}`}
+                            alt={fullName}
+                            fill
+                            sizes="(max-width: 768px) 128px, 160px"
+                            className="object-cover"
+                            unoptimized
+                          />
+                        </div>
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-5xl">
                           {firstLetter}
