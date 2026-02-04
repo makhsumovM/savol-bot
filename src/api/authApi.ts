@@ -1,5 +1,4 @@
 import { api } from '@/lib/utils/axiosConfig'
-import { CookieKey, getCookie, removeCookie, setCookie } from '@/lib/utils/cookies'
 import { IChangePassword, ILogin, IRegister } from '@/types/auth'
 
 export const loginApi = async (data: ILogin) => {
@@ -50,8 +49,6 @@ export const logoutApi = async ({ refreshToken }: { refreshToken: string }) => {
     throw error
   }
 }
-
-
 
 export const changePasswordApi = async (data: IChangePassword) => {
   try {
