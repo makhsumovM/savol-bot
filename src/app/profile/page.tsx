@@ -97,13 +97,19 @@ const ProfilePage = () => {
         {data && (
           <div className="relative">
             <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/25 blur-[80px] animate-pulse" />
-            <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
+            <div
+              className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] animate-pulse"
+              style={{ animationDelay: '1s' }}
+            />
             <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 rounded-3xl blur-xl" />
             <div className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/80 backdrop-blur-xl p-5 sm:p-8 shadow-2xl shadow-black/10">
               <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-6">
                 <div className="relative group hover:scale-102 transition-transform">
                   <div className="absolute inset-0 rounded-full bg-linear-to-r from-primary to-primary-2 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500 scale-110" />
-                  <div className="absolute inset-0 rounded-full bg-linear-to-br from-primary/30 to-primary-2/30 animate-pulse" style={{ animationDuration: '3s' }} />
+                  <div
+                    className="absolute inset-0 rounded-full bg-linear-to-br from-primary/30 to-primary-2/30 animate-pulse"
+                    style={{ animationDuration: '3s' }}
+                  />
                   <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-background shadow-2xl ring-4 ring-primary/30 group-hover:ring-primary/50 transition-all duration-500">
                     {profileImageUrl ? (
                       <Image
@@ -152,53 +158,49 @@ const ProfilePage = () => {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-background/40 rounded-2xl p-4 border border-border flex items-center gap-4 transition-transform hover:scale-[1.02]">
-                  <div className="relative z-10 flex items-center justify-between w-full">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/30 shadow-inner">
-                        <Image
-                          src={reactIcon}
-                          alt="Frontend"
-                          width={28}
-                          height={28}
-                          className="object-contain"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                          {t('profile.bestFrontendScore')}
-                        </p>
-                        <p className="text-2xl sm:text-3xl font-black text-primary">
-                          {data.bestResult?.bestFrontendScore ?? 0}
-                        </p>
-                      </div>
+                <div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div className="absolute inset-0 bg-linear-to-br from-primary/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="relative flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl border border-primary/20 bg-primary/10 flex items-center justify-center shrink-0">
+                      <Image
+                        src={reactIcon}
+                        alt="Frontend"
+                        width={28}
+                        height={28}
+                        className="object-contain"
+                      />
                     </div>
-                    <span className="text-xs text-primary/70">pts</span>
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                        {t('profile.bestFrontendScore')}
+                      </p>
+                      <p className="text-2xl font-black text-foreground">
+                        {data?.bestResult.bestFrontendScore ?? 0}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="bg-background/40 rounded-2xl p-4 border border-border flex items-center gap-4 transition-transform hover:scale-[1.02]">
-                  <div className="relative z-10 flex items-center justify-between w-full">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary-2/30 shadow-inner">
-                        <Image
-                          src={charmIcon}
-                          alt="Backend"
-                          width={28}
-                          height={28}
-                          className="object-contain"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                          {t('profile.bestBackendScore')}
-                        </p>
-                        <p className="text-2xl sm:text-3xl font-black text-primary-2">
-                          {data.bestResult?.bestBackendScore ?? 0}
-                        </p>
-                      </div>
+                <div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div className="absolute inset-0 bg-linear-to-br from-primary-2/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="relative flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl border border-primary-2/20 bg-primary-2/10 flex items-center justify-center shrink-0">
+                      <Image
+                        src={charmIcon}
+                        alt="Backend"
+                        width={28}
+                        height={28}
+                        className="object-contain"
+                      />
                     </div>
-                    <span className="text-xs text-primary-2/70">pts</span>
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                        {t('profile.bestBackendScore')}
+                      </p>
+                      <p className="text-2xl font-black text-foreground">
+                        {data?.bestResult.bestBackendScore ?? 0}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
