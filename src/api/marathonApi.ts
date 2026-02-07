@@ -6,6 +6,7 @@ export const marathonApi = async (
   lang: string,
   difficulty: string,
   type: 'frontend' | 'backend' = 'frontend',
+  topic: string = 'all'
 ) => {
   try {
     const response = await axios.get('/api/ai/marathon', {
@@ -13,6 +14,7 @@ export const marathonApi = async (
         lang,
         difficulty,
         type,
+        topic,
       },
     })
 
