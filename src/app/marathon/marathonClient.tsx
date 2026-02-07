@@ -13,19 +13,91 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import Cookies from 'js-cookie'
 import { CheckCircle2, Trophy, Zap } from 'lucide-react'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import aspnetIcon from '../../../public/aspnet.png'
 import charmIcon from '../../../public/ccharm.png'
+import cssIcon from '../../../public/css.png'
+import designPatternsIcon from '../../../public/desingpatterns.png'
+import entityIcon from '../../../public/entity.png'
+import htmlIcon from '../../../public/html.png'
+import jsIcon from '../../../public/js.png'
+import linqIcon from '../../../public/linq.png'
+import microservicesIcon from '../../../public/microservices.png'
+import nextjsIcon from '../../../public/nextjs.png'
 import reactIcon from '../../../public/react.png'
-
+import tsIcon from '../../../public/ts.png'
+import reactNextjsIcon from '../../../public/nextjs&react.png'
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
+type TopicValue =
+  | 'all'
+  | 'js'
+  | 'ts'
+  | 'html'
+  | 'css'
+  | 'react'
+  | 'nextjs'
+  | 'react-nextjs'
+  | 'csharp'
+  | 'aspnet'
+  | 'ef'
+  | 'linq'
+  | 'async'
+  | 'designpatterns'
+  | 'microservices'
+
+type TopicOption = {
+  value: TopicValue
+  label: string
+  icon?: StaticImageData
+}
+
+const frontendTopics: TopicOption[] = [
+  { value: 'all', label: 'All', icon: reactIcon },
+  { value: 'js', label: 'JavaScript', icon: jsIcon },
+  { value: 'ts', label: 'TypeScript', icon: tsIcon },
+  { value: 'html', label: 'HTML', icon: htmlIcon },
+  { value: 'css', label: 'CSS', icon: cssIcon },
+  { value: 'react', label: 'React', icon: reactIcon },
+  { value: 'nextjs', label: 'Next.js', icon: nextjsIcon },
+  { value: 'react-nextjs', label: 'React + Next.js', icon: reactNextjsIcon },
+]
+
+const backendTopics: TopicOption[] = [
+  { value: 'csharp', label: 'C#', icon: charmIcon },
+  { value: 'aspnet', label: 'ASP.NET', icon: aspnetIcon },
+  { value: 'ef', label: 'Entity Framework', icon: entityIcon },
+  { value: 'linq', label: 'LINQ', icon: linqIcon },
+  { value: 'async', label: 'Async/Await', icon: charmIcon },
+  { value: 'designpatterns', label: 'Design Patterns', icon: designPatternsIcon },
+  { value: 'microservices', label: 'Microservices', icon: microservicesIcon },
+]
+
+const defaultTopicByMode: Record<'frontend' | 'backend', TopicValue> = {
+  frontend: 'all',
+  backend: 'csharp',
+}
 
 const LOCAL_STORAGE_KEYS = {
   frontend: 'marathon_best_frontend',
   backend: 'marathon_best_backend',
 } as const
+
+const topicFilterVariants = {
+  hidden: { opacity: 0, y: 8 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+  },
+}
+
+const topicItemVariants = {
+  hidden: { opacity: 0, y: 10, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1 },
+}
 
 export default function MarathonClient() {
   const { t, i18n } = useTranslation()
@@ -45,11 +117,27 @@ export default function MarathonClient() {
   const [isGameOver, setIsGameOver] = useState(false)
   const [difficultyIndex, setDifficultyIndex] = useState(0)
   const [mode, setMode] = useState<'frontend' | 'backend'>(initialMode)
+  const [topic, setTopic] = useState<TopicValue>(defaultTopicByMode[initialMode])
   const [isLose, setIsLose] = useState(false)
   const [bestScore, setBestScore] = useState(0)
 
   const currentDifficulty = difficulties[difficultyIndex]
-
+  const isFrontend = mode === 'frontend'
+  const topicOptions = isFrontend ? frontendTopics : backendTopics
+  const topicIcon = isFrontend ? reactIcon : charmIcon
+  const topicActiveShadow = isFrontend ? 'shadow-primary/30' : 'shadow-primary-2/30'
+  const topicActiveBorder = isFrontend ? 'border-primary/60' : 'border-primary-2/60'
+  const topicActiveFill = isFrontend ? 'bg-primary' : 'bg-primary-2'
+  const topicActiveGlow = isFrontend
+    ? 'bg-linear-to-r from-primary/40 via-primary/20 to-primary/40'
+    : 'bg-linear-to-r from-primary-2/40 via-primary-2/20 to-primary-2/40'
+  const topicHoverGlow = isFrontend
+    ? 'bg-linear-to-r from-primary/10 via-primary/5 to-transparent'
+    : 'bg-linear-to-r from-primary-2/10 via-primary-2/5 to-transparent'
+  const topicPanelGlow = isFrontend ? 'bg-primary/15' : 'bg-primary-2/15'
+  const topicPanelGradient = isFrontend
+    ? 'from-primary/12 via-transparent to-primary/5'
+    : 'from-primary-2/12 via-transparent to-primary-2/5'
   const token = Cookies.get('token')
   const isAuthenticated = !!token
 
@@ -59,8 +147,8 @@ export default function MarathonClient() {
     isFetching,
     isError,
   } = useQuery<MarathonQuestion[]>({
-    queryKey: ['marathon', lang, currentDifficulty, mode],
-    queryFn: () => marathonApi(lang, currentDifficulty, mode),
+    queryKey: ['marathon', lang, currentDifficulty, mode, topic],
+    queryFn: () => marathonApi(lang, currentDifficulty, mode, topic),
     refetchOnWindowFocus: false,
     refetchOnMount: 'always',
   })
@@ -128,7 +216,7 @@ export default function MarathonClient() {
     setIsGameOver(false)
     setIsLose(false)
     setDifficultyIndex(0)
-  }, [lang, mode])
+  }, [lang, mode, topic])
   useEffect(() => {
     if (isGameOver && gameOverRef.current) {
       gameOverRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -169,7 +257,7 @@ export default function MarathonClient() {
     setDifficultyIndex(0)
 
     queryClient.invalidateQueries({
-      queryKey: ['marathon', lang, currentDifficulty, mode],
+      queryKey: ['marathon', lang, currentDifficulty, mode, topic],
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -177,6 +265,13 @@ export default function MarathonClient() {
   const handleModeChange = (newMode: 'frontend' | 'backend') => {
     if (newMode !== mode) {
       setMode(newMode)
+      setTopic(defaultTopicByMode[newMode])
+    }
+  }
+
+  const handleTopicChange = (newTopic: TopicValue) => {
+    if (newTopic !== topic) {
+      setTopic(newTopic)
     }
   }
 
@@ -266,6 +361,89 @@ export default function MarathonClient() {
         </motion.div>
 
         <motion.div
+          className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 backdrop-blur-xl p-3 sm:p-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.04 }}
+        >
+          <div
+            className={`absolute inset-0 bg-linear-to-br ${topicPanelGradient} opacity-80`}
+          />
+          <div
+            className={`absolute -top-24 right-6 h-40 w-40 rounded-full blur-[90px] ${topicPanelGlow}`}
+          />
+          <div className="absolute -bottom-20 left-6 h-32 w-32 rounded-full bg-foreground/5 blur-[80px]" />
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={mode}
+              variants={topicFilterVariants}
+              initial="hidden"
+              animate="show"
+              exit={{ opacity: 0, y: -6 }}
+              className="relative flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start"
+            >
+              {topicOptions.map((option) => {
+                const isActive = topic === option.value
+                return (
+                  <motion.button
+                    key={option.value}
+                    type="button"
+                    layout
+                    variants={topicItemVariants}
+                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.03, y: -1 }}
+                    onClick={() => handleTopicChange(option.value)}
+                    aria-pressed={isActive}
+                    className={`group relative overflow-hidden rounded-2xl border bg-card/80 px-3.5 py-2 text-xs sm:text-sm font-semibold backdrop-blur transition-all duration-300 ${
+                      isActive
+                        ? `text-white ${topicActiveBorder} shadow-lg ${topicActiveShadow}`
+                        : 'text-foreground border-border/60 hover:border-foreground/20 hover:bg-card/95'
+                    }`}
+                  >
+                    <span
+                      className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${topicHoverGlow}`}
+                    />
+                    {isActive && (
+                      <motion.span
+                        layoutId="topicIndicator"
+                        className={`absolute inset-0 rounded-2xl ${topicActiveFill}`}
+                        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+                      />
+                    )}
+                    {isActive && (
+                      <motion.span
+                        className={`absolute inset-0 rounded-2xl blur-md ${topicActiveGlow}`}
+                        animate={{ opacity: [0.35, 0.7, 0.35] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span
+                        className={`flex h-7 w-7 items-center justify-center rounded-xl border transition-colors ${
+                          isActive
+                            ? 'border-white/30 bg-white/10'
+                            : 'border-border/50 bg-background/80 group-hover:bg-background'
+                        }`}
+                      >
+                        <Image
+                          src={option.icon ?? topicIcon}
+                          alt={option.label}
+                          width={18}
+                          height={18}
+                          className="h-4 w-4 object-contain"
+                        />
+                      </span>
+                      <span className="whitespace-nowrap">{option.label}</span>
+                    </span>
+                  </motion.button>
+                )
+              })}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+
+        <motion.div
           className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -317,7 +495,7 @@ export default function MarathonClient() {
         {currentQuestion && !isLoading && !isFetching && !isError && (!isGameOver || isLose) && (
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${lang}-${currentDifficulty}-${currentIndex}-${mode}`}
+              key={`${lang}-${currentDifficulty}-${currentIndex}-${mode}-${topic}`}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
