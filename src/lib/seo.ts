@@ -1,54 +1,42 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000/'
+const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+const SITE_URL = RAW_SITE_URL.replace(/\/+$/, '')
+
 export const siteConfig = {
   name: 'SkillCheck',
-  title: 'SkillCheck — AI тесты для программистов | Подготовка к собеседованиям',
-  titleTemplate: '%s | SkillCheck — AI платформа для разработчиков',
+  title: 'SkillCheck - AI-тренажер для технических интервью',
+  titleTemplate: '%s | SkillCheck',
 
   description:
-    'SkillCheck — бесплатная AI-платформа для подготовки к техническим собеседованиям. Онлайн тесты по JavaScript, TypeScript, React, Next.js, Node.js. Проверьте знания Frontend и Backend, пройдите марафон вопросов и попадите в топ рейтинга.',
+    'SkillCheck - бесплатная AI-платформа для подготовки к техническим собеседованиям. Онлайн-тесты по JavaScript, TypeScript, React, Next.js, C#, ASP.NET и другим технологиям. Марафоны, случайные вопросы, рейтинг и личная статистика.',
 
   shortDescription:
-    'AI-платформа для тестирования программистов. Подготовка к техническим интервью онлайн.',
+    'AI-платформа для тестирования знаний разработчиков и подготовки к интервью.',
 
   url: SITE_URL,
 
   locale: 'ru_RU',
   language: 'ru',
-  locales: ['ru', 'en', 'tg'] as const,
+  locales: ['ru', 'en', 'tj'] as const,
   defaultLocale: 'ru' as const,
 
   keywords: [
     'SkillCheck',
-    'SkillCheck AI',
-    'SkillCheck тесты',
-
-    'подготовка к собеседованию программиста',
-    'как подготовиться к техническому собеседованию',
-    'вопросы на собеседовании frontend разработчика',
-    'вопросы на собеседовании backend разработчика',
-    'тестовое задание junior frontend',
-
-    'AI тесты по программированию',
-    'онлайн тесты для программистов',
-    'бесплатные тесты для разработчиков',
-    'проверка знаний программиста онлайн',
-    'марафон вопросов по программированию',
-    'викторина для программистов онлайн',
-
-    'JavaScript тесты онлайн бесплатно',
-    'TypeScript тесты с ответами',
-    'React тесты для собеседования',
-    'React вопросы junior middle senior',
-    'Next.js тесты онлайн',
-    'HTML CSS тесты для фронтенд',
-    'Node.js тесты онлайн',
-    'backend тесты для разработчиков',
-    'API вопросы собеседование',
-    'тренажёр для программистов онлайн',
-    'как проверить знания javascript',
-    'тесты по react на русском',
-    'подготовка к frontend собеседованию 2025',
-    'топ вопросы для разработчиков',
+    'AI тесты для программистов',
+    'подготовка к техническому собеседованию',
+    'тренажер для интервью',
+    'программирование онлайн тесты',
+    'JavaScript тесты',
+    'TypeScript тесты',
+    'React тесты',
+    'Next.js тесты',
+    'C# тесты',
+    'ASP.NET тесты',
+    'frontend вопросы',
+    'backend вопросы',
+    'coding interview practice',
+    'technical interview preparation',
+    'programming quiz',
+    'developer skill assessment',
   ],
 
   creator: 'SkillCheck Team',
@@ -61,19 +49,20 @@ export const siteConfig = {
   category: 'education',
   type: 'website',
 
-  ogImage: '/og-skillcheck.png',
-  logo: '/logo.png',
+  ogImage: '/og.png',
+  icon: '/icon.png',
   favicon: '/favicon.ico',
 
   social: {
     github: 'https://github.com/makhsumovM/savol-bot',
+    telegram: 'https://t.me/skillcheck_bot',
   },
 
   verification: {
-    google: '',
+    google: 'gSrZyl2wPCVWzZfpHA8e2fXPoeo9bpXdUDwhnyEJKR8',
     yandex: '',
   },
 }
 
 export type SiteConfig = typeof siteConfig
-export type Locale = 'ru' | 'en' | 'tg'
+export type Locale = (typeof siteConfig.locales)[number]
