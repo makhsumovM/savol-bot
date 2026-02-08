@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'aos/dist/aos.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -85,7 +86,6 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  /* Новый второй primary */
   --color-primary-2: var(--primary-2);
   --color-primary-2-foreground: var(--primary-2-foreground);
   --color-secondary: var(--secondary);
