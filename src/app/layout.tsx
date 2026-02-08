@@ -5,6 +5,10 @@ import Header from '@/ui/layout/header'
 import { siteConfig } from '@/lib/seo'
 
 const metadataBase = new URL(siteConfig.url)
+const ogImageUrl = new URL(siteConfig.ogImage, metadataBase)
+const iconUrl = new URL(siteConfig.icon, metadataBase)
+const socialLinks = Object.values(siteConfig.social).filter(Boolean) as string[]
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -36,12 +40,19 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
 
-  icons: 'icon.png',
+  icons: {
+    icon: [
+      { url: siteConfig.favicon, type: 'image/x-icon' },
+      { url: siteConfig.icon, type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [{ url: siteConfig.icon, type: 'image/png', sizes: '512x512' }],
+  },
+
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}${siteConfig.ogImage}`],
+    images: [ogImageUrl],
   },
 
   openGraph: {
@@ -50,14 +61,13 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: siteConfig.title,
-
     description: siteConfig.description,
     images: [
       {
-        url: `${siteConfig.url}${siteConfig.ogImage}`,
+        url: ogImageUrl,
         width: 1200,
-        height: 630,
-        alt: `${siteConfig.name} — AI платформа для тестирования программистов`,
+        height: 600,
+        alt: `${siteConfig.name} - AI-платформа для подготовки к интервью`,
         type: 'image/png',
       },
     ],
@@ -97,12 +107,12 @@ const organizationJsonLd = {
   url: siteConfig.url,
   logo: {
     '@type': 'ImageObject',
-    url: `${siteConfig.url}/logo.png`,
+    url: iconUrl.toString(),
     width: 512,
     height: 512,
   },
   description: siteConfig.shortDescription,
-  sameAs: [siteConfig.social.github],
+  ...(socialLinks.length ? { sameAs: socialLinks } : {}),
 }
 
 const websiteJsonLd = {
@@ -116,14 +126,6 @@ const websiteJsonLd = {
   publisher: {
     '@id': `${siteConfig.url}/#organization`,
   },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
 }
 
 const educationalAppJsonLd = {
@@ -133,19 +135,13 @@ const educationalAppJsonLd = {
   name: siteConfig.name,
   url: siteConfig.url,
   description: siteConfig.description,
+  inLanguage: siteConfig.language,
   applicationCategory: 'EducationalApplication',
   operatingSystem: 'Web Browser',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'USD',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '150',
-    bestRating: '5',
-    worstRating: '1',
   },
 }
 
@@ -155,7 +151,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang={siteConfig.language} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -168,10 +164,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(educationalAppJsonLd) }}
-        />
-        <meta
-          name="google-site-verification"
-          content="gSrZyl2wPCVWzZfpHA8e2fXPoeo9bpXdUDwhnyEJKR8"
         />
       </head>
       <body className="antialiased">
