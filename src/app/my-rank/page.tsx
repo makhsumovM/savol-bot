@@ -72,6 +72,7 @@ const MyRankPage = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
+          data-aos="fade-up"
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05]">
             <span className="text-primary">{myRankFirstWord}</span>
@@ -91,7 +92,11 @@ const MyRankPage = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="w-full"
           >
-            <div className="relative overflow-hidden rounded-[32px] border border-border/60 bg-card/80 backdrop-blur-xl shadow-[0_30px_120px_-70px_rgba(0,0,0,0.7)]">
+            <div
+              className="relative overflow-hidden rounded-[32px] border border-border/60 bg-card/80 backdrop-blur-xl shadow-[0_30px_120px_-70px_rgba(0,0,0,0.7)]"
+              data-aos="fade-up"
+              data-aos-delay="60"
+            >
               <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-primary/10 pointer-events-none" />
               <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-[120px] pointer-events-none" />
               <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-secondary/20 blur-[120px] pointer-events-none" />
@@ -144,7 +149,11 @@ const MyRankPage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                      <div
+                        className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                        data-aos="fade-up"
+                        data-aos-delay="140"
+                      >
                         <div className="absolute inset-0 bg-linear-to-br from-primary/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                         <div className="relative flex items-center gap-4">
                           <div className="w-12 h-12 rounded-2xl border border-primary/20 bg-primary/10 flex items-center justify-center shrink-0">
@@ -167,7 +176,11 @@ const MyRankPage = () => {
                         </div>
                       </div>
 
-                      <div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                      <div
+                        className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                      >
                         <div className="absolute inset-0 bg-linear-to-br from-primary-2/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                         <div className="relative flex items-center gap-4">
                           <div className="w-12 h-12 rounded-2xl border border-primary-2/20 bg-primary-2/10 flex items-center justify-center shrink-0">
