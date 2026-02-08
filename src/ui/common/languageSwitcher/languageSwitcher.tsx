@@ -57,9 +57,9 @@ export default function LanguageSwitcher() {
           <Image
             src={currentLanguage.flagSrc}
             alt={currentLanguage.label}
-            width={30}
-            height={20}
-            className="rounded shadow-sm transition-transform group-hover:scale-105 duration-200 object-cover"
+            width={32}
+            height={24}
+            className="rounded shadow-sm"
           />
           <span className="text-sm font-semibold">{currentLanguage.shortLabel}</span>
         </span>
@@ -93,11 +93,9 @@ export default function LanguageSwitcher() {
                     onClick={() => changeLanguage(lang.code)}
                     className={`
                       group/item relative flex items-center justify-between gap-2 px-3 py-2.5 text-sm transition-all duration-150 cursor-pointer
-                      ${
-                        isActive
-                          ? 'bg-primary/15 text-primary font-semibold'
-                          : 'hover:bg-primary/8 text-foreground hover:text-primary'
-                      }
+                      ${isActive
+                        ? 'bg-primary/15 text-primary font-semibold'
+                        : 'hover:bg-primary/8 text-foreground hover:text-primary'}
                     `}
                     aria-current={isActive ? 'true' : 'false'}
                   >
@@ -112,9 +110,9 @@ export default function LanguageSwitcher() {
                       <Image
                         src={lang.flagSrc}
                         alt={lang.label}
-                        width={30}
-                        height={22}
-                        className="rounded shadow-sm transition-transform group-hover/item:scale-105 duration-200 object-cover"
+                        width={32}
+                        height={24}
+                        className="rounded shadow-sm transition-transform group-hover/item:scale-105 duration-200  "
                       />
                       <span className="text-sm font-medium">{lang.label}</span>
                     </span>
