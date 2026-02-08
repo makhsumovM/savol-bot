@@ -1,10 +1,23 @@
 import axios from 'axios'
 import { RandomQuestion } from '@/types/random'
 
-export const randomApi = async (lang: string, type: 'frontend' | 'backend' = 'frontend') => {
+export const randomApi = async (
+  lang: string,
+  type: 'frontend' | 'backend' = 'frontend',
+  topic: string = 'all',
+  difficulty?: string,
+) => {
   try {
+    const params: Record<string, string> = {
+      lang,
+      type,
+      topic,
+    }
+    if (difficulty) {
+      params.difficulty = difficulty
+    }
     const response = await axios.get('/api/ai/random', {
-      params: { lang, type },
+      params,
     })
     const resultString = response.data.result
 
@@ -13,7 +26,7 @@ export const randomApi = async (lang: string, type: 'frontend' | 'backend' = 'fr
     const questions: RandomQuestion[] = JSON.parse(resultString)
     return questions
   } catch (error) {
-    console.error(error)
+    console.error('Error fetching random questions:', error)
     return []
   }
 }
