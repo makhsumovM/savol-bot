@@ -58,12 +58,15 @@ const RegisterPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="text-center mb-8"
+          data-aos="fade-up"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            data-aos="zoom-in"
+            data-aos-delay="60"
           >
             <UserPlus className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">{t('register.title')}</span>
@@ -90,6 +93,8 @@ const RegisterPage = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="rounded-3xl border border-border/40 bg-card/50 backdrop-blur-xl shadow-2xl p-6 sm:p-8"
+          data-aos="fade-up"
+          data-aos-delay="80"
         >
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <FormInput
