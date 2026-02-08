@@ -57,12 +57,15 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-7 sm:space-y-8 text-center lg:text-left"
+          data-aos="fade-up"
         >
           <motion.div
             className="text-center lg:text-left"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            data-aos="fade-up"
+            data-aos-delay="80"
           >
             <h1
               suppressHydrationWarning
@@ -73,15 +76,27 @@ export default function Home() {
             </h1>
           </motion.div>
 
-          <motion.p className="text-base sm:text-lg md:text-2xl font-medium text-foreground/80">
+          <motion.p
+            className="text-base sm:text-lg md:text-2xl font-medium text-foreground/80"
+            data-aos="fade-up"
+            data-aos-delay="120"
+          >
             {t('app.subtitle')}
           </motion.p>
 
-          <motion.p className="max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground">
+          <motion.p
+            className="max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground"
+            data-aos="fade-up"
+            data-aos-delay="180"
+          >
             <Typewriter text={t('app.description')} delay={1.1} speed={0.02} />
           </motion.p>
 
-          <nav className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center lg:justify-start">
+          <nav
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center lg:justify-start"
+            data-aos="fade-up"
+            data-aos-delay="240"
+          >
             {navLinks.map(({ href, icon: Icon, label }) => (
               <motion.div
                 key={href}
