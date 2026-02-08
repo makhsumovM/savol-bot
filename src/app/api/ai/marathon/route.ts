@@ -5,15 +5,18 @@ import { zodToJsonSchema } from 'zod-to-json-schema'
 
 const validDifficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
 const validTypes = ['frontend', 'backend'] as const
-const validFrontendTopics = ['js', 'ts', 'html', 'css', 'react', 'nextjs', 'react-nextjs'] as const
+const validFrontendTopics = ['js', 'ts', 'htmlcss', 'react', 'nextjs', 'react-nextjs'] as const
 const validBackendTopics = [
   'csharp',
+  'dotnet',
   'aspnet',
   'ef',
   'linq',
-  'async',
-  'designpatterns',
-  'microservices',
+  'dapper',
+  'grpc',
+  'signalr',
+  'serilog',
+  'xunit',
 ] as const
 
 type Difficulty = (typeof validDifficulties)[number]
@@ -45,19 +48,13 @@ const frontendSpecificTopics = {
     'very-hard': 'Expert TypeScript: type inference, mapped types',
     expert: 'Senior TypeScript: architecture with types',
   },
-  html: {
-    easy: 'Basic HTML: tags, structure',
-    medium: 'Intermediate HTML: forms, semantics',
-    hard: 'Advanced HTML: accessibility, custom elements',
-    'very-hard': 'Expert HTML: performance, SEO',
-    expert: 'Senior HTML: integration with frameworks',
-  },
-  css: {
-    easy: 'Basic CSS: selectors, properties',
-    medium: 'Intermediate CSS: flexbox, grid',
-    hard: 'Advanced CSS: animations, transitions',
-    'very-hard': 'Expert CSS: preprocessors, responsive design',
-    expert: 'Senior CSS: architecture, methodologies like BEM',
+  htmlcss: {
+    easy: 'Basic HTML: tags, structure; Basic CSS: selectors, properties',
+    medium: 'Intermediate HTML: forms, semantics; Intermediate CSS: flexbox, grid',
+    hard: 'Advanced HTML: accessibility, custom elements; Advanced CSS: animations, transitions',
+    'very-hard': 'Expert HTML: performance, SEO; Expert CSS: preprocessors, responsive design',
+    expert:
+      'Senior HTML: integration with frameworks; Senior CSS: architecture, methodologies like BEM',
   },
   react: {
     easy: 'Basic React: components, JSX',
@@ -83,63 +80,83 @@ const frontendSpecificTopics = {
 }
 
 const backendAllTopics = {
-  easy: 'Basic C#, Variables, Loops, Conditionals, OOP Basics',
-  medium: 'Collections, LINQ, Exceptions, Async/Await Basics',
-  hard: 'ASP.NET Core Fundamentals, Dependency Injection, Middleware, Entity Framework Basics',
-  'very-hard': 'Advanced ASP.NET Core (Authentication, Authorization, Performance, Caching)',
-  expert:
-    'Senior .NET Architecture, Microservices, Design Patterns, Concurrency, Performance Optimization',
+  easy: 'C# basics, .NET CLI, ASP.NET Core basics, LINQ fundamentals',
+  medium: 'C#, .NET, ASP.NET Core, Entity Framework Core, Dapper',
+  hard: 'Advanced ASP.NET Core, EF Core performance, gRPC, SignalR',
+  'very-hard': 'High-performance .NET, Serilog logging, diagnostics, xUnit testing',
+  expert: 'Senior .NET architecture, observability, testing strategy, data access patterns',
 }
 
 const backendSpecificTopics = {
   csharp: {
-    easy: 'Basic C#: variables, loops, conditionals, OOP basics',
+    easy: 'C# basics: variables, control flow, OOP',
     medium: 'Intermediate C#: collections, exceptions, delegates',
-    hard: 'Advanced C#: generics, events, lambda expressions',
-    'very-hard': 'Expert C#: reflection, attributes, unsafe code',
-    expert: 'Senior C#: performance tuning, memory management',
+    hard: 'Advanced C#: generics, events, lambdas, LINQ',
+    'very-hard': 'Expert C#: reflection, attributes, spans, unsafe code',
+    expert: 'Senior C#: performance, memory, multithreading',
+  },
+  dotnet: {
+    easy: '.NET basics: CLI, project structure, NuGet packages',
+    medium: '.NET intermediate: configuration, dependency injection, options',
+    hard: '.NET advanced: hosting, background services, diagnostics',
+    'very-hard': '.NET expert: GC, performance, trimming, native AOT',
+    expert: 'Senior .NET: architecture, observability, deployment',
   },
   aspnet: {
-    easy: 'Basic ASP.NET Core: MVC pattern, routing',
-    medium: 'Intermediate ASP.NET Core: controllers, views, models',
-    hard: 'Advanced ASP.NET Core: middleware, dependency injection',
-    'very-hard': 'Expert ASP.NET Core: authentication, authorization',
-    expert: 'Senior ASP.NET Core: scalability, deployment strategies',
+    easy: 'ASP.NET Core basics: routing, controllers, minimal APIs',
+    medium: 'ASP.NET Core intermediate: middleware, model binding, validation',
+    hard: 'ASP.NET Core advanced: auth, caching, error handling',
+    'very-hard': 'ASP.NET Core expert: performance, versioning, security',
+    expert: 'Senior ASP.NET Core: scalable APIs, deployment, monitoring',
   },
   ef: {
-    easy: 'Basic Entity Framework: DbContext, simple queries',
-    medium: 'Intermediate Entity Framework: relationships, migrations',
-    hard: 'Advanced Entity Framework: LINQ queries, eager/lazy loading',
-    'very-hard': 'Expert Entity Framework: performance optimization, transactions',
-    expert: 'Senior Entity Framework: complex modeling, custom providers',
+    easy: 'EF Core basics: DbContext, DbSet, CRUD',
+    medium: 'EF Core intermediate: migrations, relationships, tracking',
+    hard: 'EF Core advanced: queries, includes, performance',
+    'very-hard': 'EF Core expert: transactions, concurrency, query splitting',
+    expert: 'Senior EF Core: modeling strategy, raw SQL, multi-tenant',
   },
   linq: {
-    easy: 'Basic LINQ: query syntax, method syntax',
-    medium: 'Intermediate LINQ: joins, grouping',
-    hard: 'Advanced LINQ: projections, aggregations',
-    'very-hard': 'Expert LINQ: custom providers, expression trees',
-    expert: 'Senior LINQ: optimization, integration with other tech',
+    easy: 'LINQ basics: query syntax, method syntax',
+    medium: 'LINQ intermediate: joins, grouping, filtering',
+    hard: 'LINQ advanced: projections, aggregations, deferred execution',
+    'very-hard': 'LINQ expert: expression trees, custom providers',
+    expert: 'Senior LINQ: optimization, performance, readability',
   },
-  async: {
-    easy: 'Basic Async/Await: tasks, async methods',
-    medium: 'Intermediate Async: cancellation, progress reporting',
-    hard: 'Advanced Async: parallelism, Task.WhenAll',
-    'very-hard': 'Expert Async: error handling, deadlocks avoidance',
-    expert: 'Senior Async: high-performance async patterns',
+  dapper: {
+    easy: 'Dapper basics: parameterized queries, mapping',
+    medium: 'Dapper intermediate: multi-mapping, stored procedures',
+    hard: 'Dapper advanced: performance, batching, transactions',
+    'very-hard': 'Dapper expert: custom type handlers, multi-result sets',
+    expert: 'Senior Dapper: data access layering, diagnostics',
   },
-  designpatterns: {
-    easy: 'Basic Design Patterns: singleton, factory',
-    medium: 'Intermediate Design Patterns: observer, strategy',
-    hard: 'Advanced Design Patterns: decorator, command',
-    'very-hard': 'Expert Design Patterns: composite, mediator',
-    expert: 'Senior Design Patterns: applying in .NET architecture',
+  grpc: {
+    easy: 'gRPC basics: proto files, unary calls',
+    medium: 'gRPC intermediate: streaming, deadlines, metadata',
+    hard: 'gRPC advanced: interceptors, auth, error handling',
+    'very-hard': 'gRPC expert: load balancing, performance, observability',
+    expert: 'Senior gRPC: service design, versioning, interop',
   },
-  microservices: {
-    easy: 'Basic Microservices: concepts, benefits',
-    medium: 'Intermediate Microservices: API gateways, service discovery',
-    hard: 'Advanced Microservices: saga pattern, CQRS',
-    'very-hard': 'Expert Microservices: resilience, fault tolerance',
-    expert: 'Senior Microservices: orchestration, choreography in .NET',
+  signalr: {
+    easy: 'SignalR basics: hubs, connections, clients',
+    medium: 'SignalR intermediate: groups, auth, reconnects',
+    hard: 'SignalR advanced: scaling, backplanes, reliability',
+    'very-hard': 'SignalR expert: performance, message size, throttling',
+    expert: 'Senior SignalR: real-time architecture, deployment',
+  },
+  serilog: {
+    easy: 'Serilog basics: structured logging, sinks',
+    medium: 'Serilog intermediate: enrichers, configuration',
+    hard: 'Serilog advanced: filtering, buffering, performance',
+    'very-hard': 'Serilog expert: custom sinks, correlation, tracing',
+    expert: 'Senior Serilog: production logging strategy, retention',
+  },
+  xunit: {
+    easy: 'xUnit basics: facts, assertions',
+    medium: 'xUnit intermediate: fixtures, data-driven tests',
+    hard: 'xUnit advanced: mocking, integration tests',
+    'very-hard': 'xUnit expert: isolation, parallelization, flaky tests',
+    expert: 'Senior testing: CI pipelines, test strategy with xUnit',
   },
 }
 
@@ -232,7 +249,7 @@ VERY IMPORTANT RULES — FOLLOW EXACTLY:
 - If there is code — the language must be correct:
   ${codeLanguages}
 
-- Questions and answers in language: "${lang}"
+- Questions and answers in language: "${lang == 'tj' ? 'Tajik' : lang}"
 - Theme: ${topicDescription}
 
 - The correct answer must correspond to the number in correctIndex
