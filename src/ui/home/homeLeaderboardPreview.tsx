@@ -100,6 +100,8 @@ export const HomeLeaderboardPreview = () => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.15 }}
       className="relative mt-8 lg:mt-0"
+      data-aos="fade-up"
+      data-aos-delay="100"
     >
       <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/25 blur-[80px] animate-pulse" />
       <div
@@ -108,7 +110,11 @@ export const HomeLeaderboardPreview = () => {
       />
       <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 rounded-3xl blur-xl" />
 
-      <div className="relative rounded-2xl sm:rounded-3xl border border-border/40 bg-card/80 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black/10">
+      <div
+        className="relative rounded-2xl sm:rounded-3xl border border-border/40 bg-card/80 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black/10"
+        data-aos="fade-up"
+        data-aos-delay="80"
+      >
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <motion.div
