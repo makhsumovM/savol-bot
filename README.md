@@ -1,8 +1,8 @@
-# 🧠 SkillCheck — AI Платформа для Тестирования Программистов и Подготовки к Интервью
+# SkillCheck - AI-платформа для тестирования разработчиков и подготовки к интервью
 
-> **SkillCheck** — это современная open-source платформа, помогающая разработчикам проверять свои знания, готовиться к техническим собеседованиям и соревноваться в глобальном рейтинге. Все вопросы генерируются нейросетью Google Gemini в реальном времени, что гарантирует бесконечное разнообразие контента.
+> SkillCheck - open-source платформа, которая помогает разработчикам проверять знания, готовиться к техническим собеседованиям и соревноваться в рейтинге. Вопросы генерируются моделью Google Gemini в реальном времени.
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-skillcheck.kavsaracademy.tj-brightgreen?style=for-the-badge)](https://skillcheck.kavsaracademy.tj/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-skillcheck.kavsaracademy.tj-brightgreen?style=for-the-badge)](https://skillcheck.kavsaracademy.tj/)
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)
@@ -12,101 +12,84 @@
 
 ---
 
-## 🎯 What is SkillCheck?
+## Что такое SkillCheck
 
-**SkillCheck** is a modern AI-powered testing platform designed for software developers. It helps you:
-
-- ✅ **Prepare for technical interviews** with real questions
-- ✅ **Test your programming knowledge** (JavaScript, TypeScript, React, Next.js, Node.js)
-- ✅ **Practice with AI-generated questions** powered by Google Gemini
-- ✅ **Track your progress** and compete on the global leaderboard
-- ✅ **Choose your language** — Russian, English, Tajik
-
-**Perfect for:** Junior, Middle, and Senior developers preparing for job interviews or improving their skills.
+- Подготовка к техническим интервью для Frontend и Backend
+- Онлайн-тесты по JavaScript, TypeScript, React, Next.js, C#, ASP.NET и другим технологиям
+- Марафон и случайный вопрос для быстрой практики
+- Глобальный рейтинг и личная статистика
+- Поддержка языков: Русский, English, Тоҷикӣ
 
 ---
 
-## 🔍 SEO Keywords
+## Ключевые возможности
 
-**English:**
-
-- AI programming tests online
-- Technical interview preparation
-- Frontend developer quiz
-- JavaScript TypeScript React tests
-- Coding practice platform
-
-**Русский:**
-
-- AI тесты по программированию
-- Подготовка к собеседованию программиста
-- Frontend Backend тесты онлайн
-- JavaScript TypeScript React вопросы
-- Марафон вопросов для разработчиков
-- Бесплатные тесты для программистов
+| Feature | Description |
+| --- | --- |
+| Marathon Mode | Серия вопросов с начислением баллов и ростом сложности |
+| Random Question | Быстрая практика со случайным вопросом |
+| Leaderboard | Глобальный рейтинг участников |
+| User Profile | Персональная статистика, достижения, прогресс |
+| Multi-language | Русский, English, Тоҷикӣ |
+| AI-Generated Questions | Генерация вопросов через Google Gemini |
 
 ---
 
-## ✨ Key Features
+## Техстек
 
-| Feature                       | Description                                                             |
-| ----------------------------- | ----------------------------------------------------------------------- |
-| 🏃 **Marathon Mode**          | Series of questions with scoring — choose Frontend or Backend direction |
-| 🎲 **Random Question**        | Quick practice with randomly generated questions                        |
-| 🏆 **Leaderboard**            | Global ranking based on your results                                    |
-| 📊 **User Profile**           | Personal statistics, achievements, and progress tracking                |
-| 🌐 **Multi-language**         | Support for English, Russian, and Tajik                                 |
-| 🌙 **Dark/Light Theme**       | Switch between themes with `next-themes`                                |
-| 🤖 **AI-Generated Questions** | Powered by Google Gemini API                                            |
-
----
-
-## 🛠️ Tech Stack
-
-| Category      | Technologies                      |
-| ------------- | --------------------------------- |
-| **Framework** | Next.js 16 (App Router), React 19 |
-| **Language**  | TypeScript 5                      |
-| **Styling**   | Tailwind CSS 4, Framer Motion     |
-| **State**     | Redux Toolkit, React Query        |
-| **Forms**     | React Hook Form, Zod              |
-| **UI**        | Radix UI, Lucide Icons            |
-| **i18n**      | i18next, react-i18next            |
-| **AI**        | Google Gemini API                 |
+| Category | Technologies |
+| --- | --- |
+| Framework | Next.js 16 (App Router), React 19 |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4, Motion |
+| State | Redux Toolkit, React Query |
+| Forms | React Hook Form, Zod |
+| UI | Radix UI, Lucide Icons |
+| i18n | i18next, react-i18next |
+| AI | Google Gemini API |
 
 ---
 
-## 📁 Project Structure
+## SEO и метаданные
+
+- Базовые метаданные и Open Graph: `src/lib/seo.ts`, `src/app/layout.tsx`
+- Robots и Sitemap: `src/app/robots.ts`, `src/app/sitemap.ts`
+- Для корректных канонических ссылок и OG-URL укажите `NEXT_PUBLIC_SITE_URL`
+
+---
+
+## Структура проекта
 
 ```
-skillcheck/
+savol-bot/
 ├── src/
-│   ├── app/              # Next.js App Router (pages)
+│   ├── app/              # Next.js App Router
 │   │   ├── api/          # API Routes (Gemini endpoints)
 │   │   ├── marathon/     # Marathon quiz page
 │   │   ├── random/       # Random question page
 │   │   ├── leaderboard/  # Global rankings
 │   │   ├── profile/      # User profile
+│   │   ├── my-rank/      # User rank
 │   │   ├── login/        # Authentication
 │   │   └── register/     # Registration
 │   ├── ui/               # Reusable UI components
 │   ├── lib/              # Utilities, store, providers, SEO
 │   ├── types/            # TypeScript types
-│   ├── i18n/             # Localization (en, ru, tg)
+│   ├── i18n/             # Localization (en, ru, tj)
 │   └── styles/           # Global styles
 └── public/               # Static assets
 ```
 
 ---
 
-## 🚀 Quick Start
+## Быстрый старт
 
-### Prerequisites
+### Требования
 
 - Node.js 18+
 - npm / yarn / pnpm
 
-### Installation
+### Установка
 
 ```bash
 # Clone the repository
@@ -115,16 +98,28 @@ cd savol-bot
 
 # Install dependencies
 npm install
+```
 
-# Set up environment variables
-cp .env.example .env
-# Add your GEMINI_API_KEY and NEXT_PUBLIC_API_URL
+### Переменные окружения
 
-# Start development server
+Создайте `.env` в корне проекта:
+
+```env
+# Required
+GEMINI_API_KEY=your_google_gemini_api_key
+NEXT_PUBLIC_API_URL=your_backend_api_url
+
+# Optional (используется для SEO)
+NEXT_PUBLIC_SITE_URL=https://skillcheck.kavsaracademy.tj
+```
+
+### Запуск разработки
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
 ### Production Build
 
@@ -135,56 +130,18 @@ npm start
 
 ---
 
-## ⚙️ Environment Variables
+## Скрипты
 
-Create a `.env` file in the project root:
-
-```env
-# Required
-GEMINI_API_KEY=your_google_gemini_api_key
-NEXT_PUBLIC_API_URL=your_backend_api_url
-
-# Optional
-NEXT_PUBLIC_SITE_URL=https://skillcheck.kavsaracademy.tj
-```
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |
 
 ---
 
-## 📖 Usage Guide
-
-### Game Modes
-
-| Mode            | Description                                                                                                                    |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **🏃 Marathon** | Complete a series of questions with increasing difficulty. Choose Frontend or Backend. Your score is saved to the leaderboard. |
-| **🎲 Random**   | Quick practice — get a random question and test your knowledge instantly.                                                      |
-
-### Difficulty Levels
-
-| Level       | Description             |
-| ----------- | ----------------------- |
-| `easy`      | Basic concepts          |
-| `medium`    | Intermediate level      |
-| `hard`      | Advanced questions      |
-| `very-hard` | Expert-level challenges |
-| `expert`    | Top-tier questions      |
-
----
-
-## 📜 Available Scripts
-
-| Command         | Description              |
-| --------------- | ------------------------ |
-| `npm run dev`   | Start development server |
-| `npm run build` | Build for production     |
-| `npm start`     | Start production server  |
-| `npm run lint`  | Run ESLint               |
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
+## Вклад в проект
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
@@ -194,40 +151,26 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 💬 Support
+## Поддержка
 
-- 📧 **Email:** [Contact us](mailto:support@kavsaracademy.tj)
-- 💬 **Telegram:** [@skillcheck_bot](https://t.me/skillcheck_bot)
-- 🐛 **Issues:** [GitHub Issues](https://github.com/makhsumovM/savol-bot/issues)
-
----
-
-## 👥 Authors
-
-**Sultonzoda Abdulloh** — Frontend Developer
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdullo-sultonzoda-75a4ab3a2/)
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/sultonzoda_abdulloh)
-
-**Qosimov Yusufjon** — Frontend Developer
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/%D0%BC-qosimov-7bb6013a3/)
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=flat&logo=telegram&logoColor=white)](https://t.me/Qosimovy)
+- Email: support@kavsaracademy.tj
+- Telegram: @skillcheck_bot
+- Issues: https://github.com/makhsumovM/savol-bot/issues
 
 ---
 
-## ⭐ Show Your Support
+## Авторы
 
-If you like this project, please give it a ⭐ on GitHub!
+**Sultonzoda Abdulloh** - Frontend Developer  
+LinkedIn: https://www.linkedin.com/in/abdullo-sultonzoda-75a4ab3a2/  
+Telegram: https://t.me/sultonzoda_abdulloh
+
+**Qosimov Yusufjon** - Frontend Developer  
+LinkedIn: https://www.linkedin.com/in/%D0%BC-qosimov-7bb6013a3/  
+Telegram: https://t.me/Qosimovy
 
 ---
 
-## 📄 License
+## License
 
 MIT License © 2026 [Makhsumov Muhammad](https://github.com/makhsumovM)
-
----
-
-<p align="center">
-  <b>SkillCheck</b> — Level up your coding skills with AI 🚀
-</p>
