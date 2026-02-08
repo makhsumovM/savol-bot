@@ -126,6 +126,7 @@ const RegisterPage = () => {
               disabled={isPending}
               className="w-full h-12 rounded-2xl text-base sm:text-lg font-bold shadow-lg shadow-primary/20 transition-all hover:shadow-primary/30 active:scale-[0.98]"
             >
+              <UserPlus className="w-4 h-4 mr-2" />
               {isPending
                 ? t('register.form.submitButton.loading')
                 : t('register.form.submitButton.default')}
