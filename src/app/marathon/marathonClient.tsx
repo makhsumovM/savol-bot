@@ -19,34 +19,40 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import aspnetIcon from '../../../public/aspnet.png'
 import charmIcon from '../../../public/ccharm.png'
-import cssIcon from '../../../public/css.png'
-import designPatternsIcon from '../../../public/desingpatterns.png'
+import dapperIcon from '../../../public/dapper.png'
 import entityIcon from '../../../public/entity.png'
-import htmlIcon from '../../../public/html.png'
+import grpcIcon from '../../../public/grc.png'
+import htmlcssIcon from '../../../public/html&css.png'
 import jsIcon from '../../../public/js.png'
 import linqIcon from '../../../public/linq.png'
-import microservicesIcon from '../../../public/microservices.png'
+import netIcon from '../../../public/net.png'
 import nextjsIcon from '../../../public/nextjs.png'
 import reactIcon from '../../../public/react.png'
-import tsIcon from '../../../public/ts.png'
 import reactNextjsIcon from '../../../public/nextjs&react.png'
+import serilogIcon from '../../../public/serilog.png'
+import signalRIcon from '../../../public/signalR.png'
+import tsIcon from '../../../public/ts.png'
+import xunitIcon from '../../../public/xunit.png'
+
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
 type TopicValue =
   | 'all'
   | 'js'
   | 'ts'
-  | 'html'
-  | 'css'
+  | 'htmlcss'
   | 'react'
   | 'nextjs'
   | 'react-nextjs'
   | 'csharp'
+  | 'dotnet'
   | 'aspnet'
   | 'ef'
   | 'linq'
-  | 'async'
-  | 'designpatterns'
-  | 'microservices'
+  | 'dapper'
+  | 'grpc'
+  | 'signalr'
+  | 'serilog'
+  | 'xunit'
 
 type TopicOption = {
   value: TopicValue
@@ -58,21 +64,24 @@ const frontendTopics: TopicOption[] = [
   { value: 'all', label: 'All', icon: reactIcon },
   { value: 'js', label: 'JavaScript', icon: jsIcon },
   { value: 'ts', label: 'TypeScript', icon: tsIcon },
-  { value: 'html', label: 'HTML', icon: htmlIcon },
-  { value: 'css', label: 'CSS', icon: cssIcon },
+  { value: 'htmlcss', label: 'HTML + CSS', icon: htmlcssIcon },
   { value: 'react', label: 'React', icon: reactIcon },
   { value: 'nextjs', label: 'Next.js', icon: nextjsIcon },
   { value: 'react-nextjs', label: 'React + Next.js', icon: reactNextjsIcon },
 ]
 
 const backendTopics: TopicOption[] = [
+  { value: 'all', label: 'All', icon: netIcon },
   { value: 'csharp', label: 'C#', icon: charmIcon },
+  { value: 'dotnet', label: '.NET', icon: netIcon },
   { value: 'aspnet', label: 'ASP.NET', icon: aspnetIcon },
-  { value: 'ef', label: 'Entity Framework', icon: entityIcon },
+  { value: 'ef', label: 'Entity Framework Core', icon: entityIcon },
   { value: 'linq', label: 'LINQ', icon: linqIcon },
-  { value: 'async', label: 'Async/Await', icon: charmIcon },
-  { value: 'designpatterns', label: 'Design Patterns', icon: designPatternsIcon },
-  { value: 'microservices', label: 'Microservices', icon: microservicesIcon },
+  { value: 'dapper', label: 'Dapper', icon: dapperIcon },
+  { value: 'grpc', label: 'gRPC', icon: grpcIcon },
+  { value: 'signalr', label: 'SignalR', icon: signalRIcon },
+  { value: 'serilog', label: 'Serilog', icon: serilogIcon },
+  { value: 'xunit', label: 'xUnit', icon: xunitIcon },
 ]
 
 const defaultTopicByMode: Record<'frontend' | 'backend', TopicValue> = {
@@ -366,9 +375,7 @@ export default function MarathonClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.04 }}
         >
-          <div
-            className={`absolute inset-0 bg-linear-to-br ${topicPanelGradient} opacity-80`}
-          />
+          <div className={`absolute inset-0 bg-linear-to-br ${topicPanelGradient} opacity-80`} />
           <div
             className={`absolute -top-24 right-6 h-40 w-40 rounded-full blur-[90px] ${topicPanelGlow}`}
           />
