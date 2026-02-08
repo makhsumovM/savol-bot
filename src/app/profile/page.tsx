@@ -63,8 +63,8 @@ const ProfilePage = () => {
           </h1>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground hover:scale-105 transition-transform">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3" data-aos="fade-up">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground hover:scale-105 transition-transform" data-aos="zoom-in" data-aos-delay="40">
             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
               <Trophy className="w-3.5 h-3.5 text-foreground/70" />
             </span>
@@ -73,7 +73,7 @@ const ProfilePage = () => {
           </div>
 
           {myRank && (
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground hover:scale-105 transition-transform">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground hover:scale-105 transition-transform" data-aos="zoom-in" data-aos-delay="80">
               <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
                 <Award className="w-3.5 h-3.5 text-foreground/70" />
               </span>
@@ -82,7 +82,7 @@ const ProfilePage = () => {
             </div>
           )}
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground hover:scale-105 transition-transform">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground hover:scale-105 transition-transform" data-aos="zoom-in" data-aos-delay="120">
             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
               <Sparkles className="w-3.5 h-3.5 text-foreground/70" />
             </span>
@@ -102,7 +102,11 @@ const ProfilePage = () => {
               style={{ animationDelay: '1s' }}
             />
             <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 rounded-3xl blur-xl" />
-            <div className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/80 backdrop-blur-xl p-5 sm:p-8 shadow-2xl shadow-black/10">
+            <div
+              className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/80 backdrop-blur-xl p-5 sm:p-8 shadow-2xl shadow-black/10"
+              data-aos="zoom-in"
+              data-aos-delay="60"
+            >
               <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-6">
                 <div className="relative group hover:scale-102 transition-transform">
                   <div className="absolute inset-0 rounded-full bg-linear-to-r from-primary to-primary-2 blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500 scale-110" />
@@ -158,7 +162,11 @@ const ProfilePage = () => {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div
+                  className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  data-aos="fade-up"
+                  data-aos-delay="80"
+                >
                   <div className="absolute inset-0 bg-linear-to-br from-primary/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <div className="relative flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl border border-primary/20 bg-primary/10 flex items-center justify-center shrink-0">
@@ -181,7 +189,11 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
-                <div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div
+                  className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  data-aos="fade-up"
+                  data-aos-delay="140"
+                >
                   <div className="absolute inset-0 bg-linear-to-br from-primary-2/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <div className="relative flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl border border-primary-2/20 bg-primary-2/10 flex items-center justify-center shrink-0">
