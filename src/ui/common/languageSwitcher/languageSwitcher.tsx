@@ -47,21 +47,21 @@ export default function LanguageSwitcher() {
         aria-expanded={open}
         aria-haspopup="true"
         className="
-          group relative flex items-center gap-2 px-2.5 py-1.5 rounded-lg
+          group relative flex items-center gap-2 px-3 py-2 rounded-lg
           bg-card/80 backdrop-blur-lg border border-border/50 shadow-sm
           transition-all duration-200 hover:shadow-md hover:border-primary/30
-          min-w-[90px] max-w-[90px] h-10
+          min-w-[110px] max-w-[110px] h-12
         "
       >
-        <span className="relative flex items-center gap-2 flex-1">
+        <span className="relative flex items-center gap-3 flex-1">
           <Image
             src={currentLanguage.flagSrc}
             alt={currentLanguage.label}
-            width={20}
+            width={30}
             height={20}
-            className="rounded-full object-cover"
+            className="rounded shadow-sm transition-transform group-hover:scale-105 duration-200 object-cover"
           />
-          <span className="text-xs font-semibold">{currentLanguage.shortLabel}</span>
+          <span className="text-sm font-semibold">{currentLanguage.shortLabel}</span>
         </span>
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
@@ -79,7 +79,7 @@ export default function LanguageSwitcher() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -6 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="absolute right-0 mt-1.5 min-w-40 rounded-lg bg-card/95 backdrop-blur-xl border border-border/50 shadow-xl overflow-hidden z-50"
+            className="absolute right-0 mt-1.5 min-w-48 rounded-lg bg-card/95 backdrop-blur-xl border border-border/50 shadow-xl overflow-hidden z-50"
           >
             <div className="relative flex flex-col py-1">
               {languages.map((lang, index) => {
@@ -92,10 +92,12 @@ export default function LanguageSwitcher() {
                     transition={{ delay: index * 0.03 }}
                     onClick={() => changeLanguage(lang.code)}
                     className={`
-                      group/item relative flex items-center justify-between gap-2 px-3 py-2 text-xs transition-all duration-150 cursor-pointer
-                      ${isActive
-                        ? 'bg-primary/15 text-primary font-semibold'
-                        : 'hover:bg-primary/8 text-foreground hover:text-primary'}
+                      group/item relative flex items-center justify-between gap-2 px-3 py-2.5 text-sm transition-all duration-150 cursor-pointer
+                      ${
+                        isActive
+                          ? 'bg-primary/15 text-primary font-semibold'
+                          : 'hover:bg-primary/8 text-foreground hover:text-primary'
+                      }
                     `}
                     aria-current={isActive ? 'true' : 'false'}
                   >
@@ -106,15 +108,15 @@ export default function LanguageSwitcher() {
                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
                     )}
-                    <span className="flex items-center gap-2 flex-1">
+                    <span className="flex items-center gap-3 flex-1">
                       <Image
                         src={lang.flagSrc}
                         alt={lang.label}
-                        width={20}
-                        height={20}
-                        className="rounded-full object-cover transition-transform group-hover/item:scale-110 duration-200"
+                        width={30}
+                        height={22}
+                        className="rounded shadow-sm transition-transform group-hover/item:scale-105 duration-200 object-cover"
                       />
-                      <span className="text-xs font-medium">{lang.label}</span>
+                      <span className="text-sm font-medium">{lang.label}</span>
                     </span>
                     {isActive && (
                       <motion.span
