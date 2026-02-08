@@ -5,7 +5,7 @@ import axios from 'axios'
 export const marathonApi = async (
   lang: string,
   difficulty: string,
-  type: 'frontend' | 'backend' = 'frontend',
+  type: 'frontend' | 'backend' | 'mobile' = 'frontend',
   topic: string = 'all'
 ) => {
   try {
