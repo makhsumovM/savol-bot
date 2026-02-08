@@ -5,8 +5,8 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { ModeCards } from '@/ui/home/modeCards'
 import { Typewriter } from '@/ui/home/typewriterText'
-import { Gamepad, PlayCircle } from 'lucide-react'
 import { HomeLeaderboardPreview } from '@/ui/home/homeLeaderboardPreview'
+import { Activity, Dices } from 'lucide-react'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -14,12 +14,12 @@ export default function Home() {
   const navLinks = [
     {
       href: '/marathon',
-      icon: PlayCircle,
+      icon: Activity,
       label: t('modes.marathon.title'),
     },
     {
       href: '/random',
-      icon: Gamepad,
+      icon: Dices,
       label: t('modes.classic.title'),
     },
   ]
@@ -64,7 +64,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 suppressHydrationWarning className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight">
+            <h1
+              suppressHydrationWarning
+              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight"
+            >
               <span className="text-[#ec6216]">Skill</span>
               <span className="text-[#13aeac]">Check</span>
             </h1>
