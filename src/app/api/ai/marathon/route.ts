@@ -4,8 +4,9 @@ import { z } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
 const validDifficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
-const validTypes = ['frontend', 'backend'] as const
+const validTypes = ['frontend', 'backend', 'mobile'] as const
 const validFrontendTopics = ['js', 'ts', 'htmlcss', 'react', 'nextjs', 'react-nextjs'] as const
+const validMobileTopics = ['dart-flutter', 'kotlin', 'react-native', 'swift', 'java', 'python'] as const
 const validBackendTopics = [
   'csharp',
   'dotnet',
@@ -22,6 +23,7 @@ const validBackendTopics = [
 type Difficulty = (typeof validDifficulties)[number]
 type QuizType = (typeof validTypes)[number]
 type FrontendTopic = (typeof validFrontendTopics)[number]
+type MobileTopic = (typeof validMobileTopics)[number]
 type BackendTopic = (typeof validBackendTopics)[number]
 type TopicsByDifficulty = Record<Difficulty, string>
 
@@ -31,6 +33,14 @@ const frontendAllTopics: TopicsByDifficulty = {
   hard: 'Advanced JavaScript, TypeScript, React',
   'very-hard': 'Advanced Frontend Concepts',
   expert: 'Senior Frontend Architecture',
+}
+
+const mobileAllTopics: TopicsByDifficulty = {
+  easy: 'Mobile basics: platform overview, UI components, navigation',
+  medium: 'State management, device APIs, networking fundamentals',
+  hard: 'Offline storage, background tasks, testing basics',
+  'very-hard': 'Performance tuning, animations, native integrations',
+  expert: 'Mobile architecture, CI/CD, store readiness, scalability',
 }
 
 const frontendSpecificTopics = {
@@ -76,6 +86,51 @@ const frontendSpecificTopics = {
     hard: 'Advanced: state management, SSR in Next.js',
     'very-hard': 'Expert: performance in React/Next.js',
     expert: 'Senior: architecture for React/Next.js apps',
+  },
+}
+
+const mobileSpecificTopics = {
+  'dart-flutter': {
+    easy: 'Dart basics and Flutter widgets, layouts',
+    medium: 'State management (setState, Provider), navigation, forms',
+    hard: 'Async programming, REST/gRPC integration, animations',
+    'very-hard': 'Performance optimization, isolates, custom render objects',
+    expert: 'Architecture, platform channels, CI/CD, store distribution',
+  },
+  kotlin: {
+    easy: 'Kotlin basics: null safety, classes, functions',
+    medium: 'Android components: activities/fragments, RecyclerView, navigation',
+    hard: 'Coroutines and Flow, dependency injection (Hilt/Koin), Room',
+    'very-hard': 'WorkManager, performance profiling, testing strategies',
+    expert: 'Modularization, Compose architecture, CI/CD pipelines',
+  },
+  'react-native': {
+    easy: 'React Native basics: components, JSX, styling',
+    medium: 'Navigation, state (useState/useReducer), platform APIs',
+    hard: 'Native modules, gestures/animations, performance tuning',
+    'very-hard': 'Offline-first data, deep links, complex state (Redux/Zustand)',
+    expert: 'Large-scale architecture, monorepos, release workflows',
+  },
+  swift: {
+    easy: 'Swift basics: optionals, control flow, structs vs classes',
+    medium: 'UIKit/SwiftUI views, navigation, delegates',
+    hard: 'Concurrency (GCD/async-await), networking, Core Data',
+    'very-hard': 'Performance profiling, memory management, background modes',
+    expert: 'Architecture (MVVM/VIPER), modularization, testing/CI',
+  },
+  java: {
+    easy: 'Java basics: OOP, collections, exceptions',
+    medium: 'Android fundamentals: activities, layouts, intents',
+    hard: 'Threading (Executors), networking, SQLite/Room',
+    'very-hard': 'Performance profiling, memory leaks, security basics',
+    expert: 'Large-scale Android architecture, modular apps, test pipelines',
+  },
+  python: {
+    easy: 'Python basics: syntax, data structures, functions',
+    medium: 'Mobile frameworks (Kivy/BeeWare) basics, UI components',
+    hard: 'Networking, async IO, packaging mobile apps',
+    'very-hard': 'Performance tuning, native bindings, platform specifics',
+    expert: 'Architecture, CI/CD for Python mobile apps, store publication',
   },
 }
 
@@ -163,7 +218,21 @@ const backendSpecificTopics = {
 const QuestionSchema = z.object({
   question: z.string(),
   code: z.string().nullable(),
-  codeLanguage: z.enum(['javascript', 'typescript', 'html', 'css', 'tsx', 'csharp']).nullable(),
+  codeLanguage: z
+    .enum([
+      'javascript',
+      'typescript',
+      'html',
+      'css',
+      'tsx',
+      'csharp',
+      'dart',
+      'kotlin',
+      'swift',
+      'java',
+      'python',
+    ])
+    .nullable(),
   answers: z.array(z.string()).length(4),
   correctIndex: z.number().int().min(0).max(3),
   difficulty: z.enum(validDifficulties),
@@ -185,7 +254,7 @@ export async function GET(request: Request) {
 
     if (!validTypes.includes(typeParam as QuizType)) {
       return NextResponse.json(
-        { error: 'Invalid type. Use "frontend" or "backend"' },
+        { error: 'Invalid type. Use "frontend", "backend" or "mobile"' },
         { status: 400 },
       )
     }
@@ -209,6 +278,19 @@ export async function GET(request: Request) {
       topicDescription = backendTopicsMap[difficulty]
       promptType = `Backend (.NET/C#)${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
       codeLanguages = 'only csharp'
+    } else if (type === 'mobile') {
+      if (topic !== 'all' && !validMobileTopics.includes(topic as MobileTopic)) {
+        return NextResponse.json(
+          { error: `Invalid mobile topic. Valid: ${validMobileTopics.join(', ')}` },
+          { status: 400 },
+        )
+      }
+      const mobileTopicsMap: TopicsByDifficulty =
+        topic === 'all' ? mobileAllTopics : mobileSpecificTopics[topic as MobileTopic]
+      topicDescription = mobileTopicsMap[difficulty]
+      promptType = `Mobile${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
+      codeLanguages =
+        'dart (Flutter), kotlin, swift, java, python, javascript or typescript (for React Native)'
     } else {
       if (topic !== 'all' && !validFrontendTopics.includes(topic as FrontendTopic)) {
         return NextResponse.json(
