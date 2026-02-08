@@ -25,6 +25,11 @@ import grpcIcon from '../../../public/grc.png'
 import htmlcssIcon from '../../../public/html&css.png'
 import jsIcon from '../../../public/js.png'
 import linqIcon from '../../../public/linq.png'
+import kotlinIcon from '../../../public/kotlin.png'
+import swiftIcon from '../../../public/swift.png'
+import javaIcon from '../../../public/java.png'
+import pythonIcon from '../../../public/python.png'
+import mobileIcon from '../../../public/flutter.png'
 import netIcon from '../../../public/net.png'
 import nextjsIcon from '../../../public/nextjs.png'
 import reactIcon from '../../../public/react.png'
@@ -35,6 +40,7 @@ import tsIcon from '../../../public/ts.png'
 import xunitIcon from '../../../public/xunit.png'
 
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
+type Mode = 'frontend' | 'backend' | 'mobile'
 type TopicValue =
   | 'all'
   | 'js'
@@ -43,6 +49,12 @@ type TopicValue =
   | 'react'
   | 'nextjs'
   | 'react-nextjs'
+  | 'dart-flutter'
+  | 'kotlin'
+  | 'react-native'
+  | 'swift'
+  | 'java'
+  | 'python'
   | 'csharp'
   | 'dotnet'
   | 'aspnet'
@@ -70,6 +82,16 @@ const frontendTopics: TopicOption[] = [
   { value: 'react-nextjs', label: 'React + Next.js', icon: reactNextjsIcon },
 ]
 
+const mobileTopics: TopicOption[] = [
+  { value: 'all', label: 'All', icon: mobileIcon },
+  { value: 'dart-flutter', label: 'Dart / Flutter', icon: mobileIcon },
+  { value: 'kotlin', label: 'Kotlin', icon: kotlinIcon },
+  { value: 'react-native', label: 'React Native', icon: reactIcon },
+  { value: 'swift', label: 'Swift', icon: swiftIcon },
+  { value: 'java', label: 'Java', icon: javaIcon },
+  { value: 'python', label: 'Python', icon: pythonIcon },
+]
+
 const backendTopics: TopicOption[] = [
   { value: 'all', label: 'All', icon: netIcon },
   { value: 'csharp', label: 'C#', icon: charmIcon },
@@ -84,14 +106,16 @@ const backendTopics: TopicOption[] = [
   { value: 'xunit', label: 'xUnit', icon: xunitIcon },
 ]
 
-const defaultTopicByMode: Record<'frontend' | 'backend', TopicValue> = {
+const defaultTopicByMode: Record<Mode, TopicValue> = {
   frontend: 'all',
   backend: 'csharp',
+  mobile: 'all',
 }
 
 const LOCAL_STORAGE_KEYS = {
   frontend: 'marathon_best_frontend',
   backend: 'marathon_best_backend',
+  mobile: 'marathon_best_mobile',
 } as const
 
 const topicFilterVariants = {
@@ -117,36 +141,60 @@ export default function MarathonClient() {
   const [marathonFirstWord, ...marathonRestWords] = marathonTitle.split(' ')
   const gameOverRef = useRef<HTMLDivElement>(null)
 
-  const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as
-    | 'frontend'
-    | 'backend'
+  const searchMode = searchParams.get('mode')
+  const initialMode: Mode =
+    searchMode === 'backend' ? 'backend' : searchMode === 'mobile' ? 'mobile' : 'frontend'
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
   const [isGameOver, setIsGameOver] = useState(false)
   const [difficultyIndex, setDifficultyIndex] = useState(0)
-  const [mode, setMode] = useState<'frontend' | 'backend'>(initialMode)
+  const [mode, setMode] = useState<Mode>(initialMode)
   const [topic, setTopic] = useState<TopicValue>(defaultTopicByMode[initialMode])
   const [isLose, setIsLose] = useState(false)
   const [bestScore, setBestScore] = useState(0)
 
   const currentDifficulty = difficulties[difficultyIndex]
   const isFrontend = mode === 'frontend'
-  const topicOptions = isFrontend ? frontendTopics : backendTopics
-  const topicIcon = isFrontend ? reactIcon : charmIcon
-  const topicActiveShadow = isFrontend ? 'shadow-primary/30' : 'shadow-primary-2/30'
-  const topicActiveBorder = isFrontend ? 'border-primary/60' : 'border-primary-2/60'
-  const topicActiveFill = isFrontend ? 'bg-primary' : 'bg-primary-2'
-  const topicActiveGlow = isFrontend
-    ? 'bg-linear-to-r from-primary/40 via-primary/20 to-primary/40'
-    : 'bg-linear-to-r from-primary-2/40 via-primary-2/20 to-primary-2/40'
-  const topicHoverGlow = isFrontend
-    ? 'bg-linear-to-r from-primary/10 via-primary/5 to-transparent'
-    : 'bg-linear-to-r from-primary-2/10 via-primary-2/5 to-transparent'
-  const topicPanelGlow = isFrontend ? 'bg-primary/15' : 'bg-primary-2/15'
-  const topicPanelGradient = isFrontend
-    ? 'from-primary/12 via-transparent to-primary/5'
-    : 'from-primary-2/12 via-transparent to-primary-2/5'
+  const isBackend = mode === 'backend'
+  const isMobile = mode === 'mobile'
+  const topicOptions = isFrontend ? frontendTopics : isBackend ? backendTopics : mobileTopics
+  const topicIcon = isFrontend ? reactIcon : isBackend ? charmIcon : reactIcon
+  const topicActiveShadow = isBackend
+    ? 'shadow-primary-2/30'
+    : isFrontend
+      ? 'shadow-primary/30'
+      : 'shadow-purple-500/40'
+  const topicActiveBorder = isBackend
+    ? 'border-primary-2/60'
+    : isFrontend
+      ? 'border-primary/60'
+      : 'border-purple-500/70'
+  const topicActiveFill = isBackend
+    ? 'bg-primary-2'
+    : isFrontend
+      ? 'bg-primary'
+      : 'bg-gradient-to-r from-purple-600 to-purple-500'
+  const topicActiveGlow = isBackend
+    ? 'bg-linear-to-r from-primary-2/40 via-primary-2/20 to-primary-2/40'
+    : isFrontend
+      ? 'bg-linear-to-r from-primary/40 via-primary/20 to-primary/40'
+      : 'bg-linear-to-r from-purple-500/50 via-purple-400/25 to-purple-500/50'
+  const topicHoverGlow = isBackend
+    ? 'bg-linear-to-r from-primary-2/10 via-primary-2/5 to-transparent'
+    : isFrontend
+      ? 'bg-linear-to-r from-primary/10 via-primary/5 to-transparent'
+      : 'bg-linear-to-r from-purple-500/15 via-purple-400/8 to-transparent'
+  const topicPanelGlow = isBackend
+    ? 'bg-primary-2/15'
+    : isFrontend
+      ? 'bg-primary/15'
+      : 'bg-purple-500/20'
+  const topicPanelGradient = isBackend
+    ? 'from-primary-2/12 via-transparent to-primary-2/5'
+    : isFrontend
+      ? 'from-primary/12 via-transparent to-primary/5'
+      : 'from-purple-500/15 via-transparent to-purple-400/6'
   const token = Cookies.get('token')
   const isAuthenticated = !!token
 
@@ -187,6 +235,12 @@ export default function MarathonClient() {
 
   useEffect(() => {
     const loadBestScore = () => {
+      if (mode === 'mobile') {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.mobile)
+        setBestScore(saved ? parseInt(saved, 10) : 0)
+        return
+      }
+
       if (isAuthenticated && myBestData) {
         const score =
           mode === 'frontend' ? myBestData.bestFrontendScore : myBestData.bestBackendScore
@@ -202,6 +256,16 @@ export default function MarathonClient() {
 
   useEffect(() => {
     if (isGameOver && isLose && currentScore > 0) {
+      if (mode === 'mobile') {
+        const key = LOCAL_STORAGE_KEYS.mobile
+        const currentBest = parseInt(localStorage.getItem(key) || '0', 10)
+        if (currentScore > currentBest) {
+          localStorage.setItem(key, currentScore.toString())
+          setBestScore(currentScore)
+        }
+        return
+      }
+
       if (isAuthenticated) {
         const data: ICreateMarathonAttempt =
           mode === 'frontend'
@@ -271,7 +335,7 @@ export default function MarathonClient() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const handleModeChange = (newMode: 'frontend' | 'backend') => {
+  const handleModeChange = (newMode: Mode) => {
     if (newMode !== mode) {
       setMode(newMode)
       setTopic(defaultTopicByMode[newMode])
@@ -285,7 +349,7 @@ export default function MarathonClient() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden" data-aos="fade">
       <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
       <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
       <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
@@ -296,6 +360,7 @@ export default function MarathonClient() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
+          data-aos="fade-up"
         >
           <h1
             suppressHydrationWarning
@@ -306,7 +371,11 @@ export default function MarathonClient() {
               <span className="text-[#13aeac]"> {marathonRestWords.join(' ')}</span>
             )}
           </h1>
-          <div className="flex sm:flex-row justify-center gap-3 sm:gap-4">
+          <div
+            className="flex sm:flex-row justify-center gap-3 sm:gap-4"
+            data-aos="fade-up"
+            data-aos-delay="80"
+          >
             <motion.button
               whileTap={{ scale: 0.98 }}
               whileHover={{ scale: 1.02 }}
@@ -316,6 +385,8 @@ export default function MarathonClient() {
                   ? 'bg-primary text-white border-primary'
                   : 'bg-card/80 backdrop-blur-md text-foreground border-border'
               }`}
+              data-aos="zoom-in"
+              data-aos-delay="100"
             >
               <span className="relative z-10 flex items-center justify-center gap-2.5">
                 <Image
@@ -346,6 +417,8 @@ export default function MarathonClient() {
                   ? 'bg-primary-2 text-white border-primary-2'
                   : 'bg-card/80 backdrop-blur-md text-foreground border-border'
               }`}
+              data-aos="zoom-in"
+              data-aos-delay="140"
             >
               <span className="relative z-10 flex items-center justify-center gap-2.5">
                 <Image
@@ -366,6 +439,38 @@ export default function MarathonClient() {
                 />
               )}
             </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
+              onClick={() => handleModeChange('mobile')}
+              className={`relative w-full sm:w-auto min-h-11 px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                mode === 'mobile'
+                  ? 'bg-violet-500 text-white border-violet-500'
+                  : 'bg-card/80 backdrop-blur-md text-foreground border-border'
+              }`}
+              data-aos="zoom-in"
+              data-aos-delay="140"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <Image
+                  src={mobileIcon}
+                  alt="mobile"
+                  width={22}
+                  height={22}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+                Mobile
+              </span>
+              {mode === 'mobile' && (
+                <motion.div
+                  layoutId="modeIndicator"
+                  className="absolute inset-0 rounded-3xl bg-violet-500 z-0"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                />
+              )}
+            </motion.button>
           </div>
         </motion.div>
 
@@ -374,6 +479,8 @@ export default function MarathonClient() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.04 }}
+          data-aos="fade-up"
+          data-aos-delay="120"
         >
           <div className={`absolute inset-0 bg-linear-to-br ${topicPanelGradient} opacity-80`} />
           <div
@@ -389,6 +496,8 @@ export default function MarathonClient() {
               animate="show"
               exit={{ opacity: 0, y: -6 }}
               className="relative flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start"
+              data-aos="fade-up"
+              data-aos-delay="140"
             >
               {topicOptions.map((option) => {
                 const isActive = topic === option.value
@@ -398,40 +507,49 @@ export default function MarathonClient() {
                     type="button"
                     layout
                     variants={topicItemVariants}
-                    whileTap={{ scale: 0.97 }}
-                    whileHover={{ scale: 1.03, y: -1 }}
+                    whileTap={{ scale: 0.96 }}
+                    whileHover={{ scale: 1.04, y: -2 }}
                     onClick={() => handleTopicChange(option.value)}
                     aria-pressed={isActive}
                     className={`group relative overflow-hidden rounded-2xl border bg-card/80 px-3.5 py-2 text-xs sm:text-sm font-semibold backdrop-blur transition-all duration-300 ${
                       isActive
-                        ? `text-white ${topicActiveBorder} shadow-lg ${topicActiveShadow}`
-                        : 'text-foreground border-border/60 hover:border-foreground/20 hover:bg-card/95'
+                        ? `text-white ${topicActiveBorder} shadow-xl ${topicActiveShadow} border-opacity-80`
+                        : 'text-foreground border-border/60 hover:border-foreground/30 hover:bg-card/95 hover:shadow-lg'
                     }`}
                   >
                     <span
                       className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${topicHoverGlow}`}
                     />
                     {isActive && (
-                      <motion.span
-                        layoutId="topicIndicator"
-                        className={`absolute inset-0 rounded-2xl ${topicActiveFill}`}
-                        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-                      />
-                    )}
-                    {isActive && (
-                      <motion.span
-                        className={`absolute inset-0 rounded-2xl blur-md ${topicActiveGlow}`}
-                        animate={{ opacity: [0.35, 0.7, 0.35] }}
-                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                      />
+                      <>
+                        <motion.span
+                          layoutId="topicIndicator"
+                          className={`absolute inset-0 rounded-2xl ${topicActiveFill}`}
+                          transition={{ type: 'spring', stiffness: 280, damping: 24 }}
+                        />
+                        <motion.span
+                          className={`absolute inset-0 rounded-2xl blur-lg ${topicActiveGlow}`}
+                          animate={{ opacity: [0.4, 0.8, 0.4] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                        />
+                        {isMobile && (
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-purple-400/20 via-transparent to-purple-400/20"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                          />
+                        )}
+                      </>
                     )}
                     <span className="relative z-10 flex items-center gap-2">
-                      <span
-                        className={`flex h-7 w-7 items-center justify-center rounded-xl border transition-colors ${
+                      <motion.span
+                        className={`flex h-7 w-7 items-center justify-center rounded-xl border transition-all duration-300 ${
                           isActive
-                            ? 'border-white/30 bg-white/10'
-                            : 'border-border/50 bg-background/80 group-hover:bg-background'
+                            ? 'border-white/40 bg-white/20 shadow-lg'
+                            : 'border-border/60 bg-background/90 group-hover:border-foreground/30 group-hover:bg-background group-hover:shadow-md'
                         }`}
+                        animate={isActive && isMobile ? { scale: [1, 1.1, 1] } : {}}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
                       >
                         <Image
                           src={option.icon ?? topicIcon}
@@ -440,8 +558,14 @@ export default function MarathonClient() {
                           height={18}
                           className="h-4 w-4 object-contain"
                         />
-                      </span>
-                      <span className="whitespace-nowrap">{option.label}</span>
+                      </motion.span>
+                      <motion.span
+                        className="whitespace-nowrap"
+                        animate={isActive && isMobile ? { fontWeight: [600, 700, 600] } : {}}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      >
+                        {option.label}
+                      </motion.span>
                     </span>
                   </motion.button>
                 )
@@ -455,32 +579,70 @@ export default function MarathonClient() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.08 }}
+          data-aos="fade-up"
+          data-aos-delay="160"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+          <motion.div
+            className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground"
+            whileHover={{ scale: 1.05, y: -1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.span
+              className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80"
+              animate={mode === 'mobile' ? { rotate: [0, 360] } : {}}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 5, ease: 'linear' }}
+            >
               <Trophy className="w-3.5 h-3.5 text-foreground/70" />
-            </span>
+            </motion.span>
             <span className="uppercase tracking-wide">{t('marathon.bestScore')}</span>
-            <span className="font-semibold text-foreground/80">{bestScore}</span>
-          </div>
+            <motion.span
+              className="font-semibold text-foreground/80"
+              animate={mode === 'mobile' ? { scale: [1, 1.1, 1] } : {}}
+              transition={{ duration: 1, repeat: Infinity, repeatDelay: 3 }}
+            >
+              {bestScore}
+            </motion.span>
+          </motion.div>
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+          <motion.div
+            className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground"
+            whileHover={{ scale: 1.05, y: -1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.span
+              className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80"
+              animate={mode === 'mobile' ? { scale: [1, 1.2, 1] } : {}}
+              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 4 }}
+            >
               <Zap className="w-3.5 h-3.5 text-foreground/70" />
-            </span>
+            </motion.span>
             <span className="uppercase tracking-wide">{t('marathon.difficulty')}</span>
             <span className="font-semibold text-foreground/80">
               {t(`marathon.difficulties.${currentDifficulty}`)}
             </span>
-          </div>
+          </motion.div>
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80">
+          <motion.div
+            className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground"
+            whileHover={{ scale: 1.05, y: -1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.span
+              className="flex items-center justify-center w-5 h-5 rounded-full bg-background/80"
+              animate={mode === 'mobile' ? { opacity: [0.7, 1, 0.7] } : {}}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            >
               <CheckCircle2 className="w-3.5 h-3.5 text-foreground/70" />
-            </span>
+            </motion.span>
             <span className="uppercase tracking-wide">{t('marathon.currentScore')}</span>
-            <span className="font-semibold text-foreground/80">{currentScore}</span>
-          </div>
+            <motion.span
+              className="font-semibold text-foreground/80"
+              animate={currentScore > 0 && mode === 'mobile' ? { scale: [1, 1.15, 1] } : {}}
+              transition={{ duration: 0.3 }}
+            >
+              {currentScore}
+            </motion.span>
+          </motion.div>
         </motion.div>
 
         {isGameOver && (
@@ -488,12 +650,18 @@ export default function MarathonClient() {
             ref={gameOverRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            data-aos="zoom-in"
+            data-aos-delay="120"
           >
             <GameOver currentScore={currentScore} record={bestScore} onRestart={handleRestart} />
           </motion.div>
         )}
 
-        {(isLoading || isFetching) && <Loading />}
+        {(isLoading || isFetching) && (
+          <div data-aos="fade-up">
+            <Loading />
+          </div>
+        )}
         {isError && <Error message={t('marathon.errorLoading')} />}
         {!questions.length && !isLoading && !isFetching && !isError && (
           <Error message={t('marathon.noQuestions')} />
@@ -503,10 +671,17 @@ export default function MarathonClient() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${lang}-${currentDifficulty}-${currentIndex}-${mode}-${topic}`}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.4 }}
+              initial={{ opacity: 0, x: 50, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -50, scale: 0.95 }}
+              transition={{
+                duration: mode === 'mobile' ? 0.5 : 0.4,
+                type: 'spring',
+                stiffness: mode === 'mobile' ? 200 : 300,
+                damping: 25,
+              }}
+              data-aos="fade-up"
+              data-aos-delay="120"
             >
               <QuestionCard
                 question={currentQuestion}
