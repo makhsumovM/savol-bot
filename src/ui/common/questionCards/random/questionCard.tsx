@@ -82,6 +82,8 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5 }}
       className="w-full rounded-xl border bg-card ring-1 ring-primary/10 p-4 sm:p-5 lg:p-6"
+      data-aos="fade-up"
+      data-aos-delay="80"
     >
       <header className="flex items-start justify-between gap-3 pb-3 border-b border-border/60">
         <div className="flex items-center gap-2.5">
@@ -131,6 +133,8 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border text-[12px] sm:text-sm lg:text-base font-medium leading-snug ${getAnswerClasses(
               i,
             )}`}
+            data-aos="fade-up"
+            data-aos-delay={160 + i * 60}
           >
             <span className="flex items-center justify-center w-7 h-7 rounded-lg border-2 text-xs font-bold shrink-0">
               {letters[i]}
