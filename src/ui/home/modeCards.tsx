@@ -74,7 +74,11 @@ const themeMap: Record<
 export function ModeCards({ modes }: ModeCardsProps) {
   const router = useRouter()
   return (
-    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
+    <div
+      className="relative mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16"
+      data-aos="fade-up"
+      data-aos-delay="60"
+    >
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
       <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-border/40 to-transparent pointer-events-none" />
       <motion.div
@@ -105,6 +109,8 @@ export function ModeCards({ modes }: ModeCardsProps) {
                 border-border/40 ${theme.hoverBorder}
                 focus-visible:outline-none focus-visible:ring-2 ${theme.focusRing} focus-visible:ring-offset-2 focus-visible:ring-offset-background
               `}
+              data-aos="fade-up"
+              data-aos-delay={140 + index * 60}
             >
               <div
                 className={`absolute inset-0 bg-linear-to-br ${theme.hoverOverlay} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
