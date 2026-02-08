@@ -103,6 +103,8 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
 
   return (
     <motion.div
+      data-aos="fade-up"
+      data-aos-delay={index * 40}
       initial={{ opacity: 0, x: -30, scale: 0.98 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       transition={{
