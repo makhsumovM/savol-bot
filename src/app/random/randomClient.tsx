@@ -176,7 +176,7 @@ export default function RandomClient() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden" data-aos="fade">
       <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
       <div className="absolute -top-40 -right-40 h-80 w-[320px] sm:h-[460px] sm:w-[460px] rounded-full bg-primary/20 blur-[100px] animate-pulse-slow" />
       <div className="absolute -bottom-40 -left-40 h-[300px] w-[300px] sm:h-[440px] sm:w-[440px] rounded-full bg-secondary/15 blur-[100px] animate-pulse-slow" />
@@ -187,6 +187,7 @@ export default function RandomClient() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
+          data-aos="fade-up"
         >
           <h1
             suppressHydrationWarning
@@ -197,7 +198,11 @@ export default function RandomClient() {
               <span className="text-[#13aeac]"> {randomRestWords.join(' ')}</span>
             )}
           </h1>
-          <div className="flex sm:flex-row justify-center gap-3 sm:gap-4">
+          <div
+            className="flex sm:flex-row justify-center gap-3 sm:gap-4"
+            data-aos="fade-up"
+            data-aos-delay="80"
+          >
             <motion.button
               whileTap={{ scale: 0.98 }}
               whileHover={{ scale: 1.02 }}
@@ -207,6 +212,8 @@ export default function RandomClient() {
                   ? 'bg-primary text-white border-primary'
                   : 'bg-card/80 backdrop-blur-md text-foreground border-border'
               }`}
+              data-aos="zoom-in"
+              data-aos-delay="100"
             >
               <span className="relative z-10 flex items-center justify-center gap-2.5">
                 <Image
@@ -237,6 +244,8 @@ export default function RandomClient() {
                   ? 'bg-primary-2 text-white border-primary-2'
                   : 'bg-card/80 backdrop-blur-md text-foreground border-border'
               }`}
+              data-aos="zoom-in"
+              data-aos-delay="140"
             >
               <span className="relative z-10 flex items-center justify-center gap-2.5">
                 <Image
@@ -265,6 +274,8 @@ export default function RandomClient() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.04 }}
+          data-aos="fade-up"
+          data-aos-delay="120"
         >
           <div className={`absolute inset-0 bg-linear-to-br ${topicPanelGradient} opacity-80`} />
           <div
@@ -280,6 +291,8 @@ export default function RandomClient() {
               animate="show"
               exit={{ opacity: 0, y: -6 }}
               className="relative flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start"
+              data-aos="fade-up"
+              data-aos-delay="140"
             >
               {topicOptions.map((option) => {
                 const isActive = topic === option.value
@@ -341,7 +354,11 @@ export default function RandomClient() {
           </AnimatePresence>
         </motion.div>
 
-        {(isLoading || isFetching) && <Loading />}
+        {(isLoading || isFetching) && (
+          <div data-aos="fade-up">
+            <Loading />
+          </div>
+        )}
         {isError && <Error message={t('errors.loadFailed')} />}
         {!questions.length && !isLoading && !isFetching && !isError && (
           <Error message={t('random.noQuestions')} />
@@ -355,6 +372,8 @@ export default function RandomClient() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.4 }}
+              data-aos="fade-up"
+              data-aos-delay="120"
             >
               <QuestionCard
                 question={currentQuestion}
