@@ -1,16 +1,16 @@
-const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
-const SITE_URL = RAW_SITE_URL.replace(/\/+$/, '')
+const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const SITE_URL = RAW_SITE_URL.replace(/\/+$/, '');
 
 export const siteConfig = {
   name: 'SkillCheck',
-  title: 'SkillCheck - AI-тренажер для технических интервью',
+  title: 'SkillCheck - AI-платформа для тестирования разработчиков и подготовки к интервью',
   titleTemplate: '%s | SkillCheck',
 
   description:
-    'SkillCheck - бесплатная AI-платформа для подготовки к техническим собеседованиям. Онлайн-тесты по JavaScript, TypeScript, React, Next.js, C#, ASP.NET и другим технологиям. Марафоны, случайные вопросы, рейтинг и личная статистика.',
+    'SkillCheck - open-source платформа, которая помогает разработчикам проверять знания, готовиться к техническим собеседованиям и соревноваться в рейтинге. Вопросы генерируются моделью Google Gemini в реальном времени.',
 
   shortDescription:
-    'AI-платформа для тестирования знаний разработчиков и подготовки к интервью.',
+    'AI-платформа для тестирования разработчиков и подготовки к интервью.',
 
   url: SITE_URL,
 
@@ -21,10 +21,10 @@ export const siteConfig = {
 
   keywords: [
     'SkillCheck',
-    'AI тесты для программистов',
-    'подготовка к техническому собеседованию',
-    'тренажер для интервью',
-    'программирование онлайн тесты',
+    'AI тесты для разработчиков',
+    'технические интервью',
+    'подготовка к интервью',
+    'онлайн тесты для программистов',
     'JavaScript тесты',
     'TypeScript тесты',
     'React тесты',
@@ -33,10 +33,9 @@ export const siteConfig = {
     'ASP.NET тесты',
     'frontend вопросы',
     'backend вопросы',
-    'coding interview practice',
-    'technical interview preparation',
-    'programming quiz',
+    'Google Gemini',
     'developer skill assessment',
+    'coding interview practice',
   ],
 
   creator: 'SkillCheck Team',
@@ -62,7 +61,7 @@ export const siteConfig = {
     google: 'gSrZyl2wPCVWzZfpHA8e2fXPoeo9bpXdUDwhnyEJKR8',
     yandex: '',
   },
-}
+};
 
-export type SiteConfig = typeof siteConfig
-export type Locale = (typeof siteConfig.locales)[number]
+export type SiteConfig = typeof siteConfig;
+export type Locale = (typeof siteConfig.locales)[number];
