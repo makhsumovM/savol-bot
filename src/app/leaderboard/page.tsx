@@ -45,12 +45,15 @@ const LeaderboardPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="text-center mb-12 sm:mb-16"
+          data-aos="fade-up"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            data-aos="zoom-in"
+            data-aos-delay="60"
           >
             <Trophy className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">{t('leaderboard.top')}</span>
