@@ -7,7 +7,7 @@ const routes: Array<{
   changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
 }> = [
   {
-    path: '',
+    path: '/',
     priority: 1.0,
     changeFrequency: 'daily',
   },
@@ -21,16 +21,10 @@ const routes: Array<{
     priority: 0.9,
     changeFrequency: 'daily',
   },
-
   {
     path: '/leaderboard',
-    priority: 0.8,
+    priority: 0.7,
     changeFrequency: 'hourly',
-  },
-  {
-    path: '/profile',
-    priority: 0.5,
-    changeFrequency: 'weekly',
   },
 ]
 
@@ -39,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
 
   return routes.map((route) => ({
-    url: route.path ? `${baseUrl}${route.path}` : baseUrl,
+    url: new URL(route.path, baseUrl).toString(),
     lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
