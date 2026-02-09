@@ -29,12 +29,7 @@
     "profile": "Profile",
     "login": "Login"
   },
-  "home": {
-    "cta": {
-      "startMarathon": "Start Marathon →",
-      "features": "Smooth rhythm, balanced difficulty, and subtle animations"
-    }
-  },
+
   "leaderboard": {
     "title": "Leaderboard",
     "description": "Compare your results with other players.",
