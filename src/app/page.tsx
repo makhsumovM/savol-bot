@@ -52,18 +52,12 @@ export default function Home() {
       <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-primary-2/15 blur-[120px] animate-pulse-slow" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-14 sm:py-20 md:py-28 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        <div
           className="space-y-7 sm:space-y-8 text-center lg:text-left"
           data-aos="fade-up"
         >
-          <motion.div
+          <div
             className="text-center lg:text-left"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             data-aos="fade-up"
             data-aos-delay="80"
           >
@@ -74,7 +68,7 @@ export default function Home() {
               <span className="text-[#ec6216]">Skill</span>
               <span className="text-[#13aeac]">Check</span>
             </h1>
-          </motion.div>
+          </div>
 
           <motion.p
             className="text-base sm:text-lg md:text-2xl font-medium text-foreground/80"
@@ -84,13 +78,13 @@ export default function Home() {
             {t('app.subtitle')}
           </motion.p>
 
-          <motion.p
+          <p
             className="max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground"
             data-aos="fade-up"
             data-aos-delay="180"
           >
             <Typewriter text={t('app.description')} delay={1.1} speed={0.02} />
-          </motion.p>
+          </p>
 
           <nav
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center lg:justify-start"
@@ -98,10 +92,8 @@ export default function Home() {
             data-aos-delay="240"
           >
             {navLinks.map(({ href, icon: Icon, label }) => (
-              <motion.div
+              <div
                 key={href}
-                whileHover={{ scale: 1.05, y: -1 }}
-                transition={{ type: 'spring', stiffness: 300 }}
               >
                 <Link
                   href={href}
@@ -110,10 +102,10 @@ export default function Home() {
                   <Icon size={20} />
                   <span>{label}</span>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </nav>
-        </motion.div>
+        </div>
 
         <HomeLeaderboardPreview />
       </div>

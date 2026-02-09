@@ -38,10 +38,7 @@ const HeaderComponent = () => {
 
   return (
     <>
-      <motion.header
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+      <header
         className="sticky top-0 z-50 flex items-center justify-between px-3 py-2 backdrop-blur-lg bg-background/80 border-b border-border/70 shadow-sm"
       >
         <Link href="/" className="shrink-0 z-10">
@@ -109,7 +106,7 @@ const HeaderComponent = () => {
             </div>
           )}
         </div>
-      </motion.header>
+      </header>
 
       <motion.nav
         initial={{ opacity: 0, y: 20 }}

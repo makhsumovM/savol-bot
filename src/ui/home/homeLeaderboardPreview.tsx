@@ -95,14 +95,7 @@ export const HomeLeaderboardPreview = () => {
   const isLoading = leaderboardPending
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.15 }}
-      className="relative mt-8 lg:mt-0"
-      data-aos="fade-up"
-      data-aos-delay="100"
-    >
+    <div className="relative mt-8 lg:mt-0" data-aos="fade-up" data-aos-delay="100">
       <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/25 blur-[80px] animate-pulse" />
       <div
         className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] animate-pulse"
@@ -146,36 +139,12 @@ export const HomeLeaderboardPreview = () => {
                 const isMe = player.rank === myRank
 
                 return (
-                  <motion.div
+                  <div
                     key={player.rank}
-                    layout
-                    initial={{ opacity: 0, x: -30, scale: 0.95 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: 30, scale: 0.95 }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    transition={{
-                      duration: 0.25,
-                      delay: 0.02 + index * 0.05,
-                      type: 'spring',
-                      stiffness: 250,
-                      damping: 25,
-                      scale: {
-                        type: 'spring',
-                        stiffness: 350,
-                        damping: 25,
-                        duration: 0.15,
-                      },
-                      y: {
-                        type: 'spring',
-                        stiffness: 350,
-                        damping: 25,
-                        duration: 0.15,
-                      },
-                    }}
                     className={`
       relative flex items-center justify-between rounded-xl px-3.5 py-2.5
       backdrop-blur-md cursor-pointer
-      transition-all duration-300
+      transition-all duration-300 hover:scale-[1.02]
       ${
         isMe
           ? 'border-2 border-primary-2 bg-primary/19 shadow-lg shadow-primary-2/25'
@@ -236,7 +205,7 @@ export const HomeLeaderboardPreview = () => {
                       </motion.span>
                       <span className="text-[10px] text-muted-foreground">pts</span>
                     </div>
-                  </motion.div>
+                  </div>
                 )
               })}
             </AnimatePresence>
@@ -305,6 +274,6 @@ export const HomeLeaderboardPreview = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
