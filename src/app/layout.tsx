@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import '../styles/globals.css'
 import Providers from '@/lib/providers/providers'
 import Header from '@/ui/layout/header'
@@ -9,15 +9,7 @@ const ogImageUrl = new URL(siteConfig.ogImage, metadataBase)
 const iconUrl = new URL(siteConfig.icon, metadataBase)
 const socialLinks = Object.values(siteConfig.social).filter(Boolean) as string[]
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
-  ],
-}
+
 
 export const metadata: Metadata = {
   metadataBase,
