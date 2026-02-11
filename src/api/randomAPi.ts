@@ -3,7 +3,7 @@ import { RandomQuestion } from '@/types/random'
 
 export const randomApi = async (
   lang: string,
-  type: 'frontend' | 'backend' = 'frontend',
+  type: 'frontend' |  'backend' | 'mobile' = 'frontend',
   topic: string = 'all',
   difficulty?: string,
 ) => {
