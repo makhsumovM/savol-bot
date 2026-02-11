@@ -41,14 +41,7 @@ export const updateProfileApi = async (data: FormData) => {
   }
 }
 
-export const logoutApi = async ({ refreshToken }: { refreshToken: string }) => {
-  try {
-    const response = await api.post('/auth/logout', { refreshToken })
-    return response.data
-  } catch (error) {
-    throw error
-  }
-}
+
 
 export const changePasswordApi = async (data: IChangePassword) => {
   try {
