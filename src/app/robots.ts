@@ -1,17 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/seo'
 
-const DISALLOW_PATHS = [
-  '/api/',
-  '/_next/',
-  '/admin/',
-  '/private/',
-  '/login',
-  '/register',
-  '/profile',
-  '/my-rank',
-]
-
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = siteConfig.url
 
@@ -20,10 +9,14 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: DISALLOW_PATHS,
+        disallow: [
+          '/api/',
+          '/admin/',
+          '/private/',
+          '/_next/data/',
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
   }
 }
