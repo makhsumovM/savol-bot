@@ -4,7 +4,8 @@ import { z } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 
 const validDifficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
-const validTypes = ['frontend', 'backend'] as const
+const validMobileTopics = ['dart-flutter', 'kotlin', 'react-native', 'swift', 'java', 'python'] as const
+const validTypes = ['frontend', 'backend', 'mobile'] as const
 const validFrontendTopics = ['js', 'ts', 'htmlcss', 'react', 'nextjs', 'react-nextjs'] as const
 const validBackendTopics = [
   'csharp',
@@ -22,6 +23,7 @@ const validBackendTopics = [
 type Difficulty = (typeof validDifficulties)[number]
 type QuizType = (typeof validTypes)[number]
 type FrontendTopic = (typeof validFrontendTopics)[number]
+type MobileTopic = (typeof validMobileTopics)[number]
 type BackendTopic = (typeof validBackendTopics)[number]
 type TopicsByDifficulty = Record<Difficulty, string>
 
@@ -78,7 +80,57 @@ const frontendSpecificTopics = {
     expert: 'Senior: architecture for React/Next.js apps',
   },
 }
-
+const mobileAllTopics: TopicsByDifficulty = {
+  easy: 'Mobile basics: platform overview, UI components, navigation',
+  medium: 'State management, device APIs, networking fundamentals',
+  hard: 'Offline storage, background tasks, testing basics',
+  'very-hard': 'Performance tuning, animations, native integrations',
+  expert: 'Mobile architecture, CI/CD, store readiness, scalability',
+}
+const mobileSpecificTopics = {
+  'dart-flutter': {
+    easy: 'Dart basics and Flutter widgets, layouts',
+    medium: 'State management (setState, Provider), navigation, forms',
+    hard: 'Async programming, REST/gRPC integration, animations',
+    'very-hard': 'Performance optimization, isolates, custom render objects',
+    expert: 'Architecture, platform channels, CI/CD, store distribution',
+  },
+  kotlin: {
+    easy: 'Kotlin basics: null safety, classes, functions',
+    medium: 'Android components: activities/fragments, RecyclerView, navigation',
+    hard: 'Coroutines and Flow, dependency injection (Hilt/Koin), Room',
+    'very-hard': 'WorkManager, performance profiling, testing strategies',
+    expert: 'Modularization, Compose architecture, CI/CD pipelines',
+  },
+  'react-native': {
+    easy: 'React Native basics: components, JSX, styling',
+    medium: 'Navigation, state (useState/useReducer), platform APIs',
+    hard: 'Native modules, gestures/animations, performance tuning',
+    'very-hard': 'Offline-first data, deep links, complex state (Redux/Zustand)',
+    expert: 'Large-scale architecture, monorepos, release workflows',
+  },
+  swift: {
+    easy: 'Swift basics: optionals, control flow, structs vs classes',
+    medium: 'UIKit/SwiftUI views, navigation, delegates',
+    hard: 'Concurrency (GCD/async-await), networking, Core Data',
+    'very-hard': 'Performance profiling, memory management, background modes',
+    expert: 'Architecture (MVVM/VIPER), modularization, testing/CI',
+  },
+  java: {
+    easy: 'Java basics: OOP, collections, exceptions',
+    medium: 'Android fundamentals: activities, layouts, intents',
+    hard: 'Threading (Executors), networking, SQLite/Room',
+    'very-hard': 'Performance profiling, memory leaks, security basics',
+    expert: 'Large-scale Android architecture, modular apps, test pipelines',
+  },
+  python: {
+    easy: 'Python basics: syntax, data structures, functions',
+    medium: 'Mobile frameworks (Kivy/BeeWare) basics, UI components',
+    hard: 'Networking, async IO, packaging mobile apps',
+    'very-hard': 'Performance tuning, native bindings, platform specifics',
+    expert: 'Architecture, CI/CD for Python mobile apps, store publication',
+  },
+}
 const backendAllTopics = {
   easy: 'C# basics, .NET CLI, ASP.NET Core basics, LINQ fundamentals',
   medium: 'C#, .NET, ASP.NET Core, Entity Framework Core, Dapper',
@@ -185,7 +237,7 @@ export async function GET(request: Request) {
 
     if (!validTypes.includes(typeParam as QuizType)) {
       return NextResponse.json(
-        { error: 'Invalid type. Use "frontend" or "backend"' },
+        { error: 'Invalid type. Use "frontend"  "backend" or "mobile"' },
         { status: 400 },
       )
     }
@@ -198,35 +250,50 @@ export async function GET(request: Request) {
     let promptType: string
     let codeLanguages: string
 
-    if (type === 'backend') {
-      if (topic !== 'all' && !validBackendTopics.includes(topic as BackendTopic)) {
-        return NextResponse.json(
-          { error: `Invalid backend topic. Valid: ${validBackendTopics.join(', ')}` },
-          { status: 400 },
-        )
-      }
-      topicsByDifficulty =
-        topic === 'all' ? backendAllTopics : backendSpecificTopics[topic as BackendTopic]
-      if (difficulty) {
-        topicDescription = topicsByDifficulty[difficulty]
-      }
-      promptType = `Backend (.NET/C#)${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
-      codeLanguages = 'only csharp'
-    } else {
-      if (topic !== 'all' && !validFrontendTopics.includes(topic as FrontendTopic)) {
-        return NextResponse.json(
-          { error: `Invalid frontend topic. Valid: ${validFrontendTopics.join(', ')}` },
-          { status: 400 },
-        )
-      }
-      topicsByDifficulty =
-        topic === 'all' ? frontendAllTopics : frontendSpecificTopics[topic as FrontendTopic]
-      if (difficulty) {
-        topicDescription = topicsByDifficulty[difficulty]
-      }
-      promptType = `Frontend${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
-      codeLanguages = 'javascript, typescript, html, css or tsx'
-    }
+ if (type === 'backend') {
+  if (topic !== 'all' && !validBackendTopics.includes(topic as BackendTopic)) {
+    return NextResponse.json(
+      { error: `Invalid backend topic. Valid: ${validBackendTopics.join(', ')}` },
+      { status: 400 },
+    )
+  }
+  topicsByDifficulty =
+    topic === 'all' ? backendAllTopics : backendSpecificTopics[topic as BackendTopic]
+  if (difficulty) {
+    topicDescription = topicsByDifficulty[difficulty]
+  }
+  promptType = `Backend (.NET/C#)${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
+  codeLanguages = 'only csharp'
+} else if (type === 'frontend') {  // ← Измените на else if
+  if (topic !== 'all' && !validFrontendTopics.includes(topic as FrontendTopic)) {
+    return NextResponse.json(
+      { error: `Invalid frontend topic. Valid: ${validFrontendTopics.join(', ')}` },
+      { status: 400 },
+    )
+  }
+  topicsByDifficulty =
+    topic === 'all' ? frontendAllTopics : frontendSpecificTopics[topic as FrontendTopic]
+  if (difficulty) {
+    topicDescription = topicsByDifficulty[difficulty]
+  }
+  promptType = `Frontend${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
+  codeLanguages = 'javascript, typescript, html, css or tsx'
+} else {  // mobile
+  if (topic !== 'all' && !validMobileTopics.includes(topic as MobileTopic)) {
+    return NextResponse.json(
+      { error: `Invalid mobile topic. Valid: ${validMobileTopics.join(', ')}` },
+      { status: 400 },
+    )
+  }
+
+  topicsByDifficulty =
+    topic === 'all' ? mobileAllTopics : mobileSpecificTopics[topic as MobileTopic]
+  if (difficulty) {
+    topicDescription = topicsByDifficulty[difficulty]
+  }
+  promptType = `Mobile${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
+  codeLanguages = 'dart, kotlin, swift, java or python'
+}
 
     const difficultyRule = difficulty
       ? `  - "difficulty" — always "${difficulty}"`
