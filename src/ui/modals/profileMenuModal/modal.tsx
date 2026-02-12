@@ -4,10 +4,8 @@ import React, { useEffect, useRef } from 'react'
 import { User, LogOut, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import { logoutApi } from '@/api/authApi'
 import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useMutation } from '@tanstack/react-query'
 import { getCookie, removeCookie } from '@/lib/utils/cookies'
 
 interface IProfileMenuModalProps {
@@ -21,9 +19,7 @@ const ProfileMenuModal = ({
 }: IProfileMenuModalProps) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { mutate } = useMutation({
-    mutationFn: logoutApi,
-  })
+
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -49,12 +45,6 @@ const ProfileMenuModal = ({
   }, [profileMenuModalOpen, setProfileMenuModalOpen])
 
   const handleLogout = () => {
-    const token = getCookie('refreshToken')
-    if (token) {
-      mutate({ refreshToken: token })
-    }
-
-    removeCookie('refreshToken')
     removeCookie('token')
     setProfileMenuModalOpen(false)
     setTimeout(() => {
