@@ -1,16 +1,15 @@
-const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-const SITE_URL = RAW_SITE_URL.replace(/\/+$/, '');
+const RAW_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+const SITE_URL = RAW_SITE_URL.replace(/\/+$/, '')
 
 export const siteConfig = {
   name: 'SkillCheck',
-  title: 'SkillCheck - AI-платформа для тестирования разработчиков и подготовки к интервью',
+  title: 'SkillCheck - AI-платформа для тестирования разработчиков ',
   titleTemplate: '%s | SkillCheck',
 
   description:
-    'SkillCheck - open-source платформа, которая помогает разработчикам проверять знания, готовиться к техническим собеседованиям и соревноваться в рейтинге. Вопросы генерируются моделью Google Gemini в реальном времени.',
+    'SkillCheck - open-source платформа, которая помогает разработчикам проверять знания, готовиться к техническим собеседованиям и соревноваться в рейтинге. Вопросы генерируются с помощью AI, что обеспечивает актуальность и разнообразие. Присоединяйтесь к сообществу разработчиков и улучшайте свои навыки вместе с SkillCheck!',
 
-  shortDescription:
-    'AI-платформа для тестирования разработчиков и подготовки к интервью.',
+  shortDescription: 'AI-платформа для тестирования разработчиков и подготовки к интервью.',
 
   url: SITE_URL,
 
@@ -22,20 +21,77 @@ export const siteConfig = {
   keywords: [
     'SkillCheck',
     'AI тесты для разработчиков',
-    'технические интервью',
-    'подготовка к интервью',
+    'платформа для тестирования программистов',
+    'подготовка к техническому интервью',
+    'технические собеседования',
     'онлайн тесты для программистов',
+    'проверка знаний программистов',
+    'оценка навыков разработчиков',
+    'AI платформа для обучения',
+    'вопросы для программистов',
+
     'JavaScript тесты',
     'TypeScript тесты',
     'React тесты',
     'Next.js тесты',
+    'Frontend интервью',
+    'Backend интервью',
+    'Frontend вопросы',
+    'Backend вопросы',
+    'Fullstack интервью',
+
     'C# тесты',
     'ASP.NET тесты',
-    'frontend вопросы',
-    'backend вопросы',
-    'Google Gemini',
-    'developer skill assessment',
+    '.NET интервью',
+    'backend разработка',
+    'frontend разработка',
+
     'coding interview practice',
+    'developer skill assessment',
+    'technical interview preparation',
+    'programming interview questions',
+    'online coding tests',
+    'developer testing platform',
+    'AI generated questions',
+    'AI interview questions',
+
+    'Google Gemini',
+    'Gemini API',
+    'AI генерация вопросов',
+    'умные тесты для программистов',
+
+    'подготовка junior разработчика',
+    'подготовка middle разработчика',
+    'подготовка senior разработчика',
+    'junior developer interview',
+    'middle developer interview',
+    'senior developer interview',
+
+    'алгоритмы и структуры данных',
+    'вопросы по алгоритмам',
+    'вопросы по JavaScript',
+    'вопросы по React',
+    'вопросы по TypeScript',
+
+    'онлайн платформа для обучения программированию',
+    'самопроверка знаний программиста',
+    'практика перед собеседованием',
+    'марафон вопросов',
+    'случайные вопросы для программистов',
+
+    'рейтинговая система разработчиков',
+    'соревнование программистов',
+    'developer leaderboard',
+    'coding challenge platform',
+
+    'open source платформа',
+    'open source education',
+    'IT обучение онлайн',
+    'обучение программированию',
+
+    'SkillCheck AI',
+    'SkillCheck interview',
+    'SkillCheck tests',
   ],
 
   creator: 'SkillCheck Team',
@@ -61,7 +117,7 @@ export const siteConfig = {
     google: 'gSrZyl2wPCVWzZfpHA8e2fXPoeo9bpXdUDwhnyEJKR8',
     yandex: '',
   },
-};
+}
 
-export type SiteConfig = typeof siteConfig;
-export type Locale = (typeof siteConfig.locales)[number];
+export type SiteConfig = typeof siteConfig
+export type Locale = (typeof siteConfig.locales)[number]
