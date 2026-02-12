@@ -23,6 +23,6 @@ export interface MarathonQuestion {
 export interface ICreateMarathonAttempt {
   frontendScore: number
   backendScore: number
+  mobdevScore: number
 }
-
 
