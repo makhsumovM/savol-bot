@@ -6,6 +6,7 @@ export interface ILeaderboard {
   profilePicture: string
   totalScore: number
   lastAchievedAt: string
+  mobdevScore: number
 }
 
 export interface ILeaderboardResponse {
