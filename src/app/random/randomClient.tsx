@@ -19,6 +19,11 @@ import entityIcon from '../../../public/entity.png'
 import grpcIcon from '../../../public/grc.png'
 import htmlcssIcon from '../../../public/html&css.png'
 import jsIcon from '../../../public/js.png'
+import kotlinIcon from '../../../public/kotlin.png'
+import swiftIcon from '../../../public/swift.png'
+import javaIcon from '../../../public/java.png'
+import pythonIcon from '../../../public/python.png'
+import mobileIcon from '../../../public/flutter.png'
 import linqIcon from '../../../public/linq.png'
 import netIcon from '../../../public/net.png'
 import nextjsIcon from '../../../public/nextjs.png'
@@ -29,6 +34,7 @@ import signalRIcon from '../../../public/signalR.png'
 import tsIcon from '../../../public/ts.png'
 import xunitIcon from '../../../public/xunit.png'
 
+type Mode = 'frontend' | 'backend' | 'mobile'
 type TopicValue =
   | 'all'
   | 'js'
@@ -37,6 +43,12 @@ type TopicValue =
   | 'react'
   | 'nextjs'
   | 'react-nextjs'
+  | 'dart-flutter'
+  | 'kotlin'
+  | 'react-native'
+  | 'swift'
+  | 'java'
+  | 'python'
   | 'csharp'
   | 'dotnet'
   | 'aspnet'
@@ -63,6 +75,15 @@ const frontendTopics: TopicOption[] = [
   { value: 'nextjs', label: 'Next.js', icon: nextjsIcon },
   { value: 'react-nextjs', label: 'React + Next.js', icon: reactNextjsIcon },
 ]
+const mobileTopics: TopicOption[] = [
+  { value: 'all', label: 'All', icon: mobileIcon },
+  { value: 'dart-flutter', label: 'Dart / Flutter', icon: mobileIcon },
+  { value: 'kotlin', label: 'Kotlin', icon: kotlinIcon },
+  { value: 'react-native', label: 'React Native', icon: reactIcon },
+  { value: 'swift', label: 'Swift', icon: swiftIcon },
+  { value: 'java', label: 'Java', icon: javaIcon },
+  { value: 'python', label: 'Python', icon: pythonIcon },
+]
 
 const backendTopics: TopicOption[] = [
   { value: 'all', label: 'All', icon: netIcon },
@@ -78,9 +99,10 @@ const backendTopics: TopicOption[] = [
   { value: 'xunit', label: 'xUnit', icon: xunitIcon },
 ]
 
-const defaultTopicByMode: Record<'frontend' | 'backend', TopicValue> = {
+const defaultTopicByMode: Record<Mode, TopicValue> = {
   frontend: 'all',
   backend: 'csharp',
+  mobile: 'all',
 }
 
 const topicFilterVariants = {
@@ -98,23 +120,32 @@ const topicItemVariants = {
 }
 
 export default function RandomClient() {
+
   const { t, i18n } = useTranslation()
   const searchParams = useSearchParams()
   const lang = i18n.language
   const randomTitle = t('random.title')
   const [randomFirstWord, ...randomRestWords] = randomTitle.split(' ')
+  const allTopicsLabel = t('common.allTopics')
 
-  const initialMode = (searchParams.get('mode') === 'backend' ? 'backend' : 'frontend') as
-    | 'frontend'
-    | 'backend'
+  const searchMode = searchParams.get('mode')
+  const initialMode: Mode =
+    searchMode === 'backend' ? 'backend' : searchMode === 'mobile' ? 'mobile' : 'frontend'
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [blockNumber, setBlockNumber] = useState(1)
-  const [mode, setMode] = useState<'frontend' | 'backend'>(initialMode)
+  const [mode, setMode] = useState<Mode>(initialMode)
   const [topic, setTopic] = useState<TopicValue>(defaultTopicByMode[initialMode])
 
   const isFrontend = mode === 'frontend'
-  const topicOptions = isFrontend ? frontendTopics : backendTopics
+  const isBackend = mode === 'backend'
+  const isMobile = mode === 'mobile'
+   const topicOptions = (isFrontend ? frontendTopics : isBackend ? backendTopics : mobileTopics).map(
+    (option) => ({
+      ...option,
+      label: option.value === 'all' ? allTopicsLabel : option.label,
+    })
+  )
   const topicIcon = isFrontend ? reactIcon : charmIcon
   const topicActiveShadow = isFrontend ? 'shadow-primary/30' : 'shadow-primary-2/30'
   const topicActiveBorder = isFrontend ? 'border-primary/60' : 'border-primary-2/60'
@@ -162,7 +193,7 @@ export default function RandomClient() {
     }, 1000)
   }
 
-  const handleModeChange = (newMode: 'frontend' | 'backend') => {
+  const handleModeChange = (newMode: Mode) => {
     if (newMode !== mode) {
       setMode(newMode)
       setTopic(defaultTopicByMode[newMode])
@@ -266,6 +297,37 @@ export default function RandomClient() {
                 />
               )}
             </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
+              onClick={() => handleModeChange('mobile')}
+              className={`relative w-full sm:w-auto min-h-11 px-5 sm:px-6 py-2.5 rounded-3xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-md border ${
+                mode === 'mobile'
+                  ? 'bg-violet-500 text-white border-violet-500'
+                  : 'bg-card/80 backdrop-blur-md text-foreground border-border'
+              }`}
+              data-aos="zoom-in"
+              data-aos-delay="140"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <Image
+                  src={mobileIcon}
+                  alt="mobile"
+                  width={22}
+                  height={22}
+                  className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                />
+                Mobile
+              </span>
+              {mode === 'mobile' && (
+                <motion.div
+                  layoutId="modeIndicator"
+                  className="absolute inset-0 rounded-3xl bg-violet-500 z-0"
+                  initial={false}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+                />
+              )}
+            </motion.button>
           </div>
         </motion.div>
 
@@ -302,40 +364,49 @@ export default function RandomClient() {
                     type="button"
                     layout
                     variants={topicItemVariants}
-                    whileTap={{ scale: 0.97 }}
-                    whileHover={{ scale: 1.03, y: -1 }}
+                    whileTap={{ scale: 0.96 }}
+                    whileHover={{ scale: 1.04, y: -2 }}
                     onClick={() => handleTopicChange(option.value)}
                     aria-pressed={isActive}
                     className={`group relative overflow-hidden rounded-2xl border bg-card/80 px-3.5 py-2 text-xs sm:text-sm font-semibold backdrop-blur transition-all duration-300 ${
                       isActive
-                        ? `text-white ${topicActiveBorder} shadow-lg ${topicActiveShadow}`
-                        : 'text-foreground border-border/60 hover:border-foreground/20 hover:bg-card/95'
+                        ? `text-white ${topicActiveBorder} shadow-xl ${topicActiveShadow} border-opacity-80`
+                        : 'text-foreground border-border/60 hover:border-foreground/30 hover:bg-card/95 hover:shadow-lg'
                     }`}
                   >
                     <span
                       className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${topicHoverGlow}`}
                     />
                     {isActive && (
-                      <motion.span
-                        layoutId="topicIndicator"
-                        className={`absolute inset-0 rounded-2xl ${topicActiveFill}`}
-                        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-                      />
-                    )}
-                    {isActive && (
-                      <motion.span
-                        className={`absolute inset-0 rounded-2xl blur-md ${topicActiveGlow}`}
-                        animate={{ opacity: [0.35, 0.7, 0.35] }}
-                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                      />
+                      <>
+                        <motion.span
+                          layoutId="topicIndicator"
+                          className={`absolute inset-0 rounded-2xl ${topicActiveFill}`}
+                          transition={{ type: 'spring', stiffness: 280, damping: 24 }}
+                        />
+                        <motion.span
+                          className={`absolute inset-0 rounded-2xl blur-lg ${topicActiveGlow}`}
+                          animate={{ opacity: [0.4, 0.8, 0.4] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                        />
+                        {isMobile && (
+                          <motion.div
+                            className="absolute inset-0 bg-linear-to-r from-purple-400/20 via-transparent to-purple-400/20"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                          />
+                        )}
+                      </>
                     )}
                     <span className="relative z-10 flex items-center gap-2">
-                      <span
-                        className={`flex h-7 w-7 items-center justify-center rounded-xl border transition-colors ${
+                      <motion.span
+                        className={`flex h-7 w-7 items-center justify-center rounded-xl border transition-all duration-300 ${
                           isActive
-                            ? 'border-white/30 bg-white/10'
-                            : 'border-border/50 bg-background/80 group-hover:bg-background'
+                            ? 'border-white/40 bg-white/20 shadow-lg'
+                            : 'border-border/60 bg-background/90 group-hover:border-foreground/30 group-hover:bg-background group-hover:shadow-md'
                         }`}
+                        animate={isActive && isMobile ? { scale: [1, 1.1, 1] } : {}}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
                       >
                         <Image
                           src={option.icon ?? topicIcon}
@@ -344,8 +415,14 @@ export default function RandomClient() {
                           height={18}
                           className="h-4 w-4 object-contain"
                         />
-                      </span>
-                      <span className="whitespace-nowrap">{option.label}</span>
+                      </motion.span>
+                      <motion.span
+                        className="whitespace-nowrap"
+                        animate={isActive && isMobile ? { fontWeight: [600, 700, 600] } : {}}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      >
+                        {option.label}
+                      </motion.span>
                     </span>
                   </motion.button>
                 )
