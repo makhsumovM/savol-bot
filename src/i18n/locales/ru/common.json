@@ -140,6 +140,7 @@
     "joined": "Дата регистрации",
     "bestFrontendScore": "Лучший результат (Frontend)",
     "bestBackendScore": "Лучший результат (Backend)",
+    "bestMobdevScore": "Лучший результат (Mobile)",
     "updateProfile": "Редактировать профиль",
     "changePassword": "Сменить пароль",
     "totalScore": "Общий счёт",
@@ -242,6 +243,7 @@
     "error": "Не удалось обновить пароль."
   },
   "common": {
-    "viewAll": "Показать всё"
+    "viewAll": "Показать всё",
+    "allTopics": "Все темы"
   }
 }

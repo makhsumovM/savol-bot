@@ -135,6 +135,7 @@
     "joined": "Joined",
     "bestFrontendScore": "Best Frontend Score",
     "bestBackendScore": "Best Backend Score",
+    "bestMobdevScore": "Best Mobile Score",
     "updateProfile": "Edit Profile",
     "changePassword": "Change Password",
     "totalScore": "Total Score",
@@ -237,6 +238,7 @@
     "error": "Failed to update password."
   },
   "common": {
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "allTopics": "All Topics"
   }
 }

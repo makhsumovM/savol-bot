@@ -140,6 +140,7 @@
     "joined": "Санаи ҳамроҳшавӣ",
     "bestFrontendScore": "Беҳтарин натиҷа (Frontend)",
     "bestBackendScore": "Беҳтарин натиҷа (Backend)",
+    "bestMobdevScore": "Беҳтарин натиҷа (Mobile)",
     "updateProfile": "Таҳрири профил",
     "changePassword": "Тағйири рамз",
     "totalScore": "Холи умумӣ",
@@ -242,6 +243,7 @@
     "error": "Навсозии рамз иҷро нашуд."
   },
   "common": {
-    "viewAll": "Намоиши ҳама"
+    "viewAll": "Намоиши ҳама",
+    "allTopics": "Ҳама мавзӯъҳо"
   }
 }
