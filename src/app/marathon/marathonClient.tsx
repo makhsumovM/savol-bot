@@ -41,8 +41,9 @@ import xunitIcon from '../../../public/xunit.png'
 
 const difficulties = ['easy', 'medium', 'hard', 'very-hard', 'expert'] as const
 type Mode = 'frontend' | 'backend' | 'mobile'
-type TopicValue =
-  | 'all'
+
+
+type SpecificTopic =
   | 'js'
   | 'ts'
   | 'htmlcss'
@@ -65,6 +66,8 @@ type TopicValue =
   | 'signalr'
   | 'serilog'
   | 'xunit'
+
+type TopicValue = 'all' | SpecificTopic
 
 type TopicOption = {
   value: TopicValue
@@ -141,6 +144,8 @@ export default function MarathonClient() {
   const [marathonFirstWord, ...marathonRestWords] = marathonTitle.split(' ')
   const gameOverRef = useRef<HTMLDivElement>(null)
 
+  const allTopicsLabel = t('common.allTopics')
+
   const searchMode = searchParams.get('mode')
   const initialMode: Mode =
     searchMode === 'backend' ? 'backend' : searchMode === 'mobile' ? 'mobile' : 'frontend'
@@ -158,7 +163,14 @@ export default function MarathonClient() {
   const isFrontend = mode === 'frontend'
   const isBackend = mode === 'backend'
   const isMobile = mode === 'mobile'
-  const topicOptions = isFrontend ? frontendTopics : isBackend ? backendTopics : mobileTopics
+
+  const topicOptions = (isFrontend ? frontendTopics : isBackend ? backendTopics : mobileTopics).map(
+    (option) => ({
+      ...option,
+      label: option.value === 'all' ? allTopicsLabel : option.label,
+    })
+  )
+
   const topicIcon = isFrontend ? reactIcon : isBackend ? charmIcon : reactIcon
   const topicActiveShadow = isBackend
     ? 'shadow-primary-2/30'
@@ -226,6 +238,9 @@ export default function MarathonClient() {
           LOCAL_STORAGE_KEYS.frontend,
           response.data.bestFrontendScore.toString(),
         )
+      } else if (mode === 'mobile') {
+        setBestScore(response.data.bestMobileScore)
+        localStorage.setItem(LOCAL_STORAGE_KEYS.mobile, response.data.bestMobileScore.toString())
       } else {
         setBestScore(response.data.bestBackendScore)
         localStorage.setItem(LOCAL_STORAGE_KEYS.backend, response.data.bestBackendScore.toString())
@@ -235,45 +250,58 @@ export default function MarathonClient() {
 
   useEffect(() => {
     const loadBestScore = () => {
-      if (mode === 'mobile') {
-        const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.mobile)
-        setBestScore(saved ? parseInt(saved, 10) : 0)
-        return
-      }
-
       if (isAuthenticated && myBestData) {
         const score =
-          mode === 'frontend' ? myBestData.bestFrontendScore : myBestData.bestBackendScore
+          mode === 'frontend'
+            ? myBestData.bestFrontendScore
+            : mode === 'backend'
+              ? myBestData.bestBackendScore
+              : myBestData.bestMobdevScore
         setBestScore(score || 0)
       } else {
-        const key = mode === 'frontend' ? LOCAL_STORAGE_KEYS.frontend : LOCAL_STORAGE_KEYS.backend
+        const key =
+          mode === 'frontend'
+            ? LOCAL_STORAGE_KEYS.frontend
+            : mode === 'backend'
+              ? LOCAL_STORAGE_KEYS.backend
+              : LOCAL_STORAGE_KEYS.mobile
         const saved = localStorage.getItem(key)
         setBestScore(saved ? parseInt(saved, 10) : 0)
       }
     }
     loadBestScore()
-  }, [mode, lang, isAuthenticated, myBestData])
+  }, [mode, isAuthenticated, myBestData])
 
   useEffect(() => {
     if (isGameOver && isLose && currentScore > 0) {
-      if (mode === 'mobile') {
-        const key = LOCAL_STORAGE_KEYS.mobile
-        const currentBest = parseInt(localStorage.getItem(key) || '0', 10)
-        if (currentScore > currentBest) {
-          localStorage.setItem(key, currentScore.toString())
-          setBestScore(currentScore)
-        }
-        return
-      }
-
       if (isAuthenticated) {
         const data: ICreateMarathonAttempt =
           mode === 'frontend'
-            ? { frontendScore: currentScore, backendScore: 0 }
-            : { frontendScore: 0, backendScore: currentScore }
+            ? {
+                frontendScore: currentScore,
+                backendScore: 0,
+                mobdevScore: 0,
+              }
+            : mode === 'backend'
+              ? {
+                  frontendScore: 0,
+                  backendScore: currentScore,
+                  mobdevScore: 0,
+                }
+              : {
+                  frontendScore: 0,
+                  backendScore: 0,
+                  mobdevScore: currentScore,
+                }
+
         mutateAttempt(data)
       } else {
-        const key = mode === 'frontend' ? LOCAL_STORAGE_KEYS.frontend : LOCAL_STORAGE_KEYS.backend
+        const key =
+          mode === 'frontend'
+            ? LOCAL_STORAGE_KEYS.frontend
+            : mode === 'backend'
+              ? LOCAL_STORAGE_KEYS.backend
+              : LOCAL_STORAGE_KEYS.mobile
         const currentBest = parseInt(localStorage.getItem(key) || '0', 10)
         if (currentScore > currentBest) {
           localStorage.setItem(key, currentScore.toString())
@@ -290,11 +318,13 @@ export default function MarathonClient() {
     setIsLose(false)
     setDifficultyIndex(0)
   }, [lang, mode, topic])
+
   useEffect(() => {
     if (isGameOver && gameOverRef.current) {
       gameOverRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }, [isGameOver])
+
   const currentQuestion = questions[currentIndex]
 
   const handleAnswer = (isCorrect: boolean) => {
@@ -534,7 +564,7 @@ export default function MarathonClient() {
                         />
                         {isMobile && (
                           <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-purple-400/20 via-transparent to-purple-400/20"
+                            className="absolute inset-0 bg-linear-to-r from-purple-400/20 via-transparent to-purple-400/20"
                             animate={{ x: ['-100%', '100%'] }}
                             transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
                           />
