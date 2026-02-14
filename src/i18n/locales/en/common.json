@@ -32,7 +32,7 @@
 
   "leaderboard": {
     "title": "Leaderboard",
-    "description": "Compare your results with other players.",
+    "description": "Track the best results across frontend, backend, and mobile.",
     "columns": {
       "rank": "Rank",
       "username": "Username",
@@ -40,10 +40,20 @@
       "name": "Name",
       "date": "Date"
     },
+    "meta": {
+      "multiTrack": "Multi-track scoring"
+    },
+    "stats": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Mobile",
+      "updated": "Updated"
+    },
     "common": "You",
     "inLeaderboard": "on the leaderboard",
     "top": "Top Players",
-    "top5": "Top 5 Players"
+    "top5": "Top 5 Players",
+    "empty": "No participants in the leaderboard yet"
   },
   "loading": {
     "text": "Loading..."
@@ -239,6 +249,7 @@
   },
   "common": {
     "viewAll": "View All",
-    "allTopics": "All Topics"
+    "allTopics": "All Topics",
+    "you": "You"
   }
 }
