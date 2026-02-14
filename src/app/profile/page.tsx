@@ -15,6 +15,7 @@ import { Edit2, Lock, Trophy, Sparkles, Calendar, Mail, User, Zap, Award } from 
 import Image from 'next/image'
 import charmIcon from '../../../public/ccharm.png'
 import reactIcon from '../../../public/react.png'
+import mobileIcon from '../../../public/flutter.png'
 
 const ProfilePage = () => {
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false)
@@ -214,7 +215,34 @@ const ProfilePage = () => {
                       </p>
                     </div>
                   </div>
+
                 </div>
+                <div
+                        className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                      >
+                        <div className="absolute inset-0 bg-linear-to-br from-primary-2/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        <div className="relative flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-2xl border border-primary-2/20 bg-primary-2/10 flex items-center justify-center shrink-0">
+                            <Image
+                              src={mobileIcon}
+                              alt="Mobile"
+                              width={28}
+                              height={28}
+                              className="object-contain"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
+                              {t('profile.bestMobdevScore')}
+                            </p>
+                            <p className="text-2xl font-black text-foreground">
+                              {data?.bestResult.bestMobdevScore ?? 0}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
               </div>
 
               <div className="mt-6 flex flex-wrap justify-center sm:justify-start gap-4 border border-border/30 rounded-xl p-4 bg-muted/5">
