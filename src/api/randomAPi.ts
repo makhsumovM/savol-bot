@@ -1,30 +1,20 @@
 import axios from 'axios'
 import { RandomQuestion } from '@/types/random'
-
 export const randomApi = async (
   lang: string,
-  type: 'frontend' |  'backend' | 'mobile' = 'frontend',
+  type: 'frontend' | 'backend' | 'mobile' = 'frontend',
   topic: string = 'all',
-  difficulty?: string,
 ) => {
   try {
-    const params: Record<string, string> = {
-      lang,
-      type,
-      topic,
-    }
-    if (difficulty) {
-      params.difficulty = difficulty
-    }
-    const response = await axios.get('/api/ai/random', {
-      params,
+    const { data } = await axios.get<{ result: RandomQuestion[] }>('/api/ai/random', {
+      params: {
+        lang,
+        type,
+        topic,
+      },
     })
-    const resultString = response.data.result
 
-    if (!resultString) return []
-
-    const questions: RandomQuestion[] = JSON.parse(resultString)
-    return questions
+    return data.result || []
   } catch (error) {
     console.error('Error fetching random questions:', error)
     return []
