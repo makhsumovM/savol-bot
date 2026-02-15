@@ -3,7 +3,6 @@ import {
   backendSpecificTopics,
   BackendTopic,
   CODE_LANGUAGES,
-  Difficulty,
   frontendAllTopics,
   frontendSpecificTopics,
   FrontendTopic,
@@ -28,26 +27,19 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url)
     const lang = url.searchParams.get('lang') || 'en'
-    const difficultyParam = url.searchParams.get('difficulty')
     const typeParam = url.searchParams.get('type') || ''
     const topic = url.searchParams.get('topic') || 'all'
 
-    if (difficultyParam && !validDifficulties.includes(difficultyParam as Difficulty)) {
-      return NextResponse.json({ error: 'Invalid difficulty' }, { status: 400 })
-    }
-
     if (!validTypes.includes(typeParam as QuizType)) {
       return NextResponse.json(
-        { error: 'Invalid type. Use "frontend","backend" or "mobile"' },
+        { error: 'Invalid type. Use "frontend", "backend" or "mobile"' },
         { status: 400 },
       )
     }
 
-    const difficulty = difficultyParam ? (difficultyParam as Difficulty) : null
     const type = typeParam as QuizType
 
     let topicsByDifficulty: TopicsByDifficulty
-    let topicDescription: string | null = null
     let promptType: string
     let codeLanguages: string
 
@@ -60,9 +52,6 @@ export async function GET(request: Request) {
       }
       topicsByDifficulty =
         topic === 'all' ? backendAllTopics : backendSpecificTopics[topic as BackendTopic]
-      if (difficulty) {
-        topicDescription = topicsByDifficulty[difficulty]
-      }
       promptType = `Backend (.NET/C#)${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
       codeLanguages = CODE_LANGUAGES.backend
     } else if (type === 'frontend') {
@@ -74,9 +63,6 @@ export async function GET(request: Request) {
       }
       topicsByDifficulty =
         topic === 'all' ? frontendAllTopics : frontendSpecificTopics[topic as FrontendTopic]
-      if (difficulty) {
-        topicDescription = topicsByDifficulty[difficulty]
-      }
       promptType = `Frontend${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
       codeLanguages = CODE_LANGUAGES.frontend
     } else {
@@ -86,25 +72,13 @@ export async function GET(request: Request) {
           { status: 400 },
         )
       }
-
       topicsByDifficulty =
         topic === 'all' ? mobileAllTopics : mobileSpecificTopics[topic as MobileTopic]
-      if (difficulty) {
-        topicDescription = topicsByDifficulty[difficulty]
-      }
       promptType = `Mobile${topic !== 'all' ? ` (${topic.toUpperCase()})` : ''}`
       codeLanguages = CODE_LANGUAGES.mobile
     }
 
-    const difficultyRule = difficulty
-      ? `  - "difficulty" — always "${difficulty}"`
-      : `  - "difficulty" — one of ${validDifficulties.join(
-          ', ',
-        )} (random for each question; use at least 3 different difficulty levels)`
-
-    const themeRule = difficulty
-      ? `- Theme: ${topicDescription}`
-      : `- Theme by difficulty:
+    const themeRule = `- Theme by difficulty:
 ${Object.entries(topicsByDifficulty)
   .map(([diff, desc]) => `  - ${diff}: ${desc}`)
   .join('\n')}`
@@ -112,16 +86,16 @@ ${Object.entries(topicsByDifficulty)
     const prompt = `
 You are creating 10 interview questions for ${promptType}.
 
-VERY IMPORTANT RULES  FOLLOW EXACTLY:
+VERY IMPORTANT RULES — FOLLOW EXACTLY:
 - Output ONLY pure JSON, nothing else: no text, no explanations, no markdown
 - Exactly 10 questions
 - Each question must have:
-  - "question"  question text
-  - "answers"  exactly 4 answer options (strings)
-  - "correctIndex"  number from 0 to 3, indicating the correct answer
-${difficultyRule}
-  - "code"  code or null
-  - "codeLanguage"  code language or null
+  - "question" — question text
+  - "answers" — exactly 4 answer options (strings)
+  - "correctIndex" — number from 0 to 3, indicating the correct answer
+  - "difficulty" — one of ${validDifficulties.join(', ')} (random for each question; use at least 3 different difficulty levels)
+  - "code" — code or null
+  - "codeLanguage" — code language or null
 
 - IMPORTANT ABOUT correctIndex:
   The correct answer MUST BE RANDOM!
@@ -130,18 +104,18 @@ ${difficultyRule}
   Change the position of the correct answer differently in each question!
 
 - Only 2 or 3 questions out of 10 should have code
-  The remaining 7-8 questions  purely textual (code: null, codeLanguage: null)
+  The remaining 7–8 questions — purely textual (code: null, codeLanguage: null)
 
-- If there is code  the language must be correct:
+- If there is code — the language must be correct:
   ${codeLanguages}
 
-- Questions and answers in language: "${lang == 'tj' ? 'Tajik' : lang}"
+- Questions and answers in language: "${lang === 'tj' ? 'Tajik' : lang}"
 ${themeRule}
 
 - The correct answer must correspond to the number in correctIndex
 - Answer options must be plausible, but only one correct
 
-Make everything simple, clear and random  especially the position of the correct answer!
+Make everything simple, clear and random — especially the position of the correct answer!
 `
 
     const client = new GoogleGenAI({
@@ -158,9 +132,12 @@ Make everything simple, clear and random  especially the position of the correct
         responseSchema: zodToJsonSchema(QuestionsSchema),
       },
     })
+
     if (!result.text) throw new Error('Empty AI response')
+
     const parsedQuestions = JSON.parse(result.text)
     const validatedQuestions = QuestionsSchema.parse(parsedQuestions)
+
     return NextResponse.json({ result: validatedQuestions })
   } catch (error) {
     console.error('Question generation error:', error)
