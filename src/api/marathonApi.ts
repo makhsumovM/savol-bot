@@ -6,7 +6,7 @@ export const marathonApi = async (
   lang: string,
   difficulty: string,
   type: 'frontend' | 'backend' | 'mobile' = 'frontend',
-  topic: string = 'all'
+  topic: string = 'all',
 ) => {
   try {
     const response = await axios.get('/api/ai/marathon', {
@@ -18,7 +18,7 @@ export const marathonApi = async (
       },
     })
 
-    const questions: MarathonQuestion[] = JSON.parse(response.data.result)
+    const questions: MarathonQuestion[] = response.data.result
     return questions
   } catch (error) {
     console.error('Error fetching marathon questions:', error)
