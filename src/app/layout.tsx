@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
+import type {Metadata} from 'next'
 import '../styles/globals.css'
 import Providers from '@/lib/providers/providers'
 import Header from '@/ui/layout/header'
-import { siteConfig } from '@/lib/seo'
+import {siteConfig} from '@/lib/seo'
+import {GoogleAnalytics} from '@next/third-parties/google'
 
 const metadataBase = new URL(siteConfig.url)
 const ogImageUrl = new URL(siteConfig.ogImage, metadataBase)
 const iconUrl = new URL(siteConfig.icon, metadataBase)
 const socialLinks = Object.values(siteConfig.social).filter(Boolean) as string[]
-
 
 
 export const metadata: Metadata = {
@@ -34,10 +34,10 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: siteConfig.favicon, type: 'image/x-icon' },
-      { url: siteConfig.icon, type: 'image/png', sizes: '512x512' },
+      {url: siteConfig.favicon, type: 'image/x-icon'},
+      {url: siteConfig.icon, type: 'image/png', sizes: '512x512'},
     ],
-    apple: [{ url: siteConfig.icon, type: 'image/png', sizes: '512x512' }],
+    apple: [{url: siteConfig.icon, type: 'image/png', sizes: '512x512'}],
   },
 
   twitter: {
@@ -104,7 +104,7 @@ const organizationJsonLd = {
     height: 512,
   },
   description: siteConfig.shortDescription,
-  ...(socialLinks.length ? { sameAs: socialLinks } : {}),
+  ...(socialLinks.length ? {sameAs: socialLinks} : {}),
 }
 
 const websiteJsonLd = {
@@ -138,32 +138,33 @@ const educationalAppJsonLd = {
 }
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
     <html lang={siteConfig.language} suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(educationalAppJsonLd) }}
-        />
-      </head>
-      <body className="antialiased">
-        <Providers>
-          <Header />
-          <main className="pb-20 md:pb-0">{children}</main>
-        </Providers>
-      </body>
+    <head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(organizationJsonLd)}}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(websiteJsonLd)}}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(educationalAppJsonLd)}}
+      />
+    </head>
+    <body className="antialiased">
+    <Providers>
+      <Header />
+      <main className="pb-20 md:pb-0">{children}</main>
+    </Providers>
+    </body>
+    <GoogleAnalytics gaId="G-06G53LZERE" />
     </html>
   )
 }
