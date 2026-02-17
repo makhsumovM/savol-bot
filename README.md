@@ -1,176 +1,158 @@
-# SkillCheck - AI-платформа для тестирования разработчиков и подготовки к интервью
+<div align="center">
+  <br />
+  <h1 align="center" style="font-size: 3rem; font-weight: 900;">⚡ SkillCheck</h1>
+  <h3 align="center">AI-Powered Developer Skill Assessment Platform</h3>
+  
+  <p align="center">
+    Master your stack. Challenge an AI. Compete globally.
+  </p>
 
-> SkillCheck - open-source платформа, которая помогает разработчикам проверять знания, готовиться к техническим собеседованиям и соревноваться в рейтинге. Вопросы генерируются моделью Google Gemini в реальном времени.
+  <p align="center">
+    <a href="https://skillcheck.kavsaracademy.tj/">
+      <img src="https://img.shields.io/badge/LIVE_DEMO-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+    </a>
+  </p>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-skillcheck.kavsaracademy.tj-brightgreen?style=for-the-badge)](https://skillcheck.kavsaracademy.tj/)
+  <p align="center">
+    <img src="https://img.shields.io/badge/Next.js_16-black?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+    <img src="https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS_4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind4" />
+    <img src="https://img.shields.io/badge/Gemini_AI-8E75B2?style=flat-square&logo=google-gemini&logoColor=white" alt="Gemini" />
+  </p>
+</div>
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38bdf8?logo=tailwindcss&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat)
+<br />
 
----
+## 🔮 Overview
 
-## Что такое SkillCheck
+**SkillCheck** is not just another quiz app. It is a **Generative AI-powered** platform that creates unique interview scenarios in real-time. By leveraging **Google Gemini 2.5**, we ensure that no two tests are exactly the same. 
 
-- Подготовка к техническим интервью для Frontend и Backend
-- Онлайн-тесты по JavaScript, TypeScript, React, Next.js, C#, ASP.NET и другим технологиям
-- Марафон и случайный вопрос для быстрой практики
-- Глобальный рейтинг и личная статистика
-- Поддержка языков: Русский, English, Тоҷикӣ
-
----
-
-## Ключевые возможности
-
-| Feature | Description |
-| --- | --- |
-| Marathon Mode | Серия вопросов с начислением баллов и ростом сложности |
-| Random Question | Быстрая практика со случайным вопросом |
-| Leaderboard | Глобальный рейтинг участников |
-| User Profile | Персональная статистика, достижения, прогресс |
-| Multi-language | Русский, English, Тоҷикӣ |
-| AI-Generated Questions | Генерация вопросов через Google Gemini |
+Whether you are preparing for a Senior Frontend role or brushing up on mobile development patterns, SkillCheck adapts to your needs with an immersive, gamified experience.
 
 ---
 
-## Техстек
+## 🚀 Key Features
 
-| Category | Technologies |
-| --- | --- |
-| Framework | Next.js 16 (App Router), React 19 |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS 4, Motion |
-| State | Redux Toolkit, React Query |
-| Forms | React Hook Form, Zod |
-| UI | Radix UI, Lucide Icons |
-| i18n | i18next, react-i18next |
-| AI | Google Gemini API |
+### 🧠 **AI Core**
+*   **Dynamic Generation**: Questions are crafted on-the-fly using advanced prompt engineering.
+*   **Context Aware**: Questions cover specific nuances of React, Node.js, .NET, and Mobile development.
+*   **Smart Feedback**: Instant validation of answers with difficulty adjustments.
 
----
+### 🎮 **Game Modes**
+*   **🔥 Marathon**: A survival mode where difficulty ramps up as you progress. How long can you last?
+*   **🎲 Random**: Quickfire 10-question sprints for rapid knowledge checks.
+*   **⚔️ Leaderboard**: Global ranking system to see where you stand among peers.
 
-## SEO и метаданные
-
-- Базовые метаданные и Open Graph: `src/lib/seo.ts`, `src/app/layout.tsx`
-- Robots и Sitemap: `src/app/robots.ts`, `src/app/sitemap.ts`
-- Для корректных канонических ссылок и OG-URL укажите `NEXT_PUBLIC_SITE_URL`
+### 💎 **Premium Experience**
+*   **Fluid Animations**: Powered by **Framer Motion** for a native-app feel.
+*   **Glassmorphism UI**: Modern aesthetic with **Tailwind CSS v4** styling.
+*   **Dark/Light Themes**: Fully adaptive interface for any time of day.
+*   **Localization**: Native support for **English**, **Russian**, and **Tajik**.
 
 ---
 
-## Структура проекта
+## 🛠️ Tech Stack
+
+Built with the latest and greatest technologies for maximum performance.
+
+| Domain | Technology Stack |
+| :--- | :--- |
+| **Framework** | ![Next.js](https://img.shields.io/badge/-Next.js_16-black?logo=next.js) ![React](https://img.shields.io/badge/-React_19-61DAFB?logo=react&logoColor=black) |
+| **Language** | ![TypeScript](https://img.shields.io/badge/-TypeScript_5-3178C6?logo=typescript&logoColor=white) |
+| **Styling** | ![Tailwind](https://img.shields.io/badge/-Tailwind_CSS_4-38B2AC?logo=tailwind-css) ![Framer Motion](https://img.shields.io/badge/-Framer_Motion-0055FF?logo=framer) |
+| **State** | ![TanStack Query](https://img.shields.io/badge/-React_Query-FF4154?logo=react-query) ![Redux](https://img.shields.io/badge/-Redux_Toolkit-764ABC?logo=redux) |
+| **Integrations** | ![Gemini](https://img.shields.io/badge/-Google_Gemini-8E75B2?logo=google-gemini) ![i18next](https://img.shields.io/badge/-i18next-26A69A?logo=i18next) |
+| **Forms/Valid** | ![Zod](https://img.shields.io/badge/-Zod-3E67B1?logo=zod) ![React Hook Form](https://img.shields.io/badge/-React_Hook_Form-EC5990?logo=react-hook-form) |
+
+---
+
+## 📂 Project Structure
+
+A clean, modular architecture designed for scalability.
 
 ```
 savol-bot/
 ├── src/
-│   ├── app/              # Next.js App Router
-│   │   ├── api/          # API Routes (Gemini endpoints)
-│   │   ├── marathon/     # Marathon quiz page
-│   │   ├── random/       # Random question page
-│   │   ├── leaderboard/  # Global rankings
-│   │   ├── profile/      # User profile
-│   │   ├── my-rank/      # User rank
-│   │   ├── login/        # Authentication
-│   │   └── register/     # Registration
-│   ├── ui/               # Reusable UI components
-│   ├── lib/              # Utilities, store, providers, SEO
-│   ├── types/            # TypeScript types
-│   ├── i18n/             # Localization (en, ru, tj)
-│   └── styles/           # Global styles
-└── public/               # Static assets
+│   ├── app/              # Next.js App Router (Pages & API)
+│   │   ├── api/          # Serverless Functions (Gemini Adapters)
+│   │   ├── marathon/     # Marathon Game Logic
+│   │   ├── leaderboard/  # Ranking System
+│   │   └── ...
+│   ├── ui/               # Atomic UI Components
+│   │   ├── common/       # Buttons, Cards, Modals
+│   │   └── layout/       # Headers, Footers
+│   ├── lib/              # Core Logic & Utilities
+│   ├── types/            # TypeScript Definitions
+│   └── i18n/             # Localization (JSONs)
+├── public/               # Static Assets
+└── ...
 ```
 
 ---
 
-## Быстрый старт
+## ⚡ Getting Started
 
-### Требования
+### Prerequisites
 
-- Node.js 18+
-- npm / yarn / pnpm
+*   **Node.js**: v18.17.0 or higher
+*   **Package Manager**: npm, yarn, or pnpm
 
-### Установка
+### 📥 Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/makhsumovM/savol-bot.git
-cd savol-bot
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/makhsumovM/savol-bot.git
+    cd savol-bot
+    ```
 
-# Install dependencies
-npm install
-```
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-### Переменные окружения
+3.  **Configure Environment**
+    Create a `.env` file in the root directory:
+    ```env
+    # Required for AI Generation
+    GEMINI_API_KEY=your_google_gemini_api_key
+    
+    # API Endpoints
+    NEXT_PUBLIC_API_URL=your_backend_api_url
+    
+    # Optional (SEO)
+    NEXT_PUBLIC_SITE_URL=https://skillcheck.kavsaracademy.tj
+    ```
 
-Создайте `.env` в корне проекта:
-
-```env
-# Required
-GEMINI_API_KEY=your_google_gemini_api_key
-NEXT_PUBLIC_API_URL=your_backend_api_url
-
-# Optional (используется для SEO)
-NEXT_PUBLIC_SITE_URL=https://skillcheck.kavsaracademy.tj
-```
-
-### Запуск разработки
-
-```bash
-npm run dev
-```
-
-Откройте [http://localhost:3000](http://localhost:3000) в браузере.
-
-### Production Build
-
-```bash
-npm run build
-npm start
-```
+4.  **Launch Dev Server**
+    ```bash
+    npm run dev
+    ```
+    Visit `http://localhost:3000` to start testing.
 
 ---
 
-## Скрипты
+## 👥 Authors & Credits
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm start` | Start production server |
-| `npm run lint` | Run ESLint |
+Crafted with passion by the **SkillCheck Team**:
 
----
+*   **Sultonzoda Abdulloh** - *Frontend Engineer*  
+    [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdullo-sultonzoda-75a4ab3a2/)
+    [![Telegram](https://img.shields.io/badge/-Telegram-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/sultonzoda_abdulloh)
 
-## Вклад в проект
+*   **Qosimov Yusufjon** - *Frontend Engineer*  
+    [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/%D0%BC-qosimov-7bb6013a3/)
+    [![Telegram](https://img.shields.io/badge/-Telegram-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/Qosimovy)
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+*   **Makhsumov Muhammad** - *Project Lead*  
+    [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/makhsumovM)
 
 ---
 
-## Поддержка
+## 📜 License
 
-- Email: support@kavsaracademy.tj
-- Telegram: @skillcheck_bot
-- Issues: https://github.com/makhsumovM/savol-bot/issues
+This project is open-source and available under the [MIT License](LICENSE).
 
----
-
-## Авторы
-
-**Sultonzoda Abdulloh** - Frontend Developer  
-LinkedIn: https://www.linkedin.com/in/abdullo-sultonzoda-75a4ab3a2/  
-Telegram: https://t.me/sultonzoda_abdulloh
-
-**Qosimov Yusufjon** - Frontend Developer  
-LinkedIn: https://www.linkedin.com/in/%D0%BC-qosimov-7bb6013a3/  
-Telegram: https://t.me/Qosimovy
-
----
-
-## License
-
-MIT License © 2026 [Makhsumov Muhammad](https://github.com/makhsumovM)
+<p align="center">
+  <sub>Built for the future of developer education. © 2026 SkillCheck.</sub>
+</p>
