@@ -1,28 +1,21 @@
 'use client'
 
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { useQuery } from '@tanstack/react-query'
+import { getTotalUsers } from '@/api/userApi'
 import { useTranslation } from 'react-i18next'
+import { HeroSection } from '@/ui/home/heroSection'
+import { FeaturesSection } from '@/ui/home/featuresSection'
 import { ModeCards } from '@/ui/home/modeCards'
-import { Typewriter } from '@/ui/home/typewriterText'
-import { HomeLeaderboardPreview } from '@/ui/home/homeLeaderboardPreview'
-import { Activity, Dices } from 'lucide-react'
+import { FinalCtaSection } from '@/ui/home/finalCtaSection'
 
 export default function Home() {
   const { t } = useTranslation()
 
-  const navLinks = [
-    {
-      href: '/marathon',
-      icon: Activity,
-      label: t('modes.marathon.title'),
-    },
-    {
-      href: '/random',
-      icon: Dices,
-      label: t('modes.classic.title'),
-    },
-  ]
+  const { data: totalUsers } = useQuery({
+    queryKey: ['totalUsers'],
+    queryFn: getTotalUsers,
+    staleTime: 1000 * 60 * 5,
+  })
 
   const modes = [
     {
@@ -46,71 +39,23 @@ export default function Home() {
   ]
 
   return (
-    <section className="relative p-2 min-h-screen overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
-      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-primary-2/15 blur-[120px] animate-pulse-slow" />
+    <div className="relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-background via-background to-primary/8" />
+      <div className="pointer-events-none absolute -top-56 -right-40 h-[460px] w-[460px] rounded-full bg-primary/18 blur-[130px] animate-pulse-slow" />
+      <div
+        className="pointer-events-none absolute top-[34%] -left-44 h-[420px] w-[420px] rounded-full bg-primary-2/14 blur-[130px] animate-pulse-slow"
+        style={{ animationDelay: '1.2s' }}
+      />
+      <div className="pointer-events-none absolute -bottom-52 left-1/2 h-[420px] w-[760px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-14 sm:py-20 md:py-28 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 items-center">
-        <div
-          className="space-y-7 sm:space-y-8 text-center lg:text-left"
-          data-aos="fade-up"
-        >
-          <div
-            className="text-center lg:text-left"
-            data-aos="fade-up"
-            data-aos-delay="80"
-          >
-            <h1
-              suppressHydrationWarning
-              className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight"
-            >
-              <span className="text-[#ec6216]">Skill</span>
-              <span className="text-[#13aeac]">Check</span>
-            </h1>
-          </div>
-
-          <motion.p
-            className="text-base sm:text-lg md:text-2xl font-medium text-foreground/80"
-            data-aos="fade-up"
-            data-aos-delay="120"
-          >
-            {t('app.subtitle')}
-          </motion.p>
-
-          <p
-            className="max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground"
-            data-aos="fade-up"
-            data-aos-delay="180"
-          >
-            <Typewriter text={t('app.description')} delay={1.1} speed={0.02} />
-          </p>
-
-          <nav
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center lg:justify-start"
-            data-aos="fade-up"
-            data-aos-delay="240"
-          >
-            {navLinks.map(({ href, icon: Icon, label }) => (
-              <div
-                key={href}
-              >
-                <Link
-                  href={href}
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm sm:text-base font-medium bg-primary/5 hover:bg-primary/20 text-primary transition-all duration-300"
-                >
-                  <Icon size={20} />
-                  <span>{label}</span>
-                </Link>
-              </div>
-            ))}
-          </nav>
-        </div>
-
-        <HomeLeaderboardPreview />
+      <div className="relative">
+        <HeroSection totalUsers={totalUsers?.totalUsers} />
+        <FeaturesSection />
+        <section className="relative pb-20">
+          <ModeCards modes={modes} />
+        </section>
+        <FinalCtaSection totalUsers={totalUsers?.totalUsers} />
       </div>
-
-      <ModeCards modes={modes} />
-    </section>
+    </div>
   )
 }
