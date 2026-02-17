@@ -5,6 +5,7 @@ import CodeBlock from '@/ui/common/questionCards/marathon/codeBlock'
 import { motion } from 'framer-motion'
 import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface QuestionCardProps {
   question: MarathonQuestion
@@ -23,6 +24,7 @@ const difficultyShadows: Record<string, string> = {
 }
 
 const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
+  const { t } = useTranslation()
   const [selected, setSelected] = useState<number | null>(null)
   const [answered, setAnswered] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -81,9 +83,8 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className={`w-full rounded-xl border bg-card ring-1 ring-primary/10 ${
-        difficultyShadows[question.difficulty] || 'shadow-lg'
-      } p-4 sm:p-5 lg:p-6`}
+      className={`w-full rounded-xl border bg-card ring-1 ring-primary/10 ${difficultyShadows[question.difficulty] || 'shadow-lg'
+        } p-4 sm:p-5 lg:p-6`}
       data-aos="fade-up"
       data-aos-delay="80"
     >
@@ -112,12 +113,12 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             {copied ? (
               <>
                 <Check className="w-3.5 h-3.5 text-primary" />
-                <span className="text-primary">Copied</span>
+                <span className="text-primary">{t('question.copied')}</span>
               </>
             ) : (
               <>
                 <Copy className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-muted-foreground">Copy</span>
+                <span className="text-muted-foreground">{t('question.copy')}</span>
               </>
             )}
           </motion.button>
@@ -154,11 +155,10 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       <footer className="flex justify-end pt-3 border-t border-border/60">
         {answered && (
           <span
-            className={`px-2.5 py-1 rounded-lg font-semibold text-xs ${
-              selected === question.correctIndex
-                ? 'bg-green-900 text-green-100'
-                : 'bg-red-800 text-red-100'
-            }`}
+            className={`px-2.5 py-1 rounded-lg font-semibold text-xs ${selected === question.correctIndex
+              ? 'bg-green-900 text-green-100'
+              : 'bg-red-800 text-red-100'
+              }`}
           >
             {selected === question.correctIndex ? '✓ Correct' : '✗ Incorrect'}
           </span>
