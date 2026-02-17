@@ -27,9 +27,95 @@
     "myRank": "My Rank",
     "leaderboard": "Leaderboard",
     "profile": "Profile",
-    "login": "Login"
+    "login": "Login",
+    "about": "About"
   },
-
+  "home": {
+    "cta": {
+      "startMarathon": "Start Marathon →",
+      "features": "Smooth rhythm, balanced complexity, and careful animations"
+    },
+    "stats": {
+      "visitors": "Platform visitors",
+      "activeUsers": "active users",
+      "activeLearners": "Active Learners"
+    },
+    "hero": {
+      "badge": "AI-Powered Learning Platform",
+      "startButton": "Start Marathon",
+      "quickPractice": "Quick Practice"
+    },
+    "features": {
+      "title": "Why Choose SkillCheck ?",
+      "subtitle": "Everything you need to master programming skills",
+      "aiPowered": {
+        "title": "AI-Powered",
+        "desc": "Smart question generation"
+      },
+      "focusedPractice": {
+        "title": "Focused Practice",
+        "desc": "Targeted skill building"
+      },
+      "instantFeedback": {
+        "title": "Instant Feedback",
+        "desc": "Real-time results"
+      },
+      "competeAndWin": {
+        "title": "Compete & Win",
+        "desc": "Global leaderboards"
+      }
+    },
+    "finalCta": {
+      "title": "Ready to Level Up Your Skills?",
+      "subtitle": "Join thousands of developers improving their skills every day",
+      "getStarted": "Get Started Free",
+      "learnMore": "Learn More"
+    }
+  },
+  "about": {
+    "hero": {
+      "subtitle": "AI-powered platform for developing programming skills"
+    },
+    "stats": {
+      "title": "Our Achievements",
+      "users": "users",
+      "questions": "questions",
+      "satisfaction": "recommend us",
+      "experience": "years of experience"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "We create an accessible and effective platform for developers of all levels. Our goal is to help you improve your programming skills through practice with AI-generated questions and competition with other developers."
+    },
+    "features": {
+      "title": "What We Offer",
+      "ai": {
+        "title": "AI Testing",
+        "description": "Questions are generated using advanced AI models to ensure relevance and diversity."
+      },
+      "practice": {
+        "title": "Practice Modes",
+        "description": "Choose between marathon, random questions, or coding challenges coming soon."
+      },
+      "community": {
+        "title": "Community",
+        "description": "Compete with other developers and track your progress on the leaderboard."
+      },
+      "instant": {
+        "title": "Instant Feedback",
+        "description": "Get immediate results and explanations for each question."
+      }
+    },
+    "technologies": {
+      "title": "Supported Technologies"
+    },
+    "cta": {
+      "title": "Ready to Start?",
+      "description": "Join the developer community and start improving your skills today.",
+      "startButton": "Start Practice",
+      "leaderboardButton": "View Leaderboard"
+    }
+  },
   "leaderboard": {
     "title": "Leaderboard",
     "description": "Track the best results across frontend, backend, and mobile.",
@@ -41,7 +127,8 @@
       "date": "Date"
     },
     "meta": {
-      "multiTrack": "Multi-track scoring"
+      "multiTrack": "Multi-track scoring",
+      "refreshWindow": "Data refreshed from 15 minutes to 2 hours"
     },
     "stats": {
       "frontend": "Frontend",
