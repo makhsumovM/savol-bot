@@ -4,9 +4,11 @@
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 
 export function ModeToggle() {
+  const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -33,7 +35,7 @@ export function ModeToggle() {
       "
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
-      aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
+      aria-label={`Switch to ${isLight ? t('theme.dark') : t('theme.light')}`}
     >
       <motion.div
         className="absolute inset-0 bg-linear-to-br from-purple-400/20 to-blue-400/20 dark:from-purple-600/20 dark:to-blue-600/20 rounded-full"
