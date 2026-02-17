@@ -12,7 +12,7 @@ interface LeaderboardItemProps {
 
 const rankConfig = {
   1: {
-    icon: <Crown className="w-5 h-5" />,
+    icon: <Crown className="w-4 h-4" />,
     emoji: null,
     bg: 'bg-gradient-to-br from-yellow-400/25 via-amber-500/20 to-orange-400/15',
     border: 'border-yellow-500/50',
@@ -21,7 +21,7 @@ const rankConfig = {
     badge: 'bg-gradient-to-r from-yellow-500 to-amber-500',
   },
   2: {
-    icon: <Medal className="w-5 h-5" />,
+    icon: <Medal className="w-4 h-4" />,
     emoji: null,
     bg: 'bg-gradient-to-br from-slate-300/20 via-gray-400/15 to-slate-500/10',
     border: 'border-slate-400/40',
@@ -30,7 +30,7 @@ const rankConfig = {
     badge: 'bg-gradient-to-r from-slate-400 to-gray-500',
   },
   3: {
-    icon: <Medal className="w-5 h-5" />,
+    icon: <Medal className="w-4 h-4" />,
     emoji: null,
     bg: 'bg-gradient-to-br from-amber-600/20 via-orange-600/15 to-amber-700/10',
     border: 'border-amber-600/40',
@@ -39,7 +39,7 @@ const rankConfig = {
     badge: 'bg-gradient-to-r from-amber-600 to-orange-600',
   },
   4: {
-    icon: <Medal className="w-4 h-4" />,
+    icon: <Medal className="w-3.5 h-3.5" />,
     emoji: null,
     bg: 'bg-gradient-to-br from-blue-500/15 via-blue-600/10 to-indigo-500/10',
     border: 'border-blue-500/30',
@@ -48,7 +48,7 @@ const rankConfig = {
     badge: 'bg-gradient-to-r from-blue-500 to-indigo-500',
   },
   5: {
-    icon: <Medal className="w-4 h-4" />,
+    icon: <Medal className="w-3.5 h-3.5" />,
     emoji: null,
     bg: 'bg-gradient-to-br from-violet-500/15 via-purple-600/10 to-fuchsia-500/10',
     border: 'border-violet-500/30',
@@ -137,50 +137,50 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
         />
       )}
 
-      <div className="hidden lg:grid lg:grid-cols-6 gap-3 items-center px-4 sm:px-6 py-4">
+      <div className="hidden lg:grid lg:grid-cols-6 gap-2.5 items-center px-3 sm:px-4 py-3">
         <div className="flex items-center justify-center">
           <motion.div
             whileHover={{ rotate: player.rank === 1 ? [0, -10, 10, 0] : 0, scale: 1.1 }}
             className={`
-              flex items-center justify-center w-12 h-12 rounded-xl
+              flex items-center justify-center w-10 h-10 rounded-lg
               border transition-all duration-300
               ${config.bg} ${config.border} ${config.text}
             `}
           >
-            {config.icon ?? <span className="text-lg font-bold">{player.rank}</span>}
+            {config.icon ?? <span className="text-base font-bold">{player.rank}</span>}
           </motion.div>
         </div>
 
-        <div className="flex items-center gap-3 col-span-1">
-          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border/50 shrink-0">
+        <div className="flex items-center gap-2.5 col-span-1">
+          <div className="relative w-9 h-9 rounded-full overflow-hidden border border-border/50 shrink-0">
             {player.profilePicture ? (
               <Image
                 src={`${apiUrl}/${player.profilePicture}`}
                 alt={player.fullName}
                 fill
-                sizes="40px"
+                sizes="36px"
                 className="object-cover"
                 unoptimized
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-lg">
+              <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-base">
                 {firstLetter}
               </div>
             )}
           </div>
-          <span className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors truncate">
+          <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors truncate">
             {player.fullName}
           </span>
         </div>
 
         <div className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <Code2 className="w-4 h-4 text-primary shrink-0" />
-            <span className="text-sm sm:text-lg font-bold text-foreground tabular-nums">
+          <div className="flex items-center justify-center gap-1.5 mb-0.5">
+            <Code2 className="w-3.5 h-3.5 text-primary shrink-0" />
+            <span className="text-sm sm:text-base font-bold text-foreground tabular-nums">
               {player.frontendScore.toFixed(0)}
             </span>
           </div>
-          <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+          <div className="h-1 w-full bg-muted/50 rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${frontendPercent}%` }}
@@ -192,13 +192,13 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
         </div>
 
         <div className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <Server className="w-4 h-4 text-primary-2 shrink-0" />
-            <span className="text-sm sm:text-lg font-bold text-foreground tabular-nums">
+          <div className="flex items-center justify-center gap-1.5 mb-0.5">
+            <Server className="w-3.5 h-3.5 text-primary-2 shrink-0" />
+            <span className="text-sm sm:text-base font-bold text-foreground tabular-nums">
               {player.backendScore.toFixed(0)}
             </span>
           </div>
-          <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+          <div className="h-1 w-full bg-muted/50 rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${backendPercent}%` }}
@@ -210,13 +210,13 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
         </div>
 
         <div className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <Smartphone className="w-4 h-4 text-purple-400 shrink-0" />
-            <span className="text-sm sm:text-lg font-bold text-foreground tabular-nums">
+          <div className="flex items-center justify-center gap-1.5 mb-0.5">
+            <Smartphone className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+            <span className="text-sm sm:text-base font-bold text-foreground tabular-nums">
               {(player.mobdevScore || 0).toFixed(0)}
             </span>
           </div>
-          <div className="h-1.5 w-full bg-muted/50 rounded-full overflow-hidden">
+          <div className="h-1 w-full bg-muted/50 rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${mobdevPercent}%` }}
@@ -228,24 +228,24 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
         </div>
 
         <div className="text-right">
-          <div className="flex items-center justify-end gap-2 text-xs sm:text-sm font-medium text-foreground">
-            <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
+          <div className="flex items-center justify-end gap-1.5 text-xs font-medium text-foreground">
+            <Calendar className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
             <span className="hidden sm:inline">{date}</span>
             <span className="sm:hidden">{date.split(' ').slice(0, 2).join(' ')}</span>
           </div>
-          <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground mt-1">
-            <Clock className="w-3 h-3 shrink-0" />
+          <div className="flex items-center justify-end gap-1.5 text-xs text-muted-foreground mt-0.5">
+            <Clock className="w-2.5 h-2.5 shrink-0" />
             {time}
           </div>
         </div>
       </div>
 
-      <div className="hidden md:grid md:grid-cols-3 gap-3 items-center px-4 py-4 lg:hidden">
-        <div className="flex items-center gap-2">
+      <div className="hidden md:grid md:grid-cols-3 gap-2.5 items-center px-3 py-3 lg:hidden">
+        <div className="flex items-center gap-1.5">
           <motion.div
             whileHover={{ scale: 1.1 }}
             className={`
-              flex items-center justify-center w-10 h-10 rounded-lg
+              flex items-center justify-center w-9 h-9 rounded-lg
               border transition-all duration-300
               ${config.bg} ${config.border} ${config.text} shrink-0
             `}
@@ -253,25 +253,25 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             {config.icon ?? <span className="text-sm font-bold">{player.rank}</span>}
           </motion.div>
 
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="relative w-9 h-9 rounded-full overflow-hidden border border-border/50 shrink-0">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-border/50 shrink-0">
               {player.profilePicture ? (
                 <Image
                   src={`${apiUrl}/${player.profilePicture}`}
                   alt={player.fullName}
                   fill
-                  sizes="36px"
+                  sizes="32px"
                   className="object-cover"
                   unoptimized
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-sm">
+                <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-xs">
                   {firstLetter}
                 </div>
               )}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+              <p className="text-xs font-semibold text-foreground truncate group-hover:text-primary transition-colors">
                 {player.fullName}
               </p>
               {player.rank <= 3 && (
@@ -283,16 +283,16 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <div className="flex-1 bg-background/40 rounded-lg p-2 border border-border/40">
-            <div className="flex items-center gap-1 mb-1">
-              <Code2 className="w-3 h-3 text-primary" />
-              <span className="text-[10px] text-muted-foreground font-bold">FE</span>
+        <div className="flex gap-1.5">
+          <div className="flex-1 bg-background/40 rounded-md p-1.5 border border-border/40">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Code2 className="w-2.5 h-2.5 text-primary" />
+              <span className="text-[9px] text-muted-foreground font-bold">FE</span>
             </div>
-            <p className="text-base font-bold text-foreground leading-none">
+            <p className="text-sm font-bold text-foreground leading-none">
               {player.frontendScore.toFixed(0)}
             </p>
-            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden mt-1">
+            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden mt-0.5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${frontendPercent}%` }}
@@ -302,15 +302,15 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             </div>
           </div>
 
-          <div className="flex-1 bg-background/40 rounded-lg p-2 border border-border/40">
-            <div className="flex items-center gap-1 mb-1">
-              <Server className="w-3 h-3 text-primary-2" />
-              <span className="text-[10px] text-muted-foreground font-bold">BE</span>
+          <div className="flex-1 bg-background/40 rounded-md p-1.5 border border-border/40">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Server className="w-2.5 h-2.5 text-primary-2" />
+              <span className="text-[9px] text-muted-foreground font-bold">BE</span>
             </div>
-            <p className="text-base font-bold text-foreground leading-none">
+            <p className="text-sm font-bold text-foreground leading-none">
               {player.backendScore.toFixed(0)}
             </p>
-            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden mt-1">
+            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden mt-0.5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${backendPercent}%` }}
@@ -320,15 +320,15 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             </div>
           </div>
 
-          <div className="flex-1 bg-background/40 rounded-lg p-2 border border-border/40">
-            <div className="flex items-center gap-1 mb-1">
-              <Smartphone className="w-3 h-3 text-purple-400" />
-              <span className="text-[10px] text-muted-foreground font-bold">MD</span>
+          <div className="flex-1 bg-background/40 rounded-md p-1.5 border border-border/40">
+            <div className="flex items-center gap-1 mb-0.5">
+              <Smartphone className="w-2.5 h-2.5 text-purple-400" />
+              <span className="text-[9px] text-muted-foreground font-bold">MD</span>
             </div>
-            <p className="text-base font-bold text-foreground leading-none">
+            <p className="text-sm font-bold text-foreground leading-none">
               {(player.mobdevScore || 0).toFixed(0)}
             </p>
-            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden mt-1">
+            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden mt-0.5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${mobdevPercent}%` }}
@@ -339,25 +339,25 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           </div>
         </div>
 
-        <div className="text-right flex flex-col gap-1 text-xs">
+        <div className="text-right flex flex-col gap-0.5 text-[11px]">
           <div className="flex items-center justify-end gap-1 text-muted-foreground">
-            <Calendar className="w-3 h-3" />
-            <span className="text-[11px]">{date.split(' ').slice(0, 2).join(' ')}</span>
+            <Calendar className="w-2.5 h-2.5" />
+            <span className="text-[10px]">{date.split(' ').slice(0, 2).join(' ')}</span>
           </div>
           <div className="flex items-center justify-end gap-1 text-muted-foreground">
-            <Clock className="w-3 h-3" />
-            <span className="text-[11px]">{time}</span>
+            <Clock className="w-2.5 h-2.5" />
+            <span className="text-[10px]">{time}</span>
           </div>
         </div>
       </div>
 
-      <div className="md:hidden p-4 flex flex-col gap-3">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex items-start gap-2 flex-1 min-w-0">
+      <div className="md:hidden p-3 flex flex-col gap-2.5">
+        <div className="flex items-start justify-between gap-1.5">
+          <div className="flex items-start gap-1.5 flex-1 min-w-0">
             <motion.div
               whileHover={{ scale: 1.1 }}
               className={`
-                flex items-center justify-center w-9 h-9 rounded-lg
+                flex items-center justify-center w-8 h-8 rounded-md
                 border transition-all duration-300 shrink-0
                 ${config.bg} ${config.border} ${config.text}
               `}
@@ -366,7 +366,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             </motion.div>
 
             <div className="flex-1 min-w-0">
-              <p className="text-base font-bold text-foreground leading-tight truncate">
+              <p className="text-sm font-bold text-foreground leading-tight truncate">
                 {player.fullName}
               </p>
               {player.rank <= 3 && (
@@ -377,41 +377,41 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             </div>
           </div>
 
-          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border/50 shrink-0">
+          <div className="relative w-9 h-9 rounded-full overflow-hidden border border-border/50 shrink-0">
             {player.profilePicture ? (
               <Image
                 src={`${apiUrl}/${player.profilePicture}`}
                 alt={player.fullName}
                 fill
-                sizes="40px"
+                sizes="36px"
                 className="object-cover"
                 unoptimized
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-lg">
+              <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-base">
                 {firstLetter}
               </div>
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2">
-          <div className="bg-background/40 rounded-lg p-3 border border-border/40 flex flex-col justify-between gap-2">
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="bg-background/40 rounded-md p-2 border border-border/40 flex flex-col justify-between gap-1.5">
             <div className="flex items-center gap-1">
-              <Code2 className="w-3.5 h-3.5 text-primary" />
-              <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">
+              <Code2 className="w-3 h-3 text-primary" />
+              <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-wider">
                 Frontend
               </span>
             </div>
             <div>
-              <p className="text-lg font-black text-foreground leading-none">
+              <p className="text-base font-black text-foreground leading-none">
                 {player.frontendScore.toFixed(0)}
               </p>
-              <span className="text-[10px] text-muted-foreground font-medium">
+              <span className="text-[9px] text-muted-foreground font-medium">
                 {frontendPercent.toFixed(0)}%
               </span>
             </div>
-            <div className="h-1 w-full bg-muted/30 rounded-full overflow-hidden">
+            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${frontendPercent}%` }}
@@ -421,22 +421,22 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             </div>
           </div>
 
-          <div className="bg-background/40 rounded-lg p-3 border border-border/40 flex flex-col justify-between gap-2">
+          <div className="bg-background/40 rounded-md p-2 border border-border/40 flex flex-col justify-between gap-1.5">
             <div className="flex items-center gap-1">
-              <Server className="w-3.5 h-3.5 text-primary-2" />
-              <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">
+              <Server className="w-3 h-3 text-primary-2" />
+              <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-wider">
                 Backend
               </span>
             </div>
             <div>
-              <p className="text-lg font-black text-foreground leading-none">
+              <p className="text-base font-black text-foreground leading-none">
                 {player.backendScore.toFixed(0)}
               </p>
-              <span className="text-[10px] text-muted-foreground font-medium">
+              <span className="text-[9px] text-muted-foreground font-medium">
                 {backendPercent.toFixed(0)}%
               </span>
             </div>
-            <div className="h-1 w-full bg-muted/30 rounded-full overflow-hidden">
+            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${backendPercent}%` }}
@@ -446,22 +446,22 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             </div>
           </div>
 
-          <div className="bg-background/40 rounded-lg p-3 border border-border/40 flex flex-col justify-between gap-2">
+          <div className="bg-background/40 rounded-md p-2 border border-border/40 flex flex-col justify-between gap-1.5">
             <div className="flex items-center gap-1">
-              <Smartphone className="w-3.5 h-3.5 text-purple-400" />
-              <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">
+              <Smartphone className="w-3 h-3 text-purple-400" />
+              <span className="text-[8px] text-muted-foreground font-bold uppercase tracking-wider">
                 Mobile
               </span>
             </div>
             <div>
-              <p className="text-lg font-black text-foreground leading-none">
+              <p className="text-base font-black text-foreground leading-none">
                 {(player.mobdevScore || 0).toFixed(0)}
               </p>
-              <span className="text-[10px] text-muted-foreground font-medium">
+              <span className="text-[9px] text-muted-foreground font-medium">
                 {mobdevPercent.toFixed(0)}%
               </span>
             </div>
-            <div className="h-1 w-full bg-muted/30 rounded-full overflow-hidden">
+            <div className="h-0.5 w-full bg-muted/30 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${mobdevPercent}%` }}
@@ -472,13 +472,13 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-xs text-muted-foreground/80 pt-2 border-t border-border/30">
+        <div className="flex items-center justify-between text-[11px] text-muted-foreground/80 pt-1.5 border-t border-border/30">
           <div className="flex items-center gap-1">
-            <Calendar className="w-3 h-3" />
+            <Calendar className="w-2.5 h-2.5" />
             <span>{date.split(' ').slice(0, 2).join(' ')}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Clock className="w-3 h-3" />
+            <Clock className="w-2.5 h-2.5" />
             <span>{time}</span>
           </div>
         </div>
