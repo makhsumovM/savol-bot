@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import '../styles/globals.css'
 import Providers from '@/lib/providers/providers'
 import Header from '@/ui/layout/header'
+import Footer from '@/ui/layout/footer'
 import {siteConfig} from '@/lib/seo'
 import {GoogleAnalytics} from '@next/third-parties/google'
 
@@ -162,6 +163,7 @@ export default function RootLayout({
     <Providers>
       <Header />
       <main className="pb-20 md:pb-0">{children}</main>
+      <Footer />
     </Providers>
     </body>
     <GoogleAnalytics gaId="G-06G53LZERE" />
