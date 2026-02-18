@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { Activity, ArrowRight, Dices, Sparkles, Trophy, Users } from 'lucide-react'
+import { Activity, ArrowRight, Dices, Users } from 'lucide-react'
 
 interface FinalCtaSectionProps {
   totalUsers?: number
@@ -16,7 +16,7 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
   const titleWords = normalizedName.split(/\s+/).filter(Boolean)
 
   return (
-    <section className="relative py-20 sm:py-24">
+    <section className="relative  ">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -31,33 +31,32 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.06]" />
 
           <div className="relative p-8 text-center sm:p-12 lg:p-16">
-
-              {typeof totalUsers === 'number' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12, scale: 0.96 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: 0.2 }}
-                  whileHover={{ scale: 1.03 }}
-                  className="inline-flex items-center gap-3 rounded-full border border-primary/45  px-5 py-2.5  ring-1 ring-primary/20 backdrop-blur-xl"
-                >
-                  <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/35 ">
-                    <motion.span
-                      aria-hidden
-                      className="absolute inset-0 rounded-full border border-primary/55"
-                      animate={{ scale: [1, 1.35, 1.35], opacity: [0.5, 0, 0] }}
-                      transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
-                    />
-                    <Users className="relative z-10 h-4 w-4 text-primary" />
-                  </span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.13em] text-muted-foreground">
-                    {t('home.stats.visitors')}
-                  </span>
-                  <span className="flex items-center gap-1 text-base font-black text-primary">
-                    {totalUsers.toLocaleString()}+
-                  </span>
-                </motion.div>
-              )}
+            {typeof totalUsers === 'number' && (
+              <motion.div
+                initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: 0.2 }}
+                whileHover={{ scale: 1.03 }}
+                className="inline-flex items-center gap-3 rounded-full border border-primary/45  px-5 py-2.5  ring-1 ring-primary/20 backdrop-blur-xl"
+              >
+                <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/35 ">
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full border border-primary/55"
+                    animate={{ scale: [1, 1.35, 1.35], opacity: [0.5, 0, 0] }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
+                  />
+                  <Users className="relative z-10 h-4 w-4 text-primary" />
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-[0.13em] text-muted-foreground">
+                  {t('home.stats.visitors')}
+                </span>
+                <span className="flex items-center gap-1 text-base font-black text-primary">
+                  {totalUsers.toLocaleString()}+
+                </span>
+              </motion.div>
+            )}
 
             <h2 className="mx-auto max-w-3xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
               {titleWords.map((word, index) => (
