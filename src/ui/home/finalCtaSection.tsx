@@ -13,8 +13,7 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
   const { t } = useTranslation()
   const appName = t('home.finalCta.title')
   const normalizedName = appName.replace(/([a-z])([A-Z])/g, '$1 $2')
-  const [brandFirst, ...brandRest] = normalizedName.split(' ')
-  const brandSecond = brandRest.join(' ')
+  const titleWords = normalizedName.split(/\s+/).filter(Boolean)
 
   return (
     <section className="relative py-20 sm:py-24">
@@ -32,39 +31,44 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.06]" />
 
           <div className="relative p-8 text-center sm:p-12 lg:p-16">
-            <div className="mb-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:justify-between">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-4 py-2 text-xs font-semibold tracking-wide text-primary sm:text-sm">
-                <Sparkles className="h-4 w-4" />
-                {t('home.hero.badge')}
-              </div>
 
               {typeof totalUsers === 'number' && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: 0.2 }}
-                  className="inline-flex items-center gap-2.5 rounded-full border border-border/50 bg-card/70 px-4 py-2 shadow-lg shadow-black/8 backdrop-blur-xl"
+                  whileHover={{ scale: 1.03 }}
+                  className="inline-flex items-center gap-3 rounded-full border border-primary/45  px-5 py-2.5  ring-1 ring-primary/20 backdrop-blur-xl"
                 >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-primary/25 bg-primary/12">
-                    <Users className="h-3.5 w-3.5 text-primary" />
+                  <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/35 ">
+                    <motion.span
+                      aria-hidden
+                      className="absolute inset-0 rounded-full border border-primary/55"
+                      animate={{ scale: [1, 1.35, 1.35], opacity: [0.5, 0, 0] }}
+                      transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
+                    />
+                    <Users className="relative z-10 h-4 w-4 text-primary" />
                   </span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  <span className="text-xs font-semibold uppercase tracking-[0.13em] text-muted-foreground">
                     {t('home.stats.visitors')}
                   </span>
-                  <span className="flex items-center gap-1 text-sm font-black text-foreground">
+                  <span className="flex items-center gap-1 text-base font-black text-primary">
                     {totalUsers.toLocaleString()}+
-                    <Trophy className="h-3.5 w-3.5 text-primary-2" />
                   </span>
                 </motion.div>
               )}
-            </div>
 
             <h2 className="mx-auto max-w-3xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
-              <span className="text-primary">{brandFirst}</span>{' '}
-              <span className="text-primary-2">
-                {brandSecond}
-              </span>
+              {titleWords.map((word, index) => (
+                <span
+                  key={`${word}-${index}`}
+                  className={index % 2 === 0 ? 'text-primary' : 'text-primary-2'}
+                >
+                  {index > 0 ? ' ' : ''}
+                  {word}
+                </span>
+              ))}
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base text-foreground/80 sm:text-lg">
               {t('home.finalCta.subtitle')}
@@ -80,7 +84,6 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
                   {t('home.hero.startButton')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
-                <div className="absolute inset-0 bg-linear-to-r from-primary via-[#ec6216] to-[#13aeac] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </Link>
 
               <Link
