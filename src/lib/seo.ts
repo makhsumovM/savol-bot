@@ -12,12 +12,10 @@ export const siteConfig = {
   shortDescription: 'AI-платформа для тестирования разработчиков и подготовки к интервью.',
 
   url: SITE_URL,
-
   locale: 'ru_RU',
   language: 'ru',
   locales: ['ru', 'en', 'tj'] as const,
   defaultLocale: 'ru' as const,
-
   keywords: [
     'SkillCheck',
     'AI тесты для разработчиков',
@@ -111,8 +109,16 @@ export const siteConfig = {
   social: {
     github: 'https://github.com/makhsumovM/savol-bot',
     telegram: 'https://t.me/skillcheck_bot',
+    instagram: 'https://www.instagram.com/skillcheck.tj/',
+    facebook: 'https://www.facebook.com/skillcheck.tj',
+    youtube:'https://www.youtube.com/@skillcheck.tj',
   },
 
+  contact: {
+    email: 'skillchecktj@gmail.com',
+    telephone: '+992 785-11-2011',
+    location: 'Dushanbe, Tajikistan',
+  },
   verification: {
     google: 'gSrZyl2wPCVWzZfpHA8e2fXPoeo9bpXdUDwhnyEJKR8',
     yandex: '',
