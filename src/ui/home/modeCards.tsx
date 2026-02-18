@@ -28,8 +28,6 @@ const themeMap: Record<
     iconWrap: string
     badge: string
     hoverBorder: string
-    hoverGlow: string
-    hoverOverlay: string
     focusRing: string
   }
 > = {
@@ -38,8 +36,6 @@ const themeMap: Record<
     iconWrap: 'bg-primary/10 text-primary border-primary/20',
     badge: 'bg-primary/10 text-primary border-primary/20',
     hoverBorder: 'hover:border-primary/40',
-    hoverGlow: 'hover:shadow-primary/15',
-    hoverOverlay: 'from-primary/15 via-transparent to-primary-2/10',
     focusRing: 'focus-visible:ring-primary/40',
   },
   random: {
@@ -47,26 +43,20 @@ const themeMap: Record<
     iconWrap: 'bg-primary-2/10 text-primary-2 border-primary-2/20',
     badge: 'bg-primary-2/10 text-primary-2 border-primary-2/20',
     hoverBorder: 'hover:border-primary-2/45',
-    hoverGlow: 'hover:shadow-primary-2/15',
-    hoverOverlay: 'from-primary-2/15 via-transparent to-primary/10',
     focusRing: 'focus-visible:ring-primary-2/40',
   },
   coding: {
-    accent: 'text-foreground/85',
-    iconWrap: 'bg-linear-to-br from-primary/12 to-primary-2/12 text-foreground border-border/55',
-    badge: 'bg-foreground/7 text-foreground/80 border-border/55',
-    hoverBorder: 'hover:border-primary/35',
-    hoverGlow: 'hover:shadow-primary/10',
-    hoverOverlay: 'from-primary/16 via-primary-2/8 to-transparent',
-    focusRing: 'focus-visible:ring-primary/40',
+    accent: 'text-violet-500/7',
+    iconWrap: 'bg-violet-500/7 text-violet-500 border-violet-500/55',
+    badge: 'bg-violet-500/7 text-violet-500/80 border-border/55',
+    hoverBorder: 'hover:border-violet-500/35',
+    focusRing: 'focus-visible:ring-violet-500/40',
   },
   default: {
     accent: 'text-primary',
     iconWrap: 'bg-primary/10 text-primary border-primary/20',
     badge: 'bg-muted/30 text-muted-foreground border-border/40',
     hoverBorder: 'hover:border-primary/35',
-    hoverGlow: 'hover:shadow-primary/10',
-    hoverOverlay: 'from-primary/12 via-transparent to-primary-2/10',
     focusRing: 'focus-visible:ring-primary/40',
   },
 }
@@ -86,7 +76,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="relative grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3"
+        className="relative  grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3"
       >
         {modes.map((mode, index) => {
           const Icon = iconMap[mode.id] || Award
@@ -103,9 +93,9 @@ export function ModeCards({ modes }: ModeCardsProps) {
               type="button"
               aria-label={mode.title}
               className={`
-                group relative w-full text-left overflow-hidden
+                group relative w-full hover:${theme.accent} text-left overflow-hidden
                 rounded-3xl border bg-card/75 backdrop-blur-xl p-6 sm:p-7
-                shadow-xl shadow-black/10 hover:shadow-2xl ${theme.hoverGlow}
+
                 transition-all duration-300 cursor-pointer
                 border-border/40 ${theme.hoverBorder}
                 focus-visible:outline-none focus-visible:ring-2 ${theme.focusRing} focus-visible:ring-offset-2 focus-visible:ring-offset-background
@@ -114,7 +104,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
               data-aos-delay={140 + index * 60}
             >
               <div
-                className={`absolute inset-0 bg-linear-to-br ${theme.hoverOverlay} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
+                className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
               />
               <div className="absolute inset-0 bg-linear-to-b from-white/5 via-transparent to-transparent opacity-60 pointer-events-none" />
 
@@ -123,7 +113,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
                   <div
                     className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${theme.iconWrap} transition-colors duration-300`}
                   >
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-6 h-6 " />
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -140,15 +130,15 @@ export function ModeCards({ modes }: ModeCardsProps) {
                   </div>
                 </div>
 
-                <h3 className="mt-5 text-xl font-black tracking-tight text-foreground">
+                <h3 className={`mt-5 text-xl  font-black tracking-tight `}>
                   {mode.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-[0.95rem]">
+                <p className={`mt-2 text-sm leading-relaxed sm:text-[0.95rem]`}>
                   {mode.desc}
                 </p>
 
                 <div className="mt-6 flex items-center gap-2">
-                  <span className={`h-1.5 w-1.5 rounded-full ${theme.accent} bg-current`} />
+                  <span className={`h-1.5 w-1.5 rounded-full  bg-current`} />
                   <div className="h-px flex-1 bg-linear-to-r from-border/50 via-border/20 to-transparent" />
                 </div>
               </div>
