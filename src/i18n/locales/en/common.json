@@ -34,8 +34,12 @@
       "startMarathon": "Start Marathon →",
       "features": "Smooth rhythm, balanced complexity, and careful animations"
     },
+    "modes": {
+      "title": "Choose Your Mode",
+      "subtitle": "Pick a mode that suits your learning style and goals"
+    },
     "stats": {
-      "visitors": "Platform visitors",
+      "visitors": "Users from search",
       "activeUsers": "active users",
       "activeLearners": "Active Learners"
     },
@@ -45,23 +49,20 @@
       "quickPractice": "Quick Practice"
     },
     "features": {
-      "title": "Why Choose SkillCheck ?",
+      "title": "Why Choose SkillСheck ?",
       "subtitle": "Everything you need to master programming skills",
       "aiPowered": {
-        "title": "AI-Powered",
-        "desc": "Smart question generation"
+        "title": "AI-Powered Questions Generation",
+        "desc": "Smart question generation powered by AI"
       },
-      "focusedPractice": {
-        "title": "Focused Practice",
-        "desc": "Targeted skill building"
-      },
+
       "instantFeedback": {
-        "title": "Instant Feedback",
-        "desc": "Real-time results"
+        "title": "Instant Feedback with Real-Time Results",
+        "desc": "Real-time results for effective learning"
       },
       "competeAndWin": {
-        "title": "Compete & Win",
-        "desc": "Global leaderboards"
+        "title": "Compete & Win in Global Rankings",
+        "desc": "Global leaderboards to motivate and recognize your skills"
       }
     },
     "finalCta": {
@@ -141,7 +142,7 @@
       "badge": "LIVE",
       "description": "An endless stream of questions to train focus and endurance."
     },
-    "classic": {
+    "random": {
       "title": "Random",
       "badge": "LIVE",
       "description": "A quick session of 10–15 questions for rapid self-testing."
@@ -287,6 +288,32 @@
     },
     "success": "Password updated successfully.",
     "error": "Failed to update password."
+  },
+  "siteFooter": {
+    "description": "Free AI platform for coding practice and skill checks.",
+    "sections": {
+      "quickLinks": "Quick Links",
+      "contacts": "Contacts",
+      "newsletter": "Newsletter"
+    },
+    "newsletter": {
+      "description": "Subscribe to receive platform updates and release notes.",
+      "placeholder": "you@example.com",
+      "submitAria": "Subscribe",
+      "invalidEmail": "Please enter a valid email address.",
+      "success": "Thanks! We will notify you about new updates."
+    },
+    "social": {
+      "github": "GitHub",
+      "telegram": "Telegram",
+      "instagram": "Instagram"
+    },
+    "bottom": {
+      "copyright": "© {{year}} {{publisher}}. Built by {{creator}}. All rights reserved.",
+      "liveSite": "Live Site",
+      "sourceCode": "Source Code",
+      "community": "Community"
+    }
   },
   "common": {
     "viewAll": "View All",
