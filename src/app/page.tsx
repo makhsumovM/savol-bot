@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getTotalUsers } from '@/api/userApi'
 import { HeroSection } from '@/ui/home/heroSection'
-import { FeaturesSection } from '@/ui/home/featuresSection'
 import { FinalCtaSection } from '@/ui/home/finalCtaSection'
 import ModeSection from '@/ui/home/modeSection'
 
@@ -26,7 +25,6 @@ export default function Home() {
 
       <div className="relative">
         <HeroSection totalUsers={totalUsers?.totalUsers} />
-        <FeaturesSection />
         <ModeSection />
         <FinalCtaSection totalUsers={totalUsers?.totalUsers} />
       </div>
