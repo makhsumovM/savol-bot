@@ -120,14 +120,15 @@ const Footer = () => {
           {}
           <div className="lg:col-span-4 space-y-6" data-aos="fade-up" data-aos-delay="0">
             <div className="flex items-center gap-3">
-              <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-primary/10 p-2">
+
                 <Image
                   src={logo}
+                  width={100}
+                  height={100}
                   alt={`${siteConfig.name} logo`}
-                  className="h-full w-full object-contain"
+                  className=" object-contain"
                 />
-              </div>
-              <span className="text-xl font-bold tracking-tight">{siteConfig.name}</span>
+
             </div>
 
             <p className="text-muted-foreground leading-relaxed max-w-md">
