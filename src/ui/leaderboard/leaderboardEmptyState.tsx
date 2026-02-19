@@ -8,10 +8,23 @@ export const LeaderboardEmptyState = () => {
   const { t } = useTranslation()
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
-      <Trophy className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
-      <p className="text-muted-foreground">
-        {t('leaderboard.empty', 'No participants in the leaderboard yet')}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="flex flex-col items-center justify-center py-20 px-4 text-center"
+    >
+      <div className="relative mb-6">
+        <div className="absolute inset-0 bg-primary/20 blur-3xl animate-pulse" />
+        <div className="relative bg-card/50 backdrop-blur-xl p-6 rounded-full border border-border/50 shadow-xl">
+          <Trophy className="w-12 h-12 text-muted-foreground" />
+        </div>
+      </div>
+
+      <h3 className="text-xl font-bold text-foreground mb-2">
+        {t('leaderboard.emptyTitle', 'Leaderboard is empty')}
+      </h3>
+      <p className="text-muted-foreground max-w-sm">
+        {t('leaderboard.empty', 'No participants have submitted their scores yet. Be the first one!')}
       </p>
     </motion.div>
   )
