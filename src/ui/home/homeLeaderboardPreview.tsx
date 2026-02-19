@@ -134,7 +134,7 @@ export const HomeLeaderboardPreview = () => {
         {!isLoading && (
           <div className="space-y-2.5">
             <AnimatePresence mode="popLayout">
-              {top5?.map((player, index) => {
+              {top5?.map((player) => {
                 const style = rankStyles[player.rank as 1 | 2 | 3] ?? rankStyles.default
                 const isMe = player.rank === myRank
 
