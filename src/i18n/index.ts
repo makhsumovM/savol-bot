@@ -25,7 +25,7 @@ if (!i18n.isInitialized) {
         escapeValue: false,
       },
       detection: {
-        order: ['localStorage', 'navigator'],
+        order: ['localStorage', 'navigator'], 
         caches: ['localStorage'],
         lookupLocalStorage: 'lang',
       },

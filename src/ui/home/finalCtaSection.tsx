@@ -1,29 +1,12 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { Activity, ArrowRight, Dices, CheckCircle2 } from 'lucide-react'
+import { Activity, ArrowRight, Dices, Users } from 'lucide-react'
 
 interface FinalCtaSectionProps {
   totalUsers?: number
-}
-
-const container: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
-  },
-}
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
 }
 
 export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
@@ -33,126 +16,83 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
   const titleWords = normalizedName.split(/\s+/).filter(Boolean)
 
   return (
-    <section
-      className="relative py-20 sm:py-28 lg:py-32 overflow-hidden"
-      aria-labelledby="cta-title"
-    >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[100px] opacity-60" />
-        <div className="absolute -right-1/4 bottom-1/4 h-[500px] w-[500px] rounded-full bg-primary-2/10 blur-[100px] opacity-60" />
-      </div>
-
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+    <section className="relative  ">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative overflow-hidden rounded-[2rem] border border-border/40 bg-card/60 shadow-2xl shadow-black/10 backdrop-blur-2xl"
         >
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 shadow-[0_24px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.13)] backdrop-blur-2xl">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_0%,rgba(255,255,255,0.04),transparent)]" />
+          <div className="pointer-events-none absolute -left-20 top-[-120px] h-[280px] w-[280px] rounded-full bg-primary/25 blur-[110px]" />
+          <div className="pointer-events-none absolute -right-20 bottom-[-120px] h-[280px] w-[280px] rounded-full bg-primary-2/25 blur-[110px]" />
+          <div className="absolute inset-0 bg-linear-to-br from-primary/14 via-background/50 to-primary-2/14" />
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.06]" />
 
-            <motion.div
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-60px' }}
-              className="relative flex flex-col items-center px-5 py-14 text-center sm:px-12 sm:py-20 lg:px-20 lg:py-24"
-            >
-              {typeof totalUsers === 'number' && (
-                <motion.div variants={fadeUp} className="mb-8">
-                  <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/8 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                    <span className="relative flex h-2 w-2">
-                      <span
-                        className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60"
-                        style={{ animationDuration: '2.5s' }}
-                      />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                    </span>
-                    <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary">
-                      {totalUsers.toLocaleString()}+ {t('home.stats.visitors')}
-                    </span>
-                  </div>
-                </motion.div>
-              )}
-
-              <motion.h2
-                variants={fadeUp}
-                id="cta-title"
-                className="mx-auto max-w-3xl text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl mb-6 leading-[1.05]"
-              >
-                {titleWords.map((word, index) => (
-                  <span
-                    key={`${word}-${index}`}
-                    className={`inline-block ${index > 0 ? 'ml-[0.25em]' : ''} ${
-                      index % 2 === 0
-                        ? 'bg-linear-to-br from-primary to-primary/70 bg-clip-text text-transparent'
-                        : 'bg-linear-to-br from-primary-2 to-primary-2/70 bg-clip-text text-transparent'
-                    }`}
-                  >
-                    {word}
-                  </span>
-                ))}
-              </motion.h2>
-
-              <motion.p
-                variants={fadeUp}
-                className="mx-auto max-w-2xl text-base text-muted-foreground/85 sm:text-lg lg:text-xl leading-relaxed mb-10 font-medium"
-              >
-                {t('home.finalCta.subtitle')}
-              </motion.p>
-
+          <div className="relative p-8 text-center sm:p-12 lg:p-16">
+            {typeof totalUsers === 'number' && (
               <motion.div
-                variants={fadeUp}
-                className="flex flex-wrap justify-center gap-x-5 gap-y-2.5 mb-12 text-sm font-semibold text-foreground/60"
+                initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: 0.2 }}
+                whileHover={{ scale: 1.03 }}
+                className="inline-flex items-center gap-3 rounded-full border border-primary/45  px-5 py-2.5  ring-1 ring-primary/20 backdrop-blur-xl"
               >
-                {['Next.js 15', 'React 19', 'AI Powered'].map((item) => (
-                  <span key={item} className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" />
-                    {item}
-                  </span>
-                ))}
+                <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/35 ">
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full border border-primary/55"
+                    animate={{ scale: [1, 1.35, 1.35], opacity: [0.5, 0, 0] }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
+                  />
+                  <Users className="relative z-10 h-4 w-4 text-primary" />
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-[0.13em] text-muted-foreground">
+                  {t('home.stats.visitors')}
+                </span>
+                <span className="flex items-center gap-1 text-base font-black text-primary">
+                  {totalUsers.toLocaleString()}+
+                </span>
               </motion.div>
+            )}
 
-              <motion.div
-                variants={fadeUp}
-                className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4 w-full max-w-md sm:max-w-none"
+            <h2 className="mx-auto max-w-3xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+              {titleWords.map((word, index) => (
+                <span
+                  key={`${word}-${index}`}
+                  className={index % 2 === 0 ? 'text-primary' : 'text-primary-2'}
+                >
+                  {index > 0 ? ' ' : ''}
+                  {word}
+                </span>
+              ))}
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base text-foreground/80 sm:text-lg">
+              {t('home.finalCta.subtitle')}
+            </p>
+
+            <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+              <Link
+                href="/marathon"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-primary px-8 py-4 font-semibold text-primary-foreground transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30"
               >
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-                  className="w-full sm:w-auto"
-                >
-                  <Link
-                    href="/marathon"
-                    className="group relative inline-flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-primary px-7 py-4 text-base font-bold text-primary-foreground shadow-[0_6px_20px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)] transition-shadow duration-300 hover:shadow-[0_10px_28px_rgba(0,0,0,0.18)] sm:w-auto"
-                  >
-                    <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-600 group-hover:translate-x-full" />
-                    <Activity className="relative h-4.5 w-4.5" />
-                    <span className="relative">{t('home.hero.startButton')}</span>
-                    <ArrowRight className="relative h-4.5 w-4.5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
-                </motion.div>
+                <span className="relative z-10 flex items-center gap-2">
+                  <Activity className="h-5 w-5" />
+                  {t('home.hero.startButton')}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
 
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-                  className="w-full sm:w-auto"
-                >
-                  <Link
-                    href="/random"
-                    className="group relative inline-flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-white/12 bg-white/6 px-7 py-4 text-base font-bold text-foreground/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm transition-all duration-300 hover:border-primary-2/30 hover:bg-white/9 sm:w-auto"
-                  >
-                    <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/25 to-transparent" />
-                    <Dices className="relative h-4.5 w-4.5 text-primary-2 transition-transform duration-500 group-hover:rotate-180" />
-                    <span className="relative">{t('home.hero.quickPractice')}</span>
-                  </Link>
-                </motion.div>
-              </motion.div>
-            </motion.div>
+              <Link
+                href="/random"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-border/55 bg-card/60 px-8 py-4 font-semibold text-foreground transition-all duration-300 hover:scale-[1.02] hover:border-primary-2/50 hover:bg-card/80"
+              >
+                <Dices className="h-5 w-5 text-primary-2" />
+                {t('home.hero.quickPractice')}
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>
