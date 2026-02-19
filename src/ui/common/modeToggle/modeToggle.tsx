@@ -20,53 +20,101 @@ export function ModeToggle() {
 
   const isLight = theme === 'light'
 
-  const toggleTheme = () => {
-    setTheme(isLight ? 'dark' : 'light')
-  }
-
   return (
     <motion.button
-      onClick={toggleTheme}
-      className={`
-        relative inline-flex h-9 w-16 items-center rounded-full px-1 shadow-inner
-        transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
-        ${isLight ? 'bg-muted/80 border border-border' : 'bg-muted/80 border border-border'}
-      `}
-      whileHover={{ scale: 1.05 }}
+      onClick={() => setTheme(isLight ? 'dark' : 'light')}
+      className="
+        relative w-11 h-11 rounded-full
+        bg-linear-to-br from-yellow-100 to-yellow-200/80
+        dark:from-slate-700 dark:to-slate-800/80
+        border border-yellow-300/50 dark:border-slate-600/50
+        shadow-lg shadow-yellow-200/30 dark:shadow-slate-900/40
+        hover:shadow-xl hover:shadow-yellow-200/40 dark:hover:shadow-slate-900/50
+        transition-all duration-300 overflow-hidden
+        flex items-center justify-center
+      "
+      whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
-      aria-label={isLight ? t('theme.switchToDark', 'Switch to dark mode') : t('theme.switchToLight', 'Switch to light mode')}
+      aria-label={`Switch to ${isLight ? t('theme.dark') : t('theme.light')}`}
     >
-      <span className="sr-only">{t('theme.toggle', 'Toggle theme')}</span>
+      <motion.div
+        className="absolute inset-0 bg-linear-to-br from-purple-400/20 to-blue-400/20 dark:from-purple-600/20 dark:to-blue-600/20 rounded-full"
+        animate={{
+          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
 
       <motion.div
-        className={`
-          flex h-7 w-7 items-center justify-center rounded-full shadow-md z-10
-          ${isLight ? 'bg-background' : 'bg-background'}
-        `}
+        className="absolute flex items-center justify-center"
+        initial={false}
         animate={{
-          x: isLight ? 0 : 28
+          scale: isLight ? 1 : 0,
+          opacity: isLight ? 1 : 0,
+          rotate: isLight ? 0 : 180,
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        transition={{
+          duration: 0.4,
+          ease: 'easeInOut',
+        }}
       >
         <motion.div
-          key={isLight ? 'light' : 'dark'}
-          initial={{ scale: 0.5, rotate: -90, opacity: 0 }}
-          animate={{ scale: 1, rotate: 0, opacity: 1 }}
-          exit={{ scale: 0.5, rotate: 90, opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          animate={{
+            rotate: 360,
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
         >
-          {isLight ? (
-            <Sun className="h-4 w-4 text-primary" strokeWidth={2} />
-          ) : (
-            <Moon className="h-4 w-4 text-primary" strokeWidth={2} />
-          )}
+          <Sun className="w-5 h-5 text-yellow-600" strokeWidth={1.5} />
         </motion.div>
       </motion.div>
 
-      <div className="absolute inset-0 flex justify-between items-center px-2 pointer-events-none">
-        <div className={`opacity-0`}></div>
-      </div>
+      <motion.div
+        className="absolute flex items-center justify-center"
+        initial={false}
+        animate={{
+          scale: isLight ? 0 : 1,
+          opacity: isLight ? 0 : 1,
+          rotate: isLight ? -180 : 0,
+        }}
+        transition={{
+          duration: 0.4,
+          ease: 'easeInOut',
+        }}
+      >
+        <motion.div
+          animate={{
+            y: [0, -3, 0],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        >
+          <Moon className="w-5 h-5 text-slate-200 dark:text-slate-100" strokeWidth={1.5} />
+        </motion.div>
+      </motion.div>
 
+      <motion.div
+        className="absolute inset-0 rounded-full bg-linear-to-r from-transparent via-white/30 to-transparent dark:via-white/10"
+        animate={{
+          x: ['-100%', '100%'],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
     </motion.button>
   )
 }

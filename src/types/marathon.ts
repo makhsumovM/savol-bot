@@ -25,3 +25,4 @@ export interface ICreateMarathonAttempt {
   backendScore: number
   mobdevScore: number
 }
+

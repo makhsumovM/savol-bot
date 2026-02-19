@@ -39,7 +39,7 @@ export function MyRankProfileCard({
       className="w-full"
     >
       <div
-        className="relative overflow-hidden rounded-4xl border border-border/60 bg-card/80 backdrop-blur-xl shadow-[0_30px_120px_-70px_rgba(0,0,0,0.7)]"
+        className="relative overflow-hidden rounded-[32px] border border-border/60 bg-card/80 backdrop-blur-xl shadow-[0_30px_120px_-70px_rgba(0,0,0,0.7)]"
         data-aos="fade-up"
         data-aos-delay="60"
       >

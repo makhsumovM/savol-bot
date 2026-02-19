@@ -7,31 +7,27 @@ import { FinalCtaSection } from '@/ui/home/finalCtaSection'
 import ModeSection from '@/ui/home/modeSection'
 
 export default function Home() {
-  const { data: totalUsers, isPending } = useQuery({
+  const { data: totalUsers } = useQuery({
     queryKey: ['totalUsers'],
     queryFn: getTotalUsers,
     staleTime: 1000 * 60 * 5,
   })
 
   return (
-    <div className="relative min-h-screen overflow-hidden selection:bg-primary/20 selection:text-primary">
-      {}
-      <div className="fixed inset-0 pointer-events-none z-[-1]">
-        <div className="absolute top-0 left-0 w-full h-full bg-background" />
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-primary/5 blur-[100px] animate-pulse-slow" />
-        <div
-          className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-primary-2/5 blur-[100px] animate-pulse-slow"
-          style={{ animationDelay: '2.5s' }}
-        />
-        <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] rounded-full bg-primary/3 blur-[80px] animate-float" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-      </div>
+    <div className="relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-background via-background to-primary/8" />
+      <div className="pointer-events-none absolute -top-56 -right-40 h-[460px] w-[460px] rounded-full bg-primary/18 blur-[130px] animate-pulse-slow" />
+      <div
+        className="pointer-events-none absolute top-[34%] -left-44 h-[420px] w-[420px] rounded-full bg-primary-2/14 blur-[130px] animate-pulse-slow"
+        style={{ animationDelay: '1.2s' }}
+      />
+      <div className="pointer-events-none absolute -bottom-52 left-1/2 h-[420px] w-[760px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]" />
 
-      <main className="relative z-10">
-        <HeroSection totalUsers={totalUsers?.totalUsers} isPending={isPending} />
+      <div className="relative">
+        <HeroSection totalUsers={totalUsers?.totalUsers} />
         <ModeSection />
         <FinalCtaSection totalUsers={totalUsers?.totalUsers} />
-      </main>
+      </div>
     </div>
   )
 }
