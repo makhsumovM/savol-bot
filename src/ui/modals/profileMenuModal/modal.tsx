@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
-import { getCookie, removeCookie } from '@/lib/utils/cookies'
+import {  removeCookie } from '@/lib/utils/cookies'
 
 interface IProfileMenuModalProps {
   profileMenuModalOpen: boolean
@@ -62,9 +62,9 @@ const ProfileMenuModal = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: -8 }}
           transition={{ duration: 0.15, type: 'spring', stiffness: 350, damping: 25 }}
-          className="absolute mt-7 right-0 z-50 min-w-[160px] overflow-hidden rounded-xl border border-border/50 backdrop-blur-xl bg-card/95 shadow-xl shadow-black/15"
+          className="absolute mt-7 right-0 z-50 min-w-40 overflow-hidden rounded-xl border border-border/50 backdrop-blur-xl bg-card/95 shadow-xl shadow-black/15"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary-2/5 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-primary-2/5 pointer-events-none" />
 
           <div className="relative p-1">
             <motion.button
@@ -89,7 +89,7 @@ const ProfileMenuModal = ({
               />
             </motion.button>
 
-            <div className="my-1 mx-2 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+            <div className="my-1 mx-2 h-px bg-linear-to-r from-transparent via-border/50 to-transparent" />
 
             <motion.button
               initial={{ opacity: 0, x: -8 }}

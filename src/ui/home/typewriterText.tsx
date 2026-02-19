@@ -26,21 +26,17 @@ export function Typewriter({
   const animationRef = useRef<NodeJS.Timeout | null>(null)
   const cursorIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Reset when text changes (language change fix)
   useEffect(() => {
     if (prevTextRef.current !== text) {
-      // Clear any running animation
       if (animationRef.current) {
         clearTimeout(animationRef.current)
       }
-      // Reset state
       setDisplayedText("")
       setIsComplete(false)
       prevTextRef.current = text
     }
   }, [text])
 
-  // Main typewriter effect
   useEffect(() => {
     if (!text) return
 
@@ -53,7 +49,6 @@ export function Typewriter({
         if (currentIndex < text.length) {
           setDisplayedText(text.slice(0, currentIndex + 1))
           currentIndex++
-          // Variable speed for natural feel
           const variance = Math.random() * 30 - 15
           animationRef.current = setTimeout(typeNextChar, speed + variance)
         } else {
@@ -64,7 +59,6 @@ export function Typewriter({
       typeNextChar()
     }
 
-    // Initial delay before starting
     animationRef.current = setTimeout(startTyping, delay)
 
     return () => {
@@ -74,7 +68,6 @@ export function Typewriter({
     }
   }, [text, delay, speed, onComplete])
 
-  // Cursor blink effect
   useEffect(() => {
     if (cursor) {
       cursorIntervalRef.current = setInterval(() => {
