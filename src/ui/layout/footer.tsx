@@ -112,23 +112,18 @@ const Footer = () => {
       className="relative pt-20 pb-10 overflow-hidden border-t border-border/40"
       aria-label="Site Footer"
     >
-      <div className="pointer-events-none absolute inset-0 bg-background" />
-      <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[500px] w-full max-w-[1000px] rounded-full bg-primary/5 blur-[120px]" />
-
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {}
           <div className="lg:col-span-4 space-y-6" data-aos="fade-up" data-aos-delay="0">
             <div className="flex items-center gap-3">
-
-                <Image
-                  src={logo}
-                  width={100}
-                  height={100}
-                  alt={`${siteConfig.name} logo`}
-                  className=" object-contain"
-                />
-
+              <Image
+                src={logo}
+                width={100}
+                height={100}
+                alt={`${siteConfig.name} logo`}
+                className=" object-contain"
+              />
             </div>
 
             <p className="text-muted-foreground leading-relaxed max-w-md">
