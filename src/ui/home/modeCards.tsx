@@ -143,7 +143,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
                         theme.badge
                       )}
                     >
-                      {mode.id === 'coding' ? null : <span className="relative flex h-1.5 w-1.5"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-current"></span></span>}
+                      {mode.id === 'coding' ? null : <span className="relative flex h-1.5 w-1.5"><span className=" absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-current"></span></span>}
                       {mode.badge}
                     </span>
                     <ArrowUpRight className="w-4 h-4 text-muted-foreground/60 transition-all duration-300 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
