@@ -104,7 +104,6 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
                 href="/marathon"
                 className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-primary px-8 py-4 font-semibold text-primary-foreground transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-primary/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
               >
-                <span className="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
                 <Activity className="h-5 w-5 shrink-0 relative z-10" />
                 <span className="leading-none relative z-10">{t('home.hero.startButton')}</span>
                 <ArrowRight className="h-4 w-4 shrink-0 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -121,7 +120,6 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
           </motion.div>
 
           <motion.div variants={fadeRight} initial="hidden" animate="show" className="relative">
-            <div className="pointer-events-none absolute inset-2 rounded-3xl bg-linear-to-br from-primary/12 via-transparent to-primary-2/12 blur-2xl animate-glow-pulse" />
             <HomeLeaderboardPreview />
           </motion.div>
         </div>
@@ -139,17 +137,7 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
               transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="relative mx-auto mt-12 w-full max-w-5xl px-4"
             >
-              <div className="pointer-events-none absolute -inset-4 rounded-[2.5rem] bg-primary/10 blur-3xl" />
-              <div
-                className="pointer-events-none absolute -inset-2 rounded-4xl bg-primary-2/8 blur-2xl animate-pulse"
-                style={{ animationDuration: '4s' }}
-              />
-
-              <div className="relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.2),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.04)] backdrop-blur-2xl backdrop-saturate-180 sm:p-6 md:p-7">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/8 to-transparent" />
-                <div className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIxIi8+PC9zdmc+')] bg-repeat" />
-
+              <div className="relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-5  backdrop-blur-2xl backdrop-saturate-180 sm:p-6 md:p-7">
                 <div className="relative flex flex-col items-center gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left md:gap-6">
                   <motion.div
                     initial={{ opacity: 0, x: -16 }}
@@ -173,7 +161,7 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
                         className="mt-0.5 text-[2rem] font-black leading-none tracking-tight sm:text-[2.25rem]"
                       >
                         <span className="bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                          {totalUsers.toLocaleString()}+
+                          {totalUsers.toLocaleString()}
                         </span>
                       </motion.div>
                     </div>
@@ -188,7 +176,7 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
                     <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/9 px-3.5 py-1.5 text-[11px] font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
                       <span className="relative flex h-1.5 w-1.5">
                         <span
-                          className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60"
+                          className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60"
                           style={{ animationDuration: '2s' }}
                         />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
@@ -198,7 +186,7 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
                     <div className="inline-flex items-center gap-1.5 rounded-full border border-primary-2/20 bg-primary-2/9 px-3.5 py-1.5 text-[11px] font-semibold text-primary-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
                       <span className="relative flex h-1.5 w-1.5">
                         <span
-                          className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-2 opacity-60"
+                          className="absolute inline-flex h-full w-full rounded-full bg-primary-2 opacity-60"
                           style={{ animationDuration: '2.4s', animationDelay: '0.4s' }}
                         />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-2" />
