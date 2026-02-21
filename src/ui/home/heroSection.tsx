@@ -133,14 +133,7 @@ export function HeroSection() {
             <HomeLeaderboardPreview />
           </motion.div>
         </div>
-
         <>
-          {isPending && (
-            <div className="flex items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          )}
-
           {hasData && (
             <motion.div
               initial={{ opacity: 0, y: 32, scale: 0.96 }}
