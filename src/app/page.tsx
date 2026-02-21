@@ -10,13 +10,12 @@ export default function Home() {
   const { data: totalUsers, isPending } = useQuery({
     queryKey: ['totalUsers'],
     queryFn: getTotalOnlineUser,
-    staleTime: 1000 * 60 * 5,
   })
 
   return (
     <div className="relative min-h-screen overflow-hidden selection:bg-primary/20 selection:text-primary">
-      {}
-      
+      { }
+
 
       <main className="relative z-10">
         <HeroSection totalUsers={totalUsers?.totalUsers} isPending={isPending} />
