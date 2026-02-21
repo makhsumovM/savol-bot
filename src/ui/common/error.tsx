@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { AlertCircle } from "lucide-react"
-import { motion } from "framer-motion"
+import { AlertCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 interface IErrorProps {
   message: string
@@ -12,11 +12,9 @@ const Error = ({ message }: IErrorProps) => {
     <motion.div
       initial={{ opacity: 0, y: -20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.5, type: "spring", stiffness: 180 }}
+      transition={{ duration: 0.5, type: 'spring', stiffness: 180 }}
       className="relative mx-auto max-w-sm overflow-hidden rounded-2xl border border-destructive/30 bg-linear-to-br from-destructive/10 via-destructive/5 to-transparent backdrop-blur-md shadow-lg"
     >
-      <div className="absolute inset-0 bg-linear-to-br from-red-500/15 via-orange-500/5 to-transparent blur-xl animate-pulse-slow" />
-
       <div className="relative flex items-center gap-4 p-4">
         <motion.div
           animate={{
