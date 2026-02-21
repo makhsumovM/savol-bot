@@ -14,7 +14,7 @@ export const LeaderboardEmptyState = () => {
       className="flex flex-col items-center justify-center py-20 px-4 text-center"
     >
       <div className="relative mb-6">
-        <div className="absolute inset-0 bg-primary/20 blur-3xl animate-pulse" />
+        <div className="absolute inset-0 bg-primary/20 blur-3xl " />
         <div className="relative bg-card/50 backdrop-blur-xl p-6 rounded-full border border-border/50 shadow-xl">
           <Trophy className="w-12 h-12 text-muted-foreground" />
         </div>
