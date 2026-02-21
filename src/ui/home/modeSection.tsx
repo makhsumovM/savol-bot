@@ -1,3 +1,4 @@
+'use client'
 import { ModeCards } from '@/ui/home/modeCards'
 import { useTranslation } from 'react-i18next'
 
