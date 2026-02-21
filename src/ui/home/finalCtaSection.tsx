@@ -38,8 +38,7 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
       aria-labelledby="cta-title"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[100px] opacity-60" />
-        <div className="absolute -right-1/4 bottom-1/4 h-[500px] w-[500px] rounded-full bg-primary-2/10 blur-[100px] opacity-60" />
+        
       </div>
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
@@ -65,10 +64,9 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
                   <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/8 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
                     <span className="relative flex h-2 w-2">
                       <span
-                        className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60"
+                        className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60"
                         style={{ animationDuration: '2.5s' }}
                       />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                     </span>
                     <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary">
                       {totalUsers.toLocaleString()}+ {t('home.stats.visitors')}
