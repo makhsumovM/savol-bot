@@ -39,18 +39,18 @@ export function MyRankProfileCard({
       className="w-full"
     >
       <div
-        className="relative overflow-hidden rounded-4xl border border-border/60 bg-card/80 backdrop-blur-xl shadow-[0_30px_120px_-70px_rgba(0,0,0,0.7)]"
+        className="relative overflow-hidden rounded-4xl border border-border/60  backdrop-blur-xl shadow-[0_30px_120px_-70px_rgba(0,0,0,0.7)]"
         data-aos="fade-up"
         data-aos-delay="60"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-primary/10 pointer-events-none" />
-        <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-[120px] pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-secondary/20 blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0  pointer-events-none "  />
+        <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full  blur-[120px] pointer-events-none " />
+        <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full  blur-[120px] pointer-events-none" />
 
         <div className="relative p-6 sm:p-10">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             <div className="relative">
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full p-[3px] bg-linear-to-br from-primary/60 via-primary-2/40 to-secondary/50 shadow-2xl">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full p-[3px]  shadow-2xl">
                 <div className="w-full h-full rounded-full overflow-hidden border-4 border-background bg-muted">
                   {profileImageUrl ? (
                     <div className="relative w-full h-full">
