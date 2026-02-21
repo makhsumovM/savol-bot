@@ -3,11 +3,11 @@
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { Activity, Dices, Users, ArrowRight, Sparkles, ArrowUpRight, Loader2 } from 'lucide-react'
+import { Activity, Dices, Users, ArrowRight, Sparkles, ArrowUpRight, Loader2, Globe2 } from 'lucide-react'
 import { HomeLeaderboardPreview } from './homeLeaderboardPreview'
 import { Typewriter } from './typewriterText'
 import { useQuery } from '@tanstack/react-query'
-import { getTotalOnlineUser } from '@/api/userApi'
+import { getTotalOnlineUser, getTotalUsers } from '@/api/userApi'
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
@@ -29,10 +29,20 @@ const fadeRight: Variants = {
 
 export function HeroSection() {
   const { t } = useTranslation()
-  const { data, isPending } = useQuery({
-    queryKey: ['totalUsers'],
-    queryFn: getTotalOnlineUser,
+  const { data: totalUsersData, isPending: isTotalUsersPending } = useQuery({
+    queryKey: ['total-users'],
+    queryFn: getTotalUsers,
+    refetchInterval: 120000,
   })
+  const { data: onlineUsersData, isPending: isOnlineUsersPending } = useQuery({
+    queryKey: ['online-users'],
+    queryFn: getTotalOnlineUser,
+    refetchInterval: 120000,
+  })
+  const isPending = isTotalUsersPending || isOnlineUsersPending
+  const hasData = totalUsersData != null || onlineUsersData != null
+  const totalUsers = Number(totalUsersData?.totalUsers ?? 0)
+  const totalOnlineUsers = Number(onlineUsersData?.totalOnlineUsers ?? 0)
   const appName = t('app.name')
   const normalizedName = appName.replace(/([a-z])([A-Z])/g, '$1 $2')
   const brandWords = normalizedName.split(/\s+/).filter(Boolean)
@@ -130,86 +140,68 @@ export function HeroSection() {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           )}
-          {data?.totalOnlineUsers != null && (
+
+          {hasData && (
             <motion.div
               initial={{ opacity: 0, y: 32, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="relative mx-auto mt-12 w-full max-w-5xl px-4"
             >
-              <div className="relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-5  backdrop-blur-2xl backdrop-saturate-180 sm:p-6 md:p-7">
-                <div className="relative flex flex-col items-center gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left md:gap-6">
+              <div className="relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-5 backdrop-blur-2xl backdrop-saturate-180 sm:p-6 md:p-7">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <motion.div
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.55, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex flex-col items-center gap-3 sm:flex-row sm:items-center"
+                    className="rounded-2xl border border-white/10 bg-white/5 p-4 text-left"
                   >
-                    <div className="relative flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)]">
-                      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-b from-white/10 to-transparent" />
-                      <Users className="h-5 w-5 text-primary relative z-10" />
+                    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary/25 bg-primary/12">
+                      <Globe2 className="h-4 w-4 text-primary" />
                     </div>
-
-                    <div>
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
-                        {t('home.stats.visitors')}
-                      </div>
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-                        className="mt-0.5 text-[2rem] font-black leading-none tracking-tight sm:text-[2.25rem]"
-                      >
-                        <span className="bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                          {data?.totalOnlineUsers}
-                        </span>
-                      </motion.div>
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
+                      {t('home.stats.totalVisits')}
                     </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex items-center justify-center gap-2 flex-wrap"
-                  >
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/9 px-3.5 py-1.5 text-[11px] font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span
-                          className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60"
-                          style={{ animationDuration: '2s' }}
-                        />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-                      </span>
-                      {t('modes.marathon.title')}
+                    <div className="mt-1 text-3xl font-black tracking-tight text-primary">
+                      {totalUsers.toLocaleString()}
                     </div>
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-primary-2/20 bg-primary-2/9 px-3.5 py-1.5 text-[11px] font-semibold text-primary-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-sm">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span
-                          className="absolute inline-flex h-full w-full rounded-full bg-primary-2 opacity-60"
-                          style={{ animationDuration: '2.4s', animationDelay: '0.4s' }}
-                        />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-2" />
-                      </span>
-                      {t('modes.random.title')}
-                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground">{t('home.stats.visitsHint')}</div>
                   </motion.div>
 
                   <motion.div
                     initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.55, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.55, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className="rounded-2xl border border-white/10 bg-white/5 p-4 text-left"
                   >
-                    <Link
-                      href="/leaderboard"
-                      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-[12px] font-semibold text-foreground/80 shadow-[0_2px_12px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl transition-all duration-300 hover:border-primary-2/35 hover:bg-primary-2/8 hover:text-primary-2 hover:shadow-[0_4px_20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(var(--primary-2),0.15)] active:scale-95"
-                    >
-                      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-b from-white/[0.07] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <span className="relative z-10">{t('leaderboard.title')}</span>
-                      <ArrowUpRight className="relative z-10 h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </Link>
+                    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary-2/25 bg-primary-2/12">
+                      <Users className="h-4 w-4 text-primary-2" />
+                    </div>
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
+                      {t('home.stats.onlineUsers')}
+                    </div>
+                    <div className="mt-1 text-3xl font-black tracking-tight text-primary-2">
+                      {totalOnlineUsers.toLocaleString()}
+                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground">{t('home.stats.onlineWindow')}</div>
                   </motion.div>
                 </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-4 flex justify-center"
+                >
+                  <Link
+                    href="/leaderboard"
+                    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-[12px] font-semibold text-foreground/80 shadow-[0_2px_12px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl transition-all duration-300 hover:border-primary-2/35 hover:bg-primary-2/8 hover:text-primary-2 hover:shadow-[0_4px_20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(var(--primary-2),0.15)] active:scale-95"
+                  >
+                    <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-b from-white/[0.07] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <span className="relative z-10">{t('leaderboard.title')}</span>
+                    <ArrowUpRight className="relative z-10 h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           )}

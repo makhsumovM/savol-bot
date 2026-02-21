@@ -68,9 +68,8 @@ export function FinalCtaSection() {
                         style={{ animationDuration: '2.5s' }}
                       />
                     </span>
-                    -
                     <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary">
-                      {data?.totalOnlineUsers}+ {t('home.stats.visitors')}
+                      {data?.totalOnlineUsers}+ {t('home.stats.onlineUsers')}
                     </span>
                   </div>
                 </motion.div>
