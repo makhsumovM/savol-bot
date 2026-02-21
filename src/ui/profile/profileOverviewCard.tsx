@@ -1,10 +1,10 @@
 'use client'
 
-import { Edit2, Lock, Trophy, Calendar, Mail, User, Zap } from 'lucide-react'
-import Image from 'next/image'
-import { useTranslation } from 'react-i18next'
 import { IProfile } from '@/types/auth'
 import { ProfileScoreGrid } from '@/ui/profile/profileScoreGrid'
+import { Calendar, Edit2, Lock, Mail, Trophy, User, Zap } from 'lucide-react'
+import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 interface ProfileOverviewCardProps {
   profile: IProfile
@@ -27,13 +27,6 @@ export function ProfileOverviewCard({
 
   return (
     <div className="relative">
-      <div className="absolute -top-20 -right-20 h-40 w-40 animate-pulse rounded-full bg-primary/25 blur-[80px]" />
-      <div
-        className="absolute -bottom-20 -left-20 h-40 w-40 animate-pulse rounded-full bg-primary-2/20 blur-[80px]"
-        style={{ animationDelay: '1s' }}
-      />
-      <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 blur-xl" />
-
       <div
         className="relative rounded-2xl border border-border bg-card/80 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl sm:rounded-3xl sm:p-8"
         data-aos="zoom-in"
@@ -41,11 +34,6 @@ export function ProfileOverviewCard({
       >
         <div className="mb-6 flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
           <div className="group relative transition-transform hover:scale-102">
-            <div className="absolute inset-0 scale-110 rounded-full bg-linear-to-r from-primary to-primary-2 opacity-50 blur-xl transition-opacity duration-500 group-hover:opacity-70" />
-            <div
-              className="absolute inset-0 animate-pulse rounded-full bg-linear-to-br from-primary/30 to-primary-2/30"
-              style={{ animationDuration: '3s' }}
-            />
             <div className="relative h-28 w-28 overflow-hidden rounded-full border-4 border-background shadow-2xl ring-4 ring-primary/30 transition-all duration-500 group-hover:ring-primary/50 sm:h-36 sm:w-36">
               {profileImageUrl ? (
                 <Image
