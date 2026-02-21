@@ -8,3 +8,11 @@ export const getTotalUsers = async () => {
     console.error('Error fetching total users:', error)
   }
 }
+export const getTotalOnlineUser = async () => {
+  try {
+    const response = await axios.get('/api/analytics/users-online')
+    return response.data
+  } catch (error) {
+    console.error('Error fetching total users:', error)
+  }
+}
