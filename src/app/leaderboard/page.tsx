@@ -1,6 +1,7 @@
 
-import LeaderboardClient from '@/app/leaderboard/leaderboardClient'
+
 import { Suspense } from 'react'
+import LeaderboardClient from "@/app/leaderboard/leaderBoardClient";
 
 export default function LeaderBoardPage() {
   return (
