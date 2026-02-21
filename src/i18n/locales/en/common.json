@@ -39,9 +39,10 @@
       "subtitle": "Pick a mode that suits your learning style and goals"
     },
     "stats": {
-      "visitors": "Online users ",
-      "activeUsers": "active users",
-      "activeLearners": "Active Learners"
+      "totalVisits": "Total visits",
+      "visitsHint": "All-time sessions",
+      "onlineUsers": "Online users",
+      "onlineWindow": "Last 2-15 minutes"
     },
     "hero": {
       "badge": "AI-Powered Learning Platform",
