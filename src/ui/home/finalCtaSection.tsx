@@ -4,10 +4,8 @@ import { motion, type Variants } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import { Activity, ArrowRight, Dices, CheckCircle2 } from 'lucide-react'
-
-interface FinalCtaSectionProps {
-  totalUsers?: number
-}
+import { useQuery } from '@tanstack/react-query'
+import { getTotalOnlineUser } from '@/api/userApi'
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -26,9 +24,13 @@ const fadeUp: Variants = {
   },
 }
 
-export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
+export function FinalCtaSection() {
   const { t } = useTranslation()
   const appName = t('home.finalCta.title')
+  const { data } = useQuery({
+    queryKey: ['totalUsers'],
+    queryFn: getTotalOnlineUser,
+  })
   const normalizedName = appName.replace(/([a-z])([A-Z])/g, '$1 $2')
   const titleWords = normalizedName.split(/\s+/).filter(Boolean)
 
@@ -37,9 +39,7 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
       className="relative py-20 sm:py-28 lg:py-32 overflow-hidden"
       aria-labelledby="cta-title"
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        
-      </div>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden"></div>
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <motion.div
@@ -59,7 +59,7 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
               viewport={{ once: true, margin: '-60px' }}
               className="relative flex flex-col items-center px-5 py-14 text-center sm:px-12 sm:py-20 lg:px-20 lg:py-24"
             >
-              {typeof totalUsers === 'number' && (
+              {data?.totalOnlineUsers != null && (
                 <motion.div variants={fadeUp} className="mb-8">
                   <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/8 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
                     <span className="relative flex h-2 w-2">
@@ -68,8 +68,9 @@ export function FinalCtaSection({ totalUsers }: FinalCtaSectionProps) {
                         style={{ animationDuration: '2.5s' }}
                       />
                     </span>
+                    -
                     <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-primary">
-                      {totalUsers.toLocaleString()}+ {t('home.stats.visitors')}
+                      {data?.totalOnlineUsers}+ {t('home.stats.visitors')}
                     </span>
                   </div>
                 </motion.div>
