@@ -26,8 +26,8 @@ const GameOver = ({ currentScore, record, onRestart }: IGameOverProps) => {
       data-aos="zoom-in"
       data-aos-delay="80"
     >
-      <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-destructive/20 blur-[80px] animate-pulse" />
-      <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] animate-pulse" style={{ animationDelay: '0.5s' }} />
+      <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-destructive/20 blur-[80px] " />
+      <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] " style={{ animationDelay: '0.5s' }} />
       <div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-primary-2/5 pointer-events-none" />
 
       {isNewRecord && (
@@ -48,7 +48,7 @@ const GameOver = ({ currentScore, record, onRestart }: IGameOverProps) => {
         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
         className="relative"
       >
-        <div className="absolute inset-0 bg-destructive/20 rounded-full blur-xl animate-pulse" />
+        <div className="absolute inset-0 bg-destructive/20 rounded-full blur-xl " />
         <div className="relative flex items-center justify-center w-20 h-20 rounded-full bg-linear-to-br from-destructive/20 to-destructive/5 border border-destructive/30">
           <Flame className="w-10 h-10 text-destructive" />
         </div>
