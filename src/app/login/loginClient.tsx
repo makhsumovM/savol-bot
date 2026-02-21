@@ -44,18 +44,6 @@ const LoginClient = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-12 px-4">
-      <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
-
-      <div className="absolute -top-40 -right-40 h-80 w-80 sm:h-[500px] sm:w-[500px] rounded-full bg-primary/20 blur-[120px] animate-pulse" />
-      <div
-        className="absolute -bottom-40 -left-40 h-72 w-72 sm:h-[450px] sm:w-[450px] rounded-full bg-primary-2/20 blur-[120px] animate-pulse"
-        style={{ animationDelay: '1s' }}
-      />
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-64 w-64 rounded-full bg-violet-500/10 blur-[100px] animate-pulse"
-        style={{ animationDelay: '2s' }}
-      />
 
       <div className="relative z-10 w-full max-w-md">
         <motion.div
