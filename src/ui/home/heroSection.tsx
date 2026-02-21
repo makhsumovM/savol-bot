@@ -6,12 +6,8 @@ import Link from 'next/link'
 import { Activity, Dices, Users, ArrowRight, Sparkles, ArrowUpRight, Loader2 } from 'lucide-react'
 import { HomeLeaderboardPreview } from './homeLeaderboardPreview'
 import { Typewriter } from './typewriterText'
-
-interface HeroSectionProps {
-  totalUsers?: number
-  isPending?: boolean
-  setIsPending?: (isPending: boolean) => void
-}
+import { useQuery } from '@tanstack/react-query'
+import { getTotalOnlineUser } from '@/api/userApi'
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
@@ -31,8 +27,12 @@ const fadeRight: Variants = {
   show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 }
 
-export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
+export function HeroSection() {
   const { t } = useTranslation()
+  const { data, isPending } = useQuery({
+    queryKey: ['totalUsers'],
+    queryFn: getTotalOnlineUser,
+  })
   const appName = t('app.name')
   const normalizedName = appName.replace(/([a-z])([A-Z])/g, '$1 $2')
   const brandWords = normalizedName.split(/\s+/).filter(Boolean)
@@ -130,7 +130,7 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           )}
-          {typeof totalUsers === 'number' && (
+          {data?.totalOnlineUsers != null && (
             <motion.div
               initial={{ opacity: 0, y: 32, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -161,7 +161,7 @@ export function HeroSection({ totalUsers, isPending }: HeroSectionProps) {
                         className="mt-0.5 text-[2rem] font-black leading-none tracking-tight sm:text-[2.25rem]"
                       >
                         <span className="bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                          {totalUsers.toLocaleString()}
+                          {data?.totalOnlineUsers}
                         </span>
                       </motion.div>
                     </div>
