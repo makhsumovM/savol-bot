@@ -3,5 +3,5 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   const totalUsers = await getUsersOnline()
-  return NextResponse.json({ totalUsers })
+  return NextResponse.json({ totalOnlineUsers: totalUsers })
 }
