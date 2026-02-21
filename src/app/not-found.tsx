@@ -12,19 +12,17 @@ export default function NotFound() {
   return (
     <section className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-br from-background via-background to-primary/10" />
-      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-secondary/15 blur-[120px] animate-pulse-slow" />
+      <div className="absolute -top-40 -right-40 h-[500px] w-[500px] sm:h-[600px] sm:w-[600px] rounded-full bg-primary/20 blur-[120px] " />
+      <div className="absolute -bottom-40 -left-40 h-[420px] w-[420px] sm:h-[500px] sm:w-[500px] rounded-full bg-secondary/15 blur-[120px] " />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-28 md:py-32 flex flex-col items-center justify-center min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center space-y-8 sm:space-y-10"
         >
           <motion.h1
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2 }}
             className="text-8xl sm:text-9xl md:text-[160px] font-black tracking-tighter leading-none"
           >
@@ -35,7 +33,6 @@ export default function NotFound() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
             className="space-y-4"
           >
@@ -50,7 +47,6 @@ export default function NotFound() {
 
           <motion.nav
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.2 }}
             className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-8"
           >
@@ -95,7 +91,6 @@ export default function NotFound() {
 
           <motion.p
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
             transition={{ delay: 1.8 }}
             className="text-sm text-muted-foreground/70 mt-12"
           >
