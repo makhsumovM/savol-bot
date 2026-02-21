@@ -31,7 +31,7 @@ const Loading = ({ variant = "large" }: LoadingProps) => {
         className="relative"
       >
         <div
-          className={`${sizeClasses.outer} rounded-full bg-primary/20 blur-3xl animate-pulse-slow`}
+          className={`${sizeClasses.outer} rounded-full bg-primary/20 blur-3xl `}
         />
 
         <motion.div
