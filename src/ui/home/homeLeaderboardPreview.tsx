@@ -96,13 +96,6 @@ export const HomeLeaderboardPreview = () => {
 
   return (
     <div className="relative mt-8 lg:mt-0" data-aos="fade-up" data-aos-delay="100">
-      <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/25 blur-[80px] animate-pulse" />
-      <div
-        className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-primary-2/20 blur-[80px] animate-pulse"
-        style={{ animationDelay: '1s' }}
-      />
-      <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-primary-2/8 rounded-3xl blur-xl" />
-
       <div
         className="relative rounded-2xl sm:rounded-3xl border border-border/40 bg-card/80 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black/10"
         data-aos="fade-up"
