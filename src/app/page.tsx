@@ -1,5 +1,4 @@
 import { HeroSection } from '@/ui/home/heroSection'
-import { FinalCtaSection } from '@/ui/home/finalCtaSection'
 import ModeSection from '@/ui/home/modeSection'
 
 export default function Home() {
@@ -8,7 +7,6 @@ export default function Home() {
       <main className="relative z-10">
         <HeroSection />
         <ModeSection />
-        <FinalCtaSection />
       </main>
     </div>
   )
