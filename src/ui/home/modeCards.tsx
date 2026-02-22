@@ -53,13 +53,13 @@ const themeMap: Record<
     gradientTo: 'to-primary-2/0',
   },
   coding: {
-    accent: 'group-hover:text-violet-500',
-    iconWrap: 'bg-violet-500/10 text-violet-500 border-violet-500/25',
-    badge: 'bg-violet-500/10 text-violet-500 border-violet-500/25',
-    hoverBorder: 'hover:border-violet-500/35',
-    focusRing: 'focus-visible:ring-violet-500/40',
-    gradientFrom: 'from-violet-500/5',
-    gradientTo: 'to-violet-500/0',
+    accent: 'group-hover:text-primary-3',
+    iconWrap: 'bg-primary-3/10 text-primary-3 border-primary-3/25',
+    badge: 'bg-primary-3/10 text-primary-3 border-primary-3/25',
+    hoverBorder: 'hover:border-primary-3/35',
+    focusRing: 'focus-visible:ring-primary-3/40',
+    gradientFrom: 'from-primary-3/5',
+    gradientTo: 'to-primary-3/0',
   },
   default: {
     accent: 'group-hover:text-primary',
@@ -112,7 +112,7 @@ export function ModeCards({ modes }: ModeCardsProps) {
               data-aos="fade-up"
               data-aos-delay={150 + index * 100}
             >
-              {}
+              { }
               <div
                 className={clsx(
                   'absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out pointer-events-none',
