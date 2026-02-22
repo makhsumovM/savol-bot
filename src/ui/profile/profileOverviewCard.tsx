@@ -1,6 +1,7 @@
 'use client'
 
 import { IProfile } from '@/types/auth'
+import LevelScore from '@/ui/profile/levelScore'
 import { ProfileScoreGrid } from '@/ui/profile/profileScoreGrid'
 import { Calendar, Edit2, Lock, Mail, Trophy, User, Zap } from 'lucide-react'
 import Image from 'next/image'
@@ -28,27 +29,32 @@ export function ProfileOverviewCard({
   return (
     <div className="relative">
       <div
-        className="relative rounded-2xl border border-border bg-card/80 p-5 shadow-2xl shadow-black/10 backdrop-blur-xl sm:rounded-3xl sm:p-8"
+        className="relative rounded-3xl border border-white/10 bg-card/30 p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-10"
         data-aos="zoom-in"
         data-aos-delay="60"
       >
+
         <div className="mb-6 flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
-          <div className="group relative transition-transform hover:scale-102">
-            <div className="relative h-28 w-28 overflow-hidden rounded-full border-4 border-background shadow-2xl ring-4 ring-primary/30 transition-all duration-500 group-hover:ring-primary/50 sm:h-36 sm:w-36">
+          <div className="group relative transition-transform hover:scale-105">
+            <div className="relative h-32 w-32 overflow-hidden rounded-3xl border-2 border-white/20 shadow-2xl ring-1 ring-white/10 transition-all duration-500 sm:h-40 sm:w-40">
               {profileImageUrl ? (
                 <Image
                   src={profileImageUrl}
                   alt={profile.fullName}
                   fill
-                  sizes="(max-width: 640px) 112px, 144px"
+                  sizes="(max-width: 640px) 128px, 160px"
                   className="object-cover"
                   unoptimized
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-primary/10 text-3xl font-bold text-primary">
+                <div className="flex h-full w-full items-center justify-center bg-primary/60 text-4xl font-black text-foreground">
                   {profileInitial}
                 </div>
               )}
+              <div className="absolute inset-0 bg-linear-to-tr from-white/10 to-transparent pointer-events-none" />
+            </div>
+            <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-card/80 backdrop-blur-md shadow-lg text-primary">
+              <Trophy className="h-5 w-5" />
             </div>
           </div>
 
@@ -57,17 +63,26 @@ export function ProfileOverviewCard({
               {profile.fullName}
             </h2>
 
-            <div className="space-y-2 rounded-xl border border-border/50 bg-muted/10 p-4">
-              <div className="mb-2 flex items-center justify-center gap-2 border-b border-border/20 pb-2 text-muted-foreground sm:justify-start">
-                <Mail className="h-4 w-4" />
-                <span className="text-sm sm:text-base">{profile.email}</span>
+            <div className="space-y-3 rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm">
+              <div className="flex items-center justify-center gap-3 text-foreground/90 sm:justify-start">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                  <Mail className="h-4 w-4 text-primary" />
+                </div>
+                <span className="text-sm font-medium sm:text-base">{profile.email}</span>
               </div>
-              <div className="flex items-center justify-center gap-2 text-muted-foreground/70 sm:justify-start">
-                <Calendar className="h-4 w-4" />
-                <span className="text-xs sm:text-sm">
+              <div className="flex items-center justify-center gap-3 text-muted-foreground/60 sm:justify-start">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                  <Calendar className="h-4 w-4" />
+                </div>
+                <span className="text-xs font-medium sm:text-sm">
                   {t('profile.joined')}: {new Date(profile.createdAt).toLocaleDateString()}
                 </span>
               </div>
+              <LevelScore
+                bestBackendScore={profile.bestResult.bestBackendScore ?? 0}
+                bestFrontendScore={profile.bestResult.bestFrontendScore ?? 0}
+                bestMobdevScore={profile.bestResult.bestMobdevScore ?? 0}
+              />
             </div>
           </div>
         </div>
@@ -87,38 +102,38 @@ export function ProfileOverviewCard({
           mobileScore={profile.bestResult.bestMobdevScore ?? 0}
         />
 
-        <div className="mt-6 flex flex-wrap justify-center gap-4 rounded-xl border border-border/30 bg-muted/5 p-4 sm:justify-start">
+        <div className="mt-8 flex flex-wrap justify-center gap-4 sm:justify-start">
           <button
             onClick={onOpenChangePassword}
-            className="relative min-h-11 rounded-3xl border border-primary-2 bg-primary-2 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-102 hover:shadow-primary-2/40 active:scale-98 sm:px-6 sm:text-base"
+            className="group relative flex min-h-12 items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-xl active:scale-95 sm:text-base"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              <Lock className="h-5 w-5 sm:h-5 sm:w-5" />
-              {t('profile.changePassword')}
-            </span>
+            <div className="absolute inset-0 bg-linear-to-tr from-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <Lock className="h-5 w-5 text-primary-2" />
+            {t('profile.changePassword')}
           </button>
 
           <button
             onClick={() => onOpenUpdateProfile(profile.fullName)}
-            className="relative min-h-11 rounded-3xl border border-primary bg-linear-to-r from-primary to-primary/90 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-102 hover:shadow-primary/40 active:scale-98 sm:px-6 sm:text-base"
+            className="group relative flex min-h-12 items-center justify-center gap-3 overflow-hidden rounded-2xl border border-primary/20 bg-primary/10 px-6 py-3 text-sm font-bold text-primary backdrop-blur-md transition-all duration-300 hover:bg-primary/20 hover:shadow-xl active:scale-95 sm:text-base"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              <Edit2 className="h-5 w-5" />
-              {t('profile.updateProfile')}
-            </span>
+            <div className="absolute inset-0 bg-linear-to-tr from-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <Edit2 className="h-5 w-5" />
+            {t('profile.updateProfile')}
           </button>
         </div>
 
-        <div className="mt-6 rounded-xl border border-border/30 bg-muted/5 p-3 pt-4">
-          <div className="flex justify-between text-[10px] uppercase tracking-wider text-muted-foreground/80">
-            <span className="flex items-center gap-1.5">
+        <div className="mt-8 rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm">
+          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50">
               <User className="h-3 w-3" />
               {t('profile.member')}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Trophy className="h-3 w-3" />
-              {t('profile.total')}: {totalScore} pts
-            </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="text-sm font-black tracking-tight text-foreground">
+                {t('profile.total')}: <span className="text-primary">{totalScore}</span> pts
+              </span>
+            </div>
           </div>
         </div>
       </div>
