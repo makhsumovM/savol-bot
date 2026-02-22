@@ -44,10 +44,10 @@ const rankStyles = {
     icon: <Medal className="w-4 h-4" />,
   },
   5: {
-    bg: 'bg-gradient-to-br from-violet-500/15 via-purple-600/10 to-fuchsia-500/10',
-    border: 'border-violet-500/30',
-    text: 'text-violet-400',
-    glow: 'shadow-violet-500/15',
+    bg: 'bg-gradient-to-br from-primary-3/15 via-purple-600/10 to-fuchsia-500/10',
+    border: 'border-primary-3/30',
+    text: 'text-primary-3',
+    glow: 'shadow-primary-3/15',
     icon: <Medal className="w-4 h-4" />,
   },
   default: {
@@ -138,11 +138,10 @@ export const HomeLeaderboardPreview = () => {
       relative flex items-center justify-between rounded-xl px-3.5 py-2.5
       backdrop-blur-md cursor-pointer
       transition-all duration-300 hover:scale-[1.02]
-      ${
-        isMe
-          ? 'border-2 border-primary-2 bg-primary/19 shadow-lg shadow-primary-2/25'
-          : `border ${style.border} ${style.bg} hover:border-primary/30 ${style.glow} shadow-lg`
-      }
+      ${isMe
+                        ? 'border-2 border-primary-2 bg-primary/19 shadow-lg shadow-primary-2/25'
+                        : `border ${style.border} ${style.bg} hover:border-primary/30 ${style.glow} shadow-lg`
+                      }
     `}
                   >
                     {player.rank <= 5 && !isMe && (
@@ -158,11 +157,10 @@ export const HomeLeaderboardPreview = () => {
                         className={`
           flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold
           transition-all duration-300
-          ${
-            isMe
-              ? 'bg-primary/30 text-primary shadow-inner'
-              : `${style.bg} ${style.text} border ${style.border}`
-          }
+          ${isMe
+                            ? 'bg-primary/30 text-primary shadow-inner'
+                            : `${style.bg} ${style.text} border ${style.border}`
+                          }
         `}
                       >
                         {style.icon ?? player.rank}
