@@ -8,13 +8,17 @@ const AOSProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname()
 
   useEffect(() => {
-    AOS.init({
-      duration: 700,
-      easing: 'ease-out-cubic',
-      offset: 80,
-      once: true,
-      mirror: false,
-    })
+    const timeout = setTimeout(() => {
+      AOS.init({
+        duration: 700,
+        easing: 'ease-out-cubic',
+        offset: 80,
+        once: true,
+        mirror: false,
+      })
+    }, 100);
+
+    return () => clearTimeout(timeout);
   }, [])
 
   useEffect(() => {
