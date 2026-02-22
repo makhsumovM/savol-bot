@@ -43,7 +43,7 @@ const ProfileClient = () => {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
+      <div className="relative mx-auto max-w-[999px] px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
         <ProfileHero />
         <ProfileBadges totalScore={totalScore} myRank={myRank} />
 
