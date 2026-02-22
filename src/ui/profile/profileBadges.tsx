@@ -12,8 +12,13 @@ export function ProfileBadges({ totalScore, myRank }: ProfileBadgesProps) {
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3" data-aos="fade-up">
+    <div
+      suppressHydrationWarning
+      className="flex flex-wrap items-center justify-center gap-2 sm:gap-3"
+      data-aos="fade-up"
+    >
       <div
+        suppressHydrationWarning // <-- Added here
         className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] text-muted-foreground transition-transform hover:scale-105 sm:text-xs"
         data-aos="zoom-in"
         data-aos-delay="40"
@@ -27,6 +32,7 @@ export function ProfileBadges({ totalScore, myRank }: ProfileBadgesProps) {
 
       {myRank && (
         <div
+          suppressHydrationWarning // <-- Added here
           className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] text-muted-foreground transition-transform hover:scale-105 sm:text-xs"
           data-aos="zoom-in"
           data-aos-delay="80"
@@ -40,6 +46,7 @@ export function ProfileBadges({ totalScore, myRank }: ProfileBadgesProps) {
       )}
 
       <div
+        suppressHydrationWarning // <-- Added here
         className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] text-muted-foreground transition-transform hover:scale-105 sm:text-xs"
         data-aos="zoom-in"
         data-aos-delay="120"
@@ -52,4 +59,4 @@ export function ProfileBadges({ totalScore, myRank }: ProfileBadgesProps) {
       </div>
     </div>
   )
-}
+} 
