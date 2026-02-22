@@ -20,16 +20,24 @@ export function ProfileScoreGrid({
   const { t } = useTranslation()
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+
       <div
-        className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+        className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:bg-white/10"
         data-aos="fade-up"
         data-aos-delay="80"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-primary/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="relative flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10">
-            <Image src={reactIcon} alt="Frontend" width={28} height={28} className="object-contain" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary shadow-sm">
+
+            <Image
+              src={reactIcon}
+              alt="Frontend"
+              width={28}
+              height={28}
+              className="object-contain"
+            />
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -41,14 +49,21 @@ export function ProfileScoreGrid({
       </div>
 
       <div
-        className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+        className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:bg-white/10"
         data-aos="fade-up"
         data-aos-delay="140"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-primary-2/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary-2/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="relative flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-primary-2/20 bg-primary-2/10">
-            <Image src={charmIcon} alt="Backend" width={28} height={28} className="object-contain" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary-2/20 bg-primary-2/10 text-primary-2 shadow-sm">
+
+            <Image
+              src={charmIcon}
+              alt="Backend"
+              width={28}
+              height={28}
+              className="object-contain"
+            />
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -60,14 +75,21 @@ export function ProfileScoreGrid({
       </div>
 
       <div
-        className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/50 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+        className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:bg-white/10"
         data-aos="fade-up"
         data-aos-delay="200"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-primary-2/12 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary-3/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="relative flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-primary-2/20 bg-primary-2/10">
-            <Image src={mobileIcon} alt="Mobile" width={28} height={28} className="object-contain" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary-3/20 bg-primary-3/10 text-primary-3 shadow-sm">
+
+            <Image
+              src={mobileIcon}
+              alt="Mobile"
+              width={28}
+              height={28}
+              className="object-contain"
+            />
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
