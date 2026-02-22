@@ -197,6 +197,11 @@
     "active": "Активен",
     "scores": "Результаты",
     "member": "Участник",
+    "levels": {
+      "master": "Мастер",
+      "advanced": "Продвинутый",
+      "beginner": "Начинающий"
+    },
     "total": "Всего"
   },
   "profileMenu": {

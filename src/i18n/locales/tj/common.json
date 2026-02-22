@@ -198,7 +198,12 @@
     "active": "Фаъол",
     "scores": "Натиҷаҳо",
     "member": "Аъзо",
-    "total": "Ҳамагӣ"
+    "total": "Ҳамагӣ",
+    "levels": {
+      "master": "Мастер",
+      "advanced": "Пешрафта",
+      "beginner": "Оғозкунанда"
+    }
   },
   "profileMenu": {
     "profile": "Профил",
