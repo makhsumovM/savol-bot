@@ -17,6 +17,7 @@ export function ProfileHero() {
         {profileRestWords.length > 0 && (
           <span className="text-[#13aeac]"> {profileRestWords.join(' ')}</span>
         )}
+        
       </h1>
     </div>
   )
