@@ -159,7 +159,7 @@ export default function RootLayout({
         dangerouslySetInnerHTML={{__html: JSON.stringify(educationalAppJsonLd)}}
       />
     </head>
-    <body className="antialiased">
+    <body className="antialiased" suppressHydrationWarning={true}>
     <Providers>
       <Header />
       <main className="pb-20 md:pb-0">{children}</main>
