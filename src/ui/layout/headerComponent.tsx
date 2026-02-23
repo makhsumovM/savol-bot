@@ -26,14 +26,19 @@ const HeaderComponent = () => {
   const navLinks = [
     { href: '/marathon', icon: Activity, label: 'marathon' },
     { href: '/random', icon: Dices, label: 'random' },
-    ...(jwt ? [{ href: '/my-rank', icon: Badge, label: 'myRank' }] : []),
+    ...(jwt
+      ? [
+          { href: '/my-rank', icon: Badge, label: 'myRank' },
+          { href: '/profile', icon: User, label: 'profile' },
+        ]
+      : []),
     { href: '/leaderboard', icon: ChartBar, label: 'leaderboard' },
   ]
-
   const mobileNavLinks = [
     { href: '/', icon: Home, label: 'home' },
     ...navLinks,
-    { href: jwt ? '/profile' : '/login', icon: User, label: jwt ? 'profile' : 'login' },
+
+    ...(!jwt ? [{ href: '/login', icon: User, label: 'login' }] : []),
   ]
 
   return (
@@ -45,7 +50,11 @@ const HeaderComponent = () => {
         className="sticky top-0 z-50 flex items-center justify-between px-4 py-2.5 backdrop-blur-2xl bg-background/65 border-b border-border/50 shadow-[0_1px_12px_rgba(0,0,0,0.06)]"
       >
         <Link href="/" className="shrink-0 z-10" aria-label={t('header.home')}>
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} transition={{ type: 'spring', stiffness: 400, damping: 25 }}>
+          <motion.div
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          >
             <Image
               src={logo}
               alt="Logo"
@@ -55,7 +64,11 @@ const HeaderComponent = () => {
           </motion.div>
         </Link>
 
-        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2" role="navigation" aria-label="Main navigation">
+        <nav
+          className="hidden md:flex absolute left-1/2 -translate-x-1/2"
+          role="navigation"
+          aria-label="Main navigation"
+        >
           <div className="flex items-center gap-1 rounded-2xl border border-border/40 bg-background/50 px-2 py-1.5 backdrop-blur-xl">
             {navLinks.map(({ href, icon: Icon, label }) => {
               const isActive = pathname === href
@@ -69,9 +82,7 @@ const HeaderComponent = () => {
                   className={clsx(
                     'relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-colors duration-200',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-                    isActive
-                      ? 'text-primary'
-                      : 'text-muted-foreground hover:text-foreground',
+                    isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
                   )}
                 >
                   {isActive && (
@@ -154,7 +165,7 @@ const HeaderComponent = () => {
 
             return (
               <Link
-                key={href}
+                key={label}
                 href={href}
                 aria-label={t(`header.${label}`)}
                 aria-current={isActive ? 'page' : undefined}
@@ -190,9 +201,7 @@ const HeaderComponent = () => {
                 <span
                   className={clsx(
                     'text-[10px] sm:text-xs mt-0.5 transition-colors duration-200 text-center px-0.5 line-clamp-1 font-medium',
-                    isActive
-                      ? 'text-primary'
-                      : 'text-muted-foreground group-hover:text-foreground',
+                    isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground',
                   )}
                 >
                   {t(`header.${label}`)}
