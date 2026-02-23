@@ -13,7 +13,7 @@ import { LeaderboardTable } from '@/ui/leaderboard/leaderboardTable'
 import { LeaderboardEmptyState } from '@/ui/leaderboard/leaderboardEmptyState'
 import { getLatestDate, getTopByScore } from '@/ui/leaderboard/leaderboardUtils'
 
-const LeaderboardClient = () => {
+const LeaderBoardClient = () => {
   const { t } = useTranslation()
 
   const { data, isLoading, isError } = useQuery<ILeaderboard[]>({
@@ -50,4 +50,4 @@ const LeaderboardClient = () => {
   )
 }
 
-export default LeaderboardClient
+export default LeaderBoardClient
