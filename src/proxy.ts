@@ -39,7 +39,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  const protectedPaths = ['/my-best', '/my-rank', '/profile']
+  const protectedPaths = ['/my-best', '/profile']
   const isProtectedRoute = protectedPaths.some((path) => pathname.startsWith(path))
 
   if (!isTokenValid && isProtectedRoute) {
