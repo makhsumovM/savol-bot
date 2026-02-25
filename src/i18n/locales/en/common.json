@@ -101,6 +101,9 @@
       "mobile": "Mobile",
       "updated": "Updated"
     },
+    "rankings": "Rankings",
+    "players": "Players",
+    "lastUpdated": "Last Updated",
     "common": "You",
     "inLeaderboard": "on the leaderboard",
     "top": "Top Players",
@@ -222,7 +225,9 @@
   },
   "question": {
     "copy": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "correct": "✓ Correct",
+    "incorrect": "✗ Incorrect"
   },
   "random": {
     "badge": "Random Practice",
@@ -329,13 +334,48 @@
       "copyright": "© {{year}} {{publisher}}. Built by {{creator}}. All rights reserved.",
       "liveSite": "Live Site",
       "sourceCode": "Source Code",
-      "community": "Community"
+      "community": "Community",
+      "terms": "Terms",
+      "privacy": "Privacy"
     }
   },
   "common": {
     "viewAll": "View All",
     "allTopics": "All Topics",
-    "you": "You"
+    "you": "You",
+    "pts": "pts",
+    "total": "Total",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "mobile": "Mobile",
+    "months": {
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April",
+      "may": "May",
+      "jun": "June",
+      "jul": "July",
+      "aug": "August",
+      "sep": "September",
+      "oct": "October",
+      "nov": "November",
+      "dec": "December"
+    },
+    "monthsShort": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    }
   },
   "createReview": {
     "title": "Leave a Review",
