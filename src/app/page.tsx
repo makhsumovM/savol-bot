@@ -1,5 +1,6 @@
 import { HeroSection } from '@/ui/home/heroSection'
 import ModeSection from '@/ui/home/modeSection'
+import ReviewSection from '@/ui/home/review/reviewSection'
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
       <main className="relative z-10">
         <HeroSection />
         <ModeSection />
+        <ReviewSection />
       </main>
     </div>
   )
