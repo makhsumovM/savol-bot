@@ -9,21 +9,21 @@ export const LeaderboardEmptyState = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col items-center justify-center py-20 px-4 text-center"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col items-center justify-center py-24 px-6 text-center"
     >
-      <div className="relative mb-6">
-        <div className="absolute inset-0 bg-primary/20 blur-3xl " />
-        <div className="relative bg-card/50 backdrop-blur-xl p-6 rounded-full border border-border/50 shadow-xl">
-          <Trophy className="w-12 h-12 text-muted-foreground" />
+      <div className="relative mb-8">
+        <div className="absolute inset-0 bg-primary/10 blur-3xl animate-pulse" />
+        <div className="relative bg-card/40 backdrop-blur-2xl p-8 rounded-4xl border border-border/40 shadow-2xl">
+          <Trophy className="w-16 h-16 text-primary/40" />
         </div>
       </div>
 
-      <h3 className="text-xl font-bold text-foreground mb-2">
+      <h3 className="text-3xl font-black text-foreground tracking-tight mb-4">
         {t('leaderboard.emptyTitle', 'Leaderboard is empty')}
       </h3>
-      <p className="text-muted-foreground max-w-sm">
+      <p className="text-lg text-muted-foreground/60 max-w-sm font-medium leading-relaxed">
         {t('leaderboard.empty', 'No participants have submitted their scores yet. Be the first one!')}
       </p>
     </motion.div>
