@@ -30,20 +30,6 @@ export function ProfileBadges({ totalScore, myRank }: ProfileBadgesProps) {
         <span className="font-semibold text-foreground/80">{totalScore}</span>
       </div>
 
-      {myRank && (
-        <div
-          suppressHydrationWarning // <-- Added here
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1.5 text-[11px] text-muted-foreground transition-transform hover:scale-105 sm:text-xs"
-          data-aos="zoom-in"
-          data-aos-delay="80"
-        >
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-background/80">
-            <Award className="h-3.5 w-3.5 text-foreground/70" />
-          </span>
-          <span className="uppercase tracking-wide">{t('profile.rank')}</span>
-          <span className="font-semibold text-foreground/80">#{myRank}</span>
-        </div>
-      )}
 
       <div
         suppressHydrationWarning // <-- Added here
