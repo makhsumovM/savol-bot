@@ -1,8 +1,12 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Trophy, Clock3, Zap } from 'lucide-react'
+import { Clock3, Zap, Sparkles } from 'lucide-react'
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+}
 
 export const LeaderboardHeader = () => {
   const { t } = useTranslation()
@@ -11,35 +15,42 @@ export const LeaderboardHeader = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      initial="hidden"
+      animate="show"
+      variants={{
+        show: {
+          transition: {
+            staggerChildren: 0.1,
+          },
+        },
+      }}
       className="flex flex-col xl:flex-row gap-8 xl:items-end xl:justify-between"
-      data-aos="fade-down"
     >
-      <div className="space-y-4 max-w-2xl">
+      <div className="space-y-6 max-w-2xl">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 shadow-xs w-fit"
+          variants={fadeUp}
+          className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-4 py-2 backdrop-blur-xl"
         >
-          <Trophy className="w-4 h-4 text-primary fill-primary/20" />
-          <span className="text-xs font-bold text-primary uppercase tracking-wider">
-            {t('leaderboard.top', 'Top Performers')}
+          <motion.div
+            animate={{ rotate: [0, 12, -12, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4 }}
+          >
+            <Sparkles className="h-4 w-4 text-primary" />
+          </motion.div>
+          <span className="text-xs font-semibold tracking-wide text-primary sm:text-sm">
+            {t('leaderboard.badge')}
           </span>
         </motion.div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-[0.9] tracking-tight">
-          <span className="text-primary">
-            {leaderboardFirstWord}
-          </span>
+        <motion.h1
+          variants={fadeUp}
+          className="text-4xl sm:text-5xl md:text-6xl font-black leading-[0.9] tracking-tight"
+        >
+          <span className="text-primary">{leaderboardFirstWord}</span>
           {leaderboardRestWords.length > 0 && (
-            <span className="text-primary-2">
-              {' '}{leaderboardRestWords.join(' ')}
-            </span>
+            <span className="text-primary-2"> {leaderboardRestWords.join(' ')}</span>
           )}
-        </h1>
+        </motion.h1>
 
         <p className="text-lg text-muted-foreground/80 leading-relaxed max-w-xl">
           {t(
