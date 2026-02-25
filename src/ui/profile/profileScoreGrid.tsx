@@ -33,7 +33,7 @@ export function ProfileScoreGrid({
 
             <Image
               src={reactIcon}
-              alt="Frontend"
+              alt={t('common.frontend')}
               width={28}
               height={28}
               className="object-contain"
@@ -59,7 +59,7 @@ export function ProfileScoreGrid({
 
             <Image
               src={charmIcon}
-              alt="Backend"
+              alt={t('common.backend')}
               width={28}
               height={28}
               className="object-contain"
@@ -85,7 +85,7 @@ export function ProfileScoreGrid({
 
             <Image
               src={mobileIcon}
-              alt="Mobile"
+              alt={t('common.mobile')}
               width={28}
               height={28}
               className="object-contain"
