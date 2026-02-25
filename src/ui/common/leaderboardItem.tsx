@@ -49,16 +49,17 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
       transition={{ delay: index * 0.05, duration: 0.3 }}
       className={`
          group relative
-         hover:bg-muted/40 transition-colors duration-200
-         px-4 py-3 sm:px-6 sm:py-4
+         hover:bg-primary/5 transition-all duration-300
+         px-6 py-4 sm:px-8 sm:py-5 border-b border-border/10 last:border-0
       `}
     >
       <div className="hidden lg:grid grid-cols-[60px_1.5fr_1fr_1fr_1fr_1.2fr] items-center gap-4">
 
         <div className="flex justify-center">
           <div className={`
-               flex h-8 w-8 items-center justify-center rounded-full font-bold text-sm
-               ${player.rank <= 3 ? rankStyle.bg + ' ' + rankStyle.text + ' ring-1 ring-inset ' + rankStyle.border : 'bg-muted/20 text-muted-foreground'}
+               flex h-10 w-10 items-center justify-center rounded-2xl font-black text-sm
+               transition-all duration-300 group-hover:scale-110
+               ${player.rank <= 3 ? rankStyle.bg + ' ' + rankStyle.text + ' ring-1 ring-inset ' + rankStyle.border : 'bg-muted/10 text-muted-foreground/60'}
             `}>
             {player.rank === 1 && <Crown className="w-4 h-4" />}
             {player.rank === 2 && <Medal className="w-4 h-4" />}
@@ -78,14 +79,16 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
             )}
           </div>
           <div className="min-w-0">
-            <p className="font-semibold text-foreground truncate">{player.fullName}</p>
-            <p className="text-xs text-muted-foreground">{t('common.total')}: <span className="text-primary font-bold">{totalScore.toFixed(0)}</span></p>
+            <p className="font-black text-foreground truncate text-base">{player.fullName}</p>
+            <p className="text-[10px] text-muted-foreground/70 uppercase tracking-widest font-bold">
+              {t('common.total')}: <span className="text-primary">{totalScore.toFixed(0)}</span>
+            </p>
           </div>
         </div>
 
         <ScoreCell icon={Code2} score={player.frontendScore} percent={getPercent(player.frontendScore)} color="bg-primary" />
         <ScoreCell icon={Server} score={player.backendScore} percent={getPercent(player.backendScore)} color="bg-primary-2" />
-        <ScoreCell icon={Smartphone} score={player.mobdevScore || 0} percent={getPercent(player.mobdevScore || 0)} color="bg-blue-500" />
+        <ScoreCell icon={Smartphone} score={player.mobdevScore || 0} percent={getPercent(player.mobdevScore || 0)} color="bg-primary-3" />
 
         <div className="flex flex-col items-end gap-1 text-right">
           <span className="text-xs font-medium text-foreground/80">{date}</span>
@@ -126,7 +129,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
         <div className="grid grid-cols-3 gap-2 pl-11">
           <MobileScore pill="FE" score={player.frontendScore} color="text-primary" bg="bg-primary/10" />
           <MobileScore pill="BE" score={player.backendScore} color="text-primary-2" bg="bg-primary-2/10" />
-          <MobileScore pill="MB" score={player.mobdevScore || 0} color="text-blue-500" bg="bg-blue-500/10" />
+          <MobileScore pill="MB" score={player.mobdevScore || 0} color="text-primary-3" bg="bg-primary-3/10" />
         </div>
       </div>
     </motion.div>
@@ -135,9 +138,9 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
 
 const ScoreCell = ({ icon: Icon, score, percent, color }: { icon: ElementType, score: number, percent: number, color: string }) => (
   <div className="flex flex-col items-center gap-1.5">
-    <div className="flex items-center gap-1.5">
-      <Icon className="w-3.5 h-3.5 text-muted-foreground" />
-      <span className="font-bold text-sm tabular-nums text-foreground">{score.toFixed(0)}</span>
+    <div className="flex items-center gap-1.5 transition-transform duration-300 group-hover:scale-105">
+      <Icon className="w-4 h-4 text-muted-foreground/60" />
+      <span className="font-black text-sm tabular-nums text-foreground">{score.toFixed(0)}</span>
     </div>
     <div className="h-1 w-20 bg-muted rounded-full overflow-hidden">
       <motion.div
