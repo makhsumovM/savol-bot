@@ -53,6 +53,7 @@ const ProfileClient = () => {
         {data && (
           <ProfileOverviewCard
             profile={data}
+            rank={myRank}
             totalScore={totalScore}
             onOpenChangePassword={() => setChangePasswordModalOpen(true)}
             onOpenUpdateProfile={handleOpenUpdateProfile}
