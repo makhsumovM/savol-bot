@@ -57,9 +57,9 @@ export const LeaderboardTopCards = ({
           label={t('leaderboard.stats.mobile', 'Mobile')}
           player={topMobile}
           score={topMobile.mobdevScore || 0}
-          gradient="from-blue-500/10 to-blue-500/5 dark:from-blue-400/10 dark:to-blue-400/5"
-          accentColor="text-blue-600 dark:text-blue-400"
-          border="border-blue-500/20"
+          gradient="from-primary-3/10 to-primary-3/5"
+          accentColor="text-primary-3"
+          border="border-primary-3/25"
           delay={0.2}
         />
       )}
@@ -91,50 +91,57 @@ const TopCard = ({
   const { t } = useTranslation()
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       className={`
-         group relative overflow-hidden rounded-3xl
-         border bg-card/50 backdrop-blur-md p-5 shadow-sm
-         transition-all hover:shadow-md ${border}
+         group relative overflow-hidden rounded-4xl
+         border bg-card/40 backdrop-blur-xl p-6 sm:p-7 shadow-sm
+         transition-all duration-300 hover:shadow-xl ${border}
+         hover:border-opacity-60
       `}
     >
-      <div className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
+      <div className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out pointer-events-none`} />
 
-      <div className="relative z-10 flex items-start justify-between">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-border/50 bg-background/50 p-1.5 ">
-              <Image src={icon} alt={label} className="h-full w-full object-contain" />
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border bg-background/50 shadow-sm transition-colors duration-300 ${border}`}>
+              <Image src={icon} alt={label} className="h-6 w-6 object-contain" />
             </div>
-            <span className={`text-xs font-bold uppercase tracking-wider ${accentColor}`}>
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-background/40 ${border} ${accentColor}`}>
               {label}
             </span>
           </div>
 
-          <div>
-            <h3 className="text-lg font-bold text-foreground leading-tight truncate max-w-40">
-              {player.fullName}
-            </h3>
-            <p className="text-2xl font-black tracking-tight mt-1 text-foreground">
-              {score.toFixed(0)} <span className="text-sm font-medium text-muted-foreground">{t('common.pts')}</span>
-            </p>
-          </div>
+          {player.profilePicture && (
+            <div className="relative h-12 w-12 rounded-full border-2 border-background shadow-sm overflow-hidden ring-4 ring-background/50 group-hover:ring-background/80 transition-all duration-300">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}/${player.profilePicture}`}
+                alt={player.fullName}
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+          )}
         </div>
 
-        {player.profilePicture && (
-          <div className="relative h-12 w-12 rounded-full border-2 border-background shadow-sm overflow-hidden">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}/${player.profilePicture}`}
-              alt={player.fullName}
-              fill
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-        )}
+        <div className="mt-auto">
+          <h3 className={`text-xl font-black tracking-tight leading-tight truncate transition-colors duration-300 group-hover:${accentColor}`}>
+            {player.fullName}
+          </h3>
+          <p className="text-3xl font-black tracking-tighter mt-1 text-foreground">
+            {score.toFixed(0)} <span className="text-sm font-medium text-muted-foreground/70 uppercase tracking-widest">{t('common.pts')}</span>
+          </p>
+        </div>
+
+        <div className="mt-6 flex items-center gap-3 opacity-40 group-hover:opacity-100 transition-opacity duration-300">
+          <div className={`h-1 w-8 rounded-full transition-all duration-500 group-hover:w-16 bg-current ${accentColor}`} />
+          <div className="h-px flex-1 bg-border/40" />
+        </div>
       </div>
     </motion.div>
   )
@@ -145,29 +152,30 @@ const StatsCard = ({ latestDate }: { latestDate: Date | null }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.5 }}
-      className="relative overflow-hidden rounded-3xl border border-border bg-card/50 backdrop-blur-md p-5 shadow-sm flex flex-col justify-between"
+      whileHover={{ y: -5 }}
+      className="relative overflow-hidden rounded-4xl border border-border/40 bg-card/40 backdrop-blur-xl p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-lg flex flex-col justify-between"
     >
-      <div className="absolute inset-0 bg-linear-to-br from-muted/50 via-transparent to-transparent opacity-50" />
+      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-primary-2/5 opacity-50" />
 
       <div className="relative z-10 flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="p-2 rounded-lg bg-primary/10 text-primary">
-            <TrendingUp className="w-5 h-5" />
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-2xl bg-primary/10 text-primary border border-primary/20 shadow-sm">
+            <TrendingUp className="w-6 h-6" />
           </div>
-          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">
             {t('leaderboard.stats.updated', 'Status')}
           </span>
         </div>
       </div>
 
-      <div className="relative z-10">
-        <p className="text-sm font-medium text-muted-foreground mb-1">
+      <div className="relative z-10 mt-auto">
+        <p className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest mb-1.5">
           {t('leaderboard.lastUpdated', 'Last Updated')}
         </p>
-        <p className="text-xl font-bold text-foreground">
+        <p className="text-2xl font-black text-foreground tracking-tight">
           {latestDate ? formatDateLabel(latestDate) : '-'}
         </p>
       </div>
