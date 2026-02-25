@@ -3,8 +3,8 @@
 import { motion, Variants } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { Activity, Dices, Users, ArrowRight, Sparkles, ArrowUpRight, Loader2, Globe2 } from 'lucide-react'
-import { HomeLeaderboardPreview } from './homeLeaderboardPreview'
+import { Activity, Dices, Users, ArrowRight, Sparkles, ArrowUpRight, Globe2 } from 'lucide-react'
+import { HomeLeaderboardPreview } from './homeLeaderboard'
 import { Typewriter } from './typewriterText'
 import { useQuery } from '@tanstack/react-query'
 import { getTotalOnlineUser, getTotalUsers } from '@/api/userApi'
@@ -29,17 +29,16 @@ const fadeRight: Variants = {
 
 export function HeroSection() {
   const { t } = useTranslation()
-  const { data: totalUsersData, isPending: isTotalUsersPending } = useQuery({
+  const { data: totalUsersData } = useQuery({
     queryKey: ['total-users'],
     queryFn: getTotalUsers,
     refetchInterval: 120000,
   })
-  const { data: onlineUsersData, isPending: isOnlineUsersPending } = useQuery({
+  const { data: onlineUsersData } = useQuery({
     queryKey: ['online-users'],
     queryFn: getTotalOnlineUser,
     refetchInterval: 120000,
   })
-  const isPending = isTotalUsersPending || isOnlineUsersPending
   const hasData = totalUsersData != null || onlineUsersData != null
   const totalUsers = Number(totalUsersData?.totalUsers ?? 0)
   const totalOnlineUsers = Number(onlineUsersData?.totalOnlineUsers ?? 0)
@@ -158,7 +157,9 @@ export function HeroSection() {
                     <div className="mt-1 text-3xl font-black tracking-tight text-primary">
                       {totalUsers.toLocaleString()}
                     </div>
-                    <div className="mt-1 text-xs text-muted-foreground">{t('home.stats.visitsHint')}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      {t('home.stats.visitsHint')}
+                    </div>
                   </motion.div>
 
                   <motion.div
@@ -176,7 +177,9 @@ export function HeroSection() {
                     <div className="mt-1 text-3xl font-black tracking-tight text-primary-2">
                       {totalOnlineUsers.toLocaleString()}
                     </div>
-                    <div className="mt-1 text-xs text-muted-foreground">{t('home.stats.onlineWindow')}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      {t('home.stats.onlineWindow')}
+                    </div>
                   </motion.div>
                 </div>
 
