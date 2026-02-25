@@ -114,7 +114,7 @@ const Footer = () => {
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
-          {}
+          { }
           <div className="lg:col-span-4 space-y-6" data-aos="fade-up" data-aos-delay="0">
             <div className="flex items-center gap-3">
               <Image
@@ -148,7 +148,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {}
+          { }
           <div className="lg:col-span-2 space-y-6" data-aos="fade-up" data-aos-delay="100">
             <h3 className="font-semibold text-foreground tracking-wide">
               {t('siteFooter.sections.quickLinks')}
@@ -170,7 +170,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {}
+          { }
           <div className="lg:col-span-3 space-y-6" data-aos="fade-up" data-aos-delay="200">
             <h3 className="font-semibold text-foreground tracking-wide">
               {t('siteFooter.sections.contacts')}
@@ -196,7 +196,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {}
+          { }
           <div className="lg:col-span-3 space-y-6" data-aos="fade-up" data-aos-delay="300">
             <h3 className="font-semibold text-foreground tracking-wide">
               {t('siteFooter.sections.newsletter')}
@@ -229,7 +229,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {}
+        { }
         <div className="mt-16 pt-8 border-t border-border/40">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between text-xs text-muted-foreground font-medium">
             <p className="flex items-center gap-1.5">
@@ -256,10 +256,10 @@ const Footer = () => {
                 {t('siteFooter.bottom.sourceCode')}
               </a>
               <Link href="/terms" className="hover:text-foreground transition-colors">
-                Terms
+                {t('siteFooter.bottom.terms', 'Terms')}
               </Link>
               <Link href="/privacy" className="hover:text-foreground transition-colors">
-                Privacy
+                {t('siteFooter.bottom.privacy', 'Privacy')}
               </Link>
             </div>
           </div>
