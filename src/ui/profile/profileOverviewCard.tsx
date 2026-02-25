@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 interface ProfileOverviewCardProps {
   profile: IProfile
+  rank: number | null
   totalScore: number
   onOpenChangePassword: () => void
   onOpenUpdateProfile: (fullName: string) => void
@@ -16,6 +17,7 @@ interface ProfileOverviewCardProps {
 
 export function ProfileOverviewCard({
   profile,
+  rank,
   totalScore,
   onOpenChangePassword,
   onOpenUpdateProfile,
@@ -26,6 +28,15 @@ export function ProfileOverviewCard({
     : null
   const profileInitial = profile.fullName.charAt(0).toUpperCase()
 
+  const rankTone =
+    rank === 1
+      ? 'text-yellow-400'
+      : rank === 2
+        ? 'text-gray-300'
+        : rank === 3
+          ? 'text-amber-500'
+          : 'text-primary'
+
   return (
     <div className="relative">
       <div
@@ -33,7 +44,6 @@ export function ProfileOverviewCard({
         data-aos="zoom-in"
         data-aos-delay="60"
       >
-
         <div className="mb-6 flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
           <div className="group relative transition-transform hover:scale-105">
             <div className="relative h-32 w-32 overflow-hidden rounded-3xl border-2 border-white/20 shadow-2xl ring-1 ring-white/10 transition-all duration-500 sm:h-40 sm:w-40">
@@ -59,9 +69,28 @@ export function ProfileOverviewCard({
           </div>
 
           <div className="flex-1 text-center sm:text-left">
-            <h2 className="mb-2 text-2xl font-black text-foreground sm:text-3xl md:text-4xl">
-              {profile.fullName}
-            </h2>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-4">
+              <div>
+                <h2 className="text-2xl font-black text-foreground sm:text-3xl md:text-4xl">
+                  {profile.fullName}
+                </h2>
+                <div className="mt-2 flex items-center justify-center sm:justify-start gap-2 text-sm text-muted-foreground font-medium">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  {t('myRank.currentPosition')}
+                </div>
+              </div>
+
+              {rank && (
+                <div className="flex flex-col items-center md:items-end gap-1">
+                  <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground font-bold">
+                    {t('profile.rank')}
+                  </span>
+                  <span className={`text-5xl sm:text-6xl font-black tabular-nums ${rankTone}`}>
+                    #{rank}
+                  </span>
+                </div>
+              )}
+            </div>
 
             <div className="space-y-3 rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur-sm">
               <div className="flex items-center justify-center gap-3 text-foreground/90 sm:justify-start">
@@ -120,21 +149,6 @@ export function ProfileOverviewCard({
             <Edit2 className="h-5 w-5" />
             {t('profile.updateProfile')}
           </button>
-        </div>
-
-        <div className="mt-8 rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm">
-          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50">
-              <User className="h-3 w-3" />
-              {t('profile.member')}
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-              <span className="text-sm font-black tracking-tight text-foreground">
-                {t('profile.total')}: <span className="text-primary">{totalScore}</span> pts
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
