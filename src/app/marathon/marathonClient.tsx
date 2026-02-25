@@ -57,7 +57,9 @@ export default function MarathonClient() {
   const [isGameOver, setIsGameOver] = useState(false)
   const [difficultyIndex, setDifficultyIndex] = useState(0)
   const [mode, setMode] = useState<MarathonMode>(initialMode)
-  const [topic, setTopic] = useState<MarathonTopicValue>(MARATHON_DEFAULT_TOPIC_BY_MODE[initialMode])
+  const [topic, setTopic] = useState<MarathonTopicValue>(
+    MARATHON_DEFAULT_TOPIC_BY_MODE[initialMode],
+  )
   const [isLose, setIsLose] = useState(false)
   const [bestScore, setBestScore] = useState(0)
 
@@ -140,21 +142,21 @@ export default function MarathonClient() {
         const data: ICreateMarathonAttempt =
           mode === 'frontend'
             ? {
-              frontendScore: currentScore,
-              backendScore: 0,
-              mobdevScore: 0,
-            }
-            : mode === 'backend'
-              ? {
-                frontendScore: 0,
-                backendScore: currentScore,
+                frontendScore: currentScore,
+                backendScore: 0,
                 mobdevScore: 0,
               }
+            : mode === 'backend'
+              ? {
+                  frontendScore: 0,
+                  backendScore: currentScore,
+                  mobdevScore: 0,
+                }
               : {
-                frontendScore: 0,
-                backendScore: 0,
-                mobdevScore: currentScore,
-              }
+                  frontendScore: 0,
+                  backendScore: 0,
+                  mobdevScore: currentScore,
+                }
 
         mutateAttempt(data)
       } else {
@@ -242,7 +244,7 @@ export default function MarathonClient() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
+      <div className="relative mx-auto max-w-[90%] px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
         <motion.div
           className="flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between mb-4 sm:mb-6"
           initial="hidden"
