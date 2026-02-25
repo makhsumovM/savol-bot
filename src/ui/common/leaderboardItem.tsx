@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Clock, Code2, Crown, Medal, Server, Smartphone, User } from 'lucide-react'
 import { ILeaderboard } from '@/types/leaderboard'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 interface LeaderboardItemProps {
   player: ILeaderboard
@@ -18,11 +19,15 @@ const rankColors = {
   default: { text: 'text-muted-foreground', border: 'border-transparent', bg: 'bg-transparent' },
 }
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string, t: any) => {
   const date = new Date(dateString)
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthKey = [
+    'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+    'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
+  ][date.getMonth()]
+
   return {
-    date: `${date.getDate()} ${months[date.getMonth()]}`,
+    date: `${date.getDate()} ${t(`common.monthsShort.${monthKey}`)}`,
     time: `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
   }
 }
@@ -30,7 +35,8 @@ const formatDate = (dateString: string) => {
 export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rankStyle = (rankColors as any)[player.rank] ?? rankColors.default
-  const { date, time } = formatDate(player.lastAchievedAt)
+  const { t } = useTranslation()
+  const { date, time } = formatDate(player.lastAchievedAt, t)
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   const totalScore = player.frontendScore + player.backendScore + (player.mobdevScore || 0)
@@ -73,7 +79,7 @@ export const LeaderboardItem = ({ player, index }: LeaderboardItemProps) => {
           </div>
           <div className="min-w-0">
             <p className="font-semibold text-foreground truncate">{player.fullName}</p>
-            <p className="text-xs text-muted-foreground">Total: <span className="text-primary font-bold">{totalScore.toFixed(0)}</span></p>
+            <p className="text-xs text-muted-foreground">{t('common.total')}: <span className="text-primary font-bold">{totalScore.toFixed(0)}</span></p>
           </div>
         </div>
 
