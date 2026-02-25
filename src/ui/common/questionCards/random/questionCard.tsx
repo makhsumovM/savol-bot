@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Copy } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { RandomQuestion } from '@/types/random'
 import CodeBlock from '@/ui/common/questionCards/marathon/codeBlock'
 
@@ -20,6 +21,7 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
   const [selected, setSelected] = useState<number | null>(null)
   const [answered, setAnswered] = useState(false)
   const [copied, setCopied] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -110,12 +112,12 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
             {copied ? (
               <>
                 <Check className="w-3.5 h-3.5 text-primary" />
-                <span className="text-primary">Copied</span>
+                <span className="text-primary">{t('question.copied')}</span>
               </>
             ) : (
               <>
                 <Copy className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-muted-foreground">Copy</span>
+                <span className="text-muted-foreground">{t('question.copy')}</span>
               </>
             )}
           </motion.button>
@@ -152,13 +154,12 @@ const QuestionCard = ({ question, index, onAnswered }: QuestionCardProps) => {
       <footer className="flex justify-end pt-3 border-t border-border/60">
         {answered && (
           <span
-            className={`px-2.5 py-1 rounded-lg font-semibold text-xs ${
-              selected === question.correctIndex
+            className={`px-2.5 py-1 rounded-lg font-semibold text-xs ${selected === question.correctIndex
                 ? 'bg-green-900 text-green-100'
                 : 'bg-red-800 text-red-100'
-            }`}
+              }`}
           >
-            {selected === question.correctIndex ? '✓ Correct' : '✗ Incorrect'}
+            {selected === question.correctIndex ? t('question.correct') : t('question.incorrect')}
           </span>
         )}
       </footer>
