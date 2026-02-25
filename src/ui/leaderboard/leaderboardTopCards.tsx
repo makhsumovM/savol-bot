@@ -87,55 +87,58 @@ const TopCard = ({
   accentColor: string
   border: string
   delay: number
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.5 }}
-    whileHover={{ y: -5 }}
-    className={`
+}) => {
+  const { t } = useTranslation()
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.5 }}
+      whileHover={{ y: -5 }}
+      className={`
          group relative overflow-hidden rounded-3xl
          border bg-card/50 backdrop-blur-md p-5 shadow-sm
          transition-all hover:shadow-md ${border}
       `}
-  >
-    <div className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
+    >
+      <div className={`absolute inset-0 bg-linear-to-br ${gradient} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
 
-    <div className="relative z-10 flex items-start justify-between">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-border/50 bg-background/50 p-1.5 ">
-            <Image src={icon} alt={label} className="h-full w-full object-contain" />
+      <div className="relative z-10 flex items-start justify-between">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-border/50 bg-background/50 p-1.5 ">
+              <Image src={icon} alt={label} className="h-full w-full object-contain" />
+            </div>
+            <span className={`text-xs font-bold uppercase tracking-wider ${accentColor}`}>
+              {label}
+            </span>
           </div>
-          <span className={`text-xs font-bold uppercase tracking-wider ${accentColor}`}>
-            {label}
-          </span>
+
+          <div>
+            <h3 className="text-lg font-bold text-foreground leading-tight truncate max-w-40">
+              {player.fullName}
+            </h3>
+            <p className="text-2xl font-black tracking-tight mt-1 text-foreground">
+              {score.toFixed(0)} <span className="text-sm font-medium text-muted-foreground">{t('common.pts')}</span>
+            </p>
+          </div>
         </div>
 
-        <div>
-          <h3 className="text-lg font-bold text-foreground leading-tight truncate max-w-40">
-            {player.fullName}
-          </h3>
-          <p className="text-2xl font-black tracking-tight mt-1 text-foreground">
-            {score.toFixed(0)} <span className="text-sm font-medium text-muted-foreground">pts</span>
-          </p>
-        </div>
+        {player.profilePicture && (
+          <div className="relative h-12 w-12 rounded-full border-2 border-background shadow-sm overflow-hidden">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_API_URL}/${player.profilePicture}`}
+              alt={player.fullName}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          </div>
+        )}
       </div>
-
-      {player.profilePicture && (
-        <div className="relative h-12 w-12 rounded-full border-2 border-background shadow-sm overflow-hidden">
-          <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}/${player.profilePicture}`}
-            alt={player.fullName}
-            fill
-            className="object-cover"
-            unoptimized
-          />
-        </div>
-      )}
-    </div>
-  </motion.div>
-)
+    </motion.div>
+  )
+}
 
 const StatsCard = ({ latestDate }: { latestDate: Date | null }) => {
   const { t } = useTranslation()
