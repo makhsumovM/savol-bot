@@ -26,13 +26,9 @@ const HeaderComponent = () => {
   const navLinks = [
     { href: '/marathon', icon: Activity, label: 'marathon' },
     { href: '/random', icon: Dices, label: 'random' },
-    ...(jwt
-      ? [
-          { href: '/my-rank', icon: Badge, label: 'myRank' },
-          { href: '/profile', icon: User, label: 'profile' },
-        ]
-      : []),
+
     { href: '/leaderboard', icon: ChartBar, label: 'leaderboard' },
+    ...(jwt ? [{ href: '/profile', icon: User, label: 'profile' }] : []),
   ]
   const mobileNavLinks = [
     { href: '/', icon: Home, label: 'home' },
