@@ -35,6 +35,7 @@
       "features": "Smooth rhythm, balanced complexity, and careful animations"
     },
     "modes": {
+      "badge": "Diverse Modes",
       "title": "Choose Your Mode",
       "subtitle": "Pick a mode that suits your learning style and goals"
     },
@@ -56,7 +57,6 @@
         "title": "AI-Powered Questions Generation",
         "desc": "Smart question generation powered by AI"
       },
-
       "instantFeedback": {
         "title": "Instant Feedback with Real-Time Results",
         "desc": "Real-time results for effective learning"
@@ -71,9 +71,17 @@
       "subtitle": "Join thousands of developers improving their skills every day",
       "getStarted": "Get Started Free",
       "learnMore": "Learn More"
+    },
+    "reviews": {
+      "badge": "Community Reviews",
+      "title": "What Developers Say",
+      "subtitle": "Join thousands of users who have already improved their skills with SkillCheck.",
+      "addReview": "Leave a Review",
+      "empty": "No reviews yet. Be the first one!"
     }
   },
   "leaderboard": {
+    "badge": "Global Ranking",
     "title": "Leaderboard",
     "description": "Track the best results across frontend, backend, and mobile.",
     "columns": {
@@ -119,6 +127,7 @@
     "loginFailed": "Invalid email or password."
   },
   "marathon": {
+    "badge": "Endurance Challenge",
     "title": "Marathon Mode",
     "score": {
       "current": "Current Score",
@@ -185,6 +194,7 @@
     "hint": "Tip: the page may have been moved, renamed, or deleted."
   },
   "profile": {
+    "badge": "Your Achievements",
     "title": "Profile",
     "joined": "Joined",
     "bestFrontendScore": "Best Frontend Score",
@@ -197,7 +207,7 @@
     "status": "Status",
     "levels": {
       "master": "Master",
-      "advanced":"Advanced",
+      "advanced": "Advanced",
       "beginner": "Beginner"
     },
     "active": "Active",
@@ -215,6 +225,7 @@
     "copied": "Copied!"
   },
   "random": {
+    "badge": "Random Practice",
     "title": "Random Questions",
     "noQuestions": "Unable to load random questions."
   },
@@ -325,5 +336,27 @@
     "viewAll": "View All",
     "allTopics": "All Topics",
     "you": "You"
+  },
+  "createReview": {
+    "title": "Leave a Review",
+    "subtitle": "Share your experience with our platform",
+    "fields": {
+      "rating": {
+        "label": "Your Rating"
+      },
+      "text": {
+        "label": "Your Review",
+        "placeholder": "Write what you liked or what could be improved..."
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Send Review",
+      "updating": "Sending..."
+    },
+    "errors": {
+      "textRequired": "Please enter your review text"
+    },
+    "success": "Thanks! Your review has been submitted for moderation."
   }
 }
