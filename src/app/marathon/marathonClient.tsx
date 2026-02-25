@@ -25,11 +25,17 @@ import {
   MARATHON_MODE_ICON_BY_MODE,
 } from '@/ui/marathon/topicData'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, Variants } from 'framer-motion'
 import Cookies from 'js-cookie'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Sparkles } from 'lucide-react'
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+}
 
 export default function MarathonClient() {
   const { t, i18n } = useTranslation()
@@ -134,21 +140,21 @@ export default function MarathonClient() {
         const data: ICreateMarathonAttempt =
           mode === 'frontend'
             ? {
-                frontendScore: currentScore,
-                backendScore: 0,
-                mobdevScore: 0,
-              }
+              frontendScore: currentScore,
+              backendScore: 0,
+              mobdevScore: 0,
+            }
             : mode === 'backend'
               ? {
-                  frontendScore: 0,
-                  backendScore: currentScore,
-                  mobdevScore: 0,
-                }
+                frontendScore: 0,
+                backendScore: currentScore,
+                mobdevScore: 0,
+              }
               : {
-                  frontendScore: 0,
-                  backendScore: 0,
-                  mobdevScore: currentScore,
-                }
+                frontendScore: 0,
+                backendScore: 0,
+                mobdevScore: currentScore,
+              }
 
         mutateAttempt(data)
       } else {
@@ -235,32 +241,54 @@ export default function MarathonClient() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden" data-aos="fade">
-  
-
-
+    <section className="relative min-h-screen overflow-hidden">
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10 md:py-12 space-y-7 sm:space-y-8">
         <motion.div
-          className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left mb-4 sm:mb-6"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          data-aos="fade-up"
+          className="flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between mb-4 sm:mb-6"
+          initial="hidden"
+          animate="show"
+          variants={{
+            show: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
         >
-          <h1
-            suppressHydrationWarning
-            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
-          >
-            <span className="text-[#ec6216]">{marathonFirstWord}</span>
-            {marathonRestWords.length > 0 && (
-              <span className="text-[#13aeac]"> {marathonRestWords.join(' ')}</span>
-            )}
-          </h1>
-          <GameModeSwitcher
-            mode={mode}
-            onModeChange={handleModeChange}
-            modeIcons={MARATHON_MODE_ICON_BY_MODE}
-          />
+          <div className="space-y-6">
+            <motion.div
+              variants={fadeUp}
+              className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-4 py-2 backdrop-blur-xl"
+            >
+              <motion.div
+                animate={{ rotate: [0, 12, -12, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4 }}
+              >
+                <Sparkles className="h-4 w-4 text-primary" />
+              </motion.div>
+              <span className="text-xs font-semibold tracking-wide text-primary sm:text-sm">
+                {t('marathon.badge')}
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUp}
+              suppressHydrationWarning
+              className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight"
+            >
+              <span className="text-[#ec6216]">{marathonFirstWord}</span>
+              {marathonRestWords.length > 0 && (
+                <span className="text-[#13aeac]"> {marathonRestWords.join(' ')}</span>
+              )}
+            </motion.h1>
+          </div>
+          <motion.div variants={fadeUp}>
+            <GameModeSwitcher
+              mode={mode}
+              onModeChange={handleModeChange}
+              modeIcons={MARATHON_MODE_ICON_BY_MODE}
+            />
+          </motion.div>
         </motion.div>
 
         <GameTopicFilter
