@@ -27,7 +27,7 @@ export const LeaderboardTable = ({ players }: LeaderboardTableProps) => {
     >
       <div className="hidden lg:grid grid-cols-[60px_1.5fr_1fr_1fr_1fr_1.2fr] items-center gap-4 px-6 py-4 border-b border-border bg-muted/30">
         <div className="text-center text-xs font-bold text-muted-foreground uppercase tracking-wider">
-          #
+          {t('leaderboard.columns.rank', '#')}
         </div>
         <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
           {t('leaderboard.columns.name', 'Participant')}
@@ -35,17 +35,17 @@ export const LeaderboardTable = ({ players }: LeaderboardTableProps) => {
 
         <div className="flex items-center justify-center gap-2">
           <Image src={reactIcon} alt="FE" width={16} height={16} className="opacity-80" />
-          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Frontend</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('common.frontend')}</span>
         </div>
 
         <div className="flex items-center justify-center gap-2">
           <Image src={charmIcon} alt="BE" width={16} height={16} className="opacity-80" />
-          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Backend</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('common.backend')}</span>
         </div>
 
         <div className="flex items-center justify-center gap-2">
           <Image src={mobileIcon} alt="MB" width={16} height={16} className="opacity-80" />
-          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Mobile</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('common.mobile')}</span>
         </div>
 
         <div className="flex items-center justify-end gap-2 text-right">
