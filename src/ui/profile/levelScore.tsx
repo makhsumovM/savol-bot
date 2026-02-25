@@ -45,25 +45,28 @@ const LevelScore = ({
 
   const scores = [
     {
-      name: 'Frontend',
+      name: t('common.frontend'),
       value: bestFrontendScore,
       accent: 'text-primary',
       bg: 'bg-primary',
       border: 'border-primary/20',
+      key: 'Frontend',
     },
     {
-      name: 'Backend',
+      name: t('common.backend'),
       value: bestBackendScore,
       accent: 'text-primary-2',
       bg: 'bg-primary-2',
       border: 'border-primary-2/20',
+      key: 'Backend',
     },
     {
-      name: 'Mobile',
+      name: t('common.mobile'),
       value: bestMobdevScore,
       accent: 'text-primary-3',
       bg: 'bg-primary-3',
       border: 'border-primary-3/20',
+      key: 'Mobile',
     },
   ]
 
@@ -107,7 +110,7 @@ const LevelScore = ({
                   <span
                     className={`text-[10px] font-bold ${s.accent} bg-white/5 px-2 py-0.5 rounded-full border border-white/5`}
                   >
-                    {s.value} pts
+                    {s.value} {t('common.pts')}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -127,7 +130,7 @@ const LevelScore = ({
               >
                 <div
                   className="absolute inset-0 opacity-40 blur-[4px]"
-                  style={{ backgroundColor: `var(--${s.name === 'Frontend' ? 'primary' : s.name === 'Backend' ? 'primary-2' : 'primary-3'})` }}
+                  style={{ backgroundColor: `var(--${s.key === 'Frontend' ? 'primary' : s.key === 'Backend' ? 'primary-2' : 'primary-3'})` }}
                 />
                 <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-white/30" />
               </motion.div>
