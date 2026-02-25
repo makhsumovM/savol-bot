@@ -194,7 +194,7 @@ export const HomeLeaderboardPreview = () => {
                       >
                         {player.totalScore.toLocaleString()}
                       </motion.span>
-                      <span className="text-[10px] text-muted-foreground">pts</span>
+                      <span className="text-[10px] text-muted-foreground">{t('common.pts')}</span>
                     </div>
                   </div>
                 )
@@ -248,7 +248,7 @@ export const HomeLeaderboardPreview = () => {
                     <span className="text-sm font-bold text-primary-2 tabular-nums">
                       {myTotalScore.toLocaleString()}
                     </span>
-                    <span className="text-[10px] text-primary-2/70">pts</span>
+                    <span className="text-[10px] text-primary-2/70">{t('common.pts')}</span>
                   </div>
                 </motion.div>
               </>
