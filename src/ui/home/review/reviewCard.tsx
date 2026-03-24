@@ -20,16 +20,16 @@ const ReviewCard = ({ createdAt, rating, text, userFullName, userProfilePicture 
       transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
       className="group relative flex flex-col h-full p-9 rounded-3xl bg-linear-to-br from-card/70 to-card/40 backdrop-blur-3xl border border-white/10 shadow-2xl shadow-black/10 hover:border-primary/50 hover:shadow-primary/10 transition-all duration-700 overflow-hidden"
     >
-      <div className="absolute -top-1 -right-1 text-primary/5 group-hover:text-primary/10 transition-all duration-700">
-        <Quote size={92} strokeWidth={0.6} fill="currentColor" />
+      <div className="absolute  -top-1 -right-1 text-primary/5 group-hover:text-primary/10 transition-all duration-700">
+        <Quote size={87} strokeWidth={0.6} fill="currentColor" />
       </div>
 
       <div className="flex items-center gap-5 mb-8 relative z-10">
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-linear-to-br from-primary/20 to-primary-3/20 p-0.5 shadow-inner">
+        <div className="relative h-13 w-13 shrink-0 overflow-hidden rounded-2xl bg-linear-to-br from-primary/20 to-primary-3/20 p-0.5 shadow-inner">
           <div className="h-full w-full rounded-[14px] overflow-hidden bg-card/90 backdrop-blur-md ring-1 ring-white/10">
             {userProfilePicture ? (
               <Image
-                src={`${process.env.NEXT_PUBLIC_SITE_URL}${userProfilePicture}`}
+                src={process.env.NEXT_PUBLIC_API_URL + userProfilePicture}
                 fill
                 className="object-cover transition-all duration-700 group-hover:scale-110"
                 alt={userFullName}
@@ -46,7 +46,7 @@ const ReviewCard = ({ createdAt, rating, text, userFullName, userProfilePicture 
           <span className="font-black text-2xl tracking-tight text-foreground group-hover:text-primary transition-colors duration-300">
             {userFullName}
           </span>
-          <span className="text-sm font-medium text-muted-foreground/70 uppercase tracking-[2px]">
+          <span className="text-sm font-light text-muted-foreground/70 uppercase tracking-[2px]">
             {date}
           </span>
         </div>
