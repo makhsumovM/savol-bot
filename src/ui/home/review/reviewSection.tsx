@@ -155,7 +155,7 @@ const ReviewSection = () => {
           size="lg"
           className="rounded-2xl px-8 h-14 bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
         >
-          <MessageCircle className="mr-2 h-5 w-5" />
+          <MessageCircle size={20} className="mr-2 h-5 w-5" />
           {t('home.reviews.addReview')}
         </Button>
       </motion.div>
